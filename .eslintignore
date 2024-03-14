@@ -5,3 +5,7 @@ dist
 public
 private
 presets
+
+
+# Prisma generated
+prisma/generated
