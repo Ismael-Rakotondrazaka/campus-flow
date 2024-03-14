@@ -1,6 +1,5 @@
 //https://nitro.unjs.io/config
 export default defineNitroConfig({
-  srcDir: "server",
   typescript: {
     strict: true,
     tsConfig: {
@@ -19,5 +18,8 @@ export default defineNitroConfig({
     "/api/**": {
       cors: true,
     },
+  },
+  experimental: {
+    asyncContext: true,
   },
 });
