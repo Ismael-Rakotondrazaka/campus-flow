@@ -5,3 +5,15 @@ dist
 .cache
 .output
 .env
+
+# VSCode
+.vscode
+
+# VSCodeCounter
+.VSCodeCounter
+
+# secret folder
+secrets
+
+# Prisma generated
+prisma/generated

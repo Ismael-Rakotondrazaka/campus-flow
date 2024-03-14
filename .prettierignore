@@ -1,0 +1,7 @@
+.nitro
+.output
+node_modules
+dist
+public
+private
+presets

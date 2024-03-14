@@ -1,6 +1,3 @@
-export default eventHandler((event) => {
-  console.log(event);
-  
-
+export default defineEventHandler(() => {
   return "Start by editing <code>server/routes/index.ts</code>.";
 });

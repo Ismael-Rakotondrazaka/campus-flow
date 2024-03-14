@@ -1,7 +1,4 @@
 // https://nitro.unjs.io/guide/typescript
 {
-  "extends": "./.nitro/types/tsconfig.json",
-  "compilerOptions": {
-    "moduleResolution": "Node",
-  },
+  "extends": "./.nitro/types/tsconfig.json"
 }
