@@ -1,0 +1,210 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator zod {
+  provider = "zod-prisma-types"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("NITRO_DATABASE_URL")
+}
+
+model User {
+  id                 Int                 @id @default(autoincrement())
+  name               String
+  firstName          String
+  phoneNumber        String
+  profileUrl         String
+  email              String              @unique
+  password           String              @db.Text
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @default(now())
+  deletedAt          DateTime?
+  passwordResetToken PasswordResetToken?
+  admin              Admin?
+  student            Student?
+}
+
+model Admin {
+  userId       Int
+  user         User          @relation(fields: [userId], references: [id])
+  role         Role
+  renewals     Renewal[]
+  reservations Reservation[]
+  maintenances Maintenance[]
+
+  @@id([userId])
+}
+
+model Faculty {
+  id           Int           @id @default(autoincrement())
+  name         String        @db.Text
+  students     Student[]
+  reservations Reservation[]
+  renewals     Renewal[]
+}
+
+model Student {
+  userId          Int
+  user            User      @relation(fields: [userId], references: [id])
+  facultyId       Int
+  gender          Gender
+  nationality     String
+  emergencyNumber String
+  faculty         Faculty   @relation(fields: [facultyId], references: [id])
+  NIC             String // National ID Card
+  renewals        Renewal[]
+  lodgmentId      Int
+  lodgment        Lodgment  @relation(fields: [lodgmentId], references: [id])
+
+  @@id([userId])
+}
+
+enum Role {
+  ROOT
+  MAINTENANCE
+  RENEWAL
+  RESERVATION
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+model Lodgment {
+  id         Int       @id @default(autoincrement())
+  capacity   Int
+  floor      Int
+  roomNumber Int
+  batimentId Int
+  batiment   Batiment  @relation(fields: [batimentId], references: [id])
+  students   Student[]
+}
+
+model Reservation {
+  id                   Int               @id @default(autoincrement())
+  name                 String
+  firstName            String
+  phoneNumber          String
+  profileUrl           String            @db.Text
+  email                String            @unique
+  gender               Gender
+  nationality          String
+  emergencyNumber      String
+  NIC                  String
+  NICUrl               String            @db.Text
+  schoolCertificateUrl String            @db.Text
+  facultyId            Int
+  faculty              Faculty           @relation(fields: [facultyId], references: [id])
+  status               ReservationStatus
+  academicSessionId    Int
+  academicSession      AcademicSession   @relation(fields: [academicSessionId], references: [id])
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @default(now())
+  adminId              Int
+  admin                Admin             @relation(fields: [adminId], references: [userId])
+}
+
+model Renewal {
+  id                   Int             @id @default(autoincrement())
+  studentId            Int
+  student              Student         @relation(fields: [studentId], references: [userId])
+  phoneNumber          String
+  emergencyNumber      String
+  profileUrl           String          @db.Text
+  schoolCertificateUrl String          @db.Text
+  NICURL               String          @db.Text
+  academicSessionId    Int
+  academicSession      AcademicSession @relation(fields: [academicSessionId], references: [id])
+  status               RenewalStatus
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @default(now())
+  Faculty              Faculty?        @relation(fields: [facultyId], references: [id])
+  facultyId            Int?
+  adminId              Int
+  admin                Admin           @relation(fields: [adminId], references: [userId])
+
+  // unique constraint to ensure one student's renewal is for on academic year
+  @@unique([studentId, academicSessionId])
+}
+
+model Maintenance {
+  id          Int               @id @default(autoincrement())
+  type        MaintenanceType
+  description String?           @db.Text
+  status      MaintenanceStatus
+  adminId     Int
+  admin       Admin             @relation(fields: [adminId], references: [userId])
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @default(now())
+}
+
+enum MaintenanceStatus {
+  PENDING
+  ONGOING
+  DONE
+  REFUSED
+}
+
+enum MaintenanceType {
+  ELECTRICAL
+  PLUMBING
+  EQUIPMENT
+  HVAC // (Heating, Ventilation, and Air Conditioning) / Climatisation
+  OTHER
+}
+
+enum RenewalStatus {
+  PENDING
+  ACCEPTED
+  REFUSED
+  VALIDATED
+}
+
+model AcademicSession {
+  id          Int           @id @default(autoincrement())
+  name        String
+  startAt     DateTime
+  endAt       DateTime
+  deletedAt   DateTime?
+  Reservation Reservation[]
+  Renewal     Renewal[]
+}
+
+enum ReservationStatus {
+  PENDING
+  ACCEPTED
+  REFUSED
+  VALIDATED
+}
+
+model Batiment {
+  id        Int        @id @default(autoincrement())
+  name      String
+  lodgments Lodgment[]
+}
+
+model Announcement {
+  id              Int       @id @default(autoincrement())
+  title           String
+  content         String    @db.Text
+  illustrationUrl String?   @db.Text
+  startAt         DateTime?
+  endAt           DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @default(now())
+  deletedAt       DateTime?
+}
+
+model PasswordResetToken {
+  token     String   @id
+  expiresAt DateTime
+  userId    Int      @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
