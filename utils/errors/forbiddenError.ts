@@ -10,17 +10,21 @@ export type ForbiddenError<T extends Record<string, string>> = {
 /* eslint-disable @typescript-eslint/indent, indent */
 export const isForbiddenError = <T extends Record<string, string>>(
   error: unknown,
-): error is ForbiddenError<T> =>
-  is.object(error) &&
-  !is.null(error) &&
-  "errorMessage" in error &&
-  !is.undefined(error.errorMessage) &&
-  "message" in error &&
-  is.string(error.message) &&
-  "statusCode" in error &&
-  error.statusCode === httpStatusCodes.StatusCodes.FORBIDDEN &&
-  "statusMessage" in error &&
-  is.string(error.statusMessage);
+): error is ForbiddenError<T> => {
+  return (
+    is.object(error) &&
+    !is.null(error) &&
+    "message" in error &&
+    is.string(error.message) &&
+    "statusCode" in error &&
+    error.statusCode === httpStatusCodes.StatusCodes.FORBIDDEN &&
+    "statusMessage" in error &&
+    is.string(error.statusMessage) &&
+    "errorMessage" in error &&
+    !is.undefined(error.errorMessage) &&
+    isRecordOfStringString(error.errorMessage)
+  );
+};
 /* eslint-enable @typescript-eslint/indent, indent */
 
 export const createForbiddenError = <T extends Record<string, string>>(

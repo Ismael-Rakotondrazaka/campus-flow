@@ -10,17 +10,21 @@ export type UnauthorizedError<T extends Record<string, string>> = {
 /* eslint-disable @typescript-eslint/indent, indent */
 export const isUnauthorizedError = <T extends Record<string, string>>(
   error: unknown,
-): error is UnauthorizedError<T> =>
-  is.object(error) &&
-  !is.null(error) &&
-  "errorMessage" in error &&
-  !is.undefined(error.errorMessage) &&
-  "message" in error &&
-  is.string(error.message) &&
-  "statusCode" in error &&
-  error.statusCode === httpStatusCodes.StatusCodes.UNAUTHORIZED &&
-  "statusMessage" in error &&
-  is.string(error.statusMessage);
+): error is UnauthorizedError<T> => {
+  return (
+    is.object(error) &&
+    !is.null(error) &&
+    "message" in error &&
+    is.string(error.message) &&
+    "statusCode" in error &&
+    error.statusCode === httpStatusCodes.StatusCodes.UNAUTHORIZED &&
+    "statusMessage" in error &&
+    is.string(error.statusMessage) &&
+    "errorMessage" in error &&
+    !is.undefined(error.errorMessage) &&
+    isRecordOfStringString(error.errorMessage)
+  );
+};
 /* eslint-enable @typescript-eslint/indent, indent */
 
 export const createUnauthorizedError = <T extends Record<string, string>>(

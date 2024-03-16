@@ -8,17 +8,21 @@ export type ServerError = {
 };
 
 /* eslint-disable @typescript-eslint/indent, indent */
-export const isServerError = (error: unknown): error is ServerError =>
-  is.object(error) &&
-  !is.null(error) &&
-  "errorMessage" in error &&
-  !is.undefined(error.errorMessage) &&
-  "message" in error &&
-  is.string(error.message) &&
-  "statusCode" in error &&
-  error.statusCode === httpStatusCodes.StatusCodes.INTERNAL_SERVER_ERROR &&
-  "statusMessage" in error &&
-  is.string(error.statusMessage);
+export const isServerError = (error: unknown): error is ServerError => {
+  return (
+    is.object(error) &&
+    !is.null(error) &&
+    "message" in error &&
+    is.string(error.message) &&
+    "statusCode" in error &&
+    error.statusCode === httpStatusCodes.StatusCodes.INTERNAL_SERVER_ERROR &&
+    "statusMessage" in error &&
+    is.string(error.statusMessage) &&
+    "errorMessage" in error &&
+    !is.undefined(error.errorMessage) &&
+    isRecordOfStringString(error.errorMessage)
+  );
+};
 /* eslint-enable @typescript-eslint/indent, indent */
 
 export const createServerError = (

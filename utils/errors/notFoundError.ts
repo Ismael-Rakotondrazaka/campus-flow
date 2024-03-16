@@ -8,17 +8,21 @@ export type NotFoundError = {
 };
 
 /* eslint-disable @typescript-eslint/indent, indent */
-export const isNotFoundError = (error: unknown): error is NotFoundError =>
-  is.object(error) &&
-  !is.null(error) &&
-  "errorMessage" in error &&
-  !is.undefined(error.errorMessage) &&
-  "message" in error &&
-  is.string(error.message) &&
-  "statusCode" in error &&
-  error.statusCode === httpStatusCodes.StatusCodes.NOT_FOUND &&
-  "statusMessage" in error &&
-  is.string(error.statusMessage);
+export const isNotFoundError = (error: unknown): error is NotFoundError => {
+  return (
+    is.object(error) &&
+    !is.null(error) &&
+    "message" in error &&
+    is.string(error.message) &&
+    "statusCode" in error &&
+    error.statusCode === httpStatusCodes.StatusCodes.NOT_FOUND &&
+    "statusMessage" in error &&
+    is.string(error.statusMessage) &&
+    "errorMessage" in error &&
+    !is.undefined(error.errorMessage) &&
+    isRecordOfStringString(error.errorMessage)
+  );
+};
 /* eslint-enable @typescript-eslint/indent, indent */
 
 export const createNotFoundError = (
