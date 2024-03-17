@@ -77,8 +77,22 @@ export default defineEventHandler(async (): Promise<LoginResponse> => {
 
     const accessToken: AccessToken = createAccessToken(userSession);
 
+    const refreshToken: RefreshTokenObject = createRefreshToken({
+      id: user.id,
+    });
+    // we don't need to await this
+    refreshTokenRepository.createOne({
+      data: {
+        token: refreshToken.token,
+        userId: user.id,
+        expiresAt: refreshToken.expiresAt,
+        createdAt: new Date(),
+      },
+    });
+
     return {
       accessToken,
+      refreshToken,
     };
   } catch (error) {
     return handleUnknownError(error);

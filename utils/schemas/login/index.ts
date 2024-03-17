@@ -17,6 +17,7 @@ export type LoginBody = z.infer<typeof LoginBodySchema>;
 
 export type LoginData = {
   accessToken: AccessToken;
+  refreshToken: RefreshTokenObject;
 };
 
 /* -------------------------------------------------------------------------- */
