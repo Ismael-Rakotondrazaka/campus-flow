@@ -10,3 +10,7 @@ export const UserAdminFullSchema = UserSchema.and(
 );
 
 export type UserAdminFull = z.infer<typeof UserAdminFullSchema>;
+
+export const isUserAdminFull = (data: UserFull): data is UserAdminFull => {
+  return UserAdminFullSchema.safeParse(data).success;
+};
