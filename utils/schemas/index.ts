@@ -8,3 +8,4 @@ export * from "./genders";
 export * from "./whoami";
 export * from "./students";
 export * from "./refreshTokens";
+export * from "./logout";
