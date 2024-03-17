@@ -88,13 +88,19 @@ enum Gender {
 }
 
 model Lodgment {
-  id         Int       @id @default(autoincrement())
+  id         Int            @id @default(autoincrement())
   capacity   Int
   floor      Int
   roomNumber Int
-  batimentId Int
-  batiment   Batiment  @relation(fields: [batimentId], references: [id])
+  buildingId Int
+  building   Building       @relation(fields: [buildingId], references: [id])
+  status     LodgmentStatus
   students   Student[]
+}
+
+enum LodgmentStatus {
+  AVAILABLE
+  MAINTENANCE
 }
 
 model Reservation {
@@ -194,22 +200,31 @@ enum ReservationStatus {
   VALIDATED
 }
 
-model Batiment {
-  id        Int        @id @default(autoincrement())
-  name      String
-  lodgments Lodgment[]
+model Building {
+  id              Int        @id @default(autoincrement())
+  name            String
+  floors          Int
+  illustrationUrl String     @db.Text
+  lodgments       Lodgment[]
 }
 
 model Announcement {
-  id              Int       @id @default(autoincrement())
+  id              Int                @id @default(autoincrement())
   title           String
-  content         String    @db.Text
-  illustrationUrl String?   @db.Text
+  content         String             @db.Text
+  illustrationUrl String?            @db.Text
+  status          AnnouncementStatus
   startAt         DateTime?
   endAt           DateTime?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @default(now())
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @default(now())
   deletedAt       DateTime?
+}
+
+enum AnnouncementStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
 }
 
 model PasswordResetToken {
