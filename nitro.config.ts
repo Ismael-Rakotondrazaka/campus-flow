@@ -1,9 +1,23 @@
 //https://nitro.unjs.io/config
 export default defineNitroConfig({
   runtimeConfig: {
-    accessTokenSecret: "",
-    databaseUrl: "",
+    /* ----------------------------------- App ---------------------------------- */
     appUrl: "",
+
+    /* -------------------------------- Database -------------------------------- */
+    databaseUrl: "",
+
+    /* ---------------------------------- Token --------------------------------- */
+    accessTokenSecret: "",
+    /**
+      access token life in milliseconds
+     */
+    accessTokenLife: 0,
+    refreshTokenSecret: "",
+    /**
+      refresh token life in milliseconds
+     */
+    refreshTokenLife: 0,
   },
   typescript: {
     strict: true,
