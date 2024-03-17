@@ -10,12 +10,13 @@ export const createAccessToken = (
 ): AccessToken => {
   const runtimeConfig = useRuntimeConfig(useEvent());
   const accessTokenSecret: string = runtimeConfig.accessTokenSecret;
+  const accessTokenLife: number = runtimeConfig.accessTokenLife;
 
   const token: string = jwt.sign(data, accessTokenSecret, {
-    expiresIn: tokenConfig.accessTokenLife,
+    expiresIn: Math.round(accessTokenLife / 1000), // convert to seconds
   });
 
-  const expiresAt = new Date(Date.now() + tokenConfig.accessTokenLife);
+  const expiresAt = new Date(Date.now() + accessTokenLife);
 
   return {
     token,
