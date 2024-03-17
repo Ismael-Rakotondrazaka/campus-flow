@@ -18,6 +18,9 @@ export default defineNitroConfig({
       refresh token life in milliseconds
      */
     refreshTokenLife: 0,
+    /* --------------------------------- Bucket --------------------------------- */
+    bucketEntryPoint: "",
+    bucketName: "",
   },
   typescript: {
     strict: true,
