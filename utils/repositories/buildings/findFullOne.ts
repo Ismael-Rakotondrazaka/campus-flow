@@ -22,9 +22,7 @@ export const findFullOne = async ({
       take,
       include: {
         lodgments: {
-          select: {
-            capacity: true,
-          },
+          // we can either use `include` or `select`, but not both at the same time
           include: {
             _count: {
               select: {

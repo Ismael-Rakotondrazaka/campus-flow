@@ -3,12 +3,11 @@ import { Simplify } from "type-fest";
 
 export type BuildingFullRaw = Simplify<
   prismaCtx.Building & {
-    lodgments: {
+    lodgments: (prismaCtx.Lodgment & {
       _count: {
         students: number;
       };
-      capacity: number;
-    }[];
+    })[];
   } & {
     _count: {
       lodgments: number;
