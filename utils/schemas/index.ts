@@ -11,3 +11,4 @@ export * from "./buildings";
 export * from "./files";
 export * from "./paginations";
 export * from "./lodgments";
+export * from "./faculties";
