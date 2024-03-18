@@ -4,12 +4,15 @@ import { z } from "#imports";
 /*                                 Login body                                 */
 /* -------------------------------------------------------------------------- */
 
-export const LoginBodySchema = z.object({
+export type LoginBody = {
+  email: string;
+  password: string;
+};
+
+export const LoginBodySchema: z.ZodType<LoginBody> = z.object({
   email: emailSchema,
   password: passwordSchema,
 });
-
-export type LoginBody = z.infer<typeof LoginBodySchema>;
 
 /* -------------------------------------------------------------------------- */
 /*                                 Login data                                 */

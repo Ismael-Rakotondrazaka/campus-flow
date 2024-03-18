@@ -1,11 +1,18 @@
-import { type Simplify } from "type-fest";
 import { z } from "#imports";
 import { UserBaseSessionSchema } from "./userBaseSession";
 
-export const StudentSessionSchema = UserBaseSessionSchema.and(
-  z.object({
-    NIC: z.string(),
-  }),
-);
+export type StudentSession = {
+  id: number;
+  email: string;
+  name: string;
+  firstName: string;
+  fullName: string;
+  NIC: string;
+};
 
-export type StudentSession = Simplify<z.infer<typeof StudentSessionSchema>>;
+export const StudentSessionSchema: z.ZodType<StudentSession> =
+  UserBaseSessionSchema.and(
+    z.object({
+      NIC: z.string(),
+    }),
+  );

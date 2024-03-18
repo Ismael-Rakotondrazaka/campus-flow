@@ -1,10 +1,20 @@
 import { z } from "#imports";
-import { Simplify } from "type-fest";
+import { UserSchema } from "../users/user";
+import { RefreshTokenSchema } from "~/prisma/generated/zod";
+import { UserFiltered } from "../users";
 
-export const RefreshTokenFullSchema = RefreshTokenSchema.and(
-  z.object({
-    user: UserSchema,
-  }),
-);
+export type RefreshTokenFull = {
+  id: number;
+  token: string;
+  userId: number;
+  expiresAt: Date;
+  createdAt: Date;
+  user: UserFiltered;
+};
 
-export type RefreshTokenFull = Simplify<z.infer<typeof RefreshTokenFullSchema>>;
+export const RefreshTokenFullSchema: z.ZodType<RefreshTokenFull> =
+  RefreshTokenSchema.and(
+    z.object({
+      user: UserSchema,
+    }),
+  );

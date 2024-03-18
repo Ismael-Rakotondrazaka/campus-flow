@@ -1,11 +1,19 @@
-import { type Simplify } from "type-fest";
 import { z } from "#imports";
 import { UserBaseSessionSchema } from "./userBaseSession";
+import { RoleSchema } from "~/prisma/generated/zod";
 
-export const AdminSessionSchema = UserBaseSessionSchema.and(
-  z.object({
-    role: RoleSchema,
-  }),
-);
+export type AdminSession = {
+  id: number;
+  name: string;
+  email: string;
+  firstName: string;
+  fullName: string;
+  role: "ROOT" | "MAINTENANCE" | "RENEWAL" | "RESERVATION";
+};
 
-export type AdminSession = Simplify<z.infer<typeof AdminSessionSchema>>;
+export const AdminSessionSchema: z.ZodType<AdminSession> =
+  UserBaseSessionSchema.and(
+    z.object({
+      role: RoleSchema,
+    }),
+  );

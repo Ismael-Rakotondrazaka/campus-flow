@@ -4,11 +4,13 @@ import { z } from "#imports";
 /*                                 Logout body                                */
 /* -------------------------------------------------------------------------- */
 
-export const LogoutBodySchema = z.object({
+export type LogoutBody = {
+  refreshToken: string;
+};
+
+export const LogoutBodySchema: z.ZodType<LogoutBody> = z.object({
   refreshToken: z.string(),
 });
-
-export type LogoutBody = z.infer<typeof LogoutBodySchema>;
 
 /* -------------------------------------------------------------------------- */
 /*                                 Logout data                                */

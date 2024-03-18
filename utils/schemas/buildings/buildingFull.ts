@@ -1,8 +1,9 @@
-import { z } from "#imports";
+import { z, prismaCtx } from "#imports";
 import { Simplify } from "type-fest";
-import { BuildingSchema } from "./building";
-import { BuildingCountSchema } from "./buildingCount";
+import { BuildingSchema } from "~/prisma/generated/zod";
+import { BuildingCount, BuildingCountSchema } from "./buildingCount";
 
-export const BuildingFullSchema = BuildingSchema.and(BuildingCountSchema);
+export type BuildingFull = Simplify<prismaCtx.Building & BuildingCount>;
 
-export type BuildingFull = Simplify<z.infer<typeof BuildingFullSchema>>;
+export const BuildingFullSchema: z.ZodType<BuildingFull> =
+  BuildingSchema.and(BuildingCountSchema);

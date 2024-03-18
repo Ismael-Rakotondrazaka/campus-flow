@@ -1,14 +1,17 @@
 import { z } from "#imports";
+import { UserFull } from "../users";
 
 /* -------------------------------------------------------------------------- */
 /*                                 WhoAmI data                                */
 /* -------------------------------------------------------------------------- */
 
-export const WhoAmIDataSchema = z.object({
+export type WhoAmIData = {
+  user: UserFull | null;
+};
+
+export const WhoAmIDataSchema: z.ZodType<WhoAmIData> = z.object({
   user: UserFullSchema.nullable(),
 });
-
-export type WhoAmIData = z.infer<typeof WhoAmIDataSchema>;
 
 /* -------------------------------------------------------------------------- */
 /*                                WhoAmI Error                                */
