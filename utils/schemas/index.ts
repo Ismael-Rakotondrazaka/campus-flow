@@ -9,3 +9,4 @@ export * from "./refreshTokens";
 export * from "./logout";
 export * from "./buildings";
 export * from "./files";
+export * from "./paginations";
