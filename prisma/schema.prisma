@@ -96,6 +96,7 @@ model Lodgment {
   building   Building       @relation(fields: [buildingId], references: [id])
   status     LodgmentStatus
   students   Student[]
+  deletedAt  DateTime?
 }
 
 enum LodgmentStatus {
@@ -166,6 +167,7 @@ model Maintainer {
   id           Int           @id @default(autoincrement())
   name         String
   firstName    String
+  phoneNumber  String        @db.Text
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @default(now())
   deletedAt    DateTime?
@@ -195,13 +197,12 @@ enum RenewalStatus {
 }
 
 model AcademicSession {
-  id          Int           @id @default(autoincrement())
-  name        String
-  startAt     DateTime
-  endAt       DateTime
-  deletedAt   DateTime?
-  Reservation Reservation[]
-  Renewal     Renewal[]
+  id           Int           @id @default(autoincrement())
+  startAt      DateTime
+  endAt        DateTime
+  deletedAt    DateTime?
+  reservations Reservation[]
+  renewals     Renewal[]
 }
 
 enum ReservationStatus {
@@ -235,7 +236,6 @@ model Announcement {
 enum AnnouncementStatus {
   DRAFT
   PUBLISHED
-  ARCHIVED
 }
 
 model PasswordResetToken {
