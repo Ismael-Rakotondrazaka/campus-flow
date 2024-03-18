@@ -90,10 +90,12 @@ export default defineEventHandler(async (): Promise<LoginResponse> => {
       },
     });
 
-    return {
+    const responseData: LoginData = {
       accessToken,
       refreshToken,
     };
+
+    return LoginDataSchema.parse(responseData);
   } catch (error) {
     return handleUnknownError(error);
   }
