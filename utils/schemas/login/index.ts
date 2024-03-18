@@ -20,8 +20,13 @@ export const LoginBodySchema: z.ZodType<LoginBody> = z.object({
 
 export type LoginData = {
   accessToken: AccessToken;
-  refreshToken: RefreshTokenObject;
+  refreshToken: RefreshTokenFiltered;
 };
+
+export const LoginDataSchema: z.ZodType<LoginData> = z.object({
+  accessToken: AccessTokenSchema,
+  refreshToken: RefreshTokenSchema,
+});
 
 /* -------------------------------------------------------------------------- */
 /*                                 Login error                                */
