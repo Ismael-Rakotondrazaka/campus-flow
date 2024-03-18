@@ -1,5 +1,4 @@
 import { z } from "#imports";
-import { UserFull } from "../users";
 
 /* -------------------------------------------------------------------------- */
 /*                                 WhoAmI data                                */
