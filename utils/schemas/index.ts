@@ -4,6 +4,7 @@ export * from "./users";
 export * from "./roles";
 export * from "./sessions";
 export * from "./whoami";
+export * from "./accessTokens";
 export * from "./refreshTokens";
 export * from "./logout";
 export * from "./buildings";
