@@ -40,6 +40,11 @@ export const UpdateBuildingBodySchema: z.ZodType<UpdateBuildingBody> = z
 export type UpdateBuildingData = {
   building: BuildingFull;
 };
+export const UpdateBuildingDataSchema: z.ZodType<UpdateBuildingData> = z.object(
+  {
+    building: BuildingFullSchema,
+  },
+);
 
 /* -------------------------------------------------------------------------- */
 /*                             UpdateBuilding error                            */
