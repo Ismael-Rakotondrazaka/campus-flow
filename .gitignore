@@ -17,3 +17,6 @@ secrets
 
 # Prisma generated
 prisma/generated
+
+# GCS
+GCSServiceAccount.json

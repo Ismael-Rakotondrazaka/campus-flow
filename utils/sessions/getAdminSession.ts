@@ -12,7 +12,7 @@ export const getAdminSession = (): AdminSession | null => {
   const payload = verifyAccessToken(token);
 
   // already know that payload is not a string to be valid
-  if (is.null(token) || is.string(token)) {
+  if (is.null(payload) || is.string(payload)) {
     return null;
   }
 

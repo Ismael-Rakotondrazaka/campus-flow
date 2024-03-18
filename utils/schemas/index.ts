@@ -9,3 +9,5 @@ export * from "./whoami";
 export * from "./students";
 export * from "./refreshTokens";
 export * from "./logout";
+export * from "./buildings";
+export * from "./files";
