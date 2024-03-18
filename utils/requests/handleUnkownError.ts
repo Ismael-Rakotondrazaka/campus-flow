@@ -1,4 +1,4 @@
-import { ServerError } from "./serverError";
+import { ServerError } from "../errors/serverError";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
 export const handleUnknownError = (error: unknown): ServerError => {
