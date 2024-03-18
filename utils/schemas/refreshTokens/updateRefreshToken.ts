@@ -19,7 +19,7 @@ export const UpdateRefreshTokenBodySchema: z.ZodType<UpdateRefreshTokenBody> =
 
 export type UpdateRefreshTokenData = {
   accessToken: AccessToken;
-  refreshToken: RefreshTokenObject;
+  refreshToken: RefreshTokenFiltered;
 };
 
 /* -------------------------------------------------------------------------- */

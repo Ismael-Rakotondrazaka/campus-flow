@@ -1,7 +1,7 @@
 import { z } from "#imports";
 import { UserSchema } from "../users/user";
 import { RefreshTokenSchema } from "~/prisma/generated/zod";
-import { UserFiltered } from "../users";
+import { UserFiltered } from "../users/userFiltered";
 
 export type RefreshTokenFull = {
   id: number;

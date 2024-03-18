@@ -119,7 +119,7 @@ export default defineEventHandler(
 
         const newAccessToken: AccessToken = createAccessToken(userSession);
 
-        const newRefreshToken: RefreshTokenObject = createRefreshToken({
+        const newRefreshToken: RefreshTokenFiltered = createRefreshToken({
           id: authUser.id,
         });
         // save new RefreshToken

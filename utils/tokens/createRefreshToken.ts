@@ -3,7 +3,7 @@ import { Exact } from "type-fest";
 
 export const createRefreshToken = <T extends Exact<RefreshTokenData, T>>(
   data: T,
-): RefreshTokenObject => {
+): RefreshTokenFiltered => {
   const runtimeConfig = useRuntimeConfig(useEvent());
   const refreshTokenSecret: string = runtimeConfig.refreshTokenSecret;
   const refreshTokenLife: number = runtimeConfig.refreshTokenLife;
