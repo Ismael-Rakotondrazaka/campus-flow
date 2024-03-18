@@ -10,3 +10,4 @@ export * from "./logout";
 export * from "./buildings";
 export * from "./files";
 export * from "./paginations";
+export * from "./lodgments";
