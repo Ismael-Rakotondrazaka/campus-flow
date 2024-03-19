@@ -7,3 +7,4 @@ export * from "./lodgments";
 export * from "./faculties";
 export * from "./academicSessions";
 export * from "./maintenances";
+export * from "./maintainers";
