@@ -12,8 +12,18 @@ export const deleteFullOne = async (payload: {
       building: true,
       _count: {
         select: {
-          students: true,
-          maintenances: true,
+          students: {
+            where: {
+              user: {
+                deletedAt: null,
+              },
+            },
+          },
+          maintenances: {
+            where: {
+              status: "ONGOING",
+            },
+          },
         },
       },
     },
