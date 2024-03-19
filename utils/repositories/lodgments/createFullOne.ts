@@ -11,6 +11,7 @@ export const createFullOne = async ({
   const lodgmentFullRaw: LodgmentFullRaw = await prismaClient.lodgment.create({
     data,
     include: {
+      building: true,
       _count: {
         select: {
           students: true,

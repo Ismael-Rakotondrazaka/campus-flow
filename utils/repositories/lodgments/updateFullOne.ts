@@ -14,6 +14,7 @@ export const updateFullOne = async ({
     where,
     data,
     include: {
+      building: true,
       _count: {
         select: {
           students: true,

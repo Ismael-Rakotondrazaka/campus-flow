@@ -11,3 +11,5 @@ export const buildingRepository = Object.freeze({
   updateFullOne,
   findFullMany,
 });
+
+export * from "./fullRaw";

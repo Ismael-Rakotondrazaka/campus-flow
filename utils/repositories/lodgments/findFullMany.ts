@@ -16,6 +16,7 @@ export const findFullMany = async (payload: {
       skip: payload.skip,
       take: payload.take,
       include: {
+        building: true,
         _count: {
           select: {
             students: true,

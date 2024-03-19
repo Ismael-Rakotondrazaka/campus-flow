@@ -13,3 +13,5 @@ export const lodgmentRepository = Object.freeze({
   findFullMany,
   deleteFullOne,
 });
+
+export * from "./fullRaw";

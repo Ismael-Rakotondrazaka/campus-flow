@@ -6,6 +6,7 @@ export type LodgmentFullRaw = Simplify<
     _count: {
       students: number;
     };
+    building: prismaCtx.Building;
   }
 >;
 
@@ -17,7 +18,6 @@ export const lodgmentFullRawToLodgmentFull = (
     capacity: lodgment.capacity,
     floor: lodgment.floor,
     roomNumber: lodgment.roomNumber,
-
     buildingId: lodgment.buildingId,
     status: lodgment.status,
     deletedAt: lodgment.deletedAt,
@@ -25,6 +25,7 @@ export const lodgmentFullRawToLodgmentFull = (
       students: lodgment._count.students,
       available: lodgment.capacity - lodgment._count.students,
     },
+    building: lodgment.building,
   };
 
   return lodgmentFull;

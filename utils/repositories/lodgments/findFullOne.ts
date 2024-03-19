@@ -21,6 +21,7 @@ export const findFullOne = async ({
       skip,
       take,
       include: {
+        building: true,
         _count: {
           select: {
             students: true,

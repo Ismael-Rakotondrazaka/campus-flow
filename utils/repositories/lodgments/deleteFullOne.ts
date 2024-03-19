@@ -9,6 +9,7 @@ export const deleteFullOne = async (payload: {
   const refreshTokenRaw: LodgmentFullRaw = await prismaClient.lodgment.delete({
     where: payload.where,
     include: {
+      building: true,
       _count: {
         select: {
           students: true,
