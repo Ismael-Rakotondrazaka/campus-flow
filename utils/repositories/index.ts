@@ -10,3 +10,4 @@ export * from "./maintenances";
 export * from "./maintainers";
 export * from "./announcements";
 export * from "./reservations";
+export * from "./renewals";

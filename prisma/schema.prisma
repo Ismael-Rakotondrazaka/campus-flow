@@ -137,14 +137,14 @@ model Renewal {
   emergencyNumber      String
   profileUrl           String          @db.Text
   schoolCertificateUrl String          @db.Text
-  NICURL               String          @db.Text
+  NICUrl               String          @db.Text
   academicSessionId    Int
   academicSession      AcademicSession @relation(fields: [academicSessionId], references: [id])
   status               RenewalStatus
   createdAt            DateTime        @default(now())
   updatedAt            DateTime        @default(now())
-  Faculty              Faculty?        @relation(fields: [facultyId], references: [id])
-  facultyId            Int?
+  faculty              Faculty         @relation(fields: [facultyId], references: [id])
+  facultyId            Int
   adminId              Int
   admin                Admin           @relation(fields: [adminId], references: [userId])
 

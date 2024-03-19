@@ -26,7 +26,7 @@ export const LodgmentScalarFieldEnumSchema = z.enum(['id','capacity','floor','ro
 
 export const ReservationScalarFieldEnumSchema = z.enum(['id','name','firstName','phoneNumber','profileUrl','email','gender','origin','emergencyNumber','NIC','NICUrl','schoolCertificateUrl','facultyId','status','academicSessionId','createdAt','updatedAt','adminId']);
 
-export const RenewalScalarFieldEnumSchema = z.enum(['id','studentId','phoneNumber','emergencyNumber','profileUrl','schoolCertificateUrl','NICURL','academicSessionId','status','createdAt','updatedAt','facultyId','adminId']);
+export const RenewalScalarFieldEnumSchema = z.enum(['id','studentId','phoneNumber','emergencyNumber','profileUrl','schoolCertificateUrl','NICUrl','academicSessionId','status','createdAt','updatedAt','facultyId','adminId']);
 
 export const MaintenanceScalarFieldEnumSchema = z.enum(['id','type','description','status','adminId','createdAt','updatedAt','lodgmentId']);
 
@@ -212,11 +212,11 @@ export const RenewalSchema = z.object({
   emergencyNumber: z.string(),
   profileUrl: z.string(),
   schoolCertificateUrl: z.string(),
-  NICURL: z.string(),
+  NICUrl: z.string(),
   academicSessionId: z.number().int(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
-  facultyId: z.number().int().nullable(),
+  facultyId: z.number().int(),
   adminId: z.number().int(),
 })
 
@@ -570,7 +570,7 @@ export const ReservationSelectSchema: z.ZodType<Prisma.ReservationSelect> = z.ob
 export const RenewalIncludeSchema: z.ZodType<Prisma.RenewalInclude> = z.object({
   student: z.union([z.boolean(),z.lazy(() => StudentArgsSchema)]).optional(),
   academicSession: z.union([z.boolean(),z.lazy(() => AcademicSessionArgsSchema)]).optional(),
-  Faculty: z.union([z.boolean(),z.lazy(() => FacultyArgsSchema)]).optional(),
+  faculty: z.union([z.boolean(),z.lazy(() => FacultyArgsSchema)]).optional(),
   admin: z.union([z.boolean(),z.lazy(() => AdminArgsSchema)]).optional(),
 }).strict()
 
@@ -586,7 +586,7 @@ export const RenewalSelectSchema: z.ZodType<Prisma.RenewalSelect> = z.object({
   emergencyNumber: z.boolean().optional(),
   profileUrl: z.boolean().optional(),
   schoolCertificateUrl: z.boolean().optional(),
-  NICURL: z.boolean().optional(),
+  NICUrl: z.boolean().optional(),
   academicSessionId: z.boolean().optional(),
   status: z.boolean().optional(),
   createdAt: z.boolean().optional(),
@@ -595,7 +595,7 @@ export const RenewalSelectSchema: z.ZodType<Prisma.RenewalSelect> = z.object({
   adminId: z.boolean().optional(),
   student: z.union([z.boolean(),z.lazy(() => StudentArgsSchema)]).optional(),
   academicSession: z.union([z.boolean(),z.lazy(() => AcademicSessionArgsSchema)]).optional(),
-  Faculty: z.union([z.boolean(),z.lazy(() => FacultyArgsSchema)]).optional(),
+  faculty: z.union([z.boolean(),z.lazy(() => FacultyArgsSchema)]).optional(),
   admin: z.union([z.boolean(),z.lazy(() => AdminArgsSchema)]).optional(),
 }).strict()
 
@@ -1355,16 +1355,16 @@ export const RenewalWhereInputSchema: z.ZodType<Prisma.RenewalWhereInput> = z.ob
   emergencyNumber: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   profileUrl: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   schoolCertificateUrl: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  NICURL: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  NICUrl: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   academicSessionId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   status: z.union([ z.lazy(() => EnumRenewalStatusFilterSchema),z.lazy(() => RenewalStatusSchema) ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  facultyId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
+  facultyId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   adminId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   student: z.union([ z.lazy(() => StudentRelationFilterSchema),z.lazy(() => StudentWhereInputSchema) ]).optional(),
   academicSession: z.union([ z.lazy(() => AcademicSessionRelationFilterSchema),z.lazy(() => AcademicSessionWhereInputSchema) ]).optional(),
-  Faculty: z.union([ z.lazy(() => FacultyNullableRelationFilterSchema),z.lazy(() => FacultyWhereInputSchema) ]).optional().nullable(),
+  faculty: z.union([ z.lazy(() => FacultyRelationFilterSchema),z.lazy(() => FacultyWhereInputSchema) ]).optional(),
   admin: z.union([ z.lazy(() => AdminRelationFilterSchema),z.lazy(() => AdminWhereInputSchema) ]).optional(),
 }).strict();
 
@@ -1375,16 +1375,16 @@ export const RenewalOrderByWithRelationInputSchema: z.ZodType<Prisma.RenewalOrde
   emergencyNumber: z.lazy(() => SortOrderSchema).optional(),
   profileUrl: z.lazy(() => SortOrderSchema).optional(),
   schoolCertificateUrl: z.lazy(() => SortOrderSchema).optional(),
-  NICURL: z.lazy(() => SortOrderSchema).optional(),
+  NICUrl: z.lazy(() => SortOrderSchema).optional(),
   academicSessionId: z.lazy(() => SortOrderSchema).optional(),
   status: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
-  facultyId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  facultyId: z.lazy(() => SortOrderSchema).optional(),
   adminId: z.lazy(() => SortOrderSchema).optional(),
   student: z.lazy(() => StudentOrderByWithRelationInputSchema).optional(),
   academicSession: z.lazy(() => AcademicSessionOrderByWithRelationInputSchema).optional(),
-  Faculty: z.lazy(() => FacultyOrderByWithRelationInputSchema).optional(),
+  faculty: z.lazy(() => FacultyOrderByWithRelationInputSchema).optional(),
   admin: z.lazy(() => AdminOrderByWithRelationInputSchema).optional()
 }).strict();
 
@@ -1411,16 +1411,16 @@ export const RenewalWhereUniqueInputSchema: z.ZodType<Prisma.RenewalWhereUniqueI
   emergencyNumber: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   profileUrl: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   schoolCertificateUrl: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  NICURL: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  NICUrl: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   academicSessionId: z.union([ z.lazy(() => IntFilterSchema),z.number().int() ]).optional(),
   status: z.union([ z.lazy(() => EnumRenewalStatusFilterSchema),z.lazy(() => RenewalStatusSchema) ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  facultyId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number().int() ]).optional().nullable(),
+  facultyId: z.union([ z.lazy(() => IntFilterSchema),z.number().int() ]).optional(),
   adminId: z.union([ z.lazy(() => IntFilterSchema),z.number().int() ]).optional(),
   student: z.union([ z.lazy(() => StudentRelationFilterSchema),z.lazy(() => StudentWhereInputSchema) ]).optional(),
   academicSession: z.union([ z.lazy(() => AcademicSessionRelationFilterSchema),z.lazy(() => AcademicSessionWhereInputSchema) ]).optional(),
-  Faculty: z.union([ z.lazy(() => FacultyNullableRelationFilterSchema),z.lazy(() => FacultyWhereInputSchema) ]).optional().nullable(),
+  faculty: z.union([ z.lazy(() => FacultyRelationFilterSchema),z.lazy(() => FacultyWhereInputSchema) ]).optional(),
   admin: z.union([ z.lazy(() => AdminRelationFilterSchema),z.lazy(() => AdminWhereInputSchema) ]).optional(),
 }).strict());
 
@@ -1431,12 +1431,12 @@ export const RenewalOrderByWithAggregationInputSchema: z.ZodType<Prisma.RenewalO
   emergencyNumber: z.lazy(() => SortOrderSchema).optional(),
   profileUrl: z.lazy(() => SortOrderSchema).optional(),
   schoolCertificateUrl: z.lazy(() => SortOrderSchema).optional(),
-  NICURL: z.lazy(() => SortOrderSchema).optional(),
+  NICUrl: z.lazy(() => SortOrderSchema).optional(),
   academicSessionId: z.lazy(() => SortOrderSchema).optional(),
   status: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
-  facultyId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  facultyId: z.lazy(() => SortOrderSchema).optional(),
   adminId: z.lazy(() => SortOrderSchema).optional(),
   _count: z.lazy(() => RenewalCountOrderByAggregateInputSchema).optional(),
   _avg: z.lazy(() => RenewalAvgOrderByAggregateInputSchema).optional(),
@@ -1455,12 +1455,12 @@ export const RenewalScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Renew
   emergencyNumber: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   profileUrl: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   schoolCertificateUrl: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  NICURL: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  NICUrl: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   academicSessionId: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
   status: z.union([ z.lazy(() => EnumRenewalStatusWithAggregatesFilterSchema),z.lazy(() => RenewalStatusSchema) ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
-  facultyId: z.union([ z.lazy(() => IntNullableWithAggregatesFilterSchema),z.number() ]).optional().nullable(),
+  facultyId: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
   adminId: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
 }).strict();
 
@@ -2406,13 +2406,13 @@ export const RenewalCreateInputSchema: z.ZodType<Prisma.RenewalCreateInput> = z.
   emergencyNumber: z.string(),
   profileUrl: z.string(),
   schoolCertificateUrl: z.string(),
-  NICURL: z.string(),
+  NICUrl: z.string(),
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   student: z.lazy(() => StudentCreateNestedOneWithoutRenewalsInputSchema),
   academicSession: z.lazy(() => AcademicSessionCreateNestedOneWithoutRenewalsInputSchema),
-  Faculty: z.lazy(() => FacultyCreateNestedOneWithoutRenewalsInputSchema).optional(),
+  faculty: z.lazy(() => FacultyCreateNestedOneWithoutRenewalsInputSchema),
   admin: z.lazy(() => AdminCreateNestedOneWithoutRenewalsInputSchema)
 }).strict();
 
@@ -2423,12 +2423,12 @@ export const RenewalUncheckedCreateInputSchema: z.ZodType<Prisma.RenewalUnchecke
   emergencyNumber: z.string(),
   profileUrl: z.string(),
   schoolCertificateUrl: z.string(),
-  NICURL: z.string(),
+  NICUrl: z.string(),
   academicSessionId: z.number().int(),
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  facultyId: z.number().int().optional().nullable(),
+  facultyId: z.number().int(),
   adminId: z.number().int()
 }).strict();
 
@@ -2437,13 +2437,13 @@ export const RenewalUpdateInputSchema: z.ZodType<Prisma.RenewalUpdateInput> = z.
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   schoolCertificateUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  NICURL: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   student: z.lazy(() => StudentUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional(),
   academicSession: z.lazy(() => AcademicSessionUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional(),
-  Faculty: z.lazy(() => FacultyUpdateOneWithoutRenewalsNestedInputSchema).optional(),
+  faculty: z.lazy(() => FacultyUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional(),
   admin: z.lazy(() => AdminUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional()
 }).strict();
 
@@ -2454,12 +2454,12 @@ export const RenewalUncheckedUpdateInputSchema: z.ZodType<Prisma.RenewalUnchecke
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   schoolCertificateUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  NICURL: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   academicSessionId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  facultyId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
@@ -2470,12 +2470,12 @@ export const RenewalCreateManyInputSchema: z.ZodType<Prisma.RenewalCreateManyInp
   emergencyNumber: z.string(),
   profileUrl: z.string(),
   schoolCertificateUrl: z.string(),
-  NICURL: z.string(),
+  NICUrl: z.string(),
   academicSessionId: z.number().int(),
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  facultyId: z.number().int().optional().nullable(),
+  facultyId: z.number().int(),
   adminId: z.number().int()
 }).strict();
 
@@ -2484,7 +2484,7 @@ export const RenewalUpdateManyMutationInputSchema: z.ZodType<Prisma.RenewalUpdat
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   schoolCertificateUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  NICURL: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
@@ -2497,12 +2497,12 @@ export const RenewalUncheckedUpdateManyInputSchema: z.ZodType<Prisma.RenewalUnch
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   schoolCertificateUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  NICURL: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   academicSessionId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  facultyId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
@@ -3480,25 +3480,9 @@ export const EnumRenewalStatusFilterSchema: z.ZodType<Prisma.EnumRenewalStatusFi
   not: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => NestedEnumRenewalStatusFilterSchema) ]).optional(),
 }).strict();
 
-export const IntNullableFilterSchema: z.ZodType<Prisma.IntNullableFilter> = z.object({
-  equals: z.number().optional().nullable(),
-  in: z.number().array().optional().nullable(),
-  notIn: z.number().array().optional().nullable(),
-  lt: z.number().optional(),
-  lte: z.number().optional(),
-  gt: z.number().optional(),
-  gte: z.number().optional(),
-  not: z.union([ z.number(),z.lazy(() => NestedIntNullableFilterSchema) ]).optional().nullable(),
-}).strict();
-
 export const StudentRelationFilterSchema: z.ZodType<Prisma.StudentRelationFilter> = z.object({
   is: z.lazy(() => StudentWhereInputSchema).optional(),
   isNot: z.lazy(() => StudentWhereInputSchema).optional()
-}).strict();
-
-export const FacultyNullableRelationFilterSchema: z.ZodType<Prisma.FacultyNullableRelationFilter> = z.object({
-  is: z.lazy(() => FacultyWhereInputSchema).optional().nullable(),
-  isNot: z.lazy(() => FacultyWhereInputSchema).optional().nullable()
 }).strict();
 
 export const RenewalStudentIdAcademicSessionIdCompoundUniqueInputSchema: z.ZodType<Prisma.RenewalStudentIdAcademicSessionIdCompoundUniqueInput> = z.object({
@@ -3513,7 +3497,7 @@ export const RenewalCountOrderByAggregateInputSchema: z.ZodType<Prisma.RenewalCo
   emergencyNumber: z.lazy(() => SortOrderSchema).optional(),
   profileUrl: z.lazy(() => SortOrderSchema).optional(),
   schoolCertificateUrl: z.lazy(() => SortOrderSchema).optional(),
-  NICURL: z.lazy(() => SortOrderSchema).optional(),
+  NICUrl: z.lazy(() => SortOrderSchema).optional(),
   academicSessionId: z.lazy(() => SortOrderSchema).optional(),
   status: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
@@ -3537,7 +3521,7 @@ export const RenewalMaxOrderByAggregateInputSchema: z.ZodType<Prisma.RenewalMaxO
   emergencyNumber: z.lazy(() => SortOrderSchema).optional(),
   profileUrl: z.lazy(() => SortOrderSchema).optional(),
   schoolCertificateUrl: z.lazy(() => SortOrderSchema).optional(),
-  NICURL: z.lazy(() => SortOrderSchema).optional(),
+  NICUrl: z.lazy(() => SortOrderSchema).optional(),
   academicSessionId: z.lazy(() => SortOrderSchema).optional(),
   status: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
@@ -3553,7 +3537,7 @@ export const RenewalMinOrderByAggregateInputSchema: z.ZodType<Prisma.RenewalMinO
   emergencyNumber: z.lazy(() => SortOrderSchema).optional(),
   profileUrl: z.lazy(() => SortOrderSchema).optional(),
   schoolCertificateUrl: z.lazy(() => SortOrderSchema).optional(),
-  NICURL: z.lazy(() => SortOrderSchema).optional(),
+  NICUrl: z.lazy(() => SortOrderSchema).optional(),
   academicSessionId: z.lazy(() => SortOrderSchema).optional(),
   status: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
@@ -3578,22 +3562,6 @@ export const EnumRenewalStatusWithAggregatesFilterSchema: z.ZodType<Prisma.EnumR
   _count: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedEnumRenewalStatusFilterSchema).optional(),
   _max: z.lazy(() => NestedEnumRenewalStatusFilterSchema).optional()
-}).strict();
-
-export const IntNullableWithAggregatesFilterSchema: z.ZodType<Prisma.IntNullableWithAggregatesFilter> = z.object({
-  equals: z.number().optional().nullable(),
-  in: z.number().array().optional().nullable(),
-  notIn: z.number().array().optional().nullable(),
-  lt: z.number().optional(),
-  lte: z.number().optional(),
-  gt: z.number().optional(),
-  gte: z.number().optional(),
-  not: z.union([ z.number(),z.lazy(() => NestedIntNullableWithAggregatesFilterSchema) ]).optional().nullable(),
-  _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
-  _avg: z.lazy(() => NestedFloatNullableFilterSchema).optional(),
-  _sum: z.lazy(() => NestedIntNullableFilterSchema).optional(),
-  _min: z.lazy(() => NestedIntNullableFilterSchema).optional(),
-  _max: z.lazy(() => NestedIntNullableFilterSchema).optional()
 }).strict();
 
 export const EnumMaintenanceTypeFilterSchema: z.ZodType<Prisma.EnumMaintenanceTypeFilter> = z.object({
@@ -4642,12 +4610,10 @@ export const AcademicSessionUpdateOneRequiredWithoutRenewalsNestedInputSchema: z
   update: z.union([ z.lazy(() => AcademicSessionUpdateToOneWithWhereWithoutRenewalsInputSchema),z.lazy(() => AcademicSessionUpdateWithoutRenewalsInputSchema),z.lazy(() => AcademicSessionUncheckedUpdateWithoutRenewalsInputSchema) ]).optional(),
 }).strict();
 
-export const FacultyUpdateOneWithoutRenewalsNestedInputSchema: z.ZodType<Prisma.FacultyUpdateOneWithoutRenewalsNestedInput> = z.object({
+export const FacultyUpdateOneRequiredWithoutRenewalsNestedInputSchema: z.ZodType<Prisma.FacultyUpdateOneRequiredWithoutRenewalsNestedInput> = z.object({
   create: z.union([ z.lazy(() => FacultyCreateWithoutRenewalsInputSchema),z.lazy(() => FacultyUncheckedCreateWithoutRenewalsInputSchema) ]).optional(),
   connectOrCreate: z.lazy(() => FacultyCreateOrConnectWithoutRenewalsInputSchema).optional(),
   upsert: z.lazy(() => FacultyUpsertWithoutRenewalsInputSchema).optional(),
-  disconnect: z.union([ z.boolean(),z.lazy(() => FacultyWhereInputSchema) ]).optional(),
-  delete: z.union([ z.boolean(),z.lazy(() => FacultyWhereInputSchema) ]).optional(),
   connect: z.lazy(() => FacultyWhereUniqueInputSchema).optional(),
   update: z.union([ z.lazy(() => FacultyUpdateToOneWithWhereWithoutRenewalsInputSchema),z.lazy(() => FacultyUpdateWithoutRenewalsInputSchema),z.lazy(() => FacultyUncheckedUpdateWithoutRenewalsInputSchema) ]).optional(),
 }).strict();
@@ -4658,14 +4624,6 @@ export const AdminUpdateOneRequiredWithoutRenewalsNestedInputSchema: z.ZodType<P
   upsert: z.lazy(() => AdminUpsertWithoutRenewalsInputSchema).optional(),
   connect: z.lazy(() => AdminWhereUniqueInputSchema).optional(),
   update: z.union([ z.lazy(() => AdminUpdateToOneWithWhereWithoutRenewalsInputSchema),z.lazy(() => AdminUpdateWithoutRenewalsInputSchema),z.lazy(() => AdminUncheckedUpdateWithoutRenewalsInputSchema) ]).optional(),
-}).strict();
-
-export const NullableIntFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableIntFieldUpdateOperationsInput> = z.object({
-  set: z.number().optional().nullable(),
-  increment: z.number().optional(),
-  decrement: z.number().optional(),
-  multiply: z.number().optional(),
-  divide: z.number().optional()
 }).strict();
 
 export const AdminCreateNestedOneWithoutMaintenancesInputSchema: z.ZodType<Prisma.AdminCreateNestedOneWithoutMaintenancesInput> = z.object({
@@ -5160,33 +5118,6 @@ export const NestedEnumRenewalStatusWithAggregatesFilterSchema: z.ZodType<Prisma
   _max: z.lazy(() => NestedEnumRenewalStatusFilterSchema).optional()
 }).strict();
 
-export const NestedIntNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedIntNullableWithAggregatesFilter> = z.object({
-  equals: z.number().optional().nullable(),
-  in: z.number().array().optional().nullable(),
-  notIn: z.number().array().optional().nullable(),
-  lt: z.number().optional(),
-  lte: z.number().optional(),
-  gt: z.number().optional(),
-  gte: z.number().optional(),
-  not: z.union([ z.number(),z.lazy(() => NestedIntNullableWithAggregatesFilterSchema) ]).optional().nullable(),
-  _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
-  _avg: z.lazy(() => NestedFloatNullableFilterSchema).optional(),
-  _sum: z.lazy(() => NestedIntNullableFilterSchema).optional(),
-  _min: z.lazy(() => NestedIntNullableFilterSchema).optional(),
-  _max: z.lazy(() => NestedIntNullableFilterSchema).optional()
-}).strict();
-
-export const NestedFloatNullableFilterSchema: z.ZodType<Prisma.NestedFloatNullableFilter> = z.object({
-  equals: z.number().optional().nullable(),
-  in: z.number().array().optional().nullable(),
-  notIn: z.number().array().optional().nullable(),
-  lt: z.number().optional(),
-  lte: z.number().optional(),
-  gt: z.number().optional(),
-  gte: z.number().optional(),
-  not: z.union([ z.number(),z.lazy(() => NestedFloatNullableFilterSchema) ]).optional().nullable(),
-}).strict();
-
 export const NestedEnumMaintenanceTypeFilterSchema: z.ZodType<Prisma.NestedEnumMaintenanceTypeFilter> = z.object({
   equals: z.lazy(() => MaintenanceTypeSchema).optional(),
   in: z.lazy(() => MaintenanceTypeSchema).array().optional(),
@@ -5496,13 +5427,13 @@ export const RenewalCreateWithoutAdminInputSchema: z.ZodType<Prisma.RenewalCreat
   emergencyNumber: z.string(),
   profileUrl: z.string(),
   schoolCertificateUrl: z.string(),
-  NICURL: z.string(),
+  NICUrl: z.string(),
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   student: z.lazy(() => StudentCreateNestedOneWithoutRenewalsInputSchema),
   academicSession: z.lazy(() => AcademicSessionCreateNestedOneWithoutRenewalsInputSchema),
-  Faculty: z.lazy(() => FacultyCreateNestedOneWithoutRenewalsInputSchema).optional()
+  faculty: z.lazy(() => FacultyCreateNestedOneWithoutRenewalsInputSchema)
 }).strict();
 
 export const RenewalUncheckedCreateWithoutAdminInputSchema: z.ZodType<Prisma.RenewalUncheckedCreateWithoutAdminInput> = z.object({
@@ -5512,12 +5443,12 @@ export const RenewalUncheckedCreateWithoutAdminInputSchema: z.ZodType<Prisma.Ren
   emergencyNumber: z.string(),
   profileUrl: z.string(),
   schoolCertificateUrl: z.string(),
-  NICURL: z.string(),
+  NICUrl: z.string(),
   academicSessionId: z.number().int(),
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  facultyId: z.number().int().optional().nullable()
+  facultyId: z.number().int()
 }).strict();
 
 export const RenewalCreateOrConnectWithoutAdminInputSchema: z.ZodType<Prisma.RenewalCreateOrConnectWithoutAdminInput> = z.object({
@@ -5678,12 +5609,12 @@ export const RenewalScalarWhereInputSchema: z.ZodType<Prisma.RenewalScalarWhereI
   emergencyNumber: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   profileUrl: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   schoolCertificateUrl: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  NICURL: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  NICUrl: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   academicSessionId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   status: z.union([ z.lazy(() => EnumRenewalStatusFilterSchema),z.lazy(() => RenewalStatusSchema) ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  facultyId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
+  facultyId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   adminId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
 }).strict();
 
@@ -5919,7 +5850,7 @@ export const RenewalCreateWithoutFacultyInputSchema: z.ZodType<Prisma.RenewalCre
   emergencyNumber: z.string(),
   profileUrl: z.string(),
   schoolCertificateUrl: z.string(),
-  NICURL: z.string(),
+  NICUrl: z.string(),
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
@@ -5935,7 +5866,7 @@ export const RenewalUncheckedCreateWithoutFacultyInputSchema: z.ZodType<Prisma.R
   emergencyNumber: z.string(),
   profileUrl: z.string(),
   schoolCertificateUrl: z.string(),
-  NICURL: z.string(),
+  NICUrl: z.string(),
   academicSessionId: z.number().int(),
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
@@ -6073,12 +6004,12 @@ export const RenewalCreateWithoutStudentInputSchema: z.ZodType<Prisma.RenewalCre
   emergencyNumber: z.string(),
   profileUrl: z.string(),
   schoolCertificateUrl: z.string(),
-  NICURL: z.string(),
+  NICUrl: z.string(),
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   academicSession: z.lazy(() => AcademicSessionCreateNestedOneWithoutRenewalsInputSchema),
-  Faculty: z.lazy(() => FacultyCreateNestedOneWithoutRenewalsInputSchema).optional(),
+  faculty: z.lazy(() => FacultyCreateNestedOneWithoutRenewalsInputSchema),
   admin: z.lazy(() => AdminCreateNestedOneWithoutRenewalsInputSchema)
 }).strict();
 
@@ -6088,12 +6019,12 @@ export const RenewalUncheckedCreateWithoutStudentInputSchema: z.ZodType<Prisma.R
   emergencyNumber: z.string(),
   profileUrl: z.string(),
   schoolCertificateUrl: z.string(),
-  NICURL: z.string(),
+  NICUrl: z.string(),
   academicSessionId: z.number().int(),
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  facultyId: z.number().int().optional().nullable(),
+  facultyId: z.number().int(),
   adminId: z.number().int()
 }).strict();
 
@@ -6953,12 +6884,12 @@ export const RenewalCreateWithoutAcademicSessionInputSchema: z.ZodType<Prisma.Re
   emergencyNumber: z.string(),
   profileUrl: z.string(),
   schoolCertificateUrl: z.string(),
-  NICURL: z.string(),
+  NICUrl: z.string(),
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   student: z.lazy(() => StudentCreateNestedOneWithoutRenewalsInputSchema),
-  Faculty: z.lazy(() => FacultyCreateNestedOneWithoutRenewalsInputSchema).optional(),
+  faculty: z.lazy(() => FacultyCreateNestedOneWithoutRenewalsInputSchema),
   admin: z.lazy(() => AdminCreateNestedOneWithoutRenewalsInputSchema)
 }).strict();
 
@@ -6969,11 +6900,11 @@ export const RenewalUncheckedCreateWithoutAcademicSessionInputSchema: z.ZodType<
   emergencyNumber: z.string(),
   profileUrl: z.string(),
   schoolCertificateUrl: z.string(),
-  NICURL: z.string(),
+  NICUrl: z.string(),
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  facultyId: z.number().int().optional().nullable(),
+  facultyId: z.number().int(),
   adminId: z.number().int()
 }).strict();
 
@@ -7191,12 +7122,12 @@ export const RenewalCreateManyAdminInputSchema: z.ZodType<Prisma.RenewalCreateMa
   emergencyNumber: z.string(),
   profileUrl: z.string(),
   schoolCertificateUrl: z.string(),
-  NICURL: z.string(),
+  NICUrl: z.string(),
   academicSessionId: z.number().int(),
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  facultyId: z.number().int().optional().nullable()
+  facultyId: z.number().int()
 }).strict();
 
 export const ReservationCreateManyAdminInputSchema: z.ZodType<Prisma.ReservationCreateManyAdminInput> = z.object({
@@ -7234,13 +7165,13 @@ export const RenewalUpdateWithoutAdminInputSchema: z.ZodType<Prisma.RenewalUpdat
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   schoolCertificateUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  NICURL: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   student: z.lazy(() => StudentUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional(),
   academicSession: z.lazy(() => AcademicSessionUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional(),
-  Faculty: z.lazy(() => FacultyUpdateOneWithoutRenewalsNestedInputSchema).optional()
+  faculty: z.lazy(() => FacultyUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional()
 }).strict();
 
 export const RenewalUncheckedUpdateWithoutAdminInputSchema: z.ZodType<Prisma.RenewalUncheckedUpdateWithoutAdminInput> = z.object({
@@ -7250,12 +7181,12 @@ export const RenewalUncheckedUpdateWithoutAdminInputSchema: z.ZodType<Prisma.Ren
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   schoolCertificateUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  NICURL: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   academicSessionId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  facultyId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
 export const RenewalUncheckedUpdateManyWithoutAdminInputSchema: z.ZodType<Prisma.RenewalUncheckedUpdateManyWithoutAdminInput> = z.object({
@@ -7265,12 +7196,12 @@ export const RenewalUncheckedUpdateManyWithoutAdminInputSchema: z.ZodType<Prisma
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   schoolCertificateUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  NICURL: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   academicSessionId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  facultyId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
 export const ReservationUpdateWithoutAdminInputSchema: z.ZodType<Prisma.ReservationUpdateWithoutAdminInput> = z.object({
@@ -7399,7 +7330,7 @@ export const RenewalCreateManyFacultyInputSchema: z.ZodType<Prisma.RenewalCreate
   emergencyNumber: z.string(),
   profileUrl: z.string(),
   schoolCertificateUrl: z.string(),
-  NICURL: z.string(),
+  NICUrl: z.string(),
   academicSessionId: z.number().int(),
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
@@ -7500,7 +7431,7 @@ export const RenewalUpdateWithoutFacultyInputSchema: z.ZodType<Prisma.RenewalUpd
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   schoolCertificateUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  NICURL: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
@@ -7516,7 +7447,7 @@ export const RenewalUncheckedUpdateWithoutFacultyInputSchema: z.ZodType<Prisma.R
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   schoolCertificateUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  NICURL: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   academicSessionId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
@@ -7531,7 +7462,7 @@ export const RenewalUncheckedUpdateManyWithoutFacultyInputSchema: z.ZodType<Pris
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   schoolCertificateUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  NICURL: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   academicSessionId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
@@ -7545,12 +7476,12 @@ export const RenewalCreateManyStudentInputSchema: z.ZodType<Prisma.RenewalCreate
   emergencyNumber: z.string(),
   profileUrl: z.string(),
   schoolCertificateUrl: z.string(),
-  NICURL: z.string(),
+  NICUrl: z.string(),
   academicSessionId: z.number().int(),
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  facultyId: z.number().int().optional().nullable(),
+  facultyId: z.number().int(),
   adminId: z.number().int()
 }).strict();
 
@@ -7559,12 +7490,12 @@ export const RenewalUpdateWithoutStudentInputSchema: z.ZodType<Prisma.RenewalUpd
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   schoolCertificateUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  NICURL: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   academicSession: z.lazy(() => AcademicSessionUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional(),
-  Faculty: z.lazy(() => FacultyUpdateOneWithoutRenewalsNestedInputSchema).optional(),
+  faculty: z.lazy(() => FacultyUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional(),
   admin: z.lazy(() => AdminUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional()
 }).strict();
 
@@ -7574,12 +7505,12 @@ export const RenewalUncheckedUpdateWithoutStudentInputSchema: z.ZodType<Prisma.R
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   schoolCertificateUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  NICURL: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   academicSessionId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  facultyId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
@@ -7589,12 +7520,12 @@ export const RenewalUncheckedUpdateManyWithoutStudentInputSchema: z.ZodType<Pris
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   schoolCertificateUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  NICURL: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   academicSessionId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  facultyId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
@@ -7765,11 +7696,11 @@ export const RenewalCreateManyAcademicSessionInputSchema: z.ZodType<Prisma.Renew
   emergencyNumber: z.string(),
   profileUrl: z.string(),
   schoolCertificateUrl: z.string(),
-  NICURL: z.string(),
+  NICUrl: z.string(),
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  facultyId: z.number().int().optional().nullable(),
+  facultyId: z.number().int(),
   adminId: z.number().int()
 }).strict();
 
@@ -7837,12 +7768,12 @@ export const RenewalUpdateWithoutAcademicSessionInputSchema: z.ZodType<Prisma.Re
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   schoolCertificateUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  NICURL: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   student: z.lazy(() => StudentUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional(),
-  Faculty: z.lazy(() => FacultyUpdateOneWithoutRenewalsNestedInputSchema).optional(),
+  faculty: z.lazy(() => FacultyUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional(),
   admin: z.lazy(() => AdminUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional()
 }).strict();
 
@@ -7853,11 +7784,11 @@ export const RenewalUncheckedUpdateWithoutAcademicSessionInputSchema: z.ZodType<
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   schoolCertificateUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  NICURL: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  facultyId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
@@ -7868,11 +7799,11 @@ export const RenewalUncheckedUpdateManyWithoutAcademicSessionInputSchema: z.ZodT
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   schoolCertificateUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  NICURL: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  facultyId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
