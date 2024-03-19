@@ -8,3 +8,4 @@ export * from "./faculties";
 export * from "./academicSessions";
 export * from "./maintenances";
 export * from "./maintainers";
+export * from "./announcements";
