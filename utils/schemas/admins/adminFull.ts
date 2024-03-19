@@ -1,15 +1,10 @@
-import { prismaCtx, z } from "#imports";
+import { z } from "#imports";
 import { Simplify } from "type-fest";
 import { AdminCount, AdminCountSchema } from "./adminCount";
-import { UserFiltered } from "~/utils/schemas";
+import { AdminFiltered } from "./adminFiltered";
 import { AdminSchema } from "~/prisma/generated/zod";
 
-export type AdminFull = Simplify<
-  prismaCtx.Admin &
-    AdminCount & {
-      user: UserFiltered;
-    }
->;
+export type AdminFull = Simplify<AdminFiltered & AdminCount>;
 
 export const AdminFullSchema: z.ZodType<AdminFull> = AdminSchema.and(
   AdminCountSchema,

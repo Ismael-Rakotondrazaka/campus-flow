@@ -15,3 +15,5 @@ export * from "./faculties";
 export * from "./academicSessions";
 export * from "./admins";
 export * from "./students";
+export * from "./maintenances";
+export * from "./internals";

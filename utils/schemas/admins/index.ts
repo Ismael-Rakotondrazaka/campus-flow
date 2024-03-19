@@ -1,4 +1,6 @@
+export * from "./adminComputed";
 export * from "./adminCount";
+export * from "./adminFiltered";
 export * from "./adminFull";
 export * from "./destroyAdmin";
 export * from "./fullRaw";
