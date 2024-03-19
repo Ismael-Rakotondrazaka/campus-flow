@@ -13,3 +13,5 @@ export * from "./paginations";
 export * from "./lodgments";
 export * from "./faculties";
 export * from "./academicSessions";
+export * from "./admins";
+export * from "./students";
