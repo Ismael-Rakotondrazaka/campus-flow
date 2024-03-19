@@ -64,7 +64,7 @@ model Student {
   user            User      @relation(fields: [userId], references: [id])
   facultyId       Int
   gender          Gender
-  nationality     String
+  origin          Origin
   emergencyNumber String
   faculty         Faculty   @relation(fields: [facultyId], references: [id])
   NIC             String // National ID Card
@@ -113,7 +113,7 @@ model Reservation {
   profileUrl           String            @db.Text
   email                String            @unique
   gender               Gender
-  nationality          String
+  origin               Origin
   emergencyNumber      String
   NIC                  String
   NICUrl               String            @db.Text
@@ -150,6 +150,11 @@ model Renewal {
 
   // unique constraint to ensure one student's renewal is for on academic year
   @@unique([studentId, academicSessionId])
+}
+
+enum Origin {
+  NATIONAL
+  FOREIGNER
 }
 
 model Maintenance {

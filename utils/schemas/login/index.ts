@@ -10,7 +10,7 @@ export type LoginBody = {
 };
 
 export const LoginBodySchema: z.ZodType<LoginBody> = z.object({
-  email: emailSchema,
+  email: EmailSchema,
   password: passwordSchema,
 });
 

@@ -9,3 +9,4 @@ export * from "./academicSessions";
 export * from "./maintenances";
 export * from "./maintainers";
 export * from "./announcements";
+export * from "./reservations";

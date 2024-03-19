@@ -24,7 +24,7 @@ export const studentFullRawToStudentFull = (
     facultyId: student.facultyId,
     gender: student.gender,
     lodgmentId: student.lodgmentId,
-    nationality: student.nationality,
+    origin: student.origin,
     NIC: student.NIC,
     _count: student._count,
     user: toUserFiltered(student.user),

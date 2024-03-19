@@ -20,11 +20,11 @@ export const RefreshTokenScalarFieldEnumSchema = z.enum(['id','token','userId','
 
 export const FacultyScalarFieldEnumSchema = z.enum(['id','name']);
 
-export const StudentScalarFieldEnumSchema = z.enum(['userId','facultyId','gender','nationality','emergencyNumber','NIC','lodgmentId']);
+export const StudentScalarFieldEnumSchema = z.enum(['userId','facultyId','gender','origin','emergencyNumber','NIC','lodgmentId']);
 
 export const LodgmentScalarFieldEnumSchema = z.enum(['id','capacity','floor','roomNumber','buildingId','status','deletedAt']);
 
-export const ReservationScalarFieldEnumSchema = z.enum(['id','name','firstName','phoneNumber','profileUrl','email','gender','nationality','emergencyNumber','NIC','NICUrl','schoolCertificateUrl','facultyId','status','academicSessionId','createdAt','updatedAt','adminId']);
+export const ReservationScalarFieldEnumSchema = z.enum(['id','name','firstName','phoneNumber','profileUrl','email','gender','origin','emergencyNumber','NIC','NICUrl','schoolCertificateUrl','facultyId','status','academicSessionId','createdAt','updatedAt','adminId']);
 
 export const RenewalScalarFieldEnumSchema = z.enum(['id','studentId','phoneNumber','emergencyNumber','profileUrl','schoolCertificateUrl','NICURL','academicSessionId','status','createdAt','updatedAt','facultyId','adminId']);
 
@@ -57,6 +57,10 @@ export type GenderType = `${z.infer<typeof GenderSchema>}`
 export const LodgmentStatusSchema = z.enum(['AVAILABLE','MAINTENANCE']);
 
 export type LodgmentStatusType = `${z.infer<typeof LodgmentStatusSchema>}`
+
+export const OriginSchema = z.enum(['NATIONAL','FOREIGNER']);
+
+export type OriginType = `${z.infer<typeof OriginSchema>}`
 
 export const MaintenanceStatusSchema = z.enum(['PENDING','ONGOING','DONE','REFUSED']);
 
@@ -143,9 +147,9 @@ export type Faculty = z.infer<typeof FacultySchema>
 
 export const StudentSchema = z.object({
   gender: GenderSchema,
+  origin: OriginSchema,
   userId: z.number().int(),
   facultyId: z.number().int(),
-  nationality: z.string(),
   emergencyNumber: z.string(),
   NIC: z.string(),
   lodgmentId: z.number().int(),
@@ -175,6 +179,7 @@ export type Lodgment = z.infer<typeof LodgmentSchema>
 
 export const ReservationSchema = z.object({
   gender: GenderSchema,
+  origin: OriginSchema,
   status: ReservationStatusSchema,
   id: z.number().int(),
   name: z.string(),
@@ -182,7 +187,6 @@ export const ReservationSchema = z.object({
   phoneNumber: z.string(),
   profileUrl: z.string(),
   email: z.string(),
-  nationality: z.string(),
   emergencyNumber: z.string(),
   NIC: z.string(),
   NICUrl: z.string(),
@@ -473,7 +477,7 @@ export const StudentSelectSchema: z.ZodType<Prisma.StudentSelect> = z.object({
   userId: z.boolean().optional(),
   facultyId: z.boolean().optional(),
   gender: z.boolean().optional(),
-  nationality: z.boolean().optional(),
+  origin: z.boolean().optional(),
   emergencyNumber: z.boolean().optional(),
   NIC: z.boolean().optional(),
   lodgmentId: z.boolean().optional(),
@@ -544,7 +548,7 @@ export const ReservationSelectSchema: z.ZodType<Prisma.ReservationSelect> = z.ob
   profileUrl: z.boolean().optional(),
   email: z.boolean().optional(),
   gender: z.boolean().optional(),
-  nationality: z.boolean().optional(),
+  origin: z.boolean().optional(),
   emergencyNumber: z.boolean().optional(),
   NIC: z.boolean().optional(),
   NICUrl: z.boolean().optional(),
@@ -1053,7 +1057,7 @@ export const StudentWhereInputSchema: z.ZodType<Prisma.StudentWhereInput> = z.ob
   userId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   facultyId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   gender: z.union([ z.lazy(() => EnumGenderFilterSchema),z.lazy(() => GenderSchema) ]).optional(),
-  nationality: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  origin: z.union([ z.lazy(() => EnumOriginFilterSchema),z.lazy(() => OriginSchema) ]).optional(),
   emergencyNumber: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   NIC: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   lodgmentId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
@@ -1067,7 +1071,7 @@ export const StudentOrderByWithRelationInputSchema: z.ZodType<Prisma.StudentOrde
   userId: z.lazy(() => SortOrderSchema).optional(),
   facultyId: z.lazy(() => SortOrderSchema).optional(),
   gender: z.lazy(() => SortOrderSchema).optional(),
-  nationality: z.lazy(() => SortOrderSchema).optional(),
+  origin: z.lazy(() => SortOrderSchema).optional(),
   emergencyNumber: z.lazy(() => SortOrderSchema).optional(),
   NIC: z.lazy(() => SortOrderSchema).optional(),
   lodgmentId: z.lazy(() => SortOrderSchema).optional(),
@@ -1087,7 +1091,7 @@ export const StudentWhereUniqueInputSchema: z.ZodType<Prisma.StudentWhereUniqueI
   NOT: z.union([ z.lazy(() => StudentWhereInputSchema),z.lazy(() => StudentWhereInputSchema).array() ]).optional(),
   facultyId: z.union([ z.lazy(() => IntFilterSchema),z.number().int() ]).optional(),
   gender: z.union([ z.lazy(() => EnumGenderFilterSchema),z.lazy(() => GenderSchema) ]).optional(),
-  nationality: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  origin: z.union([ z.lazy(() => EnumOriginFilterSchema),z.lazy(() => OriginSchema) ]).optional(),
   emergencyNumber: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   NIC: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   lodgmentId: z.union([ z.lazy(() => IntFilterSchema),z.number().int() ]).optional(),
@@ -1101,7 +1105,7 @@ export const StudentOrderByWithAggregationInputSchema: z.ZodType<Prisma.StudentO
   userId: z.lazy(() => SortOrderSchema).optional(),
   facultyId: z.lazy(() => SortOrderSchema).optional(),
   gender: z.lazy(() => SortOrderSchema).optional(),
-  nationality: z.lazy(() => SortOrderSchema).optional(),
+  origin: z.lazy(() => SortOrderSchema).optional(),
   emergencyNumber: z.lazy(() => SortOrderSchema).optional(),
   NIC: z.lazy(() => SortOrderSchema).optional(),
   lodgmentId: z.lazy(() => SortOrderSchema).optional(),
@@ -1119,7 +1123,7 @@ export const StudentScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Stude
   userId: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
   facultyId: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
   gender: z.union([ z.lazy(() => EnumGenderWithAggregatesFilterSchema),z.lazy(() => GenderSchema) ]).optional(),
-  nationality: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  origin: z.union([ z.lazy(() => EnumOriginWithAggregatesFilterSchema),z.lazy(() => OriginSchema) ]).optional(),
   emergencyNumber: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   NIC: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   lodgmentId: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
@@ -1212,7 +1216,7 @@ export const ReservationWhereInputSchema: z.ZodType<Prisma.ReservationWhereInput
   profileUrl: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   email: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   gender: z.union([ z.lazy(() => EnumGenderFilterSchema),z.lazy(() => GenderSchema) ]).optional(),
-  nationality: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  origin: z.union([ z.lazy(() => EnumOriginFilterSchema),z.lazy(() => OriginSchema) ]).optional(),
   emergencyNumber: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   NIC: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   NICUrl: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
@@ -1236,7 +1240,7 @@ export const ReservationOrderByWithRelationInputSchema: z.ZodType<Prisma.Reserva
   profileUrl: z.lazy(() => SortOrderSchema).optional(),
   email: z.lazy(() => SortOrderSchema).optional(),
   gender: z.lazy(() => SortOrderSchema).optional(),
-  nationality: z.lazy(() => SortOrderSchema).optional(),
+  origin: z.lazy(() => SortOrderSchema).optional(),
   emergencyNumber: z.lazy(() => SortOrderSchema).optional(),
   NIC: z.lazy(() => SortOrderSchema).optional(),
   NICUrl: z.lazy(() => SortOrderSchema).optional(),
@@ -1275,7 +1279,7 @@ export const ReservationWhereUniqueInputSchema: z.ZodType<Prisma.ReservationWher
   phoneNumber: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   profileUrl: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   gender: z.union([ z.lazy(() => EnumGenderFilterSchema),z.lazy(() => GenderSchema) ]).optional(),
-  nationality: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  origin: z.union([ z.lazy(() => EnumOriginFilterSchema),z.lazy(() => OriginSchema) ]).optional(),
   emergencyNumber: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   NIC: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   NICUrl: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
@@ -1299,7 +1303,7 @@ export const ReservationOrderByWithAggregationInputSchema: z.ZodType<Prisma.Rese
   profileUrl: z.lazy(() => SortOrderSchema).optional(),
   email: z.lazy(() => SortOrderSchema).optional(),
   gender: z.lazy(() => SortOrderSchema).optional(),
-  nationality: z.lazy(() => SortOrderSchema).optional(),
+  origin: z.lazy(() => SortOrderSchema).optional(),
   emergencyNumber: z.lazy(() => SortOrderSchema).optional(),
   NIC: z.lazy(() => SortOrderSchema).optional(),
   NICUrl: z.lazy(() => SortOrderSchema).optional(),
@@ -1328,7 +1332,7 @@ export const ReservationScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.R
   profileUrl: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   email: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   gender: z.union([ z.lazy(() => EnumGenderWithAggregatesFilterSchema),z.lazy(() => GenderSchema) ]).optional(),
-  nationality: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  origin: z.union([ z.lazy(() => EnumOriginWithAggregatesFilterSchema),z.lazy(() => OriginSchema) ]).optional(),
   emergencyNumber: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   NIC: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   NICUrl: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
@@ -2113,7 +2117,7 @@ export const FacultyUncheckedUpdateManyInputSchema: z.ZodType<Prisma.FacultyUnch
 
 export const StudentCreateInputSchema: z.ZodType<Prisma.StudentCreateInput> = z.object({
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   user: z.lazy(() => UserCreateNestedOneWithoutStudentInputSchema),
@@ -2126,7 +2130,7 @@ export const StudentUncheckedCreateInputSchema: z.ZodType<Prisma.StudentUnchecke
   userId: z.number().int(),
   facultyId: z.number().int(),
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   lodgmentId: z.number().int(),
@@ -2135,7 +2139,7 @@ export const StudentUncheckedCreateInputSchema: z.ZodType<Prisma.StudentUnchecke
 
 export const StudentUpdateInputSchema: z.ZodType<Prisma.StudentUpdateInput> = z.object({
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   user: z.lazy(() => UserUpdateOneRequiredWithoutStudentNestedInputSchema).optional(),
@@ -2148,7 +2152,7 @@ export const StudentUncheckedUpdateInputSchema: z.ZodType<Prisma.StudentUnchecke
   userId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lodgmentId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
@@ -2159,7 +2163,7 @@ export const StudentCreateManyInputSchema: z.ZodType<Prisma.StudentCreateManyInp
   userId: z.number().int(),
   facultyId: z.number().int(),
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   lodgmentId: z.number().int()
@@ -2167,7 +2171,7 @@ export const StudentCreateManyInputSchema: z.ZodType<Prisma.StudentCreateManyInp
 
 export const StudentUpdateManyMutationInputSchema: z.ZodType<Prisma.StudentUpdateManyMutationInput> = z.object({
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -2176,7 +2180,7 @@ export const StudentUncheckedUpdateManyInputSchema: z.ZodType<Prisma.StudentUnch
   userId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lodgmentId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
@@ -2263,7 +2267,7 @@ export const ReservationCreateInputSchema: z.ZodType<Prisma.ReservationCreateInp
   profileUrl: z.string(),
   email: z.string(),
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   NICUrl: z.string(),
@@ -2284,7 +2288,7 @@ export const ReservationUncheckedCreateInputSchema: z.ZodType<Prisma.Reservation
   profileUrl: z.string(),
   email: z.string(),
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   NICUrl: z.string(),
@@ -2304,7 +2308,7 @@ export const ReservationUpdateInputSchema: z.ZodType<Prisma.ReservationUpdateInp
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -2325,7 +2329,7 @@ export const ReservationUncheckedUpdateInputSchema: z.ZodType<Prisma.Reservation
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -2346,7 +2350,7 @@ export const ReservationCreateManyInputSchema: z.ZodType<Prisma.ReservationCreat
   profileUrl: z.string(),
   email: z.string(),
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   NICUrl: z.string(),
@@ -2366,7 +2370,7 @@ export const ReservationUpdateManyMutationInputSchema: z.ZodType<Prisma.Reservat
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -2384,7 +2388,7 @@ export const ReservationUncheckedUpdateManyInputSchema: z.ZodType<Prisma.Reserva
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -3218,6 +3222,13 @@ export const EnumGenderFilterSchema: z.ZodType<Prisma.EnumGenderFilter> = z.obje
   not: z.union([ z.lazy(() => GenderSchema),z.lazy(() => NestedEnumGenderFilterSchema) ]).optional(),
 }).strict();
 
+export const EnumOriginFilterSchema: z.ZodType<Prisma.EnumOriginFilter> = z.object({
+  equals: z.lazy(() => OriginSchema).optional(),
+  in: z.lazy(() => OriginSchema).array().optional(),
+  notIn: z.lazy(() => OriginSchema).array().optional(),
+  not: z.union([ z.lazy(() => OriginSchema),z.lazy(() => NestedEnumOriginFilterSchema) ]).optional(),
+}).strict();
+
 export const FacultyRelationFilterSchema: z.ZodType<Prisma.FacultyRelationFilter> = z.object({
   is: z.lazy(() => FacultyWhereInputSchema).optional(),
   isNot: z.lazy(() => FacultyWhereInputSchema).optional()
@@ -3232,7 +3243,7 @@ export const StudentCountOrderByAggregateInputSchema: z.ZodType<Prisma.StudentCo
   userId: z.lazy(() => SortOrderSchema).optional(),
   facultyId: z.lazy(() => SortOrderSchema).optional(),
   gender: z.lazy(() => SortOrderSchema).optional(),
-  nationality: z.lazy(() => SortOrderSchema).optional(),
+  origin: z.lazy(() => SortOrderSchema).optional(),
   emergencyNumber: z.lazy(() => SortOrderSchema).optional(),
   NIC: z.lazy(() => SortOrderSchema).optional(),
   lodgmentId: z.lazy(() => SortOrderSchema).optional()
@@ -3248,7 +3259,7 @@ export const StudentMaxOrderByAggregateInputSchema: z.ZodType<Prisma.StudentMaxO
   userId: z.lazy(() => SortOrderSchema).optional(),
   facultyId: z.lazy(() => SortOrderSchema).optional(),
   gender: z.lazy(() => SortOrderSchema).optional(),
-  nationality: z.lazy(() => SortOrderSchema).optional(),
+  origin: z.lazy(() => SortOrderSchema).optional(),
   emergencyNumber: z.lazy(() => SortOrderSchema).optional(),
   NIC: z.lazy(() => SortOrderSchema).optional(),
   lodgmentId: z.lazy(() => SortOrderSchema).optional()
@@ -3258,7 +3269,7 @@ export const StudentMinOrderByAggregateInputSchema: z.ZodType<Prisma.StudentMinO
   userId: z.lazy(() => SortOrderSchema).optional(),
   facultyId: z.lazy(() => SortOrderSchema).optional(),
   gender: z.lazy(() => SortOrderSchema).optional(),
-  nationality: z.lazy(() => SortOrderSchema).optional(),
+  origin: z.lazy(() => SortOrderSchema).optional(),
   emergencyNumber: z.lazy(() => SortOrderSchema).optional(),
   NIC: z.lazy(() => SortOrderSchema).optional(),
   lodgmentId: z.lazy(() => SortOrderSchema).optional()
@@ -3278,6 +3289,16 @@ export const EnumGenderWithAggregatesFilterSchema: z.ZodType<Prisma.EnumGenderWi
   _count: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedEnumGenderFilterSchema).optional(),
   _max: z.lazy(() => NestedEnumGenderFilterSchema).optional()
+}).strict();
+
+export const EnumOriginWithAggregatesFilterSchema: z.ZodType<Prisma.EnumOriginWithAggregatesFilter> = z.object({
+  equals: z.lazy(() => OriginSchema).optional(),
+  in: z.lazy(() => OriginSchema).array().optional(),
+  notIn: z.lazy(() => OriginSchema).array().optional(),
+  not: z.union([ z.lazy(() => OriginSchema),z.lazy(() => NestedEnumOriginWithAggregatesFilterSchema) ]).optional(),
+  _count: z.lazy(() => NestedIntFilterSchema).optional(),
+  _min: z.lazy(() => NestedEnumOriginFilterSchema).optional(),
+  _max: z.lazy(() => NestedEnumOriginFilterSchema).optional()
 }).strict();
 
 export const EnumLodgmentStatusFilterSchema: z.ZodType<Prisma.EnumLodgmentStatusFilter> = z.object({
@@ -3373,7 +3394,7 @@ export const ReservationCountOrderByAggregateInputSchema: z.ZodType<Prisma.Reser
   profileUrl: z.lazy(() => SortOrderSchema).optional(),
   email: z.lazy(() => SortOrderSchema).optional(),
   gender: z.lazy(() => SortOrderSchema).optional(),
-  nationality: z.lazy(() => SortOrderSchema).optional(),
+  origin: z.lazy(() => SortOrderSchema).optional(),
   emergencyNumber: z.lazy(() => SortOrderSchema).optional(),
   NIC: z.lazy(() => SortOrderSchema).optional(),
   NICUrl: z.lazy(() => SortOrderSchema).optional(),
@@ -3401,7 +3422,7 @@ export const ReservationMaxOrderByAggregateInputSchema: z.ZodType<Prisma.Reserva
   profileUrl: z.lazy(() => SortOrderSchema).optional(),
   email: z.lazy(() => SortOrderSchema).optional(),
   gender: z.lazy(() => SortOrderSchema).optional(),
-  nationality: z.lazy(() => SortOrderSchema).optional(),
+  origin: z.lazy(() => SortOrderSchema).optional(),
   emergencyNumber: z.lazy(() => SortOrderSchema).optional(),
   NIC: z.lazy(() => SortOrderSchema).optional(),
   NICUrl: z.lazy(() => SortOrderSchema).optional(),
@@ -3422,7 +3443,7 @@ export const ReservationMinOrderByAggregateInputSchema: z.ZodType<Prisma.Reserva
   profileUrl: z.lazy(() => SortOrderSchema).optional(),
   email: z.lazy(() => SortOrderSchema).optional(),
   gender: z.lazy(() => SortOrderSchema).optional(),
-  nationality: z.lazy(() => SortOrderSchema).optional(),
+  origin: z.lazy(() => SortOrderSchema).optional(),
   emergencyNumber: z.lazy(() => SortOrderSchema).optional(),
   NIC: z.lazy(() => SortOrderSchema).optional(),
   NICUrl: z.lazy(() => SortOrderSchema).optional(),
@@ -4373,6 +4394,10 @@ export const EnumGenderFieldUpdateOperationsInputSchema: z.ZodType<Prisma.EnumGe
   set: z.lazy(() => GenderSchema).optional()
 }).strict();
 
+export const EnumOriginFieldUpdateOperationsInputSchema: z.ZodType<Prisma.EnumOriginFieldUpdateOperationsInput> = z.object({
+  set: z.lazy(() => OriginSchema).optional()
+}).strict();
+
 export const UserUpdateOneRequiredWithoutStudentNestedInputSchema: z.ZodType<Prisma.UserUpdateOneRequiredWithoutStudentNestedInput> = z.object({
   create: z.union([ z.lazy(() => UserCreateWithoutStudentInputSchema),z.lazy(() => UserUncheckedCreateWithoutStudentInputSchema) ]).optional(),
   connectOrCreate: z.lazy(() => UserCreateOrConnectWithoutStudentInputSchema).optional(),
@@ -5057,6 +5082,13 @@ export const NestedEnumGenderFilterSchema: z.ZodType<Prisma.NestedEnumGenderFilt
   not: z.union([ z.lazy(() => GenderSchema),z.lazy(() => NestedEnumGenderFilterSchema) ]).optional(),
 }).strict();
 
+export const NestedEnumOriginFilterSchema: z.ZodType<Prisma.NestedEnumOriginFilter> = z.object({
+  equals: z.lazy(() => OriginSchema).optional(),
+  in: z.lazy(() => OriginSchema).array().optional(),
+  notIn: z.lazy(() => OriginSchema).array().optional(),
+  not: z.union([ z.lazy(() => OriginSchema),z.lazy(() => NestedEnumOriginFilterSchema) ]).optional(),
+}).strict();
+
 export const NestedEnumGenderWithAggregatesFilterSchema: z.ZodType<Prisma.NestedEnumGenderWithAggregatesFilter> = z.object({
   equals: z.lazy(() => GenderSchema).optional(),
   in: z.lazy(() => GenderSchema).array().optional(),
@@ -5065,6 +5097,16 @@ export const NestedEnumGenderWithAggregatesFilterSchema: z.ZodType<Prisma.Nested
   _count: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedEnumGenderFilterSchema).optional(),
   _max: z.lazy(() => NestedEnumGenderFilterSchema).optional()
+}).strict();
+
+export const NestedEnumOriginWithAggregatesFilterSchema: z.ZodType<Prisma.NestedEnumOriginWithAggregatesFilter> = z.object({
+  equals: z.lazy(() => OriginSchema).optional(),
+  in: z.lazy(() => OriginSchema).array().optional(),
+  notIn: z.lazy(() => OriginSchema).array().optional(),
+  not: z.union([ z.lazy(() => OriginSchema),z.lazy(() => NestedEnumOriginWithAggregatesFilterSchema) ]).optional(),
+  _count: z.lazy(() => NestedIntFilterSchema).optional(),
+  _min: z.lazy(() => NestedEnumOriginFilterSchema).optional(),
+  _max: z.lazy(() => NestedEnumOriginFilterSchema).optional()
 }).strict();
 
 export const NestedEnumLodgmentStatusFilterSchema: z.ZodType<Prisma.NestedEnumLodgmentStatusFilter> = z.object({
@@ -5263,7 +5305,7 @@ export const AdminCreateOrConnectWithoutUserInputSchema: z.ZodType<Prisma.AdminC
 
 export const StudentCreateWithoutUserInputSchema: z.ZodType<Prisma.StudentCreateWithoutUserInput> = z.object({
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   faculty: z.lazy(() => FacultyCreateNestedOneWithoutStudentsInputSchema),
@@ -5274,7 +5316,7 @@ export const StudentCreateWithoutUserInputSchema: z.ZodType<Prisma.StudentCreate
 export const StudentUncheckedCreateWithoutUserInputSchema: z.ZodType<Prisma.StudentUncheckedCreateWithoutUserInput> = z.object({
   facultyId: z.number().int(),
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   lodgmentId: z.number().int(),
@@ -5368,7 +5410,7 @@ export const StudentUpdateToOneWithWhereWithoutUserInputSchema: z.ZodType<Prisma
 
 export const StudentUpdateWithoutUserInputSchema: z.ZodType<Prisma.StudentUpdateWithoutUserInput> = z.object({
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   faculty: z.lazy(() => FacultyUpdateOneRequiredWithoutStudentsNestedInputSchema).optional(),
@@ -5379,7 +5421,7 @@ export const StudentUpdateWithoutUserInputSchema: z.ZodType<Prisma.StudentUpdate
 export const StudentUncheckedUpdateWithoutUserInputSchema: z.ZodType<Prisma.StudentUncheckedUpdateWithoutUserInput> = z.object({
   facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lodgmentId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
@@ -5495,7 +5537,7 @@ export const ReservationCreateWithoutAdminInputSchema: z.ZodType<Prisma.Reservat
   profileUrl: z.string(),
   email: z.string(),
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   NICUrl: z.string(),
@@ -5515,7 +5557,7 @@ export const ReservationUncheckedCreateWithoutAdminInputSchema: z.ZodType<Prisma
   profileUrl: z.string(),
   email: z.string(),
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   NICUrl: z.string(),
@@ -5672,7 +5714,7 @@ export const ReservationScalarWhereInputSchema: z.ZodType<Prisma.ReservationScal
   profileUrl: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   email: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   gender: z.union([ z.lazy(() => EnumGenderFilterSchema),z.lazy(() => GenderSchema) ]).optional(),
-  nationality: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  origin: z.union([ z.lazy(() => EnumOriginFilterSchema),z.lazy(() => OriginSchema) ]).optional(),
   emergencyNumber: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   NIC: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   NICUrl: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
@@ -5795,7 +5837,7 @@ export const UserUncheckedUpdateWithoutRefreshTokensInputSchema: z.ZodType<Prism
 
 export const StudentCreateWithoutFacultyInputSchema: z.ZodType<Prisma.StudentCreateWithoutFacultyInput> = z.object({
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   user: z.lazy(() => UserCreateNestedOneWithoutStudentInputSchema),
@@ -5806,7 +5848,7 @@ export const StudentCreateWithoutFacultyInputSchema: z.ZodType<Prisma.StudentCre
 export const StudentUncheckedCreateWithoutFacultyInputSchema: z.ZodType<Prisma.StudentUncheckedCreateWithoutFacultyInput> = z.object({
   userId: z.number().int(),
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   lodgmentId: z.number().int(),
@@ -5830,7 +5872,7 @@ export const ReservationCreateWithoutFacultyInputSchema: z.ZodType<Prisma.Reserv
   profileUrl: z.string(),
   email: z.string(),
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   NICUrl: z.string(),
@@ -5850,7 +5892,7 @@ export const ReservationUncheckedCreateWithoutFacultyInputSchema: z.ZodType<Pris
   profileUrl: z.string(),
   email: z.string(),
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   NICUrl: z.string(),
@@ -5934,7 +5976,7 @@ export const StudentScalarWhereInputSchema: z.ZodType<Prisma.StudentScalarWhereI
   userId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   facultyId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   gender: z.union([ z.lazy(() => EnumGenderFilterSchema),z.lazy(() => GenderSchema) ]).optional(),
-  nationality: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  origin: z.union([ z.lazy(() => EnumOriginFilterSchema),z.lazy(() => OriginSchema) ]).optional(),
   emergencyNumber: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   NIC: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   lodgmentId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
@@ -6225,7 +6267,7 @@ export const BuildingCreateOrConnectWithoutLodgmentsInputSchema: z.ZodType<Prism
 
 export const StudentCreateWithoutLodgmentInputSchema: z.ZodType<Prisma.StudentCreateWithoutLodgmentInput> = z.object({
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   user: z.lazy(() => UserCreateNestedOneWithoutStudentInputSchema),
@@ -6237,7 +6279,7 @@ export const StudentUncheckedCreateWithoutLodgmentInputSchema: z.ZodType<Prisma.
   userId: z.number().int(),
   facultyId: z.number().int(),
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   renewals: z.lazy(() => RenewalUncheckedCreateNestedManyWithoutStudentInputSchema).optional()
@@ -6474,7 +6516,7 @@ export const AdminUncheckedUpdateWithoutReservationsInputSchema: z.ZodType<Prism
 
 export const StudentCreateWithoutRenewalsInputSchema: z.ZodType<Prisma.StudentCreateWithoutRenewalsInput> = z.object({
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   user: z.lazy(() => UserCreateNestedOneWithoutStudentInputSchema),
@@ -6486,7 +6528,7 @@ export const StudentUncheckedCreateWithoutRenewalsInputSchema: z.ZodType<Prisma.
   userId: z.number().int(),
   facultyId: z.number().int(),
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   lodgmentId: z.number().int()
@@ -6567,7 +6609,7 @@ export const StudentUpdateToOneWithWhereWithoutRenewalsInputSchema: z.ZodType<Pr
 
 export const StudentUpdateWithoutRenewalsInputSchema: z.ZodType<Prisma.StudentUpdateWithoutRenewalsInput> = z.object({
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   user: z.lazy(() => UserUpdateOneRequiredWithoutStudentNestedInputSchema).optional(),
@@ -6579,7 +6621,7 @@ export const StudentUncheckedUpdateWithoutRenewalsInputSchema: z.ZodType<Prisma.
   userId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lodgmentId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
@@ -6864,7 +6906,7 @@ export const ReservationCreateWithoutAcademicSessionInputSchema: z.ZodType<Prism
   profileUrl: z.string(),
   email: z.string(),
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   NICUrl: z.string(),
@@ -6884,7 +6926,7 @@ export const ReservationUncheckedCreateWithoutAcademicSessionInputSchema: z.ZodT
   profileUrl: z.string(),
   email: z.string(),
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   NICUrl: z.string(),
@@ -7165,7 +7207,7 @@ export const ReservationCreateManyAdminInputSchema: z.ZodType<Prisma.Reservation
   profileUrl: z.string(),
   email: z.string(),
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   NICUrl: z.string(),
@@ -7238,7 +7280,7 @@ export const ReservationUpdateWithoutAdminInputSchema: z.ZodType<Prisma.Reservat
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -7258,7 +7300,7 @@ export const ReservationUncheckedUpdateWithoutAdminInputSchema: z.ZodType<Prisma
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -7278,7 +7320,7 @@ export const ReservationUncheckedUpdateManyWithoutAdminInputSchema: z.ZodType<Pr
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -7324,7 +7366,7 @@ export const MaintenanceUncheckedUpdateManyWithoutAdminInputSchema: z.ZodType<Pr
 export const StudentCreateManyFacultyInputSchema: z.ZodType<Prisma.StudentCreateManyFacultyInput> = z.object({
   userId: z.number().int(),
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   lodgmentId: z.number().int()
@@ -7338,7 +7380,7 @@ export const ReservationCreateManyFacultyInputSchema: z.ZodType<Prisma.Reservati
   profileUrl: z.string(),
   email: z.string(),
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   NICUrl: z.string(),
@@ -7367,7 +7409,7 @@ export const RenewalCreateManyFacultyInputSchema: z.ZodType<Prisma.RenewalCreate
 
 export const StudentUpdateWithoutFacultyInputSchema: z.ZodType<Prisma.StudentUpdateWithoutFacultyInput> = z.object({
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   user: z.lazy(() => UserUpdateOneRequiredWithoutStudentNestedInputSchema).optional(),
@@ -7378,7 +7420,7 @@ export const StudentUpdateWithoutFacultyInputSchema: z.ZodType<Prisma.StudentUpd
 export const StudentUncheckedUpdateWithoutFacultyInputSchema: z.ZodType<Prisma.StudentUncheckedUpdateWithoutFacultyInput> = z.object({
   userId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lodgmentId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
@@ -7388,7 +7430,7 @@ export const StudentUncheckedUpdateWithoutFacultyInputSchema: z.ZodType<Prisma.S
 export const StudentUncheckedUpdateManyWithoutFacultyInputSchema: z.ZodType<Prisma.StudentUncheckedUpdateManyWithoutFacultyInput> = z.object({
   userId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lodgmentId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
@@ -7401,7 +7443,7 @@ export const ReservationUpdateWithoutFacultyInputSchema: z.ZodType<Prisma.Reserv
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -7421,7 +7463,7 @@ export const ReservationUncheckedUpdateWithoutFacultyInputSchema: z.ZodType<Pris
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -7441,7 +7483,7 @@ export const ReservationUncheckedUpdateManyWithoutFacultyInputSchema: z.ZodType<
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -7560,7 +7602,7 @@ export const StudentCreateManyLodgmentInputSchema: z.ZodType<Prisma.StudentCreat
   userId: z.number().int(),
   facultyId: z.number().int(),
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string()
 }).strict();
@@ -7577,7 +7619,7 @@ export const MaintenanceCreateManyLodgmentInputSchema: z.ZodType<Prisma.Maintena
 
 export const StudentUpdateWithoutLodgmentInputSchema: z.ZodType<Prisma.StudentUpdateWithoutLodgmentInput> = z.object({
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   user: z.lazy(() => UserUpdateOneRequiredWithoutStudentNestedInputSchema).optional(),
@@ -7589,7 +7631,7 @@ export const StudentUncheckedUpdateWithoutLodgmentInputSchema: z.ZodType<Prisma.
   userId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   renewals: z.lazy(() => RenewalUncheckedUpdateManyWithoutStudentNestedInputSchema).optional()
@@ -7599,7 +7641,7 @@ export const StudentUncheckedUpdateManyWithoutLodgmentInputSchema: z.ZodType<Pri
   userId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -7704,7 +7746,7 @@ export const ReservationCreateManyAcademicSessionInputSchema: z.ZodType<Prisma.R
   profileUrl: z.string(),
   email: z.string(),
   gender: z.lazy(() => GenderSchema),
-  nationality: z.string(),
+  origin: z.lazy(() => OriginSchema),
   emergencyNumber: z.string(),
   NIC: z.string(),
   NICUrl: z.string(),
@@ -7738,7 +7780,7 @@ export const ReservationUpdateWithoutAcademicSessionInputSchema: z.ZodType<Prism
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -7758,7 +7800,7 @@ export const ReservationUncheckedUpdateWithoutAcademicSessionInputSchema: z.ZodT
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -7778,7 +7820,7 @@ export const ReservationUncheckedUpdateManyWithoutAcademicSessionInputSchema: z.
   profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
-  nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  origin: z.union([ z.lazy(() => OriginSchema),z.lazy(() => EnumOriginFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NICUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
