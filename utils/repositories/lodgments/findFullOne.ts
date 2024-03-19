@@ -25,6 +25,7 @@ export const findFullOne = async ({
         _count: {
           select: {
             students: true,
+            maintenances: true,
           },
         },
       },

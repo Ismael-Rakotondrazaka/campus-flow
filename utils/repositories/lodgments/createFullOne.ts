@@ -15,6 +15,7 @@ export const createFullOne = async ({
       _count: {
         select: {
           students: true,
+          maintenances: true,
         },
       },
     },

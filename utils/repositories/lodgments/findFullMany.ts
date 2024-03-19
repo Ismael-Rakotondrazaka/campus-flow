@@ -20,6 +20,7 @@ export const findFullMany = async (payload: {
         _count: {
           select: {
             students: true,
+            maintenances: true,
           },
         },
       },

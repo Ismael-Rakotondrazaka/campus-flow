@@ -24,6 +24,7 @@ export const maintenanceFullRawToMaintenanceFull = (
     status: maintenance.status,
     createdAt: maintenance.createdAt,
     updatedAt: maintenance.updatedAt,
+    lodgmentId: maintenance.lodgmentId,
     _count: {
       maintainers: maintenance._count.maintainers,
     },

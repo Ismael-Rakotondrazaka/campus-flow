@@ -88,15 +88,16 @@ enum Gender {
 }
 
 model Lodgment {
-  id         Int            @id @default(autoincrement())
-  capacity   Int
-  floor      Int
-  roomNumber Int
-  buildingId Int
-  building   Building       @relation(fields: [buildingId], references: [id])
-  status     LodgmentStatus
-  students   Student[]
-  deletedAt  DateTime?
+  id           Int            @id @default(autoincrement())
+  capacity     Int
+  floor        Int
+  roomNumber   Int
+  buildingId   Int
+  building     Building       @relation(fields: [buildingId], references: [id])
+  status       LodgmentStatus
+  students     Student[]
+  maintenances Maintenance[]
+  deletedAt    DateTime?
 }
 
 enum LodgmentStatus {
@@ -160,6 +161,8 @@ model Maintenance {
   admin       Admin             @relation(fields: [adminId], references: [userId])
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @default(now())
+  lodgmentId  Int
+  lodgment    Lodgment          @relation(fields: [lodgmentId], references: [id])
   maintainers Maintainer[]
 }
 

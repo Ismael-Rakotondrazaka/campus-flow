@@ -15,11 +15,6 @@ export const createFullOne = async ({
       lodgment: {
         include: {
           building: true,
-          _count: {
-            select: {
-              students: true,
-            },
-          },
         },
       },
       _count: {

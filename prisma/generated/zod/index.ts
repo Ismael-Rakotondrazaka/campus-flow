@@ -28,7 +28,7 @@ export const ReservationScalarFieldEnumSchema = z.enum(['id','name','firstName',
 
 export const RenewalScalarFieldEnumSchema = z.enum(['id','studentId','phoneNumber','emergencyNumber','profileUrl','schoolCertificateUrl','NICURL','academicSessionId','status','createdAt','updatedAt','facultyId','adminId']);
 
-export const MaintenanceScalarFieldEnumSchema = z.enum(['id','type','description','status','adminId','createdAt','updatedAt']);
+export const MaintenanceScalarFieldEnumSchema = z.enum(['id','type','description','status','adminId','createdAt','updatedAt','lodgmentId']);
 
 export const MaintainerScalarFieldEnumSchema = z.enum(['id','name','firstName','phoneNumber','createdAt','updatedAt','deletedAt']);
 
@@ -230,6 +230,7 @@ export const MaintenanceSchema = z.object({
   adminId: z.number().int(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
+  lodgmentId: z.number().int(),
 })
 
 export type Maintenance = z.infer<typeof MaintenanceSchema>
@@ -489,6 +490,7 @@ export const StudentSelectSchema: z.ZodType<Prisma.StudentSelect> = z.object({
 export const LodgmentIncludeSchema: z.ZodType<Prisma.LodgmentInclude> = z.object({
   building: z.union([z.boolean(),z.lazy(() => BuildingArgsSchema)]).optional(),
   students: z.union([z.boolean(),z.lazy(() => StudentFindManyArgsSchema)]).optional(),
+  maintenances: z.union([z.boolean(),z.lazy(() => MaintenanceFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => LodgmentCountOutputTypeArgsSchema)]).optional(),
 }).strict()
 
@@ -503,6 +505,7 @@ export const LodgmentCountOutputTypeArgsSchema: z.ZodType<Prisma.LodgmentCountOu
 
 export const LodgmentCountOutputTypeSelectSchema: z.ZodType<Prisma.LodgmentCountOutputTypeSelect> = z.object({
   students: z.boolean().optional(),
+  maintenances: z.boolean().optional(),
 }).strict();
 
 export const LodgmentSelectSchema: z.ZodType<Prisma.LodgmentSelect> = z.object({
@@ -515,6 +518,7 @@ export const LodgmentSelectSchema: z.ZodType<Prisma.LodgmentSelect> = z.object({
   deletedAt: z.boolean().optional(),
   building: z.union([z.boolean(),z.lazy(() => BuildingArgsSchema)]).optional(),
   students: z.union([z.boolean(),z.lazy(() => StudentFindManyArgsSchema)]).optional(),
+  maintenances: z.union([z.boolean(),z.lazy(() => MaintenanceFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => LodgmentCountOutputTypeArgsSchema)]).optional(),
 }).strict()
 
@@ -596,6 +600,7 @@ export const RenewalSelectSchema: z.ZodType<Prisma.RenewalSelect> = z.object({
 
 export const MaintenanceIncludeSchema: z.ZodType<Prisma.MaintenanceInclude> = z.object({
   admin: z.union([z.boolean(),z.lazy(() => AdminArgsSchema)]).optional(),
+  lodgment: z.union([z.boolean(),z.lazy(() => LodgmentArgsSchema)]).optional(),
   maintainers: z.union([z.boolean(),z.lazy(() => MaintainerFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => MaintenanceCountOutputTypeArgsSchema)]).optional(),
 }).strict()
@@ -621,7 +626,9 @@ export const MaintenanceSelectSchema: z.ZodType<Prisma.MaintenanceSelect> = z.ob
   adminId: z.boolean().optional(),
   createdAt: z.boolean().optional(),
   updatedAt: z.boolean().optional(),
+  lodgmentId: z.boolean().optional(),
   admin: z.union([z.boolean(),z.lazy(() => AdminArgsSchema)]).optional(),
+  lodgment: z.union([z.boolean(),z.lazy(() => LodgmentArgsSchema)]).optional(),
   maintainers: z.union([z.boolean(),z.lazy(() => MaintainerFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => MaintenanceCountOutputTypeArgsSchema)]).optional(),
 }).strict()
@@ -1130,7 +1137,8 @@ export const LodgmentWhereInputSchema: z.ZodType<Prisma.LodgmentWhereInput> = z.
   status: z.union([ z.lazy(() => EnumLodgmentStatusFilterSchema),z.lazy(() => LodgmentStatusSchema) ]).optional(),
   deletedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
   building: z.union([ z.lazy(() => BuildingRelationFilterSchema),z.lazy(() => BuildingWhereInputSchema) ]).optional(),
-  students: z.lazy(() => StudentListRelationFilterSchema).optional()
+  students: z.lazy(() => StudentListRelationFilterSchema).optional(),
+  maintenances: z.lazy(() => MaintenanceListRelationFilterSchema).optional()
 }).strict();
 
 export const LodgmentOrderByWithRelationInputSchema: z.ZodType<Prisma.LodgmentOrderByWithRelationInput> = z.object({
@@ -1142,7 +1150,8 @@ export const LodgmentOrderByWithRelationInputSchema: z.ZodType<Prisma.LodgmentOr
   status: z.lazy(() => SortOrderSchema).optional(),
   deletedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   building: z.lazy(() => BuildingOrderByWithRelationInputSchema).optional(),
-  students: z.lazy(() => StudentOrderByRelationAggregateInputSchema).optional()
+  students: z.lazy(() => StudentOrderByRelationAggregateInputSchema).optional(),
+  maintenances: z.lazy(() => MaintenanceOrderByRelationAggregateInputSchema).optional()
 }).strict();
 
 export const LodgmentWhereUniqueInputSchema: z.ZodType<Prisma.LodgmentWhereUniqueInput> = z.object({
@@ -1160,7 +1169,8 @@ export const LodgmentWhereUniqueInputSchema: z.ZodType<Prisma.LodgmentWhereUniqu
   status: z.union([ z.lazy(() => EnumLodgmentStatusFilterSchema),z.lazy(() => LodgmentStatusSchema) ]).optional(),
   deletedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
   building: z.union([ z.lazy(() => BuildingRelationFilterSchema),z.lazy(() => BuildingWhereInputSchema) ]).optional(),
-  students: z.lazy(() => StudentListRelationFilterSchema).optional()
+  students: z.lazy(() => StudentListRelationFilterSchema).optional(),
+  maintenances: z.lazy(() => MaintenanceListRelationFilterSchema).optional()
 }).strict());
 
 export const LodgmentOrderByWithAggregationInputSchema: z.ZodType<Prisma.LodgmentOrderByWithAggregationInput> = z.object({
@@ -1461,7 +1471,9 @@ export const MaintenanceWhereInputSchema: z.ZodType<Prisma.MaintenanceWhereInput
   adminId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
+  lodgmentId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   admin: z.union([ z.lazy(() => AdminRelationFilterSchema),z.lazy(() => AdminWhereInputSchema) ]).optional(),
+  lodgment: z.union([ z.lazy(() => LodgmentRelationFilterSchema),z.lazy(() => LodgmentWhereInputSchema) ]).optional(),
   maintainers: z.lazy(() => MaintainerListRelationFilterSchema).optional()
 }).strict();
 
@@ -1473,7 +1485,9 @@ export const MaintenanceOrderByWithRelationInputSchema: z.ZodType<Prisma.Mainten
   adminId: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
+  lodgmentId: z.lazy(() => SortOrderSchema).optional(),
   admin: z.lazy(() => AdminOrderByWithRelationInputSchema).optional(),
+  lodgment: z.lazy(() => LodgmentOrderByWithRelationInputSchema).optional(),
   maintainers: z.lazy(() => MaintainerOrderByRelationAggregateInputSchema).optional()
 }).strict();
 
@@ -1491,7 +1505,9 @@ export const MaintenanceWhereUniqueInputSchema: z.ZodType<Prisma.MaintenanceWher
   adminId: z.union([ z.lazy(() => IntFilterSchema),z.number().int() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
+  lodgmentId: z.union([ z.lazy(() => IntFilterSchema),z.number().int() ]).optional(),
   admin: z.union([ z.lazy(() => AdminRelationFilterSchema),z.lazy(() => AdminWhereInputSchema) ]).optional(),
+  lodgment: z.union([ z.lazy(() => LodgmentRelationFilterSchema),z.lazy(() => LodgmentWhereInputSchema) ]).optional(),
   maintainers: z.lazy(() => MaintainerListRelationFilterSchema).optional()
 }).strict());
 
@@ -1503,6 +1519,7 @@ export const MaintenanceOrderByWithAggregationInputSchema: z.ZodType<Prisma.Main
   adminId: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
+  lodgmentId: z.lazy(() => SortOrderSchema).optional(),
   _count: z.lazy(() => MaintenanceCountOrderByAggregateInputSchema).optional(),
   _avg: z.lazy(() => MaintenanceAvgOrderByAggregateInputSchema).optional(),
   _max: z.lazy(() => MaintenanceMaxOrderByAggregateInputSchema).optional(),
@@ -1521,6 +1538,7 @@ export const MaintenanceScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.M
   adminId: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
+  lodgmentId: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
 }).strict();
 
 export const MaintainerWhereInputSchema: z.ZodType<Prisma.MaintainerWhereInput> = z.object({
@@ -2171,7 +2189,8 @@ export const LodgmentCreateInputSchema: z.ZodType<Prisma.LodgmentCreateInput> = 
   status: z.lazy(() => LodgmentStatusSchema),
   deletedAt: z.coerce.date().optional().nullable(),
   building: z.lazy(() => BuildingCreateNestedOneWithoutLodgmentsInputSchema),
-  students: z.lazy(() => StudentCreateNestedManyWithoutLodgmentInputSchema).optional()
+  students: z.lazy(() => StudentCreateNestedManyWithoutLodgmentInputSchema).optional(),
+  maintenances: z.lazy(() => MaintenanceCreateNestedManyWithoutLodgmentInputSchema).optional()
 }).strict();
 
 export const LodgmentUncheckedCreateInputSchema: z.ZodType<Prisma.LodgmentUncheckedCreateInput> = z.object({
@@ -2182,7 +2201,8 @@ export const LodgmentUncheckedCreateInputSchema: z.ZodType<Prisma.LodgmentUnchec
   buildingId: z.number().int(),
   status: z.lazy(() => LodgmentStatusSchema),
   deletedAt: z.coerce.date().optional().nullable(),
-  students: z.lazy(() => StudentUncheckedCreateNestedManyWithoutLodgmentInputSchema).optional()
+  students: z.lazy(() => StudentUncheckedCreateNestedManyWithoutLodgmentInputSchema).optional(),
+  maintenances: z.lazy(() => MaintenanceUncheckedCreateNestedManyWithoutLodgmentInputSchema).optional()
 }).strict();
 
 export const LodgmentUpdateInputSchema: z.ZodType<Prisma.LodgmentUpdateInput> = z.object({
@@ -2192,7 +2212,8 @@ export const LodgmentUpdateInputSchema: z.ZodType<Prisma.LodgmentUpdateInput> = 
   status: z.union([ z.lazy(() => LodgmentStatusSchema),z.lazy(() => EnumLodgmentStatusFieldUpdateOperationsInputSchema) ]).optional(),
   deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   building: z.lazy(() => BuildingUpdateOneRequiredWithoutLodgmentsNestedInputSchema).optional(),
-  students: z.lazy(() => StudentUpdateManyWithoutLodgmentNestedInputSchema).optional()
+  students: z.lazy(() => StudentUpdateManyWithoutLodgmentNestedInputSchema).optional(),
+  maintenances: z.lazy(() => MaintenanceUpdateManyWithoutLodgmentNestedInputSchema).optional()
 }).strict();
 
 export const LodgmentUncheckedUpdateInputSchema: z.ZodType<Prisma.LodgmentUncheckedUpdateInput> = z.object({
@@ -2203,7 +2224,8 @@ export const LodgmentUncheckedUpdateInputSchema: z.ZodType<Prisma.LodgmentUnchec
   buildingId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => LodgmentStatusSchema),z.lazy(() => EnumLodgmentStatusFieldUpdateOperationsInputSchema) ]).optional(),
   deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  students: z.lazy(() => StudentUncheckedUpdateManyWithoutLodgmentNestedInputSchema).optional()
+  students: z.lazy(() => StudentUncheckedUpdateManyWithoutLodgmentNestedInputSchema).optional(),
+  maintenances: z.lazy(() => MaintenanceUncheckedUpdateManyWithoutLodgmentNestedInputSchema).optional()
 }).strict();
 
 export const LodgmentCreateManyInputSchema: z.ZodType<Prisma.LodgmentCreateManyInput> = z.object({
@@ -2487,6 +2509,7 @@ export const MaintenanceCreateInputSchema: z.ZodType<Prisma.MaintenanceCreateInp
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   admin: z.lazy(() => AdminCreateNestedOneWithoutMaintenancesInputSchema),
+  lodgment: z.lazy(() => LodgmentCreateNestedOneWithoutMaintenancesInputSchema),
   maintainers: z.lazy(() => MaintainerCreateNestedManyWithoutMaintenancesInputSchema).optional()
 }).strict();
 
@@ -2498,6 +2521,7 @@ export const MaintenanceUncheckedCreateInputSchema: z.ZodType<Prisma.Maintenance
   adminId: z.number().int(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
+  lodgmentId: z.number().int(),
   maintainers: z.lazy(() => MaintainerUncheckedCreateNestedManyWithoutMaintenancesInputSchema).optional()
 }).strict();
 
@@ -2508,6 +2532,7 @@ export const MaintenanceUpdateInputSchema: z.ZodType<Prisma.MaintenanceUpdateInp
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   admin: z.lazy(() => AdminUpdateOneRequiredWithoutMaintenancesNestedInputSchema).optional(),
+  lodgment: z.lazy(() => LodgmentUpdateOneRequiredWithoutMaintenancesNestedInputSchema).optional(),
   maintainers: z.lazy(() => MaintainerUpdateManyWithoutMaintenancesNestedInputSchema).optional()
 }).strict();
 
@@ -2519,6 +2544,7 @@ export const MaintenanceUncheckedUpdateInputSchema: z.ZodType<Prisma.Maintenance
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  lodgmentId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   maintainers: z.lazy(() => MaintainerUncheckedUpdateManyWithoutMaintenancesNestedInputSchema).optional()
 }).strict();
 
@@ -2529,7 +2555,8 @@ export const MaintenanceCreateManyInputSchema: z.ZodType<Prisma.MaintenanceCreat
   status: z.lazy(() => MaintenanceStatusSchema),
   adminId: z.number().int(),
   createdAt: z.coerce.date().optional(),
-  updatedAt: z.coerce.date().optional()
+  updatedAt: z.coerce.date().optional(),
+  lodgmentId: z.number().int()
 }).strict();
 
 export const MaintenanceUpdateManyMutationInputSchema: z.ZodType<Prisma.MaintenanceUpdateManyMutationInput> = z.object({
@@ -2548,6 +2575,7 @@ export const MaintenanceUncheckedUpdateManyInputSchema: z.ZodType<Prisma.Mainten
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  lodgmentId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
 export const MaintainerCreateInputSchema: z.ZodType<Prisma.MaintainerCreateInput> = z.object({
@@ -3593,12 +3621,14 @@ export const MaintenanceCountOrderByAggregateInputSchema: z.ZodType<Prisma.Maint
   status: z.lazy(() => SortOrderSchema).optional(),
   adminId: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
-  updatedAt: z.lazy(() => SortOrderSchema).optional()
+  updatedAt: z.lazy(() => SortOrderSchema).optional(),
+  lodgmentId: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const MaintenanceAvgOrderByAggregateInputSchema: z.ZodType<Prisma.MaintenanceAvgOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
-  adminId: z.lazy(() => SortOrderSchema).optional()
+  adminId: z.lazy(() => SortOrderSchema).optional(),
+  lodgmentId: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const MaintenanceMaxOrderByAggregateInputSchema: z.ZodType<Prisma.MaintenanceMaxOrderByAggregateInput> = z.object({
@@ -3608,7 +3638,8 @@ export const MaintenanceMaxOrderByAggregateInputSchema: z.ZodType<Prisma.Mainten
   status: z.lazy(() => SortOrderSchema).optional(),
   adminId: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
-  updatedAt: z.lazy(() => SortOrderSchema).optional()
+  updatedAt: z.lazy(() => SortOrderSchema).optional(),
+  lodgmentId: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const MaintenanceMinOrderByAggregateInputSchema: z.ZodType<Prisma.MaintenanceMinOrderByAggregateInput> = z.object({
@@ -3618,12 +3649,14 @@ export const MaintenanceMinOrderByAggregateInputSchema: z.ZodType<Prisma.Mainten
   status: z.lazy(() => SortOrderSchema).optional(),
   adminId: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
-  updatedAt: z.lazy(() => SortOrderSchema).optional()
+  updatedAt: z.lazy(() => SortOrderSchema).optional(),
+  lodgmentId: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const MaintenanceSumOrderByAggregateInputSchema: z.ZodType<Prisma.MaintenanceSumOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
-  adminId: z.lazy(() => SortOrderSchema).optional()
+  adminId: z.lazy(() => SortOrderSchema).optional(),
+  lodgmentId: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const EnumMaintenanceTypeWithAggregatesFilterSchema: z.ZodType<Prisma.EnumMaintenanceTypeWithAggregatesFilter> = z.object({
@@ -4405,11 +4438,25 @@ export const StudentCreateNestedManyWithoutLodgmentInputSchema: z.ZodType<Prisma
   connect: z.union([ z.lazy(() => StudentWhereUniqueInputSchema),z.lazy(() => StudentWhereUniqueInputSchema).array() ]).optional(),
 }).strict();
 
+export const MaintenanceCreateNestedManyWithoutLodgmentInputSchema: z.ZodType<Prisma.MaintenanceCreateNestedManyWithoutLodgmentInput> = z.object({
+  create: z.union([ z.lazy(() => MaintenanceCreateWithoutLodgmentInputSchema),z.lazy(() => MaintenanceCreateWithoutLodgmentInputSchema).array(),z.lazy(() => MaintenanceUncheckedCreateWithoutLodgmentInputSchema),z.lazy(() => MaintenanceUncheckedCreateWithoutLodgmentInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => MaintenanceCreateOrConnectWithoutLodgmentInputSchema),z.lazy(() => MaintenanceCreateOrConnectWithoutLodgmentInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => MaintenanceCreateManyLodgmentInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => MaintenanceWhereUniqueInputSchema),z.lazy(() => MaintenanceWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
 export const StudentUncheckedCreateNestedManyWithoutLodgmentInputSchema: z.ZodType<Prisma.StudentUncheckedCreateNestedManyWithoutLodgmentInput> = z.object({
   create: z.union([ z.lazy(() => StudentCreateWithoutLodgmentInputSchema),z.lazy(() => StudentCreateWithoutLodgmentInputSchema).array(),z.lazy(() => StudentUncheckedCreateWithoutLodgmentInputSchema),z.lazy(() => StudentUncheckedCreateWithoutLodgmentInputSchema).array() ]).optional(),
   connectOrCreate: z.union([ z.lazy(() => StudentCreateOrConnectWithoutLodgmentInputSchema),z.lazy(() => StudentCreateOrConnectWithoutLodgmentInputSchema).array() ]).optional(),
   createMany: z.lazy(() => StudentCreateManyLodgmentInputEnvelopeSchema).optional(),
   connect: z.union([ z.lazy(() => StudentWhereUniqueInputSchema),z.lazy(() => StudentWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
+export const MaintenanceUncheckedCreateNestedManyWithoutLodgmentInputSchema: z.ZodType<Prisma.MaintenanceUncheckedCreateNestedManyWithoutLodgmentInput> = z.object({
+  create: z.union([ z.lazy(() => MaintenanceCreateWithoutLodgmentInputSchema),z.lazy(() => MaintenanceCreateWithoutLodgmentInputSchema).array(),z.lazy(() => MaintenanceUncheckedCreateWithoutLodgmentInputSchema),z.lazy(() => MaintenanceUncheckedCreateWithoutLodgmentInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => MaintenanceCreateOrConnectWithoutLodgmentInputSchema),z.lazy(() => MaintenanceCreateOrConnectWithoutLodgmentInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => MaintenanceCreateManyLodgmentInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => MaintenanceWhereUniqueInputSchema),z.lazy(() => MaintenanceWhereUniqueInputSchema).array() ]).optional(),
 }).strict();
 
 export const EnumLodgmentStatusFieldUpdateOperationsInputSchema: z.ZodType<Prisma.EnumLodgmentStatusFieldUpdateOperationsInput> = z.object({
@@ -4438,6 +4485,20 @@ export const StudentUpdateManyWithoutLodgmentNestedInputSchema: z.ZodType<Prisma
   deleteMany: z.union([ z.lazy(() => StudentScalarWhereInputSchema),z.lazy(() => StudentScalarWhereInputSchema).array() ]).optional(),
 }).strict();
 
+export const MaintenanceUpdateManyWithoutLodgmentNestedInputSchema: z.ZodType<Prisma.MaintenanceUpdateManyWithoutLodgmentNestedInput> = z.object({
+  create: z.union([ z.lazy(() => MaintenanceCreateWithoutLodgmentInputSchema),z.lazy(() => MaintenanceCreateWithoutLodgmentInputSchema).array(),z.lazy(() => MaintenanceUncheckedCreateWithoutLodgmentInputSchema),z.lazy(() => MaintenanceUncheckedCreateWithoutLodgmentInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => MaintenanceCreateOrConnectWithoutLodgmentInputSchema),z.lazy(() => MaintenanceCreateOrConnectWithoutLodgmentInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => MaintenanceUpsertWithWhereUniqueWithoutLodgmentInputSchema),z.lazy(() => MaintenanceUpsertWithWhereUniqueWithoutLodgmentInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => MaintenanceCreateManyLodgmentInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => MaintenanceWhereUniqueInputSchema),z.lazy(() => MaintenanceWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => MaintenanceWhereUniqueInputSchema),z.lazy(() => MaintenanceWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => MaintenanceWhereUniqueInputSchema),z.lazy(() => MaintenanceWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => MaintenanceWhereUniqueInputSchema),z.lazy(() => MaintenanceWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => MaintenanceUpdateWithWhereUniqueWithoutLodgmentInputSchema),z.lazy(() => MaintenanceUpdateWithWhereUniqueWithoutLodgmentInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => MaintenanceUpdateManyWithWhereWithoutLodgmentInputSchema),z.lazy(() => MaintenanceUpdateManyWithWhereWithoutLodgmentInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => MaintenanceScalarWhereInputSchema),z.lazy(() => MaintenanceScalarWhereInputSchema).array() ]).optional(),
+}).strict();
+
 export const StudentUncheckedUpdateManyWithoutLodgmentNestedInputSchema: z.ZodType<Prisma.StudentUncheckedUpdateManyWithoutLodgmentNestedInput> = z.object({
   create: z.union([ z.lazy(() => StudentCreateWithoutLodgmentInputSchema),z.lazy(() => StudentCreateWithoutLodgmentInputSchema).array(),z.lazy(() => StudentUncheckedCreateWithoutLodgmentInputSchema),z.lazy(() => StudentUncheckedCreateWithoutLodgmentInputSchema).array() ]).optional(),
   connectOrCreate: z.union([ z.lazy(() => StudentCreateOrConnectWithoutLodgmentInputSchema),z.lazy(() => StudentCreateOrConnectWithoutLodgmentInputSchema).array() ]).optional(),
@@ -4450,6 +4511,20 @@ export const StudentUncheckedUpdateManyWithoutLodgmentNestedInputSchema: z.ZodTy
   update: z.union([ z.lazy(() => StudentUpdateWithWhereUniqueWithoutLodgmentInputSchema),z.lazy(() => StudentUpdateWithWhereUniqueWithoutLodgmentInputSchema).array() ]).optional(),
   updateMany: z.union([ z.lazy(() => StudentUpdateManyWithWhereWithoutLodgmentInputSchema),z.lazy(() => StudentUpdateManyWithWhereWithoutLodgmentInputSchema).array() ]).optional(),
   deleteMany: z.union([ z.lazy(() => StudentScalarWhereInputSchema),z.lazy(() => StudentScalarWhereInputSchema).array() ]).optional(),
+}).strict();
+
+export const MaintenanceUncheckedUpdateManyWithoutLodgmentNestedInputSchema: z.ZodType<Prisma.MaintenanceUncheckedUpdateManyWithoutLodgmentNestedInput> = z.object({
+  create: z.union([ z.lazy(() => MaintenanceCreateWithoutLodgmentInputSchema),z.lazy(() => MaintenanceCreateWithoutLodgmentInputSchema).array(),z.lazy(() => MaintenanceUncheckedCreateWithoutLodgmentInputSchema),z.lazy(() => MaintenanceUncheckedCreateWithoutLodgmentInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => MaintenanceCreateOrConnectWithoutLodgmentInputSchema),z.lazy(() => MaintenanceCreateOrConnectWithoutLodgmentInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => MaintenanceUpsertWithWhereUniqueWithoutLodgmentInputSchema),z.lazy(() => MaintenanceUpsertWithWhereUniqueWithoutLodgmentInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => MaintenanceCreateManyLodgmentInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => MaintenanceWhereUniqueInputSchema),z.lazy(() => MaintenanceWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => MaintenanceWhereUniqueInputSchema),z.lazy(() => MaintenanceWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => MaintenanceWhereUniqueInputSchema),z.lazy(() => MaintenanceWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => MaintenanceWhereUniqueInputSchema),z.lazy(() => MaintenanceWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => MaintenanceUpdateWithWhereUniqueWithoutLodgmentInputSchema),z.lazy(() => MaintenanceUpdateWithWhereUniqueWithoutLodgmentInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => MaintenanceUpdateManyWithWhereWithoutLodgmentInputSchema),z.lazy(() => MaintenanceUpdateManyWithWhereWithoutLodgmentInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => MaintenanceScalarWhereInputSchema),z.lazy(() => MaintenanceScalarWhereInputSchema).array() ]).optional(),
 }).strict();
 
 export const FacultyCreateNestedOneWithoutReservationsInputSchema: z.ZodType<Prisma.FacultyCreateNestedOneWithoutReservationsInput> = z.object({
@@ -4574,6 +4649,12 @@ export const AdminCreateNestedOneWithoutMaintenancesInputSchema: z.ZodType<Prism
   connect: z.lazy(() => AdminWhereUniqueInputSchema).optional()
 }).strict();
 
+export const LodgmentCreateNestedOneWithoutMaintenancesInputSchema: z.ZodType<Prisma.LodgmentCreateNestedOneWithoutMaintenancesInput> = z.object({
+  create: z.union([ z.lazy(() => LodgmentCreateWithoutMaintenancesInputSchema),z.lazy(() => LodgmentUncheckedCreateWithoutMaintenancesInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => LodgmentCreateOrConnectWithoutMaintenancesInputSchema).optional(),
+  connect: z.lazy(() => LodgmentWhereUniqueInputSchema).optional()
+}).strict();
+
 export const MaintainerCreateNestedManyWithoutMaintenancesInputSchema: z.ZodType<Prisma.MaintainerCreateNestedManyWithoutMaintenancesInput> = z.object({
   create: z.union([ z.lazy(() => MaintainerCreateWithoutMaintenancesInputSchema),z.lazy(() => MaintainerCreateWithoutMaintenancesInputSchema).array(),z.lazy(() => MaintainerUncheckedCreateWithoutMaintenancesInputSchema),z.lazy(() => MaintainerUncheckedCreateWithoutMaintenancesInputSchema).array() ]).optional(),
   connectOrCreate: z.union([ z.lazy(() => MaintainerCreateOrConnectWithoutMaintenancesInputSchema),z.lazy(() => MaintainerCreateOrConnectWithoutMaintenancesInputSchema).array() ]).optional(),
@@ -4604,6 +4685,14 @@ export const AdminUpdateOneRequiredWithoutMaintenancesNestedInputSchema: z.ZodTy
   upsert: z.lazy(() => AdminUpsertWithoutMaintenancesInputSchema).optional(),
   connect: z.lazy(() => AdminWhereUniqueInputSchema).optional(),
   update: z.union([ z.lazy(() => AdminUpdateToOneWithWhereWithoutMaintenancesInputSchema),z.lazy(() => AdminUpdateWithoutMaintenancesInputSchema),z.lazy(() => AdminUncheckedUpdateWithoutMaintenancesInputSchema) ]).optional(),
+}).strict();
+
+export const LodgmentUpdateOneRequiredWithoutMaintenancesNestedInputSchema: z.ZodType<Prisma.LodgmentUpdateOneRequiredWithoutMaintenancesNestedInput> = z.object({
+  create: z.union([ z.lazy(() => LodgmentCreateWithoutMaintenancesInputSchema),z.lazy(() => LodgmentUncheckedCreateWithoutMaintenancesInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => LodgmentCreateOrConnectWithoutMaintenancesInputSchema).optional(),
+  upsert: z.lazy(() => LodgmentUpsertWithoutMaintenancesInputSchema).optional(),
+  connect: z.lazy(() => LodgmentWhereUniqueInputSchema).optional(),
+  update: z.union([ z.lazy(() => LodgmentUpdateToOneWithWhereWithoutMaintenancesInputSchema),z.lazy(() => LodgmentUpdateWithoutMaintenancesInputSchema),z.lazy(() => LodgmentUncheckedUpdateWithoutMaintenancesInputSchema) ]).optional(),
 }).strict();
 
 export const MaintainerUpdateManyWithoutMaintenancesNestedInputSchema: z.ZodType<Prisma.MaintainerUpdateManyWithoutMaintenancesNestedInput> = z.object({
@@ -5454,6 +5543,7 @@ export const MaintenanceCreateWithoutAdminInputSchema: z.ZodType<Prisma.Maintena
   status: z.lazy(() => MaintenanceStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
+  lodgment: z.lazy(() => LodgmentCreateNestedOneWithoutMaintenancesInputSchema),
   maintainers: z.lazy(() => MaintainerCreateNestedManyWithoutMaintenancesInputSchema).optional()
 }).strict();
 
@@ -5464,6 +5554,7 @@ export const MaintenanceUncheckedCreateWithoutAdminInputSchema: z.ZodType<Prisma
   status: z.lazy(() => MaintenanceStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
+  lodgmentId: z.number().int(),
   maintainers: z.lazy(() => MaintainerUncheckedCreateNestedManyWithoutMaintenancesInputSchema).optional()
 }).strict();
 
@@ -5621,6 +5712,7 @@ export const MaintenanceScalarWhereInputSchema: z.ZodType<Prisma.MaintenanceScal
   adminId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
+  lodgmentId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
 }).strict();
 
 export const UserCreateWithoutRefreshTokensInputSchema: z.ZodType<Prisma.UserCreateWithoutRefreshTokensInput> = z.object({
@@ -5979,7 +6071,8 @@ export const LodgmentCreateWithoutStudentsInputSchema: z.ZodType<Prisma.Lodgment
   roomNumber: z.number().int(),
   status: z.lazy(() => LodgmentStatusSchema),
   deletedAt: z.coerce.date().optional().nullable(),
-  building: z.lazy(() => BuildingCreateNestedOneWithoutLodgmentsInputSchema)
+  building: z.lazy(() => BuildingCreateNestedOneWithoutLodgmentsInputSchema),
+  maintenances: z.lazy(() => MaintenanceCreateNestedManyWithoutLodgmentInputSchema).optional()
 }).strict();
 
 export const LodgmentUncheckedCreateWithoutStudentsInputSchema: z.ZodType<Prisma.LodgmentUncheckedCreateWithoutStudentsInput> = z.object({
@@ -5989,7 +6082,8 @@ export const LodgmentUncheckedCreateWithoutStudentsInputSchema: z.ZodType<Prisma
   roomNumber: z.number().int(),
   buildingId: z.number().int(),
   status: z.lazy(() => LodgmentStatusSchema),
-  deletedAt: z.coerce.date().optional().nullable()
+  deletedAt: z.coerce.date().optional().nullable(),
+  maintenances: z.lazy(() => MaintenanceUncheckedCreateNestedManyWithoutLodgmentInputSchema).optional()
 }).strict();
 
 export const LodgmentCreateOrConnectWithoutStudentsInputSchema: z.ZodType<Prisma.LodgmentCreateOrConnectWithoutStudentsInput> = z.object({
@@ -6096,7 +6190,8 @@ export const LodgmentUpdateWithoutStudentsInputSchema: z.ZodType<Prisma.Lodgment
   roomNumber: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => LodgmentStatusSchema),z.lazy(() => EnumLodgmentStatusFieldUpdateOperationsInputSchema) ]).optional(),
   deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  building: z.lazy(() => BuildingUpdateOneRequiredWithoutLodgmentsNestedInputSchema).optional()
+  building: z.lazy(() => BuildingUpdateOneRequiredWithoutLodgmentsNestedInputSchema).optional(),
+  maintenances: z.lazy(() => MaintenanceUpdateManyWithoutLodgmentNestedInputSchema).optional()
 }).strict();
 
 export const LodgmentUncheckedUpdateWithoutStudentsInputSchema: z.ZodType<Prisma.LodgmentUncheckedUpdateWithoutStudentsInput> = z.object({
@@ -6107,6 +6202,7 @@ export const LodgmentUncheckedUpdateWithoutStudentsInputSchema: z.ZodType<Prisma
   buildingId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => LodgmentStatusSchema),z.lazy(() => EnumLodgmentStatusFieldUpdateOperationsInputSchema) ]).optional(),
   deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  maintenances: z.lazy(() => MaintenanceUncheckedUpdateManyWithoutLodgmentNestedInputSchema).optional()
 }).strict();
 
 export const BuildingCreateWithoutLodgmentsInputSchema: z.ZodType<Prisma.BuildingCreateWithoutLodgmentsInput> = z.object({
@@ -6157,6 +6253,37 @@ export const StudentCreateManyLodgmentInputEnvelopeSchema: z.ZodType<Prisma.Stud
   skipDuplicates: z.boolean().optional()
 }).strict();
 
+export const MaintenanceCreateWithoutLodgmentInputSchema: z.ZodType<Prisma.MaintenanceCreateWithoutLodgmentInput> = z.object({
+  type: z.lazy(() => MaintenanceTypeSchema),
+  description: z.string().optional().nullable(),
+  status: z.lazy(() => MaintenanceStatusSchema),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
+  admin: z.lazy(() => AdminCreateNestedOneWithoutMaintenancesInputSchema),
+  maintainers: z.lazy(() => MaintainerCreateNestedManyWithoutMaintenancesInputSchema).optional()
+}).strict();
+
+export const MaintenanceUncheckedCreateWithoutLodgmentInputSchema: z.ZodType<Prisma.MaintenanceUncheckedCreateWithoutLodgmentInput> = z.object({
+  id: z.number().int().optional(),
+  type: z.lazy(() => MaintenanceTypeSchema),
+  description: z.string().optional().nullable(),
+  status: z.lazy(() => MaintenanceStatusSchema),
+  adminId: z.number().int(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
+  maintainers: z.lazy(() => MaintainerUncheckedCreateNestedManyWithoutMaintenancesInputSchema).optional()
+}).strict();
+
+export const MaintenanceCreateOrConnectWithoutLodgmentInputSchema: z.ZodType<Prisma.MaintenanceCreateOrConnectWithoutLodgmentInput> = z.object({
+  where: z.lazy(() => MaintenanceWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => MaintenanceCreateWithoutLodgmentInputSchema),z.lazy(() => MaintenanceUncheckedCreateWithoutLodgmentInputSchema) ]),
+}).strict();
+
+export const MaintenanceCreateManyLodgmentInputEnvelopeSchema: z.ZodType<Prisma.MaintenanceCreateManyLodgmentInputEnvelope> = z.object({
+  data: z.union([ z.lazy(() => MaintenanceCreateManyLodgmentInputSchema),z.lazy(() => MaintenanceCreateManyLodgmentInputSchema).array() ]),
+  skipDuplicates: z.boolean().optional()
+}).strict();
+
 export const BuildingUpsertWithoutLodgmentsInputSchema: z.ZodType<Prisma.BuildingUpsertWithoutLodgmentsInput> = z.object({
   update: z.union([ z.lazy(() => BuildingUpdateWithoutLodgmentsInputSchema),z.lazy(() => BuildingUncheckedUpdateWithoutLodgmentsInputSchema) ]),
   create: z.union([ z.lazy(() => BuildingCreateWithoutLodgmentsInputSchema),z.lazy(() => BuildingUncheckedCreateWithoutLodgmentsInputSchema) ]),
@@ -6195,6 +6322,22 @@ export const StudentUpdateWithWhereUniqueWithoutLodgmentInputSchema: z.ZodType<P
 export const StudentUpdateManyWithWhereWithoutLodgmentInputSchema: z.ZodType<Prisma.StudentUpdateManyWithWhereWithoutLodgmentInput> = z.object({
   where: z.lazy(() => StudentScalarWhereInputSchema),
   data: z.union([ z.lazy(() => StudentUpdateManyMutationInputSchema),z.lazy(() => StudentUncheckedUpdateManyWithoutLodgmentInputSchema) ]),
+}).strict();
+
+export const MaintenanceUpsertWithWhereUniqueWithoutLodgmentInputSchema: z.ZodType<Prisma.MaintenanceUpsertWithWhereUniqueWithoutLodgmentInput> = z.object({
+  where: z.lazy(() => MaintenanceWhereUniqueInputSchema),
+  update: z.union([ z.lazy(() => MaintenanceUpdateWithoutLodgmentInputSchema),z.lazy(() => MaintenanceUncheckedUpdateWithoutLodgmentInputSchema) ]),
+  create: z.union([ z.lazy(() => MaintenanceCreateWithoutLodgmentInputSchema),z.lazy(() => MaintenanceUncheckedCreateWithoutLodgmentInputSchema) ]),
+}).strict();
+
+export const MaintenanceUpdateWithWhereUniqueWithoutLodgmentInputSchema: z.ZodType<Prisma.MaintenanceUpdateWithWhereUniqueWithoutLodgmentInput> = z.object({
+  where: z.lazy(() => MaintenanceWhereUniqueInputSchema),
+  data: z.union([ z.lazy(() => MaintenanceUpdateWithoutLodgmentInputSchema),z.lazy(() => MaintenanceUncheckedUpdateWithoutLodgmentInputSchema) ]),
+}).strict();
+
+export const MaintenanceUpdateManyWithWhereWithoutLodgmentInputSchema: z.ZodType<Prisma.MaintenanceUpdateManyWithWhereWithoutLodgmentInput> = z.object({
+  where: z.lazy(() => MaintenanceScalarWhereInputSchema),
+  data: z.union([ z.lazy(() => MaintenanceUpdateManyMutationInputSchema),z.lazy(() => MaintenanceUncheckedUpdateManyWithoutLodgmentInputSchema) ]),
 }).strict();
 
 export const FacultyCreateWithoutReservationsInputSchema: z.ZodType<Prisma.FacultyCreateWithoutReservationsInput> = z.object({
@@ -6536,6 +6679,32 @@ export const AdminCreateOrConnectWithoutMaintenancesInputSchema: z.ZodType<Prism
   create: z.union([ z.lazy(() => AdminCreateWithoutMaintenancesInputSchema),z.lazy(() => AdminUncheckedCreateWithoutMaintenancesInputSchema) ]),
 }).strict();
 
+export const LodgmentCreateWithoutMaintenancesInputSchema: z.ZodType<Prisma.LodgmentCreateWithoutMaintenancesInput> = z.object({
+  capacity: z.number().int(),
+  floor: z.number().int(),
+  roomNumber: z.number().int(),
+  status: z.lazy(() => LodgmentStatusSchema),
+  deletedAt: z.coerce.date().optional().nullable(),
+  building: z.lazy(() => BuildingCreateNestedOneWithoutLodgmentsInputSchema),
+  students: z.lazy(() => StudentCreateNestedManyWithoutLodgmentInputSchema).optional()
+}).strict();
+
+export const LodgmentUncheckedCreateWithoutMaintenancesInputSchema: z.ZodType<Prisma.LodgmentUncheckedCreateWithoutMaintenancesInput> = z.object({
+  id: z.number().int().optional(),
+  capacity: z.number().int(),
+  floor: z.number().int(),
+  roomNumber: z.number().int(),
+  buildingId: z.number().int(),
+  status: z.lazy(() => LodgmentStatusSchema),
+  deletedAt: z.coerce.date().optional().nullable(),
+  students: z.lazy(() => StudentUncheckedCreateNestedManyWithoutLodgmentInputSchema).optional()
+}).strict();
+
+export const LodgmentCreateOrConnectWithoutMaintenancesInputSchema: z.ZodType<Prisma.LodgmentCreateOrConnectWithoutMaintenancesInput> = z.object({
+  where: z.lazy(() => LodgmentWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => LodgmentCreateWithoutMaintenancesInputSchema),z.lazy(() => LodgmentUncheckedCreateWithoutMaintenancesInputSchema) ]),
+}).strict();
+
 export const MaintainerCreateWithoutMaintenancesInputSchema: z.ZodType<Prisma.MaintainerCreateWithoutMaintenancesInput> = z.object({
   name: z.string(),
   firstName: z.string(),
@@ -6585,6 +6754,38 @@ export const AdminUncheckedUpdateWithoutMaintenancesInputSchema: z.ZodType<Prism
   reservations: z.lazy(() => ReservationUncheckedUpdateManyWithoutAdminNestedInputSchema).optional()
 }).strict();
 
+export const LodgmentUpsertWithoutMaintenancesInputSchema: z.ZodType<Prisma.LodgmentUpsertWithoutMaintenancesInput> = z.object({
+  update: z.union([ z.lazy(() => LodgmentUpdateWithoutMaintenancesInputSchema),z.lazy(() => LodgmentUncheckedUpdateWithoutMaintenancesInputSchema) ]),
+  create: z.union([ z.lazy(() => LodgmentCreateWithoutMaintenancesInputSchema),z.lazy(() => LodgmentUncheckedCreateWithoutMaintenancesInputSchema) ]),
+  where: z.lazy(() => LodgmentWhereInputSchema).optional()
+}).strict();
+
+export const LodgmentUpdateToOneWithWhereWithoutMaintenancesInputSchema: z.ZodType<Prisma.LodgmentUpdateToOneWithWhereWithoutMaintenancesInput> = z.object({
+  where: z.lazy(() => LodgmentWhereInputSchema).optional(),
+  data: z.union([ z.lazy(() => LodgmentUpdateWithoutMaintenancesInputSchema),z.lazy(() => LodgmentUncheckedUpdateWithoutMaintenancesInputSchema) ]),
+}).strict();
+
+export const LodgmentUpdateWithoutMaintenancesInputSchema: z.ZodType<Prisma.LodgmentUpdateWithoutMaintenancesInput> = z.object({
+  capacity: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  floor: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  roomNumber: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  status: z.union([ z.lazy(() => LodgmentStatusSchema),z.lazy(() => EnumLodgmentStatusFieldUpdateOperationsInputSchema) ]).optional(),
+  deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  building: z.lazy(() => BuildingUpdateOneRequiredWithoutLodgmentsNestedInputSchema).optional(),
+  students: z.lazy(() => StudentUpdateManyWithoutLodgmentNestedInputSchema).optional()
+}).strict();
+
+export const LodgmentUncheckedUpdateWithoutMaintenancesInputSchema: z.ZodType<Prisma.LodgmentUncheckedUpdateWithoutMaintenancesInput> = z.object({
+  id: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  capacity: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  floor: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  roomNumber: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  buildingId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  status: z.union([ z.lazy(() => LodgmentStatusSchema),z.lazy(() => EnumLodgmentStatusFieldUpdateOperationsInputSchema) ]).optional(),
+  deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  students: z.lazy(() => StudentUncheckedUpdateManyWithoutLodgmentNestedInputSchema).optional()
+}).strict();
+
 export const MaintainerUpsertWithWhereUniqueWithoutMaintenancesInputSchema: z.ZodType<Prisma.MaintainerUpsertWithWhereUniqueWithoutMaintenancesInput> = z.object({
   where: z.lazy(() => MaintainerWhereUniqueInputSchema),
   update: z.union([ z.lazy(() => MaintainerUpdateWithoutMaintenancesInputSchema),z.lazy(() => MaintainerUncheckedUpdateWithoutMaintenancesInputSchema) ]),
@@ -6620,7 +6821,8 @@ export const MaintenanceCreateWithoutMaintainersInputSchema: z.ZodType<Prisma.Ma
   status: z.lazy(() => MaintenanceStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  admin: z.lazy(() => AdminCreateNestedOneWithoutMaintenancesInputSchema)
+  admin: z.lazy(() => AdminCreateNestedOneWithoutMaintenancesInputSchema),
+  lodgment: z.lazy(() => LodgmentCreateNestedOneWithoutMaintenancesInputSchema)
 }).strict();
 
 export const MaintenanceUncheckedCreateWithoutMaintainersInputSchema: z.ZodType<Prisma.MaintenanceUncheckedCreateWithoutMaintainersInput> = z.object({
@@ -6630,7 +6832,8 @@ export const MaintenanceUncheckedCreateWithoutMaintainersInputSchema: z.ZodType<
   status: z.lazy(() => MaintenanceStatusSchema),
   adminId: z.number().int(),
   createdAt: z.coerce.date().optional(),
-  updatedAt: z.coerce.date().optional()
+  updatedAt: z.coerce.date().optional(),
+  lodgmentId: z.number().int()
 }).strict();
 
 export const MaintenanceCreateOrConnectWithoutMaintainersInputSchema: z.ZodType<Prisma.MaintenanceCreateOrConnectWithoutMaintainersInput> = z.object({
@@ -6780,7 +6983,8 @@ export const LodgmentCreateWithoutBuildingInputSchema: z.ZodType<Prisma.Lodgment
   roomNumber: z.number().int(),
   status: z.lazy(() => LodgmentStatusSchema),
   deletedAt: z.coerce.date().optional().nullable(),
-  students: z.lazy(() => StudentCreateNestedManyWithoutLodgmentInputSchema).optional()
+  students: z.lazy(() => StudentCreateNestedManyWithoutLodgmentInputSchema).optional(),
+  maintenances: z.lazy(() => MaintenanceCreateNestedManyWithoutLodgmentInputSchema).optional()
 }).strict();
 
 export const LodgmentUncheckedCreateWithoutBuildingInputSchema: z.ZodType<Prisma.LodgmentUncheckedCreateWithoutBuildingInput> = z.object({
@@ -6790,7 +6994,8 @@ export const LodgmentUncheckedCreateWithoutBuildingInputSchema: z.ZodType<Prisma
   roomNumber: z.number().int(),
   status: z.lazy(() => LodgmentStatusSchema),
   deletedAt: z.coerce.date().optional().nullable(),
-  students: z.lazy(() => StudentUncheckedCreateNestedManyWithoutLodgmentInputSchema).optional()
+  students: z.lazy(() => StudentUncheckedCreateNestedManyWithoutLodgmentInputSchema).optional(),
+  maintenances: z.lazy(() => MaintenanceUncheckedCreateNestedManyWithoutLodgmentInputSchema).optional()
 }).strict();
 
 export const LodgmentCreateOrConnectWithoutBuildingInputSchema: z.ZodType<Prisma.LodgmentCreateOrConnectWithoutBuildingInput> = z.object({
@@ -6978,7 +7183,8 @@ export const MaintenanceCreateManyAdminInputSchema: z.ZodType<Prisma.Maintenance
   description: z.string().optional().nullable(),
   status: z.lazy(() => MaintenanceStatusSchema),
   createdAt: z.coerce.date().optional(),
-  updatedAt: z.coerce.date().optional()
+  updatedAt: z.coerce.date().optional(),
+  lodgmentId: z.number().int()
 }).strict();
 
 export const RenewalUpdateWithoutAdminInputSchema: z.ZodType<Prisma.RenewalUpdateWithoutAdminInput> = z.object({
@@ -7090,6 +7296,7 @@ export const MaintenanceUpdateWithoutAdminInputSchema: z.ZodType<Prisma.Maintena
   status: z.union([ z.lazy(() => MaintenanceStatusSchema),z.lazy(() => EnumMaintenanceStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  lodgment: z.lazy(() => LodgmentUpdateOneRequiredWithoutMaintenancesNestedInputSchema).optional(),
   maintainers: z.lazy(() => MaintainerUpdateManyWithoutMaintenancesNestedInputSchema).optional()
 }).strict();
 
@@ -7100,6 +7307,7 @@ export const MaintenanceUncheckedUpdateWithoutAdminInputSchema: z.ZodType<Prisma
   status: z.union([ z.lazy(() => MaintenanceStatusSchema),z.lazy(() => EnumMaintenanceStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  lodgmentId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   maintainers: z.lazy(() => MaintainerUncheckedUpdateManyWithoutMaintenancesNestedInputSchema).optional()
 }).strict();
 
@@ -7110,6 +7318,7 @@ export const MaintenanceUncheckedUpdateManyWithoutAdminInputSchema: z.ZodType<Pr
   status: z.union([ z.lazy(() => MaintenanceStatusSchema),z.lazy(() => EnumMaintenanceStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  lodgmentId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
 export const StudentCreateManyFacultyInputSchema: z.ZodType<Prisma.StudentCreateManyFacultyInput> = z.object({
@@ -7356,6 +7565,16 @@ export const StudentCreateManyLodgmentInputSchema: z.ZodType<Prisma.StudentCreat
   NIC: z.string()
 }).strict();
 
+export const MaintenanceCreateManyLodgmentInputSchema: z.ZodType<Prisma.MaintenanceCreateManyLodgmentInput> = z.object({
+  id: z.number().int().optional(),
+  type: z.lazy(() => MaintenanceTypeSchema),
+  description: z.string().optional().nullable(),
+  status: z.lazy(() => MaintenanceStatusSchema),
+  adminId: z.number().int(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional()
+}).strict();
+
 export const StudentUpdateWithoutLodgmentInputSchema: z.ZodType<Prisma.StudentUpdateWithoutLodgmentInput> = z.object({
   gender: z.union([ z.lazy(() => GenderSchema),z.lazy(() => EnumGenderFieldUpdateOperationsInputSchema) ]).optional(),
   nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -7383,6 +7602,37 @@ export const StudentUncheckedUpdateManyWithoutLodgmentInputSchema: z.ZodType<Pri
   nationality: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   emergencyNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   NIC: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+}).strict();
+
+export const MaintenanceUpdateWithoutLodgmentInputSchema: z.ZodType<Prisma.MaintenanceUpdateWithoutLodgmentInput> = z.object({
+  type: z.union([ z.lazy(() => MaintenanceTypeSchema),z.lazy(() => EnumMaintenanceTypeFieldUpdateOperationsInputSchema) ]).optional(),
+  description: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  status: z.union([ z.lazy(() => MaintenanceStatusSchema),z.lazy(() => EnumMaintenanceStatusFieldUpdateOperationsInputSchema) ]).optional(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  admin: z.lazy(() => AdminUpdateOneRequiredWithoutMaintenancesNestedInputSchema).optional(),
+  maintainers: z.lazy(() => MaintainerUpdateManyWithoutMaintenancesNestedInputSchema).optional()
+}).strict();
+
+export const MaintenanceUncheckedUpdateWithoutLodgmentInputSchema: z.ZodType<Prisma.MaintenanceUncheckedUpdateWithoutLodgmentInput> = z.object({
+  id: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  type: z.union([ z.lazy(() => MaintenanceTypeSchema),z.lazy(() => EnumMaintenanceTypeFieldUpdateOperationsInputSchema) ]).optional(),
+  description: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  status: z.union([ z.lazy(() => MaintenanceStatusSchema),z.lazy(() => EnumMaintenanceStatusFieldUpdateOperationsInputSchema) ]).optional(),
+  adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  maintainers: z.lazy(() => MaintainerUncheckedUpdateManyWithoutMaintenancesNestedInputSchema).optional()
+}).strict();
+
+export const MaintenanceUncheckedUpdateManyWithoutLodgmentInputSchema: z.ZodType<Prisma.MaintenanceUncheckedUpdateManyWithoutLodgmentInput> = z.object({
+  id: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  type: z.union([ z.lazy(() => MaintenanceTypeSchema),z.lazy(() => EnumMaintenanceTypeFieldUpdateOperationsInputSchema) ]).optional(),
+  description: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  status: z.union([ z.lazy(() => MaintenanceStatusSchema),z.lazy(() => EnumMaintenanceStatusFieldUpdateOperationsInputSchema) ]).optional(),
+  adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
 export const MaintainerUpdateWithoutMaintenancesInputSchema: z.ZodType<Prisma.MaintainerUpdateWithoutMaintenancesInput> = z.object({
@@ -7420,7 +7670,8 @@ export const MaintenanceUpdateWithoutMaintainersInputSchema: z.ZodType<Prisma.Ma
   status: z.union([ z.lazy(() => MaintenanceStatusSchema),z.lazy(() => EnumMaintenanceStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  admin: z.lazy(() => AdminUpdateOneRequiredWithoutMaintenancesNestedInputSchema).optional()
+  admin: z.lazy(() => AdminUpdateOneRequiredWithoutMaintenancesNestedInputSchema).optional(),
+  lodgment: z.lazy(() => LodgmentUpdateOneRequiredWithoutMaintenancesNestedInputSchema).optional()
 }).strict();
 
 export const MaintenanceUncheckedUpdateWithoutMaintainersInputSchema: z.ZodType<Prisma.MaintenanceUncheckedUpdateWithoutMaintainersInput> = z.object({
@@ -7431,6 +7682,7 @@ export const MaintenanceUncheckedUpdateWithoutMaintainersInputSchema: z.ZodType<
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  lodgmentId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
 export const MaintenanceUncheckedUpdateManyWithoutMaintainersInputSchema: z.ZodType<Prisma.MaintenanceUncheckedUpdateManyWithoutMaintainersInput> = z.object({
@@ -7441,6 +7693,7 @@ export const MaintenanceUncheckedUpdateManyWithoutMaintainersInputSchema: z.ZodT
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  lodgmentId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
 export const ReservationCreateManyAcademicSessionInputSchema: z.ZodType<Prisma.ReservationCreateManyAcademicSessionInput> = z.object({
@@ -7596,7 +7849,8 @@ export const LodgmentUpdateWithoutBuildingInputSchema: z.ZodType<Prisma.Lodgment
   roomNumber: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => LodgmentStatusSchema),z.lazy(() => EnumLodgmentStatusFieldUpdateOperationsInputSchema) ]).optional(),
   deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  students: z.lazy(() => StudentUpdateManyWithoutLodgmentNestedInputSchema).optional()
+  students: z.lazy(() => StudentUpdateManyWithoutLodgmentNestedInputSchema).optional(),
+  maintenances: z.lazy(() => MaintenanceUpdateManyWithoutLodgmentNestedInputSchema).optional()
 }).strict();
 
 export const LodgmentUncheckedUpdateWithoutBuildingInputSchema: z.ZodType<Prisma.LodgmentUncheckedUpdateWithoutBuildingInput> = z.object({
@@ -7606,7 +7860,8 @@ export const LodgmentUncheckedUpdateWithoutBuildingInputSchema: z.ZodType<Prisma
   roomNumber: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   status: z.union([ z.lazy(() => LodgmentStatusSchema),z.lazy(() => EnumLodgmentStatusFieldUpdateOperationsInputSchema) ]).optional(),
   deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  students: z.lazy(() => StudentUncheckedUpdateManyWithoutLodgmentNestedInputSchema).optional()
+  students: z.lazy(() => StudentUncheckedUpdateManyWithoutLodgmentNestedInputSchema).optional(),
+  maintenances: z.lazy(() => MaintenanceUncheckedUpdateManyWithoutLodgmentNestedInputSchema).optional()
 }).strict();
 
 export const LodgmentUncheckedUpdateManyWithoutBuildingInputSchema: z.ZodType<Prisma.LodgmentUncheckedUpdateManyWithoutBuildingInput> = z.object({

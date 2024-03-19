@@ -13,6 +13,7 @@ export const deleteFullOne = async (payload: {
       _count: {
         select: {
           students: true,
+          maintenances: true,
         },
       },
     },

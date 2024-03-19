@@ -18,6 +18,7 @@ export const updateFullOne = async ({
       _count: {
         select: {
           students: true,
+          maintenances: true,
         },
       },
     },

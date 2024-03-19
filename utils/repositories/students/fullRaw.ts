@@ -9,7 +9,9 @@ export type StudentFullRaw = Simplify<
   } & {
     user: UserComputed;
     faculty: prismaCtx.Faculty;
-    lodgment: LodgmentFullRaw;
+    lodgment: prismaCtx.Lodgment & {
+      building: prismaCtx.Building;
+    };
   }
 >;
 
@@ -27,7 +29,7 @@ export const studentFullRawToStudentFull = (
     _count: student._count,
     user: toUserFiltered(student.user),
     faculty: student.faculty,
-    lodgment: lodgmentFullRawToLodgmentFull(student.lodgment),
+    lodgment: student.lodgment,
   };
 
   return studentFull;
