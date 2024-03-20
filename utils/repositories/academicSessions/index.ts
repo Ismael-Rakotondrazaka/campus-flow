@@ -3,6 +3,7 @@ import { findOneOrFail } from "./findOneOrFail";
 import { updateOne } from "./updateOne";
 import { findMany } from "./findMany";
 import { findOne } from "./findOne";
+import { count } from "./count";
 
 export const academicSessionRepository = Object.freeze({
   createOne,
@@ -10,4 +11,5 @@ export const academicSessionRepository = Object.freeze({
   updateOne,
   findMany,
   findOne,
+  count,
 });
