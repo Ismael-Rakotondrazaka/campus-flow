@@ -1,10 +1,5 @@
 export default defineEventHandler(async (): Promise<IndexRenewalResponse> => {
   try {
-    const adminSession: AdminSession | null = getAdminSession();
-    if (is.null(adminSession)) {
-      return createUnauthorizedError();
-    }
-
     const indexRenewalQuerySPR = await safeParseRequestQueryAs(
       IndexRenewalQuerySchema,
     );

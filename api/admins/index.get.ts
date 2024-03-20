@@ -1,10 +1,5 @@
 export default defineEventHandler(async (): Promise<IndexAdminResponse> => {
   try {
-    const adminSession: AdminSession | null = getAdminSession();
-    if (is.null(adminSession)) {
-      return createUnauthorizedError();
-    }
-
     const indexAdminQuerySPR = await safeParseRequestQueryAs(
       IndexAdminQuerySchema,
     );

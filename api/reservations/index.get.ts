@@ -1,11 +1,6 @@
 export default defineEventHandler(
   async (): Promise<IndexReservationResponse> => {
     try {
-      const adminSession: AdminSession | null = getAdminSession();
-      if (is.null(adminSession)) {
-        return createUnauthorizedError();
-      }
-
       const indexReservationQuerySPR = await safeParseRequestQueryAs(
         IndexReservationQuerySchema,
       );

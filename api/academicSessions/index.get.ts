@@ -3,11 +3,6 @@ import { prismaCtx } from "#imports";
 export default defineEventHandler(
   async (): Promise<IndexAcademicSessionResponse> => {
     try {
-      const adminSession: AdminSession | null = getAdminSession();
-      if (is.null(adminSession)) {
-        return createUnauthorizedError();
-      }
-
       const indexAcademicSessionQuerySPR = await safeParseRequestQueryAs(
         IndexAcademicSessionQuerySchema,
       );
