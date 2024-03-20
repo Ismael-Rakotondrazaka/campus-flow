@@ -17,7 +17,14 @@ export const DestroyLodgmentParamSchema: z.ZodType<DestroyLodgmentParam> =
 /*                             DestroyLodgment data                             */
 /* -------------------------------------------------------------------------- */
 
-export type DestroyLodgmentData = void;
+export type DestroyLodgmentData = {
+  lodgment: LodgmentFull;
+};
+
+export const DestroyLodgmentDataSchema: z.ZodType<DestroyLodgmentData> =
+  z.object({
+    lodgment: LodgmentFullSchema,
+  });
 
 /* -------------------------------------------------------------------------- */
 /*                             DestroyLodgment error                            */

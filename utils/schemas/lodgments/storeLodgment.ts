@@ -2,6 +2,7 @@ import { prismaCtx, z } from "#imports";
 import { LodgmentStatusSchema } from "~/prisma/generated/zod";
 import { LodgmentFull } from "./lodgmentFull";
 import { lodgmentConfig } from "~/utils/configs/lodgmentConfig";
+import { Simplify } from "type-fest";
 
 /* -------------------------------------------------------------------------- */
 /*                             StoreLodgment body                             */
@@ -25,7 +26,7 @@ export type StoreLodgmentBodyInput = {
 };
 
 export const StoreLodgmentBodySchema: z.ZodType<
-  StoreLodgmentBody,
+  Simplify<StoreLodgmentBody>,
   z.ZodTypeDef,
   StoreLodgmentBodyInput
 > = z.object({

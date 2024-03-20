@@ -1,6 +1,7 @@
 import { prismaCtx, z } from "#imports";
 import { LodgmentStatusSchema } from "~/prisma/generated/zod";
 import { LodgmentFull } from "./lodgmentFull";
+import { Simplify } from "type-fest";
 
 /* -------------------------------------------------------------------------- */
 /*                            UpdateLodgment param                            */
@@ -27,15 +28,16 @@ export type UpdateLodgmentBody = {
   status?: prismaCtx.$Enums.LodgmentStatus;
 };
 
-export const UpdateLodgmentBodySchema: z.ZodType<UpdateLodgmentBody> = z
-  .object({
-    capacity: z.coerce.number().int().nonnegative(),
-    floor: z.coerce.number().int().nonnegative(),
-    roomNumber: z.coerce.number().int().nonnegative(),
-    buildingId: IdentifierSchema,
-    status: LodgmentStatusSchema,
-  })
-  .partial();
+export const UpdateLodgmentBodySchema: z.ZodType<Simplify<UpdateLodgmentBody>> =
+  z
+    .object({
+      capacity: z.coerce.number().int().nonnegative(),
+      floor: z.coerce.number().int().nonnegative(),
+      roomNumber: z.coerce.number().int().nonnegative(),
+      buildingId: IdentifierSchema,
+      status: LodgmentStatusSchema,
+    })
+    .partial();
 
 /* -------------------------------------------------------------------------- */
 /*                             UpdateLodgment data                             */
