@@ -4,11 +4,13 @@ import { z } from "#imports";
 /*                                 WhoAmI data                                */
 /* -------------------------------------------------------------------------- */
 
-export const WhoAmIDataSchema = z.object({
+export type WhoAmIData = {
+  user: UserFull | null;
+};
+
+export const WhoAmIDataSchema: z.ZodType<WhoAmIData> = z.object({
   user: UserFullSchema.nullable(),
 });
-
-export type WhoAmIData = z.infer<typeof WhoAmIDataSchema>;
 
 /* -------------------------------------------------------------------------- */
 /*                                WhoAmI Error                                */

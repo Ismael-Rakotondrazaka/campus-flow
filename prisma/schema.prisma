@@ -64,7 +64,7 @@ model Student {
   user            User      @relation(fields: [userId], references: [id])
   facultyId       Int
   gender          Gender
-  nationality     String
+  origin          Origin
   emergencyNumber String
   faculty         Faculty   @relation(fields: [facultyId], references: [id])
   NIC             String // National ID Card
@@ -88,14 +88,16 @@ enum Gender {
 }
 
 model Lodgment {
-  id         Int            @id @default(autoincrement())
-  capacity   Int
-  floor      Int
-  roomNumber Int
-  buildingId Int
-  building   Building       @relation(fields: [buildingId], references: [id])
-  status     LodgmentStatus
-  students   Student[]
+  id           Int            @id @default(autoincrement())
+  capacity     Int
+  floor        Int
+  roomNumber   Int
+  buildingId   Int
+  building     Building       @relation(fields: [buildingId], references: [id])
+  status       LodgmentStatus
+  students     Student[]
+  maintenances Maintenance[]
+  deletedAt    DateTime?
 }
 
 enum LodgmentStatus {
@@ -111,7 +113,7 @@ model Reservation {
   profileUrl           String            @db.Text
   email                String            @unique
   gender               Gender
-  nationality          String
+  origin               Origin
   emergencyNumber      String
   NIC                  String
   NICUrl               String            @db.Text
@@ -135,19 +137,24 @@ model Renewal {
   emergencyNumber      String
   profileUrl           String          @db.Text
   schoolCertificateUrl String          @db.Text
-  NICURL               String          @db.Text
+  NICUrl               String          @db.Text
   academicSessionId    Int
   academicSession      AcademicSession @relation(fields: [academicSessionId], references: [id])
   status               RenewalStatus
   createdAt            DateTime        @default(now())
   updatedAt            DateTime        @default(now())
-  Faculty              Faculty?        @relation(fields: [facultyId], references: [id])
-  facultyId            Int?
+  faculty              Faculty         @relation(fields: [facultyId], references: [id])
+  facultyId            Int
   adminId              Int
   admin                Admin           @relation(fields: [adminId], references: [userId])
 
   // unique constraint to ensure one student's renewal is for on academic year
   @@unique([studentId, academicSessionId])
+}
+
+enum Origin {
+  NATIONAL
+  FOREIGNER
 }
 
 model Maintenance {
@@ -159,6 +166,20 @@ model Maintenance {
   admin       Admin             @relation(fields: [adminId], references: [userId])
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @default(now())
+  lodgmentId  Int
+  lodgment    Lodgment          @relation(fields: [lodgmentId], references: [id])
+  maintainers Maintainer[]
+}
+
+model Maintainer {
+  id           Int           @id @default(autoincrement())
+  name         String
+  firstName    String
+  phoneNumber  String        @db.Text
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @default(now())
+  deletedAt    DateTime?
+  maintenances Maintenance[]
 }
 
 enum MaintenanceStatus {
@@ -184,13 +205,12 @@ enum RenewalStatus {
 }
 
 model AcademicSession {
-  id          Int           @id @default(autoincrement())
-  name        String
-  startAt     DateTime
-  endAt       DateTime
-  deletedAt   DateTime?
-  Reservation Reservation[]
-  Renewal     Renewal[]
+  id           Int           @id @default(autoincrement())
+  startAt      DateTime
+  endAt        DateTime
+  deletedAt    DateTime?
+  reservations Reservation[]
+  renewals     Renewal[]
 }
 
 enum ReservationStatus {
@@ -224,7 +244,6 @@ model Announcement {
 enum AnnouncementStatus {
   DRAFT
   PUBLISHED
-  ARCHIVED
 }
 
 model PasswordResetToken {

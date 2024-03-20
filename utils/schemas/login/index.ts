@@ -4,12 +4,15 @@ import { z } from "#imports";
 /*                                 Login body                                 */
 /* -------------------------------------------------------------------------- */
 
-export const LoginBodySchema = z.object({
-  email: emailSchema,
+export type LoginBody = {
+  email: string;
+  password: string;
+};
+
+export const LoginBodySchema: z.ZodType<LoginBody> = z.object({
+  email: EmailSchema,
   password: passwordSchema,
 });
-
-export type LoginBody = z.infer<typeof LoginBodySchema>;
 
 /* -------------------------------------------------------------------------- */
 /*                                 Login data                                 */
@@ -17,8 +20,13 @@ export type LoginBody = z.infer<typeof LoginBodySchema>;
 
 export type LoginData = {
   accessToken: AccessToken;
-  refreshToken: RefreshTokenObject;
+  refreshToken: RefreshTokenFiltered;
 };
+
+export const LoginDataSchema: z.ZodType<LoginData> = z.object({
+  accessToken: AccessTokenSchema,
+  refreshToken: RefreshTokenSchema,
+});
 
 /* -------------------------------------------------------------------------- */
 /*                                 Login error                                */

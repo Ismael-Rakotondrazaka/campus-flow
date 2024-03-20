@@ -19,7 +19,13 @@ export const updateFullOne = async ({
         include: {
           _count: {
             select: {
-              students: true,
+              students: {
+                where: {
+                  user: {
+                    deletedAt: null,
+                  },
+                },
+              },
             },
           },
         },

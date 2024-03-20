@@ -14,6 +14,18 @@ const prisma = new PrismaClient().$extends({
         },
       },
     },
+    reservation: {
+      // add fullName field to reservation
+      fullName: {
+        needs: {
+          firstName: true,
+          name: true,
+        },
+        compute(user) {
+          return `${user.name} ${user.firstName}`;
+        },
+      },
+    },
   },
 });
 

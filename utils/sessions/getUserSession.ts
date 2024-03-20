@@ -1,9 +1,3 @@
-import {
-  UserSession,
-  UserSessionSchema,
-} from "../schemas/sessions/userSession";
-import { verifyAccessToken } from "../tokens/verifyAccessToken";
-
 export const getUserSession = (): UserSession | null => {
   const event = useEvent();
 

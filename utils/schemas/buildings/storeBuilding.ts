@@ -6,13 +6,17 @@ import { BuildingNameSchema } from "./buildingName";
 /*                             StoreBuilding body                             */
 /* -------------------------------------------------------------------------- */
 
-export const StoreBuildingBodySchema = z.object({
+export type StoreBuildingBody = {
+  name: string;
+  floors: number;
+  illustration: File;
+};
+
+export const StoreBuildingBodySchema: z.ZodType<StoreBuildingBody> = z.object({
   name: BuildingNameSchema,
   floors: z.coerce.number().int().nonnegative(),
   illustration: FileSchema,
 });
-
-export type StoreBuildingBody = z.infer<typeof StoreBuildingBodySchema>;
 
 /* -------------------------------------------------------------------------- */
 /*                             StoreBuilding data                             */
