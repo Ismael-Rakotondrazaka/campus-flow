@@ -1,7 +1,5 @@
-export const formatBuildingIllustrationUrl = ({
-  filename,
-  mimeType,
-}: {
+export const formatFileUrl = (payload: {
+  subPath: string;
   filename?: string;
   mimeType: string;
 }): { path: string; filename: string; url: string } => {
@@ -9,11 +7,11 @@ export const formatBuildingIllustrationUrl = ({
   const bucketEntryPoint: string = runtimeConfig.bucketEntryPoint;
 
   const formattedFilename: string = formatFilename({
-    filename,
-    mimeType,
+    filename: payload.filename,
+    mimeType: payload.mimeType,
   });
 
-  const path: string = `public/buildings/${formattedFilename}`;
+  const path: string = `${payload.subPath}/${formattedFilename}`;
 
   return {
     path,

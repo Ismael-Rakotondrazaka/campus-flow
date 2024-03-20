@@ -1,9 +1,10 @@
-import { formatBuildingIllustrationUrl } from "./formatBuildingIllustrationUrl";
+import { formatFileUrl } from "./formatFileUrl";
 
 export const uploadBuildingIllustration = (file: File): string => {
-  const { path, url } = formatBuildingIllustrationUrl({
+  const { path, url } = formatFileUrl({
     filename: file.name,
     mimeType: file.type,
+    subPath: "public/building-illustrations",
   });
 
   saveFile({
