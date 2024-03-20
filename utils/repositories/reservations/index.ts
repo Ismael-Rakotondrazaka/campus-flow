@@ -3,6 +3,7 @@ import { createFullOne } from "./createFullOne";
 import { findFullOneOrFail } from "./findFullOneOrFail";
 import { updateFullOne } from "./updateFullOne";
 import { findFullMany } from "./findFullMany";
+import { count } from "./count";
 
 export const reservationRepository = Object.freeze({
   findFullOne,
@@ -10,4 +11,5 @@ export const reservationRepository = Object.freeze({
   findFullOneOrFail,
   updateFullOne,
   findFullMany,
+  count,
 });
