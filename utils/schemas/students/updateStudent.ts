@@ -6,12 +6,12 @@ import { RoleSchema } from "~/prisma/generated/zod";
 /* -------------------------------------------------------------------------- */
 
 export type UpdateStudentParam = {
-  id: number;
+  userId: number;
 };
 
 export const UpdateStudentParamSchema: z.ZodType<UpdateStudentParam> = z.object(
   {
-    id: IdentifierSchema,
+    userId: IdentifierSchema,
   },
 );
 

@@ -5,11 +5,11 @@ import { z } from "#imports";
 /* -------------------------------------------------------------------------- */
 
 export type ShowStudentParam = {
-  id: number;
+  userId: number;
 };
 
 export const ShowStudentParamSchema: z.ZodType<ShowStudentParam> = z.object({
-  id: IdentifierSchema,
+  userId: IdentifierSchema,
 });
 
 /* -------------------------------------------------------------------------- */
