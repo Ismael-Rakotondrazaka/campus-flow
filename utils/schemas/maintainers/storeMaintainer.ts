@@ -1,4 +1,5 @@
 import { z } from "#imports";
+import { Simplify } from "type-fest";
 import { MaintainerFull } from "./maintainerFull";
 import { MaintainerNameSchema } from "./maintainerName";
 
@@ -12,12 +13,13 @@ export type StoreMaintainerBody = {
   phoneNumber: string;
 };
 
-export const StoreMaintainerBodySchema: z.ZodType<StoreMaintainerBody> =
-  z.object({
-    name: MaintainerNameSchema,
-    firstName: MaintainerFirstNameSchema,
-    phoneNumber: PhoneNumberSchema,
-  });
+export const StoreMaintainerBodySchema: z.ZodType<
+  Simplify<StoreMaintainerBody>
+> = z.object({
+  name: MaintainerNameSchema,
+  firstName: MaintainerFirstNameSchema,
+  phoneNumber: PhoneNumberSchema,
+});
 
 /* -------------------------------------------------------------------------- */
 /*                             StoreMaintainer data                             */
@@ -26,6 +28,11 @@ export const StoreMaintainerBodySchema: z.ZodType<StoreMaintainerBody> =
 export type StoreMaintainerData = {
   maintainer: MaintainerFull;
 };
+
+export const StoreMaintainerDataSchema: z.ZodType<StoreMaintainerData> =
+  z.object({
+    maintainer: MaintainerFullSchema,
+  });
 
 /* -------------------------------------------------------------------------- */
 /*                             StoreMaintainer error                            */

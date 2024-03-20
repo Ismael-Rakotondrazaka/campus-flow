@@ -17,7 +17,14 @@ export const DestroyMaintainerParamSchema: z.ZodType<DestroyMaintainerParam> =
 /*                             DestroyMaintainer data                             */
 /* -------------------------------------------------------------------------- */
 
-export type DestroyMaintainerData = void;
+export type DestroyMaintainerData = {
+  maintainer: MaintainerFull;
+};
+
+export const DestroyMaintainerDataSchema: z.ZodType<DestroyMaintainerData> =
+  z.object({
+    maintainer: MaintainerFullSchema,
+  });
 
 /* -------------------------------------------------------------------------- */
 /*                             DestroyMaintainer error                            */
