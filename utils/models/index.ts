@@ -1,2 +1,2 @@
-export * from "./buildings";
+export * from "./files";
 export * from "./paginations";
