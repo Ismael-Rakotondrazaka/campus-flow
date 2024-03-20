@@ -38,14 +38,14 @@ export const IndexAcademicSessionQuerySchema: z.ZodType<
 
 export type IndexAcademicSessionData = Simplify<
   {
-    faculties: prismaCtx.AcademicSession[];
+    academicSessions: prismaCtx.AcademicSession[];
   } & Pagination
 >;
 
 export const IndexAcademicSessionDataSchema: z.ZodType<IndexAcademicSessionData> =
   z
     .object({
-      faculties: z.array(AcademicSessionSchema),
+      academicSessions: z.array(AcademicSessionSchema),
     })
     .and(PaginationSchema);
 
