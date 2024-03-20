@@ -77,7 +77,7 @@ export default defineEventHandler(async (): Promise<LoginResponse> => {
 
     const accessToken: AccessToken = createAccessToken(userSession);
 
-    const refreshToken: RefreshTokenObject = createRefreshToken({
+    const refreshToken: RefreshTokenFiltered = createRefreshToken({
       id: user.id,
     });
     // we don't need to await this
@@ -90,10 +90,12 @@ export default defineEventHandler(async (): Promise<LoginResponse> => {
       },
     });
 
-    return {
+    const responseData: LoginData = {
       accessToken,
       refreshToken,
     };
+
+    return LoginDataSchema.parse(responseData);
   } catch (error) {
     return handleUnknownError(error);
   }

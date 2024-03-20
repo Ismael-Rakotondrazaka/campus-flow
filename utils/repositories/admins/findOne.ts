@@ -1,11 +1,6 @@
 import { prismaCtx } from "#imports";
 
-export const findOne = async ({
-  where,
-  orderBy,
-  skip,
-  take,
-}: {
+export const findOne = async (payload: {
   where?: prismaCtx.Prisma.AdminWhereInput;
   orderBy?: prismaCtx.Prisma.AdminOrderByWithRelationInput;
   skip?: number;
@@ -14,10 +9,10 @@ export const findOne = async ({
   const prismaClient = usePrismaClient();
 
   const user: prismaCtx.Admin | null = await prismaClient.admin.findFirst({
-    where,
-    orderBy,
-    skip,
-    take,
+    where: payload.where,
+    orderBy: payload.orderBy,
+    skip: payload.skip,
+    take: payload.take,
   });
 
   return user;

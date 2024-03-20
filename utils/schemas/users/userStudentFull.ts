@@ -1,12 +1,21 @@
-import { z } from "#imports";
-import { StudentSchema } from "../students/student";
+import { z, prismaCtx } from "#imports";
+import { Simplify } from "type-fest";
 import { UserSchema } from "../users/user";
+import { StudentSchema } from "~/prisma/generated/zod";
+import { UserFiltered } from "./userFiltered";
 
-export const UserStudentFullSchema = UserSchema.and(
-  z.object({
-    admin: z.null(),
-    student: StudentSchema,
-  }),
+export type UserStudentExtra = {
+  student: prismaCtx.Student;
+  admin: null;
+};
+
+export const UserStudentExtraSchema: z.ZodType<UserStudentExtra> = z.object({
+  admin: z.null(),
+  student: StudentSchema,
+});
+
+export type UserStudentFull = Simplify<UserFiltered & UserStudentExtra>;
+
+export const UserStudentFullSchema: z.ZodType<UserStudentFull> = UserSchema.and(
+  UserStudentExtraSchema,
 );
-
-export type UserStudentFull = z.infer<typeof UserStudentFullSchema>;

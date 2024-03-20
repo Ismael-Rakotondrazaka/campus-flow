@@ -1,6 +1,15 @@
 import { z } from "#imports";
 
-export const BuildingCountSchema = z.object({
+export type BuildingCount = {
+  _count: {
+    lodgments: number;
+    capacity: number;
+    students: number;
+    available: number;
+  };
+};
+
+export const BuildingCountSchema: z.ZodType<BuildingCount> = z.object({
   _count: z.object({
     lodgments: z.number().nonnegative().int(),
     capacity: z.number().nonnegative().int(),
@@ -8,5 +17,3 @@ export const BuildingCountSchema = z.object({
     available: z.number().nonnegative().int(),
   }),
 });
-
-export type BuildingCount = z.infer<typeof BuildingCountSchema>;

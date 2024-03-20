@@ -4,13 +4,14 @@ import { z } from "#imports";
 /*                           UpdateRefreshToken body                          */
 /* -------------------------------------------------------------------------- */
 
-export const UpdateRefreshTokenBodySchema = z.object({
-  refreshToken: z.string(),
-});
+export type UpdateRefreshTokenBody = {
+  refreshToken: string;
+};
 
-export type UpdateRefreshTokenBody = z.infer<
-  typeof UpdateRefreshTokenBodySchema
->;
+export const UpdateRefreshTokenBodySchema: z.ZodType<UpdateRefreshTokenBody> =
+  z.object({
+    refreshToken: z.string(),
+  });
 
 /* -------------------------------------------------------------------------- */
 /*                           UpdateRefreshToken data                          */
@@ -18,7 +19,7 @@ export type UpdateRefreshTokenBody = z.infer<
 
 export type UpdateRefreshTokenData = {
   accessToken: AccessToken;
-  refreshToken: RefreshTokenObject;
+  refreshToken: RefreshTokenFiltered;
 };
 
 /* -------------------------------------------------------------------------- */

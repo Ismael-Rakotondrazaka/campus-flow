@@ -28,6 +28,10 @@ export default defineNitroConfig({
       compilerOptions: {
         moduleResolution: "Node",
         noImplicitAny: true,
+        paths: {
+          "~": ["../.."],
+          "~/*": ["../../*"],
+        },
       },
       exclude: [
         "../../node_modules/**/*",

@@ -1,9 +1,5 @@
 import { z } from "#imports";
 
-export type RequestErrorMessage<T> = Partial<
-  Record<keyof T, string | undefined>
->;
-
 export const formatValidationErrorMessage = <T>(
   error: z.ZodError<T>,
 ): RequestErrorMessage<T> => {

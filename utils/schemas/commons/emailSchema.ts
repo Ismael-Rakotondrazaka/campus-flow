@@ -1,1 +1,1 @@
-export const emailSchema = z.string().trim().email();
+export const EmailSchema = z.string().trim().email();

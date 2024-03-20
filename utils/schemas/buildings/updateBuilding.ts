@@ -5,25 +5,33 @@ import { BuildingNameSchema } from "./buildingName";
 /* -------------------------------------------------------------------------- */
 /*                            UpdateBuilding param                            */
 /* -------------------------------------------------------------------------- */
-export const UpdateBuildingParamSchema = z.object({
-  id: IdentifierSchema,
-});
 
-export type UpdateBuildingParam = z.infer<typeof UpdateBuildingParamSchema>;
+export type UpdateBuildingParam = {
+  id: number;
+};
+
+export const UpdateBuildingParamSchema: z.ZodType<UpdateBuildingParam> =
+  z.object({
+    id: IdentifierSchema,
+  });
 
 /* -------------------------------------------------------------------------- */
 /*                             UpdateBuilding body                             */
 /* -------------------------------------------------------------------------- */
 
-export const UpdateBuildingBodySchema = z
+export type UpdateBuildingBody = {
+  name?: string | undefined;
+  floors?: number | undefined;
+  illustration?: File | undefined;
+};
+
+export const UpdateBuildingBodySchema: z.ZodType<UpdateBuildingBody> = z
   .object({
     name: BuildingNameSchema,
     floors: z.coerce.number().int().nonnegative(),
     illustration: FileSchema,
   })
   .partial();
-
-export type UpdateBuildingBody = z.infer<typeof UpdateBuildingBodySchema>;
 
 /* -------------------------------------------------------------------------- */
 /*                             UpdateBuilding data                             */
@@ -32,6 +40,11 @@ export type UpdateBuildingBody = z.infer<typeof UpdateBuildingBodySchema>;
 export type UpdateBuildingData = {
   building: BuildingFull;
 };
+export const UpdateBuildingDataSchema: z.ZodType<UpdateBuildingData> = z.object(
+  {
+    building: BuildingFullSchema,
+  },
+);
 
 /* -------------------------------------------------------------------------- */
 /*                             UpdateBuilding error                            */

@@ -1,10 +1,5 @@
 import jwt from "jsonwebtoken";
 
-export type AccessToken = {
-  token: string;
-  expiresAt: Date;
-};
-
 export const createAccessToken = (
   data: string | object | Buffer,
 ): AccessToken => {

@@ -21,9 +21,11 @@ export default defineEventHandler(async (): Promise<WhoAmIResponse> => {
       };
     }
 
-    return {
+    const WhoAmIData: WhoAmIData = {
       user: authUser,
     };
+
+    return WhoAmIDataSchema.parse(WhoAmIData);
   } catch (error) {
     return handleUnknownError(error);
   }
