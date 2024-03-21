@@ -1,6 +1,6 @@
 import { prismaCtx, z } from "#imports";
-import { MaintenanceStatusSchema } from "~/prisma/generated/zod";
 import { MaintenanceFull } from "./maintenanceFull";
+import { Simplify } from "type-fest";
 
 /* -------------------------------------------------------------------------- */
 /*                            UpdateMaintenance param                            */
@@ -20,13 +20,14 @@ export const UpdateMaintenanceParamSchema: z.ZodType<UpdateMaintenanceParam> =
 /* -------------------------------------------------------------------------- */
 
 export type UpdateMaintenanceBody = {
-  status: prismaCtx.$Enums.MaintenanceStatus;
+  status: Exclude<prismaCtx.$Enums.MaintenanceStatus, "PENDING">;
 };
 
-export const UpdateMaintenanceBodySchema: z.ZodType<UpdateMaintenanceBody> =
-  z.object({
-    status: MaintenanceStatusSchema,
-  });
+export const UpdateMaintenanceBodySchema: z.ZodType<
+  Simplify<UpdateMaintenanceBody>
+> = z.object({
+  status: z.enum(["ONGOING", "DONE", "REFUSED"]),
+});
 
 /* -------------------------------------------------------------------------- */
 /*                             UpdateMaintenance data                             */

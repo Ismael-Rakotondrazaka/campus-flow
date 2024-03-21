@@ -2,6 +2,7 @@ import { prismaCtx, z } from "#imports";
 import { MaintenanceTypeSchema } from "~/prisma/generated/zod";
 import { MaintenanceFull } from "./maintenanceFull";
 import { MaintenanceDescriptionSchema } from "./maintenanceDescription";
+import { Simplify } from "type-fest";
 
 /* -------------------------------------------------------------------------- */
 /*                             StoreMaintenance body                             */
@@ -12,11 +13,12 @@ export type StoreMaintenanceBody = {
   type: prismaCtx.$Enums.MaintenanceType;
 };
 
-export const StoreMaintenanceBodySchema: z.ZodType<StoreMaintenanceBody> =
-  z.object({
-    description: MaintenanceDescriptionSchema.optional(),
-    type: MaintenanceTypeSchema,
-  });
+export const StoreMaintenanceBodySchema: z.ZodType<
+  Simplify<StoreMaintenanceBody>
+> = z.object({
+  description: MaintenanceDescriptionSchema.optional(),
+  type: MaintenanceTypeSchema,
+});
 
 /* -------------------------------------------------------------------------- */
 /*                             StoreMaintenance data                             */
