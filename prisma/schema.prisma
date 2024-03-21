@@ -54,6 +54,7 @@ model RefreshToken {
 model Faculty {
   id           Int           @id @default(autoincrement())
   name         String        @db.Text
+  deletedAt    DateTime?
   students     Student[]
   reservations Reservation[]
   renewals     Renewal[]
