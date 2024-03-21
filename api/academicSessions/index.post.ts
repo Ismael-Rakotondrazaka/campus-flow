@@ -20,9 +20,11 @@ export default defineEventHandler(
       }
 
       const formattedStartAt: Date = storeAcademicSessionBodySPR.data.startAt;
+      formattedStartAt.setFullYear(formattedStartAt.getFullYear(), 0, 1);
       formattedStartAt.setHours(0, 0, 0, 0);
 
-      const formattedEndAt: Date = storeAcademicSessionBodySPR.data.startAt;
+      const formattedEndAt: Date = storeAcademicSessionBodySPR.data.endAt;
+      formattedEndAt.setFullYear(formattedEndAt.getFullYear(), 0, 1);
       formattedEndAt.setHours(0, 0, 0, 0);
 
       if (formattedStartAt.getFullYear() + 1 !== formattedEndAt.getFullYear()) {
