@@ -19,6 +19,14 @@ export default defineEventHandler(
       if (is.null(adminSession)) {
         return createUnauthorizedError();
       }
+      if (
+        !(
+          maintenance.adminId === adminSession.id ||
+          adminSession.role === "ROOT"
+        )
+      ) {
+        return createForbiddenError();
+      }
 
       const updateMaintenanceBodySPR = await safeParseRequestBodyAs(
         UpdateMaintenanceBodySchema,

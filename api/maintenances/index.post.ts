@@ -39,6 +39,9 @@ export default defineEventHandler(
         await adminRepository.findOne({
           where: {
             role: "MAINTENANCE",
+            user: {
+              deletedAt: null,
+            },
           },
           orderBy: {
             maintenances: {
