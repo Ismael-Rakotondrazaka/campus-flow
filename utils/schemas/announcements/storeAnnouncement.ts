@@ -1,4 +1,5 @@
 import { prismaCtx, z } from "#imports";
+import { Simplify } from "type-fest";
 import {
   AnnouncementSchema,
   AnnouncementStatusSchema,
@@ -13,6 +14,8 @@ export type StoreAnnouncementBody = {
   content: string;
   illustration?: File | null;
   status: prismaCtx.$Enums.AnnouncementStatus;
+  startAt?: Date | null;
+  endAt?: Date | null;
 };
 
 export type StoreAnnouncementBodyInput = {
@@ -20,10 +23,12 @@ export type StoreAnnouncementBodyInput = {
   content: string;
   illustration?: File | null | string;
   status: prismaCtx.$Enums.AnnouncementStatus;
+  startAt?: Date | null | string;
+  endAt?: Date | null | string;
 };
 
 export const StoreAnnouncementBodySchema: z.ZodType<
-  StoreAnnouncementBody,
+  Simplify<StoreAnnouncementBody>,
   z.ZodTypeDef,
   StoreAnnouncementBodyInput
 > = z.object({
@@ -31,6 +36,8 @@ export const StoreAnnouncementBodySchema: z.ZodType<
   content: AnnouncementContentSchema,
   illustration: z.union([CustomNullSchema, CustomUndefinedSchema, FileSchema]),
   status: AnnouncementStatusSchema,
+  startAt: z.union([CustomNullSchema, CustomUndefinedSchema, z.coerce.date()]),
+  endAt: z.union([CustomNullSchema, CustomUndefinedSchema, z.coerce.date()]),
 });
 
 /* -------------------------------------------------------------------------- */
