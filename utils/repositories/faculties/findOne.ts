@@ -6,12 +6,15 @@ export const findOne = async (payload: {
   skip?: number;
   take?: number;
 }): Promise<prismaCtx.Faculty | null> => {
-  const faculty: prismaCtx.Faculty | null = await findOne({
-    where: payload.where,
-    orderBy: payload.orderBy,
-    skip: payload.skip,
-    take: payload.take,
-  });
+  const prismaClient = usePrismaClient();
+
+  const faculty: prismaCtx.Faculty | null =
+    await prismaClient.faculty.findFirst({
+      where: payload.where,
+      orderBy: payload.orderBy,
+      skip: payload.skip,
+      take: payload.take,
+    });
 
   return faculty;
 };
