@@ -6,6 +6,7 @@ import { findFullMany } from "./findFullMany";
 import { deleteFullOne } from "./deleteFullOne";
 import { findOne } from "./findOne";
 import { count } from "./count";
+import { exist } from "./exist";
 
 export const studentRepository = Object.freeze({
   findFullOne,
@@ -16,6 +17,7 @@ export const studentRepository = Object.freeze({
   deleteFullOne,
   findOne,
   count,
+  exist,
 });
 
 export * from "./fullRaw";
