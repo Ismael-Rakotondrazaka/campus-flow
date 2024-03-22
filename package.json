@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": "nitro build",
-    "dev": "nitro dev",
+    "dev": "PORT=8000 nitro dev",
     "prepare": "nitro prepare && npx prisma generate",
     "preview": "node .output/server/index.mjs",
     "typecheck": "tsc --noEmit",
