@@ -21,6 +21,13 @@ export default defineNitroConfig({
     /* --------------------------------- Bucket --------------------------------- */
     bucketEntryPoint: "",
     bucketName: "",
+    /* ---------------------------------- Email --------------------------------- */
+    smtpHost: "",
+    smtpPort: 0,
+    smtpUser: "",
+    smtpPassword: "",
+    informationEmail: "",
+    informationPhoneNumber: "",
   },
   typescript: {
     strict: true,

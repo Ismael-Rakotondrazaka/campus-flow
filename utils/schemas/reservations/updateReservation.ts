@@ -19,14 +19,19 @@ export const UpdateReservationParamSchema: z.ZodType<UpdateReservationParam> =
 /*                             UpdateReservation body                             */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * If status is `VALIDATED`, lodgmentId is required.
+ */
 export type UpdateReservationBody = {
   status: Exclude<prismaCtx.$Enums.ReservationStatus, "PENDING">;
+  lodgmentId?: number;
 };
 
 export const UpdateReservationBodySchema: z.ZodType<
   Simplify<UpdateReservationBody>
 > = z.object({
   status: z.enum(["ACCEPTED", "REFUSED", "VALIDATED"]),
+  lodgmentId: z.coerce.number().optional(),
 });
 
 /* -------------------------------------------------------------------------- */

@@ -19,6 +19,7 @@ export default defineEventHandler(
       if (is.null(adminSession)) {
         return createUnauthorizedError();
       }
+
       if (
         !(
           adminSession.id === reservation.adminId ||
@@ -39,7 +40,12 @@ export default defineEventHandler(
         });
       }
 
-      if (reservation.status !== "PENDING" && adminSession.role !== "ROOT") {
+      if (
+        !(
+          reservation.status !== "PENDING" ||
+          (reservation.status === "PENDING" && adminSession.role !== "ROOT")
+        )
+      ) {
         return createBadRequestError({
           message:
             "La réservation ne peut être modifiée une fois refusée, acceptée, ou validée.",
@@ -52,6 +58,38 @@ export default defineEventHandler(
           message: "Au moins une modification est requise.",
           errorMessage: {},
         });
+      }
+
+      if (updateReservationBodySPR.data.status === "ACCEPTED") {
+        await handleReservationAccepted(reservation);
+      } else if (updateReservationBodySPR.data.status === "REFUSED") {
+        await handleReservationRefused(reservation);
+      } else if (updateReservationBodySPR.data.status === "VALIDATED") {
+        if (reservation.status !== "ACCEPTED") {
+          return createBadRequestError({
+            message: "La réservation doit être acceptée avant d'être validée.",
+            errorMessage: {
+              status: "La réservation doit être acceptée avant d'être validée.",
+            },
+          });
+        }
+
+        const lodgment: LodgmentFull | null =
+          await lodgmentRepository.findFullOne({
+            where: {
+              id: updateReservationBodySPR.data.lodgmentId,
+            },
+          });
+
+        if (is.null(lodgment)) {
+          return createBadRequestError({
+            errorMessage: {
+              lodgmentId: "Le logement n'existe pas.",
+            },
+          });
+        }
+
+        await handleReservationValidated(reservation, lodgment);
       }
 
       const updatedReservation: ReservationFull =
