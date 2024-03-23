@@ -11,6 +11,7 @@ export type StoreMaintainerBody = {
   name: string;
   firstName: string;
   phoneNumber: string;
+  profile: File;
 };
 
 export const StoreMaintainerBodySchema: z.ZodType<
@@ -19,6 +20,7 @@ export const StoreMaintainerBodySchema: z.ZodType<
   name: MaintainerNameSchema,
   firstName: MaintainerFirstNameSchema,
   phoneNumber: PhoneNumberSchema,
+  profile: FileSchema,
 });
 
 /* -------------------------------------------------------------------------- */

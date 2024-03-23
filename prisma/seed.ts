@@ -527,6 +527,7 @@ const main = async () => {
       data: {
         firstName,
         name,
+        profileUrl: faker.image.avatarLegacy(),
         phoneNumber: createPhoneNumber(),
       },
     });

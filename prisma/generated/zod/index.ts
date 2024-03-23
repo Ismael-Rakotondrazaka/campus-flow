@@ -30,7 +30,7 @@ export const RenewalScalarFieldEnumSchema = z.enum(['id','studentId','phoneNumbe
 
 export const MaintenanceScalarFieldEnumSchema = z.enum(['id','type','description','status','adminId','createdAt','updatedAt','lodgmentId']);
 
-export const MaintainerScalarFieldEnumSchema = z.enum(['id','name','firstName','phoneNumber','createdAt','updatedAt','deletedAt']);
+export const MaintainerScalarFieldEnumSchema = z.enum(['id','name','firstName','phoneNumber','profileUrl','createdAt','updatedAt','deletedAt']);
 
 export const AcademicSessionScalarFieldEnumSchema = z.enum(['id','startAt','endAt','deletedAt']);
 
@@ -249,6 +249,7 @@ export const MaintainerSchema = z.object({
   name: z.string(),
   firstName: z.string(),
   phoneNumber: z.string(),
+  profileUrl: z.string(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
   deletedAt: z.coerce.date().nullable(),
@@ -665,6 +666,7 @@ export const MaintainerSelectSchema: z.ZodType<Prisma.MaintainerSelect> = z.obje
   name: z.boolean().optional(),
   firstName: z.boolean().optional(),
   phoneNumber: z.boolean().optional(),
+  profileUrl: z.boolean().optional(),
   createdAt: z.boolean().optional(),
   updatedAt: z.boolean().optional(),
   deletedAt: z.boolean().optional(),
@@ -1560,6 +1562,7 @@ export const MaintainerWhereInputSchema: z.ZodType<Prisma.MaintainerWhereInput> 
   name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   firstName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   phoneNumber: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  profileUrl: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   deletedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
@@ -1571,6 +1574,7 @@ export const MaintainerOrderByWithRelationInputSchema: z.ZodType<Prisma.Maintain
   name: z.lazy(() => SortOrderSchema).optional(),
   firstName: z.lazy(() => SortOrderSchema).optional(),
   phoneNumber: z.lazy(() => SortOrderSchema).optional(),
+  profileUrl: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   deletedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -1588,6 +1592,7 @@ export const MaintainerWhereUniqueInputSchema: z.ZodType<Prisma.MaintainerWhereU
   name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   firstName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   phoneNumber: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  profileUrl: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   deletedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
@@ -1599,6 +1604,7 @@ export const MaintainerOrderByWithAggregationInputSchema: z.ZodType<Prisma.Maint
   name: z.lazy(() => SortOrderSchema).optional(),
   firstName: z.lazy(() => SortOrderSchema).optional(),
   phoneNumber: z.lazy(() => SortOrderSchema).optional(),
+  profileUrl: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   deletedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -1617,6 +1623,7 @@ export const MaintainerScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Ma
   name: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   firstName: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   phoneNumber: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  profileUrl: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
   deletedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.coerce.date() ]).optional().nullable(),
@@ -2600,6 +2607,7 @@ export const MaintainerCreateInputSchema: z.ZodType<Prisma.MaintainerCreateInput
   name: z.string(),
   firstName: z.string(),
   phoneNumber: z.string(),
+  profileUrl: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   deletedAt: z.coerce.date().optional().nullable(),
@@ -2611,6 +2619,7 @@ export const MaintainerUncheckedCreateInputSchema: z.ZodType<Prisma.MaintainerUn
   name: z.string(),
   firstName: z.string(),
   phoneNumber: z.string(),
+  profileUrl: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   deletedAt: z.coerce.date().optional().nullable(),
@@ -2621,6 +2630,7 @@ export const MaintainerUpdateInputSchema: z.ZodType<Prisma.MaintainerUpdateInput
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   firstName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   phoneNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -2632,6 +2642,7 @@ export const MaintainerUncheckedUpdateInputSchema: z.ZodType<Prisma.MaintainerUn
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   firstName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   phoneNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -2643,6 +2654,7 @@ export const MaintainerCreateManyInputSchema: z.ZodType<Prisma.MaintainerCreateM
   name: z.string(),
   firstName: z.string(),
   phoneNumber: z.string(),
+  profileUrl: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   deletedAt: z.coerce.date().optional().nullable()
@@ -2652,6 +2664,7 @@ export const MaintainerUpdateManyMutationInputSchema: z.ZodType<Prisma.Maintaine
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   firstName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   phoneNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -2662,6 +2675,7 @@ export const MaintainerUncheckedUpdateManyInputSchema: z.ZodType<Prisma.Maintain
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   firstName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   phoneNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -3708,6 +3722,7 @@ export const MaintainerCountOrderByAggregateInputSchema: z.ZodType<Prisma.Mainta
   name: z.lazy(() => SortOrderSchema).optional(),
   firstName: z.lazy(() => SortOrderSchema).optional(),
   phoneNumber: z.lazy(() => SortOrderSchema).optional(),
+  profileUrl: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   deletedAt: z.lazy(() => SortOrderSchema).optional()
@@ -3722,6 +3737,7 @@ export const MaintainerMaxOrderByAggregateInputSchema: z.ZodType<Prisma.Maintain
   name: z.lazy(() => SortOrderSchema).optional(),
   firstName: z.lazy(() => SortOrderSchema).optional(),
   phoneNumber: z.lazy(() => SortOrderSchema).optional(),
+  profileUrl: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   deletedAt: z.lazy(() => SortOrderSchema).optional()
@@ -3732,6 +3748,7 @@ export const MaintainerMinOrderByAggregateInputSchema: z.ZodType<Prisma.Maintain
   name: z.lazy(() => SortOrderSchema).optional(),
   firstName: z.lazy(() => SortOrderSchema).optional(),
   phoneNumber: z.lazy(() => SortOrderSchema).optional(),
+  profileUrl: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   deletedAt: z.lazy(() => SortOrderSchema).optional()
@@ -6711,6 +6728,7 @@ export const MaintainerCreateWithoutMaintenancesInputSchema: z.ZodType<Prisma.Ma
   name: z.string(),
   firstName: z.string(),
   phoneNumber: z.string(),
+  profileUrl: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   deletedAt: z.coerce.date().optional().nullable()
@@ -6721,6 +6739,7 @@ export const MaintainerUncheckedCreateWithoutMaintenancesInputSchema: z.ZodType<
   name: z.string(),
   firstName: z.string(),
   phoneNumber: z.string(),
+  profileUrl: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   deletedAt: z.coerce.date().optional().nullable()
@@ -6812,6 +6831,7 @@ export const MaintainerScalarWhereInputSchema: z.ZodType<Prisma.MaintainerScalar
   name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   firstName: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   phoneNumber: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  profileUrl: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   deletedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
@@ -7641,6 +7661,7 @@ export const MaintainerUpdateWithoutMaintenancesInputSchema: z.ZodType<Prisma.Ma
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   firstName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   phoneNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -7651,6 +7672,7 @@ export const MaintainerUncheckedUpdateWithoutMaintenancesInputSchema: z.ZodType<
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   firstName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   phoneNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -7661,6 +7683,7 @@ export const MaintainerUncheckedUpdateManyWithoutMaintenancesInputSchema: z.ZodT
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   firstName: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   phoneNumber: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  profileUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),

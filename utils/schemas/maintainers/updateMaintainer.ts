@@ -23,6 +23,7 @@ export type UpdateMaintainerBody = Partial<{
   name: string;
   firstName: string;
   phoneNumber: string;
+  profile: File;
 }>;
 
 export const UpdateMaintainerBodySchema: z.ZodType<UpdateMaintainerBody> = z
@@ -30,6 +31,7 @@ export const UpdateMaintainerBodySchema: z.ZodType<UpdateMaintainerBody> = z
     name: MaintainerNameSchema,
     firstName: MaintainerFirstNameSchema,
     phoneNumber: PhoneNumberSchema,
+    profile: FileSchema,
   })
   .partial();
 

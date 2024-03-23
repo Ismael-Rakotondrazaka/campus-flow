@@ -177,6 +177,7 @@ model Maintainer {
   name         String
   firstName    String
   phoneNumber  String        @db.Text
+  profileUrl   String        @db.Text
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @default(now())
   deletedAt    DateTime?

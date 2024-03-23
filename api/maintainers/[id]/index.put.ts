@@ -47,6 +47,11 @@ export default defineEventHandler(
         });
       }
 
+      let profileUrl: string | undefined;
+      if (!is.undefined(updateMaintainerBodySPR.data.profile)) {
+        profileUrl = uploadUserProfile(updateMaintainerBodySPR.data.profile);
+      }
+
       const updatedMaintainer: MaintainerFull =
         await maintainerRepository.updateFullOne({
           where: {
@@ -57,6 +62,7 @@ export default defineEventHandler(
             firstName: updateMaintainerBodySPR.data.firstName,
             phoneNumber: updateMaintainerBodySPR.data.phoneNumber,
             updatedAt: new Date(),
+            profileUrl,
           },
         });
 

@@ -17,12 +17,17 @@ export default defineEventHandler(
         });
       }
 
+      const profileUrl: string = uploadUserProfile(
+        storeMaintainerBodySPR.data.profile,
+      );
+
       const maintainer: MaintainerFull =
         await maintainerRepository.createFullOne({
           data: {
             name: storeMaintainerBodySPR.data.name,
             firstName: storeMaintainerBodySPR.data.firstName,
             phoneNumber: storeMaintainerBodySPR.data.phoneNumber,
+            profileUrl,
           },
         });
 
