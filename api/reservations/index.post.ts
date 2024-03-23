@@ -153,6 +153,8 @@ export default defineEventHandler(
           },
         });
 
+      await handleReservationCreated(reservation);
+
       const response: StoreReservationResponse = {
         reservation,
       };
