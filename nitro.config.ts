@@ -47,11 +47,6 @@ export default defineNitroConfig({
       ],
     },
   },
-  routeRules: {
-    "/api/**": {
-      cors: true,
-    },
-  },
   experimental: {
     asyncContext: true,
     openAPI: true,

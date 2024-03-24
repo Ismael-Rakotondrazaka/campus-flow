@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": "nitro build",
-    "dev": "npm run prepare && nitro dev",
+    "dev": "npm run prepare && PORT=8000 nitro dev",
     "prepare": "nitro prepare && npx prisma generate",
     "preview": "node .output/server/index.mjs",
     "typecheck": "tsc --noEmit",
@@ -14,7 +14,7 @@
     "db:reset": "npx prisma migrate reset --force --skip-seed && npx prisma db push && npx prisma db seed"
   },
   "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.1.0",
@@ -47,8 +47,10 @@
     "libphonenumber-js": "^1.10.58",
     "mime": "^4.0.1",
     "nanoid": "^5.0.6",
+    "nitro-cors": "^0.7.0",
     "nodemailer": "^6.9.12",
     "slugify": "^1.6.6",
+    "tsx": "^4.7.1",
     "type-fest": "^4.12.0",
     "xss": "^1.0.15",
     "zod": "^3.22.4",
