@@ -1,6 +1,7 @@
 import { prismaCtx, z } from "#imports";
 import { GenderSchema, OriginSchema } from "~/prisma/generated/zod";
 import { ReservationFull, ReservationFullSchema } from "./reservationFull";
+import { Simplify } from "type-fest";
 
 /* -------------------------------------------------------------------------- */
 /*                             StoreReservation body                             */
@@ -22,22 +23,23 @@ export type StoreReservationBody = {
   origin: prismaCtx.$Enums.Origin;
 };
 
-export const StoreReservationBodySchema: z.ZodType<StoreReservationBody> =
-  z.object({
-    name: UserNameSchema,
-    firstName: UserFirstNameSchema,
-    phoneNumber: PhoneNumberSchema,
-    profile: FileSchema,
-    email: EmailSchema,
-    gender: GenderSchema,
-    emergencyNumber: PhoneNumberSchema,
-    NIC: NICSchema,
-    NICImage: FileSchema,
-    schoolCertificate: FileSchema,
-    facultyId: IdentifierSchema,
-    academicSessionId: IdentifierSchema,
-    origin: OriginSchema,
-  });
+export const StoreReservationBodySchema: z.ZodType<
+  Simplify<StoreReservationBody>
+> = z.object({
+  name: UserNameSchema,
+  firstName: UserFirstNameSchema,
+  phoneNumber: PhoneNumberSchema,
+  profile: FileSchema,
+  email: EmailSchema,
+  gender: GenderSchema,
+  emergencyNumber: PhoneNumberSchema,
+  NIC: NICSchema,
+  NICImage: FileSchema,
+  schoolCertificate: FileSchema,
+  facultyId: IdentifierSchema,
+  academicSessionId: IdentifierSchema,
+  origin: OriginSchema,
+});
 
 /* -------------------------------------------------------------------------- */
 /*                             StoreReservation data                             */

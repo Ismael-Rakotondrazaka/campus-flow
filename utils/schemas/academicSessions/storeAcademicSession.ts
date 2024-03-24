@@ -1,4 +1,5 @@
 import { prismaCtx, z } from "#imports";
+import { Simplify } from "type-fest";
 import { AcademicSessionSchema } from "~/prisma/generated/zod";
 
 /* -------------------------------------------------------------------------- */
@@ -10,11 +11,12 @@ export type StoreAcademicSessionBody = {
   endAt: Date;
 };
 
-export const StoreAcademicSessionBodySchema: z.ZodType<StoreAcademicSessionBody> =
-  z.object({
-    startAt: z.coerce.date(),
-    endAt: z.coerce.date(),
-  });
+export const StoreAcademicSessionBodySchema: z.ZodType<
+  Simplify<StoreAcademicSessionBody>
+> = z.object({
+  startAt: z.coerce.date(),
+  endAt: z.coerce.date(),
+});
 
 /* -------------------------------------------------------------------------- */
 /*                             StoreAcademicSession data                             */

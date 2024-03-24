@@ -11,10 +11,14 @@ export const getRequestBody = async (): Promise<unknown> => {
 
   if (requestContentType !== undefined) {
     if (requestContentType.startsWith("application/json")) {
-      const JSONBody: unknown = await readBody(event);
+      try {
+        const JSONBody: unknown = await readBody(event);
 
-      if (JSONBody !== undefined && JSONBody !== null) {
-        result = JSONBody;
+        if (JSONBody !== undefined && JSONBody !== null) {
+          result = JSONBody;
+        }
+      } catch (error) {
+        return result;
       }
     } else if (
       requestContentType.startsWith("application/x-www-form-urlencoded") ||

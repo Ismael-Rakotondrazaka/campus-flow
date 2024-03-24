@@ -25,7 +25,10 @@ export type LoginData = {
 
 export const LoginDataSchema: z.ZodType<LoginData> = z.object({
   accessToken: AccessTokenSchema,
-  refreshToken: RefreshTokenSchema,
+  refreshToken: z.object({
+    token: z.string(),
+    expiresAt: z.coerce.date(),
+  }),
 });
 
 /* -------------------------------------------------------------------------- */

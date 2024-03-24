@@ -5,6 +5,7 @@ import { updateFullOne } from "./updateFullOne";
 import { findFullMany } from "./findFullMany";
 import { deleteFullOne } from "./deleteFullOne";
 import { count } from "./count";
+import { exist } from "./exist";
 
 export const lodgmentRepository = Object.freeze({
   findFullOne,
@@ -14,6 +15,7 @@ export const lodgmentRepository = Object.freeze({
   findFullMany,
   deleteFullOne,
   count,
+  exist,
 });
 
 export * from "./fullRaw";

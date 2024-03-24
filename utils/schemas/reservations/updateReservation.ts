@@ -1,6 +1,6 @@
 import { prismaCtx, z } from "#imports";
-import { ReservationStatusSchema } from "~/prisma/generated/zod";
 import { ReservationFull, ReservationFullSchema } from "./reservationFull";
+import { Simplify } from "type-fest";
 
 /* -------------------------------------------------------------------------- */
 /*                            UpdateReservation param                            */
@@ -19,14 +19,20 @@ export const UpdateReservationParamSchema: z.ZodType<UpdateReservationParam> =
 /*                             UpdateReservation body                             */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * If status is `VALIDATED`, lodgmentId is required.
+ */
 export type UpdateReservationBody = {
-  status: Omit<prismaCtx.$Enums.ReservationStatus, "PENDING">;
+  status: Exclude<prismaCtx.$Enums.ReservationStatus, "PENDING">;
+  lodgmentId?: number;
 };
 
-export const UpdateReservationBodySchema: z.ZodType<UpdateReservationBody> =
-  z.object({
-    status: ReservationStatusSchema,
-  });
+export const UpdateReservationBodySchema: z.ZodType<
+  Simplify<UpdateReservationBody>
+> = z.object({
+  status: z.enum(["ACCEPTED", "REFUSED", "VALIDATED"]),
+  lodgmentId: z.coerce.number().optional(),
+});
 
 /* -------------------------------------------------------------------------- */
 /*                             UpdateReservation data                             */

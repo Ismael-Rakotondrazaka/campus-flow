@@ -24,8 +24,10 @@ export const UpdateAnnouncementParamSchema: z.ZodType<UpdateAnnouncementParam> =
 export type UpdateAnnouncementBody = Partial<{
   title: string;
   content: string;
-  illustration: File | null;
+  illustration?: File | null;
   status: prismaCtx.$Enums.AnnouncementStatus;
+  startAt?: Date | null;
+  endAt?: Date | null;
 }>;
 
 export type UpdateAnnouncementBodyInput = Partial<{
@@ -33,6 +35,8 @@ export type UpdateAnnouncementBodyInput = Partial<{
   content: string;
   illustration: File | null | string;
   status: prismaCtx.$Enums.AnnouncementStatus;
+  startAt?: Date | null | string;
+  endAt?: Date | null | string;
 }>;
 
 export const UpdateAnnouncementBodySchema: z.ZodType<
@@ -49,6 +53,12 @@ export const UpdateAnnouncementBodySchema: z.ZodType<
       FileSchema,
     ]),
     status: AnnouncementStatusSchema,
+    startAt: z.union([
+      CustomNullSchema,
+      CustomUndefinedSchema,
+      z.coerce.date(),
+    ]),
+    endAt: z.union([CustomNullSchema, CustomUndefinedSchema, z.coerce.date()]),
   })
   .partial();
 
