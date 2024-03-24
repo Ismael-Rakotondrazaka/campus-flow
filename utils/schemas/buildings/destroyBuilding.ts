@@ -17,7 +17,13 @@ export const DestroyBuildingParamSchema: z.ZodType<DestroyBuildingParam> =
 /*                             DestroyBuilding data                             */
 /* -------------------------------------------------------------------------- */
 
-export type DestroyBuildingData = void;
+export type DestroyBuildingData = {
+  building: BuildingFull;
+};
+
+export const DestroyBuildingDataSchema: z.ZodType<ShowBuildingData> = z.object({
+  building: BuildingFullSchema,
+});
 
 /* -------------------------------------------------------------------------- */
 /*                             DestroyBuilding error                            */
