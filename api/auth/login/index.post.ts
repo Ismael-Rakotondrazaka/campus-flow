@@ -23,7 +23,7 @@ export default defineEventHandler(async (): Promise<LoginResponse> => {
 
     const isPasswordMatch: boolean = comparePassword(
       loginSPR.data.password,
-      user.password
+      user.password,
     );
     if (!isPasswordMatch) {
       return createBadRequestError({

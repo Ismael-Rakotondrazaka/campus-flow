@@ -6,4 +6,3 @@ export * from "./sendReservationAcceptedEmail";
 export * from "./sendReservationCreatedEmail";
 export * from "./sendReservationRefusedEmail";
 export * from "./sendReservationValidatedEmail";
-export * from "./formatEmailWithLayout";

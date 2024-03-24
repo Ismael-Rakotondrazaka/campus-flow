@@ -34,7 +34,7 @@ export const MaintainerScalarFieldEnumSchema = z.enum(['id','name','firstName','
 
 export const AcademicSessionScalarFieldEnumSchema = z.enum(['id','startAt','endAt','deletedAt']);
 
-export const BuildingScalarFieldEnumSchema = z.enum(['id','name','floors','illustrationUrl']);
+export const BuildingScalarFieldEnumSchema = z.enum(['id','name','floors','illustrationUrl','deletedAt']);
 
 export const AnnouncementScalarFieldEnumSchema = z.enum(['id','title','content','illustrationUrl','status','startAt','endAt','createdAt','updatedAt','deletedAt']);
 
@@ -279,6 +279,7 @@ export const BuildingSchema = z.object({
   name: z.string(),
   floors: z.number().int(),
   illustrationUrl: z.string(),
+  deletedAt: z.coerce.date().nullable(),
 })
 
 export type Building = z.infer<typeof BuildingSchema>
@@ -733,6 +734,7 @@ export const BuildingSelectSchema: z.ZodType<Prisma.BuildingSelect> = z.object({
   name: z.boolean().optional(),
   floors: z.boolean().optional(),
   illustrationUrl: z.boolean().optional(),
+  deletedAt: z.boolean().optional(),
   lodgments: z.union([z.boolean(),z.lazy(() => LodgmentFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => BuildingCountOutputTypeArgsSchema)]).optional(),
 }).strict()
@@ -1695,6 +1697,7 @@ export const BuildingWhereInputSchema: z.ZodType<Prisma.BuildingWhereInput> = z.
   name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   floors: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   illustrationUrl: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  deletedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
   lodgments: z.lazy(() => LodgmentListRelationFilterSchema).optional()
 }).strict();
 
@@ -1703,6 +1706,7 @@ export const BuildingOrderByWithRelationInputSchema: z.ZodType<Prisma.BuildingOr
   name: z.lazy(() => SortOrderSchema).optional(),
   floors: z.lazy(() => SortOrderSchema).optional(),
   illustrationUrl: z.lazy(() => SortOrderSchema).optional(),
+  deletedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   lodgments: z.lazy(() => LodgmentOrderByRelationAggregateInputSchema).optional()
 }).strict();
 
@@ -1717,6 +1721,7 @@ export const BuildingWhereUniqueInputSchema: z.ZodType<Prisma.BuildingWhereUniqu
   name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   floors: z.union([ z.lazy(() => IntFilterSchema),z.number().int() ]).optional(),
   illustrationUrl: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  deletedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
   lodgments: z.lazy(() => LodgmentListRelationFilterSchema).optional()
 }).strict());
 
@@ -1725,6 +1730,7 @@ export const BuildingOrderByWithAggregationInputSchema: z.ZodType<Prisma.Buildin
   name: z.lazy(() => SortOrderSchema).optional(),
   floors: z.lazy(() => SortOrderSchema).optional(),
   illustrationUrl: z.lazy(() => SortOrderSchema).optional(),
+  deletedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   _count: z.lazy(() => BuildingCountOrderByAggregateInputSchema).optional(),
   _avg: z.lazy(() => BuildingAvgOrderByAggregateInputSchema).optional(),
   _max: z.lazy(() => BuildingMaxOrderByAggregateInputSchema).optional(),
@@ -1740,6 +1746,7 @@ export const BuildingScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Buil
   name: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   floors: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
   illustrationUrl: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  deletedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.coerce.date() ]).optional().nullable(),
 }).strict();
 
 export const AnnouncementWhereInputSchema: z.ZodType<Prisma.AnnouncementWhereInput> = z.object({
@@ -2739,6 +2746,7 @@ export const BuildingCreateInputSchema: z.ZodType<Prisma.BuildingCreateInput> = 
   name: z.string(),
   floors: z.number().int(),
   illustrationUrl: z.string(),
+  deletedAt: z.coerce.date().optional().nullable(),
   lodgments: z.lazy(() => LodgmentCreateNestedManyWithoutBuildingInputSchema).optional()
 }).strict();
 
@@ -2747,6 +2755,7 @@ export const BuildingUncheckedCreateInputSchema: z.ZodType<Prisma.BuildingUnchec
   name: z.string(),
   floors: z.number().int(),
   illustrationUrl: z.string(),
+  deletedAt: z.coerce.date().optional().nullable(),
   lodgments: z.lazy(() => LodgmentUncheckedCreateNestedManyWithoutBuildingInputSchema).optional()
 }).strict();
 
@@ -2754,6 +2763,7 @@ export const BuildingUpdateInputSchema: z.ZodType<Prisma.BuildingUpdateInput> = 
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   floors: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   illustrationUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   lodgments: z.lazy(() => LodgmentUpdateManyWithoutBuildingNestedInputSchema).optional()
 }).strict();
 
@@ -2762,6 +2772,7 @@ export const BuildingUncheckedUpdateInputSchema: z.ZodType<Prisma.BuildingUnchec
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   floors: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   illustrationUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   lodgments: z.lazy(() => LodgmentUncheckedUpdateManyWithoutBuildingNestedInputSchema).optional()
 }).strict();
 
@@ -2769,13 +2780,15 @@ export const BuildingCreateManyInputSchema: z.ZodType<Prisma.BuildingCreateManyI
   id: z.number().int().optional(),
   name: z.string(),
   floors: z.number().int(),
-  illustrationUrl: z.string()
+  illustrationUrl: z.string(),
+  deletedAt: z.coerce.date().optional().nullable()
 }).strict();
 
 export const BuildingUpdateManyMutationInputSchema: z.ZodType<Prisma.BuildingUpdateManyMutationInput> = z.object({
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   floors: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   illustrationUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const BuildingUncheckedUpdateManyInputSchema: z.ZodType<Prisma.BuildingUncheckedUpdateManyInput> = z.object({
@@ -2783,6 +2796,7 @@ export const BuildingUncheckedUpdateManyInputSchema: z.ZodType<Prisma.BuildingUn
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   floors: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   illustrationUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const AnnouncementCreateInputSchema: z.ZodType<Prisma.AnnouncementCreateInput> = z.object({
@@ -3801,7 +3815,8 @@ export const BuildingCountOrderByAggregateInputSchema: z.ZodType<Prisma.Building
   id: z.lazy(() => SortOrderSchema).optional(),
   name: z.lazy(() => SortOrderSchema).optional(),
   floors: z.lazy(() => SortOrderSchema).optional(),
-  illustrationUrl: z.lazy(() => SortOrderSchema).optional()
+  illustrationUrl: z.lazy(() => SortOrderSchema).optional(),
+  deletedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const BuildingAvgOrderByAggregateInputSchema: z.ZodType<Prisma.BuildingAvgOrderByAggregateInput> = z.object({
@@ -3813,14 +3828,16 @@ export const BuildingMaxOrderByAggregateInputSchema: z.ZodType<Prisma.BuildingMa
   id: z.lazy(() => SortOrderSchema).optional(),
   name: z.lazy(() => SortOrderSchema).optional(),
   floors: z.lazy(() => SortOrderSchema).optional(),
-  illustrationUrl: z.lazy(() => SortOrderSchema).optional()
+  illustrationUrl: z.lazy(() => SortOrderSchema).optional(),
+  deletedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const BuildingMinOrderByAggregateInputSchema: z.ZodType<Prisma.BuildingMinOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   name: z.lazy(() => SortOrderSchema).optional(),
   floors: z.lazy(() => SortOrderSchema).optional(),
-  illustrationUrl: z.lazy(() => SortOrderSchema).optional()
+  illustrationUrl: z.lazy(() => SortOrderSchema).optional(),
+  deletedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const BuildingSumOrderByAggregateInputSchema: z.ZodType<Prisma.BuildingSumOrderByAggregateInput> = z.object({
@@ -6219,14 +6236,16 @@ export const LodgmentUncheckedUpdateWithoutStudentsInputSchema: z.ZodType<Prisma
 export const BuildingCreateWithoutLodgmentsInputSchema: z.ZodType<Prisma.BuildingCreateWithoutLodgmentsInput> = z.object({
   name: z.string(),
   floors: z.number().int(),
-  illustrationUrl: z.string()
+  illustrationUrl: z.string(),
+  deletedAt: z.coerce.date().optional().nullable()
 }).strict();
 
 export const BuildingUncheckedCreateWithoutLodgmentsInputSchema: z.ZodType<Prisma.BuildingUncheckedCreateWithoutLodgmentsInput> = z.object({
   id: z.number().int().optional(),
   name: z.string(),
   floors: z.number().int(),
-  illustrationUrl: z.string()
+  illustrationUrl: z.string(),
+  deletedAt: z.coerce.date().optional().nullable()
 }).strict();
 
 export const BuildingCreateOrConnectWithoutLodgmentsInputSchema: z.ZodType<Prisma.BuildingCreateOrConnectWithoutLodgmentsInput> = z.object({
@@ -6310,6 +6329,7 @@ export const BuildingUpdateWithoutLodgmentsInputSchema: z.ZodType<Prisma.Buildin
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   floors: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   illustrationUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const BuildingUncheckedUpdateWithoutLodgmentsInputSchema: z.ZodType<Prisma.BuildingUncheckedUpdateWithoutLodgmentsInput> = z.object({
@@ -6317,6 +6337,7 @@ export const BuildingUncheckedUpdateWithoutLodgmentsInputSchema: z.ZodType<Prism
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   floors: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   illustrationUrl: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  deletedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const StudentUpsertWithWhereUniqueWithoutLodgmentInputSchema: z.ZodType<Prisma.StudentUpsertWithWhereUniqueWithoutLodgmentInput> = z.object({

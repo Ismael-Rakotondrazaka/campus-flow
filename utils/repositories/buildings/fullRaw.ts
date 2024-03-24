@@ -23,6 +23,7 @@ export const buildingFullRawToBuildingFull = (
     name: building.name,
     floors: building.floors,
     illustrationUrl: building.illustrationUrl,
+    deletedAt: building.deletedAt,
     _count: {
       lodgments: building._count.lodgments,
       available: 0,

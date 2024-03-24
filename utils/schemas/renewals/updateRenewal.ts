@@ -1,5 +1,4 @@
 import { prismaCtx, z } from "#imports";
-import { RenewalStatusSchema } from "~/prisma/generated/zod";
 import { RenewalFull, RenewalFullSchema } from "./renewalFull";
 
 /* -------------------------------------------------------------------------- */
@@ -21,11 +20,11 @@ export const UpdateRenewalParamSchema: z.ZodType<UpdateRenewalParam> = z.object(
 /* -------------------------------------------------------------------------- */
 
 export type UpdateRenewalBody = {
-  status: Omit<prismaCtx.$Enums.RenewalStatus, "PENDING">;
+  status: Exclude<prismaCtx.$Enums.RenewalStatus, "PENDING">;
 };
 
 export const UpdateRenewalBodySchema: z.ZodType<UpdateRenewalBody> = z.object({
-  status: RenewalStatusSchema,
+  status: z.enum(["ACCEPTED", "REFUSED", "VALIDATED"]),
 });
 
 /* -------------------------------------------------------------------------- */

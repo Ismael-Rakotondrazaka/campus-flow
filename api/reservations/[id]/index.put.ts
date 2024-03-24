@@ -60,11 +60,9 @@ export default defineEventHandler(
         });
       }
 
-      if (updateReservationBodySPR.data.status === "ACCEPTED") {
-        await handleReservationAccepted(reservation);
-      } else if (updateReservationBodySPR.data.status === "REFUSED") {
-        await handleReservationRefused(reservation);
-      } else if (updateReservationBodySPR.data.status === "VALIDATED") {
+      let assignedLodgment: LodgmentFull | null = null;
+
+      if (updateReservationBodySPR.data.status === "VALIDATED") {
         if (reservation.status !== "ACCEPTED") {
           return createBadRequestError({
             message: "La réservation doit être acceptée avant d'être validée.",
@@ -72,24 +70,21 @@ export default defineEventHandler(
               status: "La réservation doit être acceptée avant d'être validée.",
             },
           });
-        }
-
-        const lodgment: LodgmentFull | null =
-          await lodgmentRepository.findFullOne({
+        } else {
+          assignedLodgment = await lodgmentRepository.findFullOne({
             where: {
               id: updateReservationBodySPR.data.lodgmentId,
             },
           });
 
-        if (is.null(lodgment)) {
-          return createBadRequestError({
-            errorMessage: {
-              lodgmentId: "Le logement n'existe pas.",
-            },
-          });
+          if (is.null(assignedLodgment)) {
+            return createBadRequestError({
+              errorMessage: {
+                lodgmentId: "Le logement n'existe pas.",
+              },
+            });
+          }
         }
-
-        await handleReservationValidated(reservation, lodgment);
       }
 
       const updatedReservation: ReservationFull =
@@ -101,6 +96,14 @@ export default defineEventHandler(
             status: updateReservationBodySPR.data.status,
           },
         });
+
+      if (updateReservationBodySPR.data.status === "ACCEPTED") {
+        await handleReservationAccepted(updatedReservation);
+      } else if (updateReservationBodySPR.data.status === "REFUSED") {
+        await handleReservationRefused(updatedReservation);
+      } else if (updateReservationBodySPR.data.status === "VALIDATED") {
+        await handleReservationValidated(updatedReservation, assignedLodgment!);
+      }
 
       const response: UpdateReservationResponse = {
         reservation: updatedReservation,

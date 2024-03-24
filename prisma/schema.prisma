@@ -227,6 +227,7 @@ model Building {
   name            String
   floors          Int
   illustrationUrl String     @db.Text
+  deletedAt       DateTime?
   lodgments       Lodgment[]
 }
 

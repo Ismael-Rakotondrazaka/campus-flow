@@ -1,4 +1,5 @@
 import { z } from "#imports";
+import { Simplify } from "type-fest";
 import { RenewalFull, RenewalFullSchema } from "./renewalFull";
 
 /* -------------------------------------------------------------------------- */
@@ -15,15 +16,16 @@ export type StoreRenewalBody = {
   academicSessionId: number;
 };
 
-export const StoreRenewalBodySchema: z.ZodType<StoreRenewalBody> = z.object({
-  phoneNumber: PhoneNumberSchema,
-  profile: FileSchema,
-  emergencyNumber: PhoneNumberSchema,
-  NICImage: FileSchema,
-  schoolCertificate: FileSchema,
-  facultyId: IdentifierSchema,
-  academicSessionId: IdentifierSchema,
-});
+export const StoreRenewalBodySchema: z.ZodType<Simplify<StoreRenewalBody>> =
+  z.object({
+    phoneNumber: PhoneNumberSchema,
+    profile: FileSchema,
+    emergencyNumber: PhoneNumberSchema,
+    NICImage: FileSchema,
+    schoolCertificate: FileSchema,
+    facultyId: IdentifierSchema,
+    academicSessionId: IdentifierSchema,
+  });
 
 /* -------------------------------------------------------------------------- */
 /*                             StoreRenewal data                             */

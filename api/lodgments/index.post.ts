@@ -17,6 +17,7 @@ export default defineEventHandler(async (): Promise<StoreLodgmentResponse> => {
     const building: BuildingFull | null = await buildingRepository.findFullOne({
       where: {
         id: storeLodgmentBodySPR.data.buildingId,
+        deletedAt: null,
       },
     });
     if (is.null(building)) {
