@@ -1,1 +1,2 @@
 - [ ] Remove password, refreshTokens, passwordResetTokens from user query in generated schemas
+- [ ] Password reset
