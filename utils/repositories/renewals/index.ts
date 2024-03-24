@@ -4,6 +4,7 @@ import { findFullOneOrFail } from "./findFullOneOrFail";
 import { updateFullOne } from "./updateFullOne";
 import { findFullMany } from "./findFullMany";
 import { count } from "./count";
+import { exist } from "./exist";
 
 export const renewalRepository = Object.freeze({
   findFullOne,
@@ -12,6 +13,7 @@ export const renewalRepository = Object.freeze({
   updateFullOne,
   findFullMany,
   count,
+  exist,
 });
 
 export * from "./fullRaw";
