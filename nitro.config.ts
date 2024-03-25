@@ -18,6 +18,8 @@ export default defineNitroConfig({
       refresh token life in milliseconds
      */
     refreshTokenLife: 0,
+    resetPasswordTokenSecret: "",
+    resetPasswordTokenLife: 0,
     /* --------------------------------- Bucket --------------------------------- */
     bucketEntryPoint: "",
     bucketName: "",
@@ -30,6 +32,7 @@ export default defineNitroConfig({
     informationPhoneNumber: "",
     /* --------------------------------- Client --------------------------------- */
     clientUrl: "",
+    clientLoginUrl: "",
   },
   typescript: {
     strict: true,
