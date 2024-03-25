@@ -62,34 +62,36 @@ export default defineEventHandler(async (): Promise<UpdateLodgmentResponse> => {
         });
       }
 
-      if (!is.undefined(updateLodgmentBodySPR.data.floor)) {
-        if (updateLodgmentBodySPR.data.floor > building.floors) {
-          return createBadRequestError({
-            errorMessage: {
-              floor: "L'étage n’existe pas dans le bâtiment.",
-            },
-          });
-        }
-      }
-
-      if (!is.undefined(updateLodgmentBodySPR.data.roomNumber)) {
-        const isRoomNumberExist: boolean = await lodgmentRepository.exist({
-          where: {
-            roomNumber: updateLodgmentBodySPR.data.roomNumber,
-            buildingId: building.id,
+      if (
+        (updateLodgmentBodySPR.data.floor ?? lodgment.floor) > building.floors
+      ) {
+        return createBadRequestError({
+          errorMessage: {
+            floor: "L'étage n’existe pas dans le bâtiment.",
           },
         });
-        if (isRoomNumberExist) {
-          return createBadRequestError({
-            errorMessage: {
-              floor:
-                "Une chambre avec le même numéro est déjà présent dans le bâtiment.",
-            },
-          });
-        }
+      }
+
+      const isRoomNumberExist: boolean = await lodgmentRepository.exist({
+        where: {
+          roomNumber:
+            updateLodgmentBodySPR.data.roomNumber ?? lodgment.roomNumber,
+          buildingId: building.id,
+        },
+      });
+      if (isRoomNumberExist) {
+        return createBadRequestError({
+          errorMessage: {
+            roomNumber:
+              "Une chambre avec le même numéro est déjà présent dans le bâtiment.",
+          },
+        });
       }
     } else {
-      if (!is.undefined(updateLodgmentBodySPR.data.floor)) {
+      if (
+        !is.undefined(updateLodgmentBodySPR.data.floor) &&
+        updateLodgmentBodySPR.data.floor !== lodgment.floor
+      ) {
         const building: BuildingFull =
           await buildingRepository.findFullOneOrFail({
             where: {
@@ -106,18 +108,10 @@ export default defineEventHandler(async (): Promise<UpdateLodgmentResponse> => {
         }
       }
 
-      if (!is.undefined(updateLodgmentBodySPR.data.capacity)) {
-        if (updateLodgmentBodySPR.data.capacity < lodgment._count.students) {
-          return createBadRequestError({
-            errorMessage: {
-              capacity:
-                "La capacité est inférieure au nombre d'étudiant résidant actuellement dans cette chambre. Transférez-les d'abord.",
-            },
-          });
-        }
-      }
-
-      if (!is.undefined(updateLodgmentBodySPR.data.roomNumber)) {
+      if (
+        !is.undefined(updateLodgmentBodySPR.data.roomNumber) &&
+        updateLodgmentBodySPR.data.roomNumber !== lodgment.roomNumber
+      ) {
         const isRoomNumberExist: boolean = await lodgmentRepository.exist({
           where: {
             roomNumber: updateLodgmentBodySPR.data.roomNumber,
@@ -129,6 +123,15 @@ export default defineEventHandler(async (): Promise<UpdateLodgmentResponse> => {
             errorMessage: {
               floor:
                 "Une chambre avec le même numéro est déjà présent dans le bâtiment.",
+            },
+          });
+        }
+      } else if (!is.undefined(updateLodgmentBodySPR.data.capacity)) {
+        if (updateLodgmentBodySPR.data.capacity < lodgment._count.students) {
+          return createBadRequestError({
+            errorMessage: {
+              capacity:
+                "La capacité est inférieure au nombre d'étudiant résidant actuellement dans cette chambre. Transférez-les d'abord.",
             },
           });
         }
