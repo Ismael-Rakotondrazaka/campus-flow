@@ -3,3 +3,5 @@ export * from "./files";
 export * from "./paginations";
 export * from "./renewals";
 export * from "./reservations";
+export * from "./resetPassword";
+export * from "./resetRequestPasswords";

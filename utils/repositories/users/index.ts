@@ -3,6 +3,7 @@ import { findFullOne } from "./findFullOne";
 import { findFullOneOrFail } from "./findFullOneOrFail";
 import { count } from "./count";
 import { exist } from "./exist";
+import { updateOne } from "./updateOne";
 
 export const userRepository = Object.freeze({
   findOne,
@@ -10,4 +11,5 @@ export const userRepository = Object.freeze({
   findFullOneOrFail,
   count,
   exist,
+  updateOne,
 });
