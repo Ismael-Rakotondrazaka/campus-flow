@@ -1,7 +1,7 @@
 import { prismaCtx } from "#imports";
 
 export default defineEventHandler(
-  async (): Promise<StoreReservationResponse> => {
+  async (_event): Promise<StoreReservationResponse> => {
     try {
       const storeReservationBodySPR = await safeParseRequestBodyAs(
         StoreReservationBodySchema,
@@ -158,6 +158,11 @@ export default defineEventHandler(
       const response: StoreReservationResponse = {
         reservation,
       };
+
+      const io = _event.context.socketIOServer;
+      io.to(`admins:${reservation.adminId}`).emit("reservations:store", {
+        reservation,
+      });
 
       return StoreReservationDataSchema.parse(response);
     } catch (error) {
