@@ -10,7 +10,7 @@ export const verifyAccessToken = (
   options?: VerifyAccessTokenOptions,
 ): string | jwt.JwtPayload | null => {
   try {
-    const runtimeConfig = useRuntimeConfig(useEvent());
+    const runtimeConfig = useRuntimeConfig();
     const accessTokenSecret: string = runtimeConfig.accessTokenSecret;
 
     const decoded = jwt.verify(token, accessTokenSecret, options);

@@ -2,7 +2,7 @@ import { prismaCtx } from "#imports";
 import { LodgmentFull } from "~/utils/schemas";
 
 export default defineEventHandler(
-  async (): Promise<StoreMaintenanceResponse> => {
+  async (_event): Promise<StoreMaintenanceResponse> => {
     try {
       const studentSession: StudentSession | null = getStudentSession();
       if (is.null(studentSession)) {
@@ -74,6 +74,11 @@ export default defineEventHandler(
       const response: StoreMaintenanceResponse = {
         maintenance,
       };
+
+      const io = _event.context.socketIOServer;
+      io.to(`admins:${maintenance.adminId}`).emit("maintenances:store", {
+        maintenance,
+      });
 
       return StoreMaintenanceDataSchema.parse(response);
     } catch (error) {

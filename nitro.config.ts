@@ -28,6 +28,8 @@ export default defineNitroConfig({
     smtpPassword: "",
     informationEmail: "",
     informationPhoneNumber: "",
+    /* --------------------------------- Client --------------------------------- */
+    clientUrl: "",
   },
   typescript: {
     strict: true,
