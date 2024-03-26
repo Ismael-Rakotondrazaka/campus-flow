@@ -16,6 +16,7 @@ export default defineEventHandler(
 
       const totalCounts: number = await academicSessionRepository.count({
         where: indexAcademicSessionQuerySPR.data.where,
+        orderBy: indexAcademicSessionQuerySPR.data.orderBy,
       });
 
       const pageSize: number = indexAcademicSessionQuerySPR.data.pageSize;

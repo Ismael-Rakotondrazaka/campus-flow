@@ -31,13 +31,16 @@ export default defineEventHandler(
         });
       }
 
+      const now = new Date();
+
       const deletedLodgment: LodgmentFull =
         await lodgmentRepository.updateFullOne({
           where: {
             id: destroyLodgmentParamSPR.data.id,
           },
           data: {
-            deletedAt: new Date(),
+            deletedAt: now,
+            updatedAt: now,
           },
         });
 

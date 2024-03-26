@@ -11,6 +11,7 @@ export default defineEventHandler(async (): Promise<IndexStudentResponse> => {
 
     const totalCounts: number = await studentRepository.count({
       where: indexStudentQuerySPR.data.where,
+      orderBy: indexStudentQuerySPR.data.orderBy,
     });
 
     const pageSize: number = indexStudentQuerySPR.data.pageSize;

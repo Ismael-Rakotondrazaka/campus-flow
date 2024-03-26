@@ -61,8 +61,8 @@ export default defineEventHandler(
             name: updateMaintainerBodySPR.data.name,
             firstName: updateMaintainerBodySPR.data.firstName,
             phoneNumber: updateMaintainerBodySPR.data.phoneNumber,
-            updatedAt: new Date(),
             profileUrl,
+            updatedAt: new Date(),
           },
         });
 

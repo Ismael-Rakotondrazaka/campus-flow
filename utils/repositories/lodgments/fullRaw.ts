@@ -21,6 +21,8 @@ export const lodgmentFullRawToLodgmentFull = (
     roomNumber: lodgment.roomNumber,
     buildingId: lodgment.buildingId,
     status: lodgment.status,
+    createdAt: lodgment.createdAt,
+    updatedAt: lodgment.updatedAt,
     deletedAt: lodgment.deletedAt,
     _count: {
       students: lodgment._count.students,

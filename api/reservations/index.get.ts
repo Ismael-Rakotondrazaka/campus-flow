@@ -14,6 +14,7 @@ export default defineEventHandler(
 
       const totalCounts: number = await reservationRepository.count({
         where: indexReservationQuerySPR.data.where,
+        orderBy: indexReservationQuerySPR.data.orderBy,
       });
 
       const pageSize: number = indexReservationQuerySPR.data.pageSize;

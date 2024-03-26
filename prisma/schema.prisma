@@ -49,11 +49,14 @@ model RefreshToken {
   user      User     @relation(fields: [userId], references: [id])
   expiresAt DateTime
   createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 }
 
 model Faculty {
   id           Int           @id @default(autoincrement())
   name         String        @db.Text
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @default(now())
   deletedAt    DateTime?
   students     Student[]
   reservations Reservation[]
@@ -98,6 +101,8 @@ model Lodgment {
   status       LodgmentStatus
   students     Student[]
   maintenances Maintenance[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now())
   deletedAt    DateTime?
 }
 
@@ -210,6 +215,8 @@ model AcademicSession {
   id           Int           @id @default(autoincrement())
   startAt      DateTime
   endAt        DateTime
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @default(now())
   deletedAt    DateTime?
   reservations Reservation[]
   renewals     Renewal[]
@@ -227,6 +234,8 @@ model Building {
   name            String
   floors          Int
   illustrationUrl String     @db.Text
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @default(now())
   deletedAt       DateTime?
   lodgments       Lodgment[]
 }
@@ -251,6 +260,8 @@ enum AnnouncementStatus {
 
 model PasswordResetToken {
   token     String   @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
   expiresAt DateTime
   userId    Int      @unique
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)

@@ -23,13 +23,16 @@ export default defineEventHandler(
         return createUnauthorizedError();
       }
 
+      const now = new Date();
+
       const deletedAcademicSession: prismaCtx.AcademicSession =
         await academicSessionRepository.updateOne({
           where: {
             id: academicSession.id,
           },
           data: {
-            deletedAt: null,
+            deletedAt: now,
+            updatedAt: now,
           },
         });
 

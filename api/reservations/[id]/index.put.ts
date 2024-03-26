@@ -94,6 +94,7 @@ export default defineEventHandler(
           },
           data: {
             status: updateReservationBodySPR.data.status,
+            updatedAt: new Date(),
           },
         });
 

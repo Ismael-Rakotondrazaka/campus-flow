@@ -21,13 +21,16 @@ export default defineEventHandler(async (): Promise<DestroyFacultyResponse> => {
       return createUnauthorizedError();
     }
 
+    const now = new Date();
+
     const deletedFaculty: prismaCtx.Faculty = await facultyRepository.updateOne(
       {
         where: {
           id: faculty.id,
         },
         data: {
-          deletedAt: new Date(),
+          deletedAt: now,
+          updatedAt: now,
         },
       },
     );

@@ -68,6 +68,7 @@ export default defineEventHandler(async (): Promise<UpdateBuildingResponse> => {
           floors,
           name,
           illustrationUrl,
+          updatedAt: new Date(),
         },
       });
 

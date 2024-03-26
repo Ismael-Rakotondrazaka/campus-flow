@@ -24,13 +24,16 @@ export default defineEventHandler(
         });
       }
 
+      const now = new Date();
+
       const deletedBuilding: BuildingFull =
         await buildingRepository.updateFullOne({
           where: {
             id: building.id,
           },
           data: {
-            deletedAt: new Date(),
+            deletedAt: now,
+            updatedAt: now,
           },
         });
 
