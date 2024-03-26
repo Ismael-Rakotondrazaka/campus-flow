@@ -11,6 +11,7 @@ export default defineEventHandler(async (): Promise<IndexRenewalResponse> => {
 
     const totalCounts: number = await renewalRepository.count({
       where: indexRenewalQuerySPR.data.where,
+      orderBy: indexRenewalQuerySPR.data.orderBy,
     });
 
     const pageSize: number = indexRenewalQuerySPR.data.pageSize;

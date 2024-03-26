@@ -11,6 +11,7 @@ export default defineEventHandler(async (): Promise<IndexAdminResponse> => {
 
     const totalCounts: number = await adminRepository.count({
       where: indexAdminQuerySPR.data.where,
+      orderBy: indexAdminQuerySPR.data.orderBy,
     });
 
     const pageSize: number = indexAdminQuerySPR.data.pageSize;

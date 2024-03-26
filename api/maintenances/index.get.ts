@@ -14,6 +14,7 @@ export default defineEventHandler(
 
       const totalCounts: number = await maintenanceRepository.count({
         where: indexMaintenanceQuerySPR.data.where,
+        orderBy: indexMaintenanceQuerySPR.data.orderBy,
       });
 
       const pageSize: number = indexMaintenanceQuerySPR.data.pageSize;

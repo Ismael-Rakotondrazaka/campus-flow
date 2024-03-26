@@ -16,6 +16,7 @@ export default defineEventHandler(
 
       const totalCounts: number = await announcementRepository.count({
         where: indexAnnouncementQuerySPR.data.where,
+        orderBy: indexAnnouncementQuerySPR.data.orderBy,
       });
 
       const pageSize: number = indexAnnouncementQuerySPR.data.pageSize;

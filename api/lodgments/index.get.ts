@@ -11,6 +11,7 @@ export default defineEventHandler(async (): Promise<IndexLodgmentResponse> => {
 
     const totalCounts: number = await lodgmentRepository.count({
       where: indexLodgmentQuerySPR.data.where,
+      orderBy: indexLodgmentQuerySPR.data.orderBy,
     });
 
     const pageSize: number = indexLodgmentQuerySPR.data.pageSize;

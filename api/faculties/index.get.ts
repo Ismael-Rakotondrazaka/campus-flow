@@ -13,6 +13,7 @@ export default defineEventHandler(async (): Promise<IndexFacultyResponse> => {
 
     const totalCounts: number = await facultyRepository.count({
       where: indexFacultyQuerySPR.data.where,
+      orderBy: indexFacultyQuerySPR.data.orderBy,
     });
 
     const pageSize: number = indexFacultyQuerySPR.data.pageSize;
