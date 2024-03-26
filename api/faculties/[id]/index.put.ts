@@ -49,6 +49,7 @@ export default defineEventHandler(async (): Promise<UpdateFacultyResponse> => {
         },
         data: {
           name: updateFacultyBodySPR.data.name,
+          updatedAt: new Date(),
         },
       },
     );

@@ -30,13 +30,16 @@ export default defineEventHandler(
         });
       }
 
+      const now = new Date();
+
       const deletedMaintainer: MaintainerFull =
         await maintainerRepository.updateFullOne({
           where: {
             id: destroyMaintainerParamSPR.data.id,
           },
           data: {
-            deletedAt: new Date(),
+            deletedAt: now,
+            updatedAt: now,
           },
         });
 

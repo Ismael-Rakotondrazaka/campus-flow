@@ -59,6 +59,7 @@ export default defineEventHandler(async (): Promise<UpdateRenewalResponse> => {
       },
       data: {
         status: updateRenewalBodySPR.data.status,
+        updatedAt: new Date(),
       },
     });
 

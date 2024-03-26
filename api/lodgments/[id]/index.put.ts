@@ -149,6 +149,7 @@ export default defineEventHandler(async (): Promise<UpdateLodgmentResponse> => {
           roomNumber: updateLodgmentBodySPR.data.roomNumber,
           status: updateLodgmentBodySPR.data.status,
           buildingId: updateLodgmentBodySPR.data.buildingId,
+          updatedAt: new Date(),
         },
       });
 

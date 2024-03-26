@@ -58,6 +58,7 @@ export default defineEventHandler(
           },
           data: {
             status: updateMaintenanceBodySPR.data.status,
+            updatedAt: new Date(),
           },
         });
 
