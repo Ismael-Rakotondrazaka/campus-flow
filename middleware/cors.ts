@@ -12,5 +12,5 @@ export default corsEventHandler(
       allowHeaders: ["Authorization", "authorization"],
       credentials: true,
     };
-  })(),
+  })()
 );
