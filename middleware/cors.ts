@@ -6,10 +6,12 @@ export default corsEventHandler(
     const runtimeConfig = useRuntimeConfig();
     const clientUrls: string[] = runtimeConfig.clientUrl.split(",");
 
+    console.log(clientUrls);
+
     return {
       origin: clientUrls,
       methods: "*",
-      allowHeaders: ["Authorization", "authorization"],
+      allowHeaders: ["Authorization", "authorization", "content-type"],
       credentials: true,
     };
   })()

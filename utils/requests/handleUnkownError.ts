@@ -7,7 +7,7 @@ import { RequestError } from "./requestError";
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
 export const handleUnknownError = <T extends Record<string, string>>(
-  error: unknown,
+  error: unknown
 ): Exclude<RequestError<T>, BadRequestError<T>> => {
   if (
     isUnauthorizedError(error) ||

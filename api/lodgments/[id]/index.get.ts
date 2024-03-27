@@ -1,7 +1,7 @@
 export default defineEventHandler(async (): Promise<ShowLodgmentResponse> => {
   try {
     const showLodgmentParamSPR = await safeParseRequestParamAs(
-      ShowLodgmentParamSchema,
+      ShowLodgmentParamSchema
     );
     if (!showLodgmentParamSPR.success) {
       return createNotFoundError();
