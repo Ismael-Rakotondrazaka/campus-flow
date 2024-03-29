@@ -8,3 +8,4 @@ export * from "./renewals";
 export * from "./reservations";
 export * from "./resetPassword";
 export * from "./resetRequestPasswords";
+export * from "./students";
