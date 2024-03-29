@@ -2,6 +2,7 @@ export * from "./handleReservationValidated";
 export * from "./handleReservationRefused";
 export * from "./handleReservationAccepted";
 export * from "./handleReservationCreated";
+export * from "./reservationsToExportFormat";
 export * from "./sendReservationAcceptedEmail";
 export * from "./sendReservationCreatedEmail";
 export * from "./sendReservationRefusedEmail";

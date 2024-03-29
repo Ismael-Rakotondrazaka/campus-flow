@@ -6,12 +6,15 @@ export type MaintenanceFullRaw = Simplify<
     _count: {
       maintainers: number;
     };
-    maintainers: prismaCtx.Maintainer[];
+    maintainers: MaintainerComputed[];
     admin: prismaCtx.Admin & {
       user: UserComputed;
     };
     student: prismaCtx.Student & {
       user: UserComputed;
+    };
+    lodgment: prismaCtx.Lodgment & {
+      building: prismaCtx.Building;
     };
   }
 >;
@@ -41,6 +44,7 @@ export const maintenanceFullRawToMaintenanceFull = (
       user: toUserFiltered(maintenance.admin.user),
     },
     student: toStudentFiltered(maintenance.student),
+    lodgment: maintenance.lodgment,
   };
 
   return maintenanceFull;

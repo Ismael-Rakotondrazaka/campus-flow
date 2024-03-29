@@ -1,9 +1,9 @@
-import { z, prismaCtx } from "#imports";
+import { z } from "#imports";
 import { Simplify } from "type-fest";
-import { MaintainerSchema } from "~/prisma/generated/zod";
 import { MaintainerCount, MaintainerCountSchema } from "./maintainerCount";
+import { MaintainerComputed } from "./maintainerComputed";
 
-export type MaintainerFull = Simplify<prismaCtx.Maintainer & MaintainerCount>;
+export type MaintainerFull = Simplify<MaintainerComputed & MaintainerCount>;
 
 export const MaintainerFullSchema: z.ZodType<MaintainerFull> =
   MaintainerSchema.and(MaintainerCountSchema);
