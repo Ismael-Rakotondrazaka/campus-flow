@@ -1,4 +1,17 @@
+import { prismaCtx } from "#imports";
 import { CellValue, Alignment } from "exceljs";
+
+const formatMaintenanceType = (type: prismaCtx.MaintenanceType): string => {
+  const typeValue: Record<prismaCtx.MaintenanceType, string> = {
+    ELECTRICAL: "Électrique",
+    EQUIPMENT: "Équipement",
+    HVAC: "Climatisation",
+    OTHER: "Autres",
+    PLUMBING: "Plomberie",
+  };
+
+  return typeValue[type];
+};
 
 const formatRow = (maintenance: MaintenanceFull): CellValue[] => {
   return [
@@ -10,7 +23,7 @@ const formatRow = (maintenance: MaintenanceFull): CellValue[] => {
     maintenance.lodgment.building.name,
     maintenance.lodgment.floor,
     maintenance.lodgment.roomNumber,
-    maintenance.type,
+    formatMaintenanceType(maintenance.type),
     maintenance.description,
     maintenance.startAt ?? "",
     maintenance.endAt ?? "",
