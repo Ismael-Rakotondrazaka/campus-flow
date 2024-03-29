@@ -1,3 +1,4 @@
+export * from "./buildings";
 export * from "./emails";
 export * from "./files";
 export * from "./lodgments";
