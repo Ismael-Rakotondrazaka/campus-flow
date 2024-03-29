@@ -2,7 +2,8 @@ import { z, prismaCtx } from "#imports";
 import { Simplify } from "type-fest";
 import {
   AdminSchema,
-  MaintainerSchema,
+  BuildingSchema,
+  LodgmentSchema,
   MaintenanceSchema,
   StudentSchema,
 } from "~/prisma/generated/zod";
@@ -11,9 +12,12 @@ import { MaintenanceCount, MaintenanceCountSchema } from "./maintenanceCount";
 export type MaintenanceFull = Simplify<
   prismaCtx.Maintenance &
     MaintenanceCount & {
-      maintainers: prismaCtx.Maintainer[];
+      maintainers: MaintainerComputed[];
       admin: AdminFiltered;
       student: StudentFiltered;
+      lodgment: prismaCtx.Lodgment & {
+        building: prismaCtx.Building;
+      };
     }
 >;
 
@@ -29,6 +33,11 @@ export const MaintenanceFullSchema: z.ZodType<MaintenanceFull> =
       student: StudentSchema.merge(
         z.object({
           user: UserSchema,
+        }),
+      ),
+      lodgment: LodgmentSchema.merge(
+        z.object({
+          building: BuildingSchema,
         }),
       ),
     }),

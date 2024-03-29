@@ -30,6 +30,11 @@ export const findFullOne = async (payload: {
             user: true,
           },
         },
+        lodgment: {
+          include: {
+            building: true,
+          },
+        },
         _count: {
           select: {
             maintainers: true,

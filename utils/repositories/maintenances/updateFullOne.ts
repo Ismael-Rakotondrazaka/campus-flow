@@ -26,6 +26,11 @@ export const updateFullOne = async (payload: {
             user: true,
           },
         },
+        lodgment: {
+          include: {
+            building: true,
+          },
+        },
         _count: {
           select: {
             maintainers: true,

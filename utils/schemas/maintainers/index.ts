@@ -1,5 +1,6 @@
 export * from "./destroyMaintainer";
 export * from "./indexMaintainer";
+export * from "./maintainerComputed";
 export * from "./maintainerCount";
 export * from "./maintainerFirstName";
 export * from "./maintainerFull";

@@ -595,6 +595,10 @@ const main = async () => {
         type: createMaintenanceType(),
         lodgmentId: faker.helpers.arrayElement(lodgments).id,
         status,
+        description: faker.lorem.paragraphs({
+          min: 3,
+          max: 5,
+        }),
         adminId: faker.helpers.arrayElement(maintenanceAdmins).userId,
         startAt,
         endAt,

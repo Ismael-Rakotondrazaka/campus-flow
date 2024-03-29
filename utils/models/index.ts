@@ -1,5 +1,6 @@
 export * from "./emails";
 export * from "./files";
+export * from "./maintenances";
 export * from "./paginations";
 export * from "./renewals";
 export * from "./reservations";

@@ -26,6 +26,18 @@ const prisma = new PrismaClient().$extends({
         },
       },
     },
+    maintainer: {
+      // add fullName field to maintainer
+      fullName: {
+        needs: {
+          firstName: true,
+          name: true,
+        },
+        compute(user) {
+          return `${user.name} ${user.firstName}`;
+        },
+      },
+    },
   },
 });
 

@@ -31,6 +31,11 @@ export const createFullOne = async ({
             maintainers: true,
           },
         },
+        lodgment: {
+          include: {
+            building: true,
+          },
+        },
       },
     });
 
