@@ -51,6 +51,8 @@ export default defineEventHandler(
         });
       }
 
+      const now: Date = new Date();
+
       const updatedMaintenance: MaintenanceFull =
         await maintenanceRepository.updateFullOne({
           where: {
@@ -58,7 +60,9 @@ export default defineEventHandler(
           },
           data: {
             status: updateMaintenanceBodySPR.data.status,
-            updatedAt: new Date(),
+            updatedAt: now,
+            startAt: updateMaintenanceBodySPR.data.startAt,
+            endAt: updateMaintenanceBodySPR.data.endAt,
           },
         });
 

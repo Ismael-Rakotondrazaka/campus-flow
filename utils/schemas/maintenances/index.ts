@@ -1,3 +1,4 @@
+export * from "./destroyMaintenance";
 export * from "./destroyMaintenanceMaintainer";
 export * from "./indexMaintenance";
 export * from "./maintenanceCount";

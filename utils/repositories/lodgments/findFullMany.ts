@@ -28,7 +28,7 @@ export const findFullMany = async (payload: {
             },
             maintenances: {
               where: {
-                status: "ONGOING",
+                status: "ACCEPTED",
               },
             },
           },

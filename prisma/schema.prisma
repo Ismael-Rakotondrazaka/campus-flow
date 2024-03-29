@@ -65,16 +65,17 @@ model Faculty {
 
 model Student {
   userId          Int
-  user            User      @relation(fields: [userId], references: [id])
+  user            User          @relation(fields: [userId], references: [id])
   facultyId       Int
   gender          Gender
   origin          Origin
   emergencyNumber String
-  faculty         Faculty   @relation(fields: [facultyId], references: [id])
+  faculty         Faculty       @relation(fields: [facultyId], references: [id])
   NIC             String // National ID Card
-  renewals        Renewal[]
   lodgmentId      Int
-  lodgment        Lodgment  @relation(fields: [lodgmentId], references: [id])
+  lodgment        Lodgment      @relation(fields: [lodgmentId], references: [id])
+  renewals        Renewal[]
+  maintenances    Maintenance[]
 
   @@id([userId])
 }
@@ -168,8 +169,12 @@ model Maintenance {
   type        MaintenanceType
   description String?           @db.Text
   status      MaintenanceStatus
+  studentId   Int
+  student     Student           @relation(fields: [studentId], references: [userId])
   adminId     Int
   admin       Admin             @relation(fields: [adminId], references: [userId])
+  startAt     DateTime?
+  endAt       DateTime?
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @default(now())
   lodgmentId  Int
@@ -191,7 +196,7 @@ model Maintainer {
 
 enum MaintenanceStatus {
   PENDING
-  ONGOING
+  ACCEPTED
   DONE
   REFUSED
 }

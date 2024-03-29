@@ -21,7 +21,7 @@ export const deleteFullOne = async (payload: {
           },
           maintenances: {
             where: {
-              status: "ONGOING",
+              status: "ACCEPTED",
             },
           },
         },

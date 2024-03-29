@@ -23,7 +23,7 @@ export const createFullOne = async ({
           },
           maintenances: {
             where: {
-              status: "ONGOING",
+              status: "ACCEPTED",
             },
           },
         },

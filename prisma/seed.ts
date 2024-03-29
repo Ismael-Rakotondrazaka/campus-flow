@@ -557,7 +557,9 @@ const main = async () => {
     });
 
     let maintainerConnects: { id: number }[] = [];
-    if (status === "DONE" || status === "ONGOING") {
+    let startAt: Date | undefined;
+    let endAt: Date | undefined;
+    if (status === "DONE" || status === "ACCEPTED") {
       maintainerConnects = faker.helpers
         .arrayElements<Maintainer>(maintainers, {
           min: 1,
@@ -568,6 +570,24 @@ const main = async () => {
             id: maintainer.id,
           };
         });
+
+      startAt = faker.date.soon({
+        days: faker.number.int({
+          min: 5,
+          max: 15,
+        }),
+        refDate: createdAt,
+      });
+
+      if (status === "DONE") {
+        endAt = faker.date.soon({
+          days: faker.number.int({
+            min: 5,
+            max: 15,
+          }),
+          refDate: startAt,
+        });
+      }
     }
 
     return prismaClient.maintenance.create({
@@ -576,8 +596,11 @@ const main = async () => {
         lodgmentId: faker.helpers.arrayElement(lodgments).id,
         status,
         adminId: faker.helpers.arrayElement(maintenanceAdmins).userId,
+        startAt,
+        endAt,
         createdAt,
         updatedAt: createdAt,
+        studentId: faker.helpers.arrayElement(students).userId,
         maintainers: {
           connect: maintainerConnects,
         },
@@ -623,7 +646,7 @@ const main = async () => {
           createMaintenance(
             faker.helpers.arrayElement<MaintenanceStatus>([
               "PENDING",
-              "ONGOING",
+              "ACCEPTED",
             ]),
           ),
         ),

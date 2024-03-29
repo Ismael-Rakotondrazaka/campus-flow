@@ -63,13 +63,12 @@ export default defineEventHandler(
           data: {
             type: storeMaintenanceBodySPR.data.type,
             description: storeMaintenanceBodySPR.data.description,
+            studentId: studentSession.id,
             lodgmentId: lodgment.id,
             status: "PENDING",
             adminId: adminWithLowestMaintenances.userId,
           },
         });
-
-      // TODO notify the assigned admin
 
       const response: StoreMaintenanceResponse = {
         maintenance,

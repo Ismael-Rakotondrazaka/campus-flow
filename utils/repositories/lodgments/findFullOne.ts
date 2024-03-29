@@ -33,7 +33,7 @@ export const findFullOne = async ({
             },
             maintenances: {
               where: {
-                status: "ONGOING",
+                status: "ACCEPTED",
               },
             },
           },

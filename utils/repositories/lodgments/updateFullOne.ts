@@ -26,7 +26,7 @@ export const updateFullOne = async ({
           },
           maintenances: {
             where: {
-              status: "ONGOING",
+              status: "ACCEPTED",
             },
           },
         },
