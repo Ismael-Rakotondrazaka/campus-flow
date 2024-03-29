@@ -8,7 +8,7 @@ export default defineEventHandler(async (): Promise<ShowAdminResponse> => {
 
     const admin: AdminFull = await adminRepository.findFullOneOrFail({
       where: {
-        id: showAdminParamSPR.data.id,
+        userId: showAdminParamSPR.data.id,
       },
     });
 

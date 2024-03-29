@@ -25,6 +25,11 @@ export const findFullOne = async (payload: {
             user: true,
           },
         },
+        student: {
+          include: {
+            user: true,
+          },
+        },
         _count: {
           select: {
             maintainers: true,

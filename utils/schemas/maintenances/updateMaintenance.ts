@@ -21,12 +21,24 @@ export const UpdateMaintenanceParamSchema: z.ZodType<UpdateMaintenanceParam> =
 
 export type UpdateMaintenanceBody = {
   status: Exclude<prismaCtx.$Enums.MaintenanceStatus, "PENDING">;
+  startAt?: Date | null;
+  endAt?: Date | null;
+};
+
+export type UpdateMaintenanceBodyInput = {
+  status: Exclude<prismaCtx.$Enums.MaintenanceStatus, "PENDING">;
+  startAt?: Date | null | string;
+  endAt?: Date | null | string;
 };
 
 export const UpdateMaintenanceBodySchema: z.ZodType<
-  Simplify<UpdateMaintenanceBody>
+  Simplify<UpdateMaintenanceBody>,
+  z.ZodTypeDef,
+  UpdateMaintenanceBodyInput
 > = z.object({
-  status: z.enum(["ONGOING", "DONE", "REFUSED"]),
+  status: z.enum(["ACCEPTED", "DONE", "REFUSED"]),
+  startAt: z.union([CustomNullSchema, CustomUndefinedSchema, z.coerce.date()]),
+  endAt: z.union([CustomNullSchema, CustomUndefinedSchema, z.coerce.date()]),
 });
 
 /* -------------------------------------------------------------------------- */
