@@ -24,15 +24,10 @@ export default defineEventHandler(async (): Promise<UpdateRenewalResponse> => {
       return createForbiddenError();
     }
 
-    if (
-      !(
-        renewal.status !== "PENDING" ||
-        (renewal.status === "PENDING" && adminSession.role !== "ROOT")
-      )
-    ) {
+    if (renewal.status === "VALIDATED" || renewal.status === "REFUSED") {
       return createBadRequestError({
         message:
-          "La demande de renouvellement ne peut être modifiée une fois refusée, acceptée, ou validée.",
+          "La demande de renouvellement ne peut être modifiée une fois refusée ou validée.",
         errorMessage: {},
       });
     }

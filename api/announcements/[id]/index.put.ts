@@ -4,7 +4,7 @@ export default defineEventHandler(
   async (): Promise<UpdateAnnouncementResponse> => {
     try {
       const updateAnnouncementParamSPR = await safeParseRequestParamAs(
-        UpdateAnnouncementParamSchema
+        UpdateAnnouncementParamSchema,
       );
       if (!updateAnnouncementParamSPR.success) {
         return createNotFoundError();
@@ -24,12 +24,12 @@ export default defineEventHandler(
       }
 
       const updateAnnouncementBodySPR = await safeParseRequestBodyAs(
-        UpdateAnnouncementBodySchema
+        UpdateAnnouncementBodySchema,
       );
       if (!updateAnnouncementBodySPR.success) {
         return createBadRequestError({
           errorMessage: formatValidationErrorMessage(
-            updateAnnouncementBodySPR.error
+            updateAnnouncementBodySPR.error,
           ),
         });
       }
@@ -90,7 +90,7 @@ export default defineEventHandler(
         !is.null(updateAnnouncementBodySPR.data.illustration)
       ) {
         illustrationUrl = uploadAnnouncementIllustration(
-          updateAnnouncementBodySPR.data.illustration
+          updateAnnouncementBodySPR.data.illustration,
         );
       }
 
@@ -118,5 +118,5 @@ export default defineEventHandler(
     } catch (error) {
       return handleUnknownError(error);
     }
-  }
+  },
 );
