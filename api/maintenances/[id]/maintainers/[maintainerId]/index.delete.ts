@@ -27,12 +27,11 @@ export default defineEventHandler(
       }
 
       if (
-        !(adminSession.role === "MAINTENANCE" || adminSession.role === "ROOT")
+        !(
+          adminSession.id === maintenance.adminId ||
+          adminSession.role === "ROOT"
+        )
       ) {
-        return createForbiddenError();
-      }
-
-      if (adminSession.id !== maintenance.adminId) {
         return createForbiddenError();
       }
 

@@ -29,6 +29,17 @@ export default defineEventHandler(
         return createForbiddenError();
       }
 
+      if (
+        reservation.status === "VALIDATED" ||
+        reservation.status === "REFUSED"
+      ) {
+        return createBadRequestError({
+          message:
+            "La réservation ne peut être modifiée une fois refusée ou validée.",
+          errorMessage: {},
+        });
+      }
+
       const updateReservationBodySPR = await safeParseRequestBodyAs(
         UpdateReservationBodySchema,
       );
@@ -37,19 +48,6 @@ export default defineEventHandler(
           errorMessage: formatValidationErrorMessage(
             updateReservationBodySPR.error,
           ),
-        });
-      }
-
-      if (
-        !(
-          reservation.status !== "PENDING" ||
-          (reservation.status === "PENDING" && adminSession.role !== "ROOT")
-        )
-      ) {
-        return createBadRequestError({
-          message:
-            "La réservation ne peut être modifiée une fois refusée, acceptée, ou validée.",
-          errorMessage: {},
         });
       }
 
@@ -71,6 +69,15 @@ export default defineEventHandler(
             },
           });
         } else {
+          if (is.undefined(updateReservationBodySPR.data.lodgmentId)) {
+            return createBadRequestError({
+              message: "Une chambre est requise pour validée la demande.",
+              errorMessage: {
+                lodgmentId: "Une chambre est requise pour validée la demande.",
+              },
+            });
+          }
+
           assignedLodgment = await lodgmentRepository.findFullOne({
             where: {
               id: updateReservationBodySPR.data.lodgmentId,
