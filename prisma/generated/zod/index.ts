@@ -24,9 +24,9 @@ export const StudentScalarFieldEnumSchema = z.enum(['userId','facultyId','gender
 
 export const LodgmentScalarFieldEnumSchema = z.enum(['id','capacity','floor','roomNumber','buildingId','status','createdAt','updatedAt','deletedAt']);
 
-export const ReservationScalarFieldEnumSchema = z.enum(['id','name','firstName','phoneNumber','profileUrl','email','gender','origin','emergencyNumber','NIC','NICUrl','schoolCertificateUrl','facultyId','status','academicSessionId','createdAt','updatedAt','adminId']);
+export const ReservationScalarFieldEnumSchema = z.enum(['id','name','firstName','phoneNumber','profileUrl','email','gender','origin','emergencyNumber','NIC','NICUrl','schoolCertificateUrl','facultyId','status','academicSessionId','createdAt','updatedAt','adminId','refusalReason']);
 
-export const RenewalScalarFieldEnumSchema = z.enum(['id','studentId','phoneNumber','emergencyNumber','profileUrl','schoolCertificateUrl','NICUrl','academicSessionId','status','createdAt','updatedAt','facultyId','adminId']);
+export const RenewalScalarFieldEnumSchema = z.enum(['id','studentId','phoneNumber','emergencyNumber','profileUrl','schoolCertificateUrl','NICUrl','academicSessionId','status','createdAt','updatedAt','facultyId','adminId','refusalReason']);
 
 export const MaintenanceScalarFieldEnumSchema = z.enum(['id','type','description','status','studentId','adminId','startAt','endAt','createdAt','updatedAt','lodgmentId']);
 
@@ -57,6 +57,10 @@ export type GenderType = `${z.infer<typeof GenderSchema>}`
 export const LodgmentStatusSchema = z.enum(['AVAILABLE','MAINTENANCE']);
 
 export type LodgmentStatusType = `${z.infer<typeof LodgmentStatusSchema>}`
+
+export const RefusalReasonSchema = z.enum(['CAPACITY_LIMIT_REACHED','INCOMPLETE_DOCUMENTS','FALSIFIED_DOCUMENTS','PAST_BEHAVIOR','INELIGIBILITY','OTHER']);
+
+export type RefusalReasonType = `${z.infer<typeof RefusalReasonSchema>}`
 
 export const OriginSchema = z.enum(['NATIONAL','FOREIGNER']);
 
@@ -187,6 +191,7 @@ export const ReservationSchema = z.object({
   gender: GenderSchema,
   origin: OriginSchema,
   status: ReservationStatusSchema,
+  refusalReason: RefusalReasonSchema.nullable(),
   id: z.number().int(),
   name: z.string(),
   firstName: z.string(),
@@ -212,6 +217,7 @@ export type Reservation = z.infer<typeof ReservationSchema>
 
 export const RenewalSchema = z.object({
   status: RenewalStatusSchema,
+  refusalReason: RefusalReasonSchema.nullable(),
   id: z.number().int(),
   studentId: z.number().int(),
   phoneNumber: z.string(),
@@ -585,6 +591,7 @@ export const ReservationSelectSchema: z.ZodType<Prisma.ReservationSelect> = z.ob
   createdAt: z.boolean().optional(),
   updatedAt: z.boolean().optional(),
   adminId: z.boolean().optional(),
+  refusalReason: z.boolean().optional(),
   faculty: z.union([z.boolean(),z.lazy(() => FacultyArgsSchema)]).optional(),
   academicSession: z.union([z.boolean(),z.lazy(() => AcademicSessionArgsSchema)]).optional(),
   admin: z.union([z.boolean(),z.lazy(() => AdminArgsSchema)]).optional(),
@@ -619,6 +626,7 @@ export const RenewalSelectSchema: z.ZodType<Prisma.RenewalSelect> = z.object({
   updatedAt: z.boolean().optional(),
   facultyId: z.boolean().optional(),
   adminId: z.boolean().optional(),
+  refusalReason: z.boolean().optional(),
   student: z.union([z.boolean(),z.lazy(() => StudentArgsSchema)]).optional(),
   academicSession: z.union([z.boolean(),z.lazy(() => AcademicSessionArgsSchema)]).optional(),
   faculty: z.union([z.boolean(),z.lazy(() => FacultyArgsSchema)]).optional(),
@@ -1299,6 +1307,7 @@ export const ReservationWhereInputSchema: z.ZodType<Prisma.ReservationWhereInput
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   adminId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  refusalReason: z.union([ z.lazy(() => EnumRefusalReasonNullableFilterSchema),z.lazy(() => RefusalReasonSchema) ]).optional().nullable(),
   faculty: z.union([ z.lazy(() => FacultyRelationFilterSchema),z.lazy(() => FacultyWhereInputSchema) ]).optional(),
   academicSession: z.union([ z.lazy(() => AcademicSessionRelationFilterSchema),z.lazy(() => AcademicSessionWhereInputSchema) ]).optional(),
   admin: z.union([ z.lazy(() => AdminRelationFilterSchema),z.lazy(() => AdminWhereInputSchema) ]).optional(),
@@ -1323,6 +1332,7 @@ export const ReservationOrderByWithRelationInputSchema: z.ZodType<Prisma.Reserva
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   adminId: z.lazy(() => SortOrderSchema).optional(),
+  refusalReason: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   faculty: z.lazy(() => FacultyOrderByWithRelationInputSchema).optional(),
   academicSession: z.lazy(() => AcademicSessionOrderByWithRelationInputSchema).optional(),
   admin: z.lazy(() => AdminOrderByWithRelationInputSchema).optional()
@@ -1362,6 +1372,7 @@ export const ReservationWhereUniqueInputSchema: z.ZodType<Prisma.ReservationWher
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   adminId: z.union([ z.lazy(() => IntFilterSchema),z.number().int() ]).optional(),
+  refusalReason: z.union([ z.lazy(() => EnumRefusalReasonNullableFilterSchema),z.lazy(() => RefusalReasonSchema) ]).optional().nullable(),
   faculty: z.union([ z.lazy(() => FacultyRelationFilterSchema),z.lazy(() => FacultyWhereInputSchema) ]).optional(),
   academicSession: z.union([ z.lazy(() => AcademicSessionRelationFilterSchema),z.lazy(() => AcademicSessionWhereInputSchema) ]).optional(),
   admin: z.union([ z.lazy(() => AdminRelationFilterSchema),z.lazy(() => AdminWhereInputSchema) ]).optional(),
@@ -1386,6 +1397,7 @@ export const ReservationOrderByWithAggregationInputSchema: z.ZodType<Prisma.Rese
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   adminId: z.lazy(() => SortOrderSchema).optional(),
+  refusalReason: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   _count: z.lazy(() => ReservationCountOrderByAggregateInputSchema).optional(),
   _avg: z.lazy(() => ReservationAvgOrderByAggregateInputSchema).optional(),
   _max: z.lazy(() => ReservationMaxOrderByAggregateInputSchema).optional(),
@@ -1415,6 +1427,7 @@ export const ReservationScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.R
   createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
   adminId: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
+  refusalReason: z.union([ z.lazy(() => EnumRefusalReasonNullableWithAggregatesFilterSchema),z.lazy(() => RefusalReasonSchema) ]).optional().nullable(),
 }).strict();
 
 export const RenewalWhereInputSchema: z.ZodType<Prisma.RenewalWhereInput> = z.object({
@@ -1434,6 +1447,7 @@ export const RenewalWhereInputSchema: z.ZodType<Prisma.RenewalWhereInput> = z.ob
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   facultyId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   adminId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  refusalReason: z.union([ z.lazy(() => EnumRefusalReasonNullableFilterSchema),z.lazy(() => RefusalReasonSchema) ]).optional().nullable(),
   student: z.union([ z.lazy(() => StudentRelationFilterSchema),z.lazy(() => StudentWhereInputSchema) ]).optional(),
   academicSession: z.union([ z.lazy(() => AcademicSessionRelationFilterSchema),z.lazy(() => AcademicSessionWhereInputSchema) ]).optional(),
   faculty: z.union([ z.lazy(() => FacultyRelationFilterSchema),z.lazy(() => FacultyWhereInputSchema) ]).optional(),
@@ -1454,6 +1468,7 @@ export const RenewalOrderByWithRelationInputSchema: z.ZodType<Prisma.RenewalOrde
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   facultyId: z.lazy(() => SortOrderSchema).optional(),
   adminId: z.lazy(() => SortOrderSchema).optional(),
+  refusalReason: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   student: z.lazy(() => StudentOrderByWithRelationInputSchema).optional(),
   academicSession: z.lazy(() => AcademicSessionOrderByWithRelationInputSchema).optional(),
   faculty: z.lazy(() => FacultyOrderByWithRelationInputSchema).optional(),
@@ -1490,6 +1505,7 @@ export const RenewalWhereUniqueInputSchema: z.ZodType<Prisma.RenewalWhereUniqueI
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   facultyId: z.union([ z.lazy(() => IntFilterSchema),z.number().int() ]).optional(),
   adminId: z.union([ z.lazy(() => IntFilterSchema),z.number().int() ]).optional(),
+  refusalReason: z.union([ z.lazy(() => EnumRefusalReasonNullableFilterSchema),z.lazy(() => RefusalReasonSchema) ]).optional().nullable(),
   student: z.union([ z.lazy(() => StudentRelationFilterSchema),z.lazy(() => StudentWhereInputSchema) ]).optional(),
   academicSession: z.union([ z.lazy(() => AcademicSessionRelationFilterSchema),z.lazy(() => AcademicSessionWhereInputSchema) ]).optional(),
   faculty: z.union([ z.lazy(() => FacultyRelationFilterSchema),z.lazy(() => FacultyWhereInputSchema) ]).optional(),
@@ -1510,6 +1526,7 @@ export const RenewalOrderByWithAggregationInputSchema: z.ZodType<Prisma.RenewalO
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   facultyId: z.lazy(() => SortOrderSchema).optional(),
   adminId: z.lazy(() => SortOrderSchema).optional(),
+  refusalReason: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   _count: z.lazy(() => RenewalCountOrderByAggregateInputSchema).optional(),
   _avg: z.lazy(() => RenewalAvgOrderByAggregateInputSchema).optional(),
   _max: z.lazy(() => RenewalMaxOrderByAggregateInputSchema).optional(),
@@ -1534,6 +1551,7 @@ export const RenewalScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Renew
   updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
   facultyId: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
   adminId: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
+  refusalReason: z.union([ z.lazy(() => EnumRefusalReasonNullableWithAggregatesFilterSchema),z.lazy(() => RefusalReasonSchema) ]).optional().nullable(),
 }).strict();
 
 export const MaintenanceWhereInputSchema: z.ZodType<Prisma.MaintenanceWhereInput> = z.object({
@@ -2451,6 +2469,7 @@ export const ReservationCreateInputSchema: z.ZodType<Prisma.ReservationCreateInp
   status: z.lazy(() => ReservationStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable(),
   faculty: z.lazy(() => FacultyCreateNestedOneWithoutReservationsInputSchema),
   academicSession: z.lazy(() => AcademicSessionCreateNestedOneWithoutReservationsInputSchema),
   admin: z.lazy(() => AdminCreateNestedOneWithoutReservationsInputSchema)
@@ -2474,7 +2493,8 @@ export const ReservationUncheckedCreateInputSchema: z.ZodType<Prisma.Reservation
   academicSessionId: z.number().int(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  adminId: z.number().int()
+  adminId: z.number().int(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable()
 }).strict();
 
 export const ReservationUpdateInputSchema: z.ZodType<Prisma.ReservationUpdateInput> = z.object({
@@ -2492,6 +2512,7 @@ export const ReservationUpdateInputSchema: z.ZodType<Prisma.ReservationUpdateInp
   status: z.union([ z.lazy(() => ReservationStatusSchema),z.lazy(() => EnumReservationStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   faculty: z.lazy(() => FacultyUpdateOneRequiredWithoutReservationsNestedInputSchema).optional(),
   academicSession: z.lazy(() => AcademicSessionUpdateOneRequiredWithoutReservationsNestedInputSchema).optional(),
   admin: z.lazy(() => AdminUpdateOneRequiredWithoutReservationsNestedInputSchema).optional()
@@ -2516,6 +2537,7 @@ export const ReservationUncheckedUpdateInputSchema: z.ZodType<Prisma.Reservation
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const ReservationCreateManyInputSchema: z.ZodType<Prisma.ReservationCreateManyInput> = z.object({
@@ -2536,7 +2558,8 @@ export const ReservationCreateManyInputSchema: z.ZodType<Prisma.ReservationCreat
   academicSessionId: z.number().int(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  adminId: z.number().int()
+  adminId: z.number().int(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable()
 }).strict();
 
 export const ReservationUpdateManyMutationInputSchema: z.ZodType<Prisma.ReservationUpdateManyMutationInput> = z.object({
@@ -2554,6 +2577,7 @@ export const ReservationUpdateManyMutationInputSchema: z.ZodType<Prisma.Reservat
   status: z.union([ z.lazy(() => ReservationStatusSchema),z.lazy(() => EnumReservationStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const ReservationUncheckedUpdateManyInputSchema: z.ZodType<Prisma.ReservationUncheckedUpdateManyInput> = z.object({
@@ -2575,6 +2599,7 @@ export const ReservationUncheckedUpdateManyInputSchema: z.ZodType<Prisma.Reserva
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const RenewalCreateInputSchema: z.ZodType<Prisma.RenewalCreateInput> = z.object({
@@ -2586,6 +2611,7 @@ export const RenewalCreateInputSchema: z.ZodType<Prisma.RenewalCreateInput> = z.
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable(),
   student: z.lazy(() => StudentCreateNestedOneWithoutRenewalsInputSchema),
   academicSession: z.lazy(() => AcademicSessionCreateNestedOneWithoutRenewalsInputSchema),
   faculty: z.lazy(() => FacultyCreateNestedOneWithoutRenewalsInputSchema),
@@ -2605,7 +2631,8 @@ export const RenewalUncheckedCreateInputSchema: z.ZodType<Prisma.RenewalUnchecke
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   facultyId: z.number().int(),
-  adminId: z.number().int()
+  adminId: z.number().int(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable()
 }).strict();
 
 export const RenewalUpdateInputSchema: z.ZodType<Prisma.RenewalUpdateInput> = z.object({
@@ -2617,6 +2644,7 @@ export const RenewalUpdateInputSchema: z.ZodType<Prisma.RenewalUpdateInput> = z.
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   student: z.lazy(() => StudentUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional(),
   academicSession: z.lazy(() => AcademicSessionUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional(),
   faculty: z.lazy(() => FacultyUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional(),
@@ -2637,6 +2665,7 @@ export const RenewalUncheckedUpdateInputSchema: z.ZodType<Prisma.RenewalUnchecke
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const RenewalCreateManyInputSchema: z.ZodType<Prisma.RenewalCreateManyInput> = z.object({
@@ -2652,7 +2681,8 @@ export const RenewalCreateManyInputSchema: z.ZodType<Prisma.RenewalCreateManyInp
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   facultyId: z.number().int(),
-  adminId: z.number().int()
+  adminId: z.number().int(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable()
 }).strict();
 
 export const RenewalUpdateManyMutationInputSchema: z.ZodType<Prisma.RenewalUpdateManyMutationInput> = z.object({
@@ -2664,6 +2694,7 @@ export const RenewalUpdateManyMutationInputSchema: z.ZodType<Prisma.RenewalUpdat
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const RenewalUncheckedUpdateManyInputSchema: z.ZodType<Prisma.RenewalUncheckedUpdateManyInput> = z.object({
@@ -2680,6 +2711,7 @@ export const RenewalUncheckedUpdateManyInputSchema: z.ZodType<Prisma.RenewalUnch
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const MaintenanceCreateInputSchema: z.ZodType<Prisma.MaintenanceCreateInput> = z.object({
@@ -3646,6 +3678,13 @@ export const EnumReservationStatusFilterSchema: z.ZodType<Prisma.EnumReservation
   not: z.union([ z.lazy(() => ReservationStatusSchema),z.lazy(() => NestedEnumReservationStatusFilterSchema) ]).optional(),
 }).strict();
 
+export const EnumRefusalReasonNullableFilterSchema: z.ZodType<Prisma.EnumRefusalReasonNullableFilter> = z.object({
+  equals: z.lazy(() => RefusalReasonSchema).optional().nullable(),
+  in: z.lazy(() => RefusalReasonSchema).array().optional().nullable(),
+  notIn: z.lazy(() => RefusalReasonSchema).array().optional().nullable(),
+  not: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NestedEnumRefusalReasonNullableFilterSchema) ]).optional().nullable(),
+}).strict();
+
 export const AcademicSessionRelationFilterSchema: z.ZodType<Prisma.AcademicSessionRelationFilter> = z.object({
   is: z.lazy(() => AcademicSessionWhereInputSchema).optional(),
   isNot: z.lazy(() => AcademicSessionWhereInputSchema).optional()
@@ -3674,7 +3713,8 @@ export const ReservationCountOrderByAggregateInputSchema: z.ZodType<Prisma.Reser
   academicSessionId: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
-  adminId: z.lazy(() => SortOrderSchema).optional()
+  adminId: z.lazy(() => SortOrderSchema).optional(),
+  refusalReason: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const ReservationAvgOrderByAggregateInputSchema: z.ZodType<Prisma.ReservationAvgOrderByAggregateInput> = z.object({
@@ -3702,7 +3742,8 @@ export const ReservationMaxOrderByAggregateInputSchema: z.ZodType<Prisma.Reserva
   academicSessionId: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
-  adminId: z.lazy(() => SortOrderSchema).optional()
+  adminId: z.lazy(() => SortOrderSchema).optional(),
+  refusalReason: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const ReservationMinOrderByAggregateInputSchema: z.ZodType<Prisma.ReservationMinOrderByAggregateInput> = z.object({
@@ -3723,7 +3764,8 @@ export const ReservationMinOrderByAggregateInputSchema: z.ZodType<Prisma.Reserva
   academicSessionId: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
-  adminId: z.lazy(() => SortOrderSchema).optional()
+  adminId: z.lazy(() => SortOrderSchema).optional(),
+  refusalReason: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const ReservationSumOrderByAggregateInputSchema: z.ZodType<Prisma.ReservationSumOrderByAggregateInput> = z.object({
@@ -3741,6 +3783,16 @@ export const EnumReservationStatusWithAggregatesFilterSchema: z.ZodType<Prisma.E
   _count: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedEnumReservationStatusFilterSchema).optional(),
   _max: z.lazy(() => NestedEnumReservationStatusFilterSchema).optional()
+}).strict();
+
+export const EnumRefusalReasonNullableWithAggregatesFilterSchema: z.ZodType<Prisma.EnumRefusalReasonNullableWithAggregatesFilter> = z.object({
+  equals: z.lazy(() => RefusalReasonSchema).optional().nullable(),
+  in: z.lazy(() => RefusalReasonSchema).array().optional().nullable(),
+  notIn: z.lazy(() => RefusalReasonSchema).array().optional().nullable(),
+  not: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NestedEnumRefusalReasonNullableWithAggregatesFilterSchema) ]).optional().nullable(),
+  _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
+  _min: z.lazy(() => NestedEnumRefusalReasonNullableFilterSchema).optional(),
+  _max: z.lazy(() => NestedEnumRefusalReasonNullableFilterSchema).optional()
 }).strict();
 
 export const EnumRenewalStatusFilterSchema: z.ZodType<Prisma.EnumRenewalStatusFilter> = z.object({
@@ -3773,7 +3825,8 @@ export const RenewalCountOrderByAggregateInputSchema: z.ZodType<Prisma.RenewalCo
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   facultyId: z.lazy(() => SortOrderSchema).optional(),
-  adminId: z.lazy(() => SortOrderSchema).optional()
+  adminId: z.lazy(() => SortOrderSchema).optional(),
+  refusalReason: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const RenewalAvgOrderByAggregateInputSchema: z.ZodType<Prisma.RenewalAvgOrderByAggregateInput> = z.object({
@@ -3797,7 +3850,8 @@ export const RenewalMaxOrderByAggregateInputSchema: z.ZodType<Prisma.RenewalMaxO
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   facultyId: z.lazy(() => SortOrderSchema).optional(),
-  adminId: z.lazy(() => SortOrderSchema).optional()
+  adminId: z.lazy(() => SortOrderSchema).optional(),
+  refusalReason: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const RenewalMinOrderByAggregateInputSchema: z.ZodType<Prisma.RenewalMinOrderByAggregateInput> = z.object({
@@ -3813,7 +3867,8 @@ export const RenewalMinOrderByAggregateInputSchema: z.ZodType<Prisma.RenewalMinO
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   facultyId: z.lazy(() => SortOrderSchema).optional(),
-  adminId: z.lazy(() => SortOrderSchema).optional()
+  adminId: z.lazy(() => SortOrderSchema).optional(),
+  refusalReason: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const RenewalSumOrderByAggregateInputSchema: z.ZodType<Prisma.RenewalSumOrderByAggregateInput> = z.object({
@@ -4889,6 +4944,10 @@ export const EnumReservationStatusFieldUpdateOperationsInputSchema: z.ZodType<Pr
   set: z.lazy(() => ReservationStatusSchema).optional()
 }).strict();
 
+export const NullableEnumRefusalReasonFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableEnumRefusalReasonFieldUpdateOperationsInput> = z.object({
+  set: z.lazy(() => RefusalReasonSchema).optional().nullable()
+}).strict();
+
 export const FacultyUpdateOneRequiredWithoutReservationsNestedInputSchema: z.ZodType<Prisma.FacultyUpdateOneRequiredWithoutReservationsNestedInput> = z.object({
   create: z.union([ z.lazy(() => FacultyCreateWithoutReservationsInputSchema),z.lazy(() => FacultyUncheckedCreateWithoutReservationsInputSchema) ]).optional(),
   connectOrCreate: z.lazy(() => FacultyCreateOrConnectWithoutReservationsInputSchema).optional(),
@@ -5452,6 +5511,13 @@ export const NestedEnumReservationStatusFilterSchema: z.ZodType<Prisma.NestedEnu
   not: z.union([ z.lazy(() => ReservationStatusSchema),z.lazy(() => NestedEnumReservationStatusFilterSchema) ]).optional(),
 }).strict();
 
+export const NestedEnumRefusalReasonNullableFilterSchema: z.ZodType<Prisma.NestedEnumRefusalReasonNullableFilter> = z.object({
+  equals: z.lazy(() => RefusalReasonSchema).optional().nullable(),
+  in: z.lazy(() => RefusalReasonSchema).array().optional().nullable(),
+  notIn: z.lazy(() => RefusalReasonSchema).array().optional().nullable(),
+  not: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NestedEnumRefusalReasonNullableFilterSchema) ]).optional().nullable(),
+}).strict();
+
 export const NestedEnumReservationStatusWithAggregatesFilterSchema: z.ZodType<Prisma.NestedEnumReservationStatusWithAggregatesFilter> = z.object({
   equals: z.lazy(() => ReservationStatusSchema).optional(),
   in: z.lazy(() => ReservationStatusSchema).array().optional(),
@@ -5460,6 +5526,16 @@ export const NestedEnumReservationStatusWithAggregatesFilterSchema: z.ZodType<Pr
   _count: z.lazy(() => NestedIntFilterSchema).optional(),
   _min: z.lazy(() => NestedEnumReservationStatusFilterSchema).optional(),
   _max: z.lazy(() => NestedEnumReservationStatusFilterSchema).optional()
+}).strict();
+
+export const NestedEnumRefusalReasonNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedEnumRefusalReasonNullableWithAggregatesFilter> = z.object({
+  equals: z.lazy(() => RefusalReasonSchema).optional().nullable(),
+  in: z.lazy(() => RefusalReasonSchema).array().optional().nullable(),
+  notIn: z.lazy(() => RefusalReasonSchema).array().optional().nullable(),
+  not: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NestedEnumRefusalReasonNullableWithAggregatesFilterSchema) ]).optional().nullable(),
+  _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
+  _min: z.lazy(() => NestedEnumRefusalReasonNullableFilterSchema).optional(),
+  _max: z.lazy(() => NestedEnumRefusalReasonNullableFilterSchema).optional()
 }).strict();
 
 export const NestedEnumRenewalStatusFilterSchema: z.ZodType<Prisma.NestedEnumRenewalStatusFilter> = z.object({
@@ -5807,6 +5883,7 @@ export const RenewalCreateWithoutAdminInputSchema: z.ZodType<Prisma.RenewalCreat
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable(),
   student: z.lazy(() => StudentCreateNestedOneWithoutRenewalsInputSchema),
   academicSession: z.lazy(() => AcademicSessionCreateNestedOneWithoutRenewalsInputSchema),
   faculty: z.lazy(() => FacultyCreateNestedOneWithoutRenewalsInputSchema)
@@ -5824,7 +5901,8 @@ export const RenewalUncheckedCreateWithoutAdminInputSchema: z.ZodType<Prisma.Ren
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  facultyId: z.number().int()
+  facultyId: z.number().int(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable()
 }).strict();
 
 export const RenewalCreateOrConnectWithoutAdminInputSchema: z.ZodType<Prisma.RenewalCreateOrConnectWithoutAdminInput> = z.object({
@@ -5852,6 +5930,7 @@ export const ReservationCreateWithoutAdminInputSchema: z.ZodType<Prisma.Reservat
   status: z.lazy(() => ReservationStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable(),
   faculty: z.lazy(() => FacultyCreateNestedOneWithoutReservationsInputSchema),
   academicSession: z.lazy(() => AcademicSessionCreateNestedOneWithoutReservationsInputSchema)
 }).strict();
@@ -5873,7 +5952,8 @@ export const ReservationUncheckedCreateWithoutAdminInputSchema: z.ZodType<Prisma
   status: z.lazy(() => ReservationStatusSchema),
   academicSessionId: z.number().int(),
   createdAt: z.coerce.date().optional(),
-  updatedAt: z.coerce.date().optional()
+  updatedAt: z.coerce.date().optional(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable()
 }).strict();
 
 export const ReservationCreateOrConnectWithoutAdminInputSchema: z.ZodType<Prisma.ReservationCreateOrConnectWithoutAdminInput> = z.object({
@@ -5998,6 +6078,7 @@ export const RenewalScalarWhereInputSchema: z.ZodType<Prisma.RenewalScalarWhereI
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   facultyId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   adminId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  refusalReason: z.union([ z.lazy(() => EnumRefusalReasonNullableFilterSchema),z.lazy(() => RefusalReasonSchema) ]).optional().nullable(),
 }).strict();
 
 export const ReservationUpsertWithWhereUniqueWithoutAdminInputSchema: z.ZodType<Prisma.ReservationUpsertWithWhereUniqueWithoutAdminInput> = z.object({
@@ -6038,6 +6119,7 @@ export const ReservationScalarWhereInputSchema: z.ZodType<Prisma.ReservationScal
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   adminId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  refusalReason: z.union([ z.lazy(() => EnumRefusalReasonNullableFilterSchema),z.lazy(() => RefusalReasonSchema) ]).optional().nullable(),
 }).strict();
 
 export const MaintenanceUpsertWithWhereUniqueWithoutAdminInputSchema: z.ZodType<Prisma.MaintenanceUpsertWithWhereUniqueWithoutAdminInput> = z.object({
@@ -6198,6 +6280,7 @@ export const ReservationCreateWithoutFacultyInputSchema: z.ZodType<Prisma.Reserv
   status: z.lazy(() => ReservationStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable(),
   academicSession: z.lazy(() => AcademicSessionCreateNestedOneWithoutReservationsInputSchema),
   admin: z.lazy(() => AdminCreateNestedOneWithoutReservationsInputSchema)
 }).strict();
@@ -6219,7 +6302,8 @@ export const ReservationUncheckedCreateWithoutFacultyInputSchema: z.ZodType<Pris
   academicSessionId: z.number().int(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  adminId: z.number().int()
+  adminId: z.number().int(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable()
 }).strict();
 
 export const ReservationCreateOrConnectWithoutFacultyInputSchema: z.ZodType<Prisma.ReservationCreateOrConnectWithoutFacultyInput> = z.object({
@@ -6241,6 +6325,7 @@ export const RenewalCreateWithoutFacultyInputSchema: z.ZodType<Prisma.RenewalCre
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable(),
   student: z.lazy(() => StudentCreateNestedOneWithoutRenewalsInputSchema),
   academicSession: z.lazy(() => AcademicSessionCreateNestedOneWithoutRenewalsInputSchema),
   admin: z.lazy(() => AdminCreateNestedOneWithoutRenewalsInputSchema)
@@ -6258,7 +6343,8 @@ export const RenewalUncheckedCreateWithoutFacultyInputSchema: z.ZodType<Prisma.R
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  adminId: z.number().int()
+  adminId: z.number().int(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable()
 }).strict();
 
 export const RenewalCreateOrConnectWithoutFacultyInputSchema: z.ZodType<Prisma.RenewalCreateOrConnectWithoutFacultyInput> = z.object({
@@ -6431,6 +6517,7 @@ export const RenewalCreateWithoutStudentInputSchema: z.ZodType<Prisma.RenewalCre
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable(),
   academicSession: z.lazy(() => AcademicSessionCreateNestedOneWithoutRenewalsInputSchema),
   faculty: z.lazy(() => FacultyCreateNestedOneWithoutRenewalsInputSchema),
   admin: z.lazy(() => AdminCreateNestedOneWithoutRenewalsInputSchema)
@@ -6448,7 +6535,8 @@ export const RenewalUncheckedCreateWithoutStudentInputSchema: z.ZodType<Prisma.R
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   facultyId: z.number().int(),
-  adminId: z.number().int()
+  adminId: z.number().int(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable()
 }).strict();
 
 export const RenewalCreateOrConnectWithoutStudentInputSchema: z.ZodType<Prisma.RenewalCreateOrConnectWithoutStudentInput> = z.object({
@@ -7446,6 +7534,7 @@ export const ReservationCreateWithoutAcademicSessionInputSchema: z.ZodType<Prism
   status: z.lazy(() => ReservationStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable(),
   faculty: z.lazy(() => FacultyCreateNestedOneWithoutReservationsInputSchema),
   admin: z.lazy(() => AdminCreateNestedOneWithoutReservationsInputSchema)
 }).strict();
@@ -7467,7 +7556,8 @@ export const ReservationUncheckedCreateWithoutAcademicSessionInputSchema: z.ZodT
   status: z.lazy(() => ReservationStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  adminId: z.number().int()
+  adminId: z.number().int(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable()
 }).strict();
 
 export const ReservationCreateOrConnectWithoutAcademicSessionInputSchema: z.ZodType<Prisma.ReservationCreateOrConnectWithoutAcademicSessionInput> = z.object({
@@ -7489,6 +7579,7 @@ export const RenewalCreateWithoutAcademicSessionInputSchema: z.ZodType<Prisma.Re
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable(),
   student: z.lazy(() => StudentCreateNestedOneWithoutRenewalsInputSchema),
   faculty: z.lazy(() => FacultyCreateNestedOneWithoutRenewalsInputSchema),
   admin: z.lazy(() => AdminCreateNestedOneWithoutRenewalsInputSchema)
@@ -7506,7 +7597,8 @@ export const RenewalUncheckedCreateWithoutAcademicSessionInputSchema: z.ZodType<
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   facultyId: z.number().int(),
-  adminId: z.number().int()
+  adminId: z.number().int(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable()
 }).strict();
 
 export const RenewalCreateOrConnectWithoutAcademicSessionInputSchema: z.ZodType<Prisma.RenewalCreateOrConnectWithoutAcademicSessionInput> = z.object({
@@ -7738,7 +7830,8 @@ export const RenewalCreateManyAdminInputSchema: z.ZodType<Prisma.RenewalCreateMa
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  facultyId: z.number().int()
+  facultyId: z.number().int(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable()
 }).strict();
 
 export const ReservationCreateManyAdminInputSchema: z.ZodType<Prisma.ReservationCreateManyAdminInput> = z.object({
@@ -7758,7 +7851,8 @@ export const ReservationCreateManyAdminInputSchema: z.ZodType<Prisma.Reservation
   status: z.lazy(() => ReservationStatusSchema),
   academicSessionId: z.number().int(),
   createdAt: z.coerce.date().optional(),
-  updatedAt: z.coerce.date().optional()
+  updatedAt: z.coerce.date().optional(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable()
 }).strict();
 
 export const MaintenanceCreateManyAdminInputSchema: z.ZodType<Prisma.MaintenanceCreateManyAdminInput> = z.object({
@@ -7783,6 +7877,7 @@ export const RenewalUpdateWithoutAdminInputSchema: z.ZodType<Prisma.RenewalUpdat
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   student: z.lazy(() => StudentUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional(),
   academicSession: z.lazy(() => AcademicSessionUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional(),
   faculty: z.lazy(() => FacultyUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional()
@@ -7801,6 +7896,7 @@ export const RenewalUncheckedUpdateWithoutAdminInputSchema: z.ZodType<Prisma.Ren
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const RenewalUncheckedUpdateManyWithoutAdminInputSchema: z.ZodType<Prisma.RenewalUncheckedUpdateManyWithoutAdminInput> = z.object({
@@ -7816,6 +7912,7 @@ export const RenewalUncheckedUpdateManyWithoutAdminInputSchema: z.ZodType<Prisma
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const ReservationUpdateWithoutAdminInputSchema: z.ZodType<Prisma.ReservationUpdateWithoutAdminInput> = z.object({
@@ -7833,6 +7930,7 @@ export const ReservationUpdateWithoutAdminInputSchema: z.ZodType<Prisma.Reservat
   status: z.union([ z.lazy(() => ReservationStatusSchema),z.lazy(() => EnumReservationStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   faculty: z.lazy(() => FacultyUpdateOneRequiredWithoutReservationsNestedInputSchema).optional(),
   academicSession: z.lazy(() => AcademicSessionUpdateOneRequiredWithoutReservationsNestedInputSchema).optional()
 }).strict();
@@ -7855,6 +7953,7 @@ export const ReservationUncheckedUpdateWithoutAdminInputSchema: z.ZodType<Prisma
   academicSessionId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const ReservationUncheckedUpdateManyWithoutAdminInputSchema: z.ZodType<Prisma.ReservationUncheckedUpdateManyWithoutAdminInput> = z.object({
@@ -7875,6 +7974,7 @@ export const ReservationUncheckedUpdateManyWithoutAdminInputSchema: z.ZodType<Pr
   academicSessionId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const MaintenanceUpdateWithoutAdminInputSchema: z.ZodType<Prisma.MaintenanceUpdateWithoutAdminInput> = z.object({
@@ -7943,7 +8043,8 @@ export const ReservationCreateManyFacultyInputSchema: z.ZodType<Prisma.Reservati
   academicSessionId: z.number().int(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  adminId: z.number().int()
+  adminId: z.number().int(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable()
 }).strict();
 
 export const RenewalCreateManyFacultyInputSchema: z.ZodType<Prisma.RenewalCreateManyFacultyInput> = z.object({
@@ -7958,7 +8059,8 @@ export const RenewalCreateManyFacultyInputSchema: z.ZodType<Prisma.RenewalCreate
   status: z.lazy(() => RenewalStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  adminId: z.number().int()
+  adminId: z.number().int(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable()
 }).strict();
 
 export const StudentUpdateWithoutFacultyInputSchema: z.ZodType<Prisma.StudentUpdateWithoutFacultyInput> = z.object({
@@ -8007,6 +8109,7 @@ export const ReservationUpdateWithoutFacultyInputSchema: z.ZodType<Prisma.Reserv
   status: z.union([ z.lazy(() => ReservationStatusSchema),z.lazy(() => EnumReservationStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   academicSession: z.lazy(() => AcademicSessionUpdateOneRequiredWithoutReservationsNestedInputSchema).optional(),
   admin: z.lazy(() => AdminUpdateOneRequiredWithoutReservationsNestedInputSchema).optional()
 }).strict();
@@ -8029,6 +8132,7 @@ export const ReservationUncheckedUpdateWithoutFacultyInputSchema: z.ZodType<Pris
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const ReservationUncheckedUpdateManyWithoutFacultyInputSchema: z.ZodType<Prisma.ReservationUncheckedUpdateManyWithoutFacultyInput> = z.object({
@@ -8049,6 +8153,7 @@ export const ReservationUncheckedUpdateManyWithoutFacultyInputSchema: z.ZodType<
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const RenewalUpdateWithoutFacultyInputSchema: z.ZodType<Prisma.RenewalUpdateWithoutFacultyInput> = z.object({
@@ -8060,6 +8165,7 @@ export const RenewalUpdateWithoutFacultyInputSchema: z.ZodType<Prisma.RenewalUpd
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   student: z.lazy(() => StudentUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional(),
   academicSession: z.lazy(() => AcademicSessionUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional(),
   admin: z.lazy(() => AdminUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional()
@@ -8078,6 +8184,7 @@ export const RenewalUncheckedUpdateWithoutFacultyInputSchema: z.ZodType<Prisma.R
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const RenewalUncheckedUpdateManyWithoutFacultyInputSchema: z.ZodType<Prisma.RenewalUncheckedUpdateManyWithoutFacultyInput> = z.object({
@@ -8093,6 +8200,7 @@ export const RenewalUncheckedUpdateManyWithoutFacultyInputSchema: z.ZodType<Pris
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const RenewalCreateManyStudentInputSchema: z.ZodType<Prisma.RenewalCreateManyStudentInput> = z.object({
@@ -8107,7 +8215,8 @@ export const RenewalCreateManyStudentInputSchema: z.ZodType<Prisma.RenewalCreate
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   facultyId: z.number().int(),
-  adminId: z.number().int()
+  adminId: z.number().int(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable()
 }).strict();
 
 export const MaintenanceCreateManyStudentInputSchema: z.ZodType<Prisma.MaintenanceCreateManyStudentInput> = z.object({
@@ -8132,6 +8241,7 @@ export const RenewalUpdateWithoutStudentInputSchema: z.ZodType<Prisma.RenewalUpd
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   academicSession: z.lazy(() => AcademicSessionUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional(),
   faculty: z.lazy(() => FacultyUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional(),
   admin: z.lazy(() => AdminUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional()
@@ -8150,6 +8260,7 @@ export const RenewalUncheckedUpdateWithoutStudentInputSchema: z.ZodType<Prisma.R
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const RenewalUncheckedUpdateManyWithoutStudentInputSchema: z.ZodType<Prisma.RenewalUncheckedUpdateManyWithoutStudentInput> = z.object({
@@ -8165,6 +8276,7 @@ export const RenewalUncheckedUpdateManyWithoutStudentInputSchema: z.ZodType<Pris
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const MaintenanceUpdateWithoutStudentInputSchema: z.ZodType<Prisma.MaintenanceUpdateWithoutStudentInput> = z.object({
@@ -8390,7 +8502,8 @@ export const ReservationCreateManyAcademicSessionInputSchema: z.ZodType<Prisma.R
   status: z.lazy(() => ReservationStatusSchema),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  adminId: z.number().int()
+  adminId: z.number().int(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable()
 }).strict();
 
 export const RenewalCreateManyAcademicSessionInputSchema: z.ZodType<Prisma.RenewalCreateManyAcademicSessionInput> = z.object({
@@ -8405,7 +8518,8 @@ export const RenewalCreateManyAcademicSessionInputSchema: z.ZodType<Prisma.Renew
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   facultyId: z.number().int(),
-  adminId: z.number().int()
+  adminId: z.number().int(),
+  refusalReason: z.lazy(() => RefusalReasonSchema).optional().nullable()
 }).strict();
 
 export const ReservationUpdateWithoutAcademicSessionInputSchema: z.ZodType<Prisma.ReservationUpdateWithoutAcademicSessionInput> = z.object({
@@ -8423,6 +8537,7 @@ export const ReservationUpdateWithoutAcademicSessionInputSchema: z.ZodType<Prism
   status: z.union([ z.lazy(() => ReservationStatusSchema),z.lazy(() => EnumReservationStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   faculty: z.lazy(() => FacultyUpdateOneRequiredWithoutReservationsNestedInputSchema).optional(),
   admin: z.lazy(() => AdminUpdateOneRequiredWithoutReservationsNestedInputSchema).optional()
 }).strict();
@@ -8445,6 +8560,7 @@ export const ReservationUncheckedUpdateWithoutAcademicSessionInputSchema: z.ZodT
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const ReservationUncheckedUpdateManyWithoutAcademicSessionInputSchema: z.ZodType<Prisma.ReservationUncheckedUpdateManyWithoutAcademicSessionInput> = z.object({
@@ -8465,6 +8581,7 @@ export const ReservationUncheckedUpdateManyWithoutAcademicSessionInputSchema: z.
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const RenewalUpdateWithoutAcademicSessionInputSchema: z.ZodType<Prisma.RenewalUpdateWithoutAcademicSessionInput> = z.object({
@@ -8476,6 +8593,7 @@ export const RenewalUpdateWithoutAcademicSessionInputSchema: z.ZodType<Prisma.Re
   status: z.union([ z.lazy(() => RenewalStatusSchema),z.lazy(() => EnumRenewalStatusFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   student: z.lazy(() => StudentUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional(),
   faculty: z.lazy(() => FacultyUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional(),
   admin: z.lazy(() => AdminUpdateOneRequiredWithoutRenewalsNestedInputSchema).optional()
@@ -8494,6 +8612,7 @@ export const RenewalUncheckedUpdateWithoutAcademicSessionInputSchema: z.ZodType<
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const RenewalUncheckedUpdateManyWithoutAcademicSessionInputSchema: z.ZodType<Prisma.RenewalUncheckedUpdateManyWithoutAcademicSessionInput> = z.object({
@@ -8509,6 +8628,7 @@ export const RenewalUncheckedUpdateManyWithoutAcademicSessionInputSchema: z.ZodT
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   facultyId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   adminId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  refusalReason: z.union([ z.lazy(() => RefusalReasonSchema),z.lazy(() => NullableEnumRefusalReasonFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const LodgmentCreateManyBuildingInputSchema: z.ZodType<Prisma.LodgmentCreateManyBuildingInput> = z.object({

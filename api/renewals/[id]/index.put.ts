@@ -1,3 +1,5 @@
+import { prismaCtx } from "#imports";
+
 export default defineEventHandler(async (): Promise<UpdateRenewalResponse> => {
   try {
     const updateRenewalParamSPR = await safeParseRequestParamAs(
@@ -48,12 +50,18 @@ export default defineEventHandler(async (): Promise<UpdateRenewalResponse> => {
       });
     }
 
+    let refusalReason: prismaCtx.RefusalReason | undefined;
+    if (updateRenewalBodySPR.data.status === "REFUSED") {
+      refusalReason = updateRenewalBodySPR.data.refusalReason ?? "OTHER";
+    }
+
     const updatedRenewal: RenewalFull = await renewalRepository.updateFullOne({
       where: {
         id: renewal.id,
       },
       data: {
         status: updateRenewalBodySPR.data.status,
+        refusalReason,
         updatedAt: new Date(),
       },
     });
