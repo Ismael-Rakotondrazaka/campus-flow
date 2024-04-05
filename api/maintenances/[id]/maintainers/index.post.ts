@@ -2,7 +2,7 @@ export default defineEventHandler(
   async (): Promise<StoreMaintenanceMaintainerResponse> => {
     try {
       const storeMaintenanceMaintainerParamSPR = await safeParseRequestParamAs(
-        StoreMaintenanceMaintainerParamSchema,
+        StoreMaintenanceMaintainerParamSchema
       );
       if (!storeMaintenanceMaintainerParamSPR.success) {
         return createNotFoundError();
@@ -30,12 +30,12 @@ export default defineEventHandler(
       }
 
       const storeMaintenanceMaintainerBodySPR = await safeParseRequestBodyAs(
-        StoreMaintenanceMaintainerBodySchema,
+        StoreMaintenanceMaintainerBodySchema
       );
       if (!storeMaintenanceMaintainerBodySPR.success) {
         return createBadRequestError({
           errorMessage: formatValidationErrorMessage(
-            storeMaintenanceMaintainerBodySPR.error,
+            storeMaintenanceMaintainerBodySPR.error
           ),
         });
       }
@@ -85,5 +85,5 @@ export default defineEventHandler(
     } catch (error) {
       return handleUnknownError(error);
     }
-  },
+  }
 );
