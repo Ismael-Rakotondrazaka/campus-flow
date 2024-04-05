@@ -1,3 +1,5 @@
+import { prismaCtx } from "#imports";
+
 export default defineEventHandler(
   async (): Promise<UpdateReservationResponse> => {
     try {
@@ -94,6 +96,11 @@ export default defineEventHandler(
         }
       }
 
+      let refusalReason: prismaCtx.RefusalReason | undefined;
+      if (updateReservationBodySPR.data.status === "REFUSED") {
+        refusalReason = updateReservationBodySPR.data.refusalReason ?? "OTHER";
+      }
+
       const updatedReservation: ReservationFull =
         await reservationRepository.updateFullOne({
           where: {
@@ -101,6 +108,7 @@ export default defineEventHandler(
           },
           data: {
             status: updateReservationBodySPR.data.status,
+            refusalReason,
             updatedAt: new Date(),
           },
         });

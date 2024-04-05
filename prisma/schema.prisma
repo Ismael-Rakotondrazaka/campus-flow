@@ -133,7 +133,9 @@ model Reservation {
   createdAt            DateTime          @default(now())
   updatedAt            DateTime          @default(now())
   adminId              Int
-  admin                Admin             @relation(fields: [adminId], references: [userId])
+  refusalReason        RefusalReason?
+
+  admin Admin @relation(fields: [adminId], references: [userId])
 }
 
 model Renewal {
@@ -154,9 +156,19 @@ model Renewal {
   facultyId            Int
   adminId              Int
   admin                Admin           @relation(fields: [adminId], references: [userId])
+  refusalReason        RefusalReason?
 
   // unique constraint to ensure one student's renewal is for on academic year
   @@unique([studentId, academicSessionId])
+}
+
+enum RefusalReason {
+  CAPACITY_LIMIT_REACHED
+  INCOMPLETE_DOCUMENTS
+  FALSIFIED_DOCUMENTS
+  PAST_BEHAVIOR
+  INELIGIBILITY
+  OTHER
 }
 
 enum Origin {

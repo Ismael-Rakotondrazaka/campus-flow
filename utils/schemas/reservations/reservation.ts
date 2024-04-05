@@ -2,6 +2,7 @@ import { z } from "zod";
 import {
   GenderSchema,
   OriginSchema,
+  RefusalReasonSchema,
   ReservationStatusSchema,
 } from "~/prisma/generated/zod";
 import { ReservationComputed } from "./reservationComputed";
@@ -26,4 +27,5 @@ export const ReservationSchema: z.ZodType<ReservationComputed> = z.object({
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
   adminId: z.number().int(),
+  refusalReason: RefusalReasonSchema.nullable(),
 });

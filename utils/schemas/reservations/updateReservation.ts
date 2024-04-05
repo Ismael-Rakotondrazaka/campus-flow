@@ -1,4 +1,5 @@
 import { prismaCtx, z } from "#imports";
+import { RefusalReasonSchema } from "~/prisma/generated/zod";
 import { ReservationFull, ReservationFullSchema } from "./reservationFull";
 import { Simplify } from "type-fest";
 
@@ -25,13 +26,23 @@ export const UpdateReservationParamSchema: z.ZodType<UpdateReservationParam> =
 export type UpdateReservationBody = {
   status: Exclude<prismaCtx.$Enums.ReservationStatus, "PENDING">;
   lodgmentId?: number;
+  refusalReason?: prismaCtx.RefusalReason;
+};
+
+export type UpdateReservationBodyInput = {
+  status: Exclude<prismaCtx.$Enums.ReservationStatus, "PENDING">;
+  lodgmentId?: number;
+  refusalReason?: prismaCtx.RefusalReason | string;
 };
 
 export const UpdateReservationBodySchema: z.ZodType<
-  Simplify<UpdateReservationBody>
+  Simplify<UpdateReservationBody>,
+  z.ZodTypeDef,
+  UpdateReservationBodyInput
 > = z.object({
   status: z.enum(["ACCEPTED", "REFUSED", "VALIDATED"]),
   lodgmentId: z.coerce.number().optional(),
+  refusalReason: z.union([RefusalReasonSchema, CustomUndefinedSchema]),
 });
 
 /* -------------------------------------------------------------------------- */
