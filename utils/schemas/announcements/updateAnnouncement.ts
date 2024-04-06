@@ -48,9 +48,9 @@ export const UpdateAnnouncementBodySchema: z.ZodType<
     title: AnnouncementTitleSchema,
     content: AnnouncementContentSchema,
     illustration: z.union([
+      FileSchema,
       CustomNullSchema,
       CustomUndefinedSchema,
-      FileSchema,
     ]),
     status: AnnouncementStatusSchema,
     startAt: z.union([

@@ -34,7 +34,7 @@ export const StoreAnnouncementBodySchema: z.ZodType<
 > = z.object({
   title: AnnouncementTitleSchema,
   content: AnnouncementContentSchema,
-  illustration: z.union([CustomNullSchema, CustomUndefinedSchema, FileSchema]),
+  illustration: z.union([FileSchema, CustomNullSchema, CustomUndefinedSchema]),
   status: AnnouncementStatusSchema,
   startAt: z.union([CustomNullSchema, CustomUndefinedSchema, z.coerce.date()]),
   endAt: z.union([CustomNullSchema, CustomUndefinedSchema, z.coerce.date()]),
