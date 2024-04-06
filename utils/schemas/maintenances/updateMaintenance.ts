@@ -53,14 +53,14 @@ export const UpdateMaintenanceBodySchema: z.ZodType<
 > = z.object({
   /* ADMIN */
   status: z.union([
-    CustomUndefinedSchema,
     z.enum(["ACCEPTED", "DONE", "REFUSED"]),
+    CustomUndefinedSchema,
   ]),
   startAt: z.union([CustomNullSchema, CustomUndefinedSchema, z.coerce.date()]),
   endAt: z.union([CustomNullSchema, CustomUndefinedSchema, z.coerce.date()]),
   /* STUDENT */
   description: z.union([MaintenanceDescriptionSchema, CustomUndefinedSchema]),
-  type: z.union([CustomUndefinedSchema, MaintenanceTypeSchema]),
+  type: z.union([MaintenanceTypeSchema, CustomUndefinedSchema]),
 });
 
 /* -------------------------------------------------------------------------- */
