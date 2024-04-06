@@ -1,4 +1,5 @@
 import { prismaCtx, z } from "#imports";
+import { MaintenanceTypeSchema } from "~/prisma/generated/zod";
 import { MaintenanceFull } from "./maintenanceFull";
 import { Simplify } from "type-fest";
 
@@ -19,16 +20,30 @@ export const UpdateMaintenanceParamSchema: z.ZodType<UpdateMaintenanceParam> =
 /*                             UpdateMaintenance body                             */
 /* -------------------------------------------------------------------------- */
 
-export type UpdateMaintenanceBody = {
-  status: Exclude<prismaCtx.$Enums.MaintenanceStatus, "PENDING">;
+export type UpdateMaintenanceBody = UpdateMaintenanceBodyAdmin &
+  UpdateMaintenanceBodyStudent;
+
+/** ADMIN */
+export type UpdateMaintenanceBodyAdmin = {
+  status?: Exclude<prismaCtx.$Enums.MaintenanceStatus, "PENDING">;
   startAt?: Date | null;
   endAt?: Date | null;
 };
 
+/** STUDENT */
+export type UpdateMaintenanceBodyStudent = {
+  description?: string | null;
+  type?: prismaCtx.$Enums.MaintenanceType;
+};
+
 export type UpdateMaintenanceBodyInput = {
-  status: Exclude<prismaCtx.$Enums.MaintenanceStatus, "PENDING">;
+  /* ADMIN */
+  status?: Exclude<prismaCtx.$Enums.MaintenanceStatus, "PENDING"> | string;
   startAt?: Date | null | string;
   endAt?: Date | null | string;
+  /* STUDENT */
+  description?: string | null;
+  type?: prismaCtx.$Enums.MaintenanceType | string;
 };
 
 export const UpdateMaintenanceBodySchema: z.ZodType<
@@ -36,9 +51,16 @@ export const UpdateMaintenanceBodySchema: z.ZodType<
   z.ZodTypeDef,
   UpdateMaintenanceBodyInput
 > = z.object({
-  status: z.enum(["ACCEPTED", "DONE", "REFUSED"]),
+  /* ADMIN */
+  status: z.union([
+    CustomUndefinedSchema,
+    z.enum(["ACCEPTED", "DONE", "REFUSED"]),
+  ]),
   startAt: z.union([CustomNullSchema, CustomUndefinedSchema, z.coerce.date()]),
   endAt: z.union([CustomNullSchema, CustomUndefinedSchema, z.coerce.date()]),
+  /* STUDENT */
+  description: z.union([MaintenanceDescriptionSchema, CustomUndefinedSchema]),
+  type: z.union([CustomUndefinedSchema, MaintenanceTypeSchema]),
 });
 
 /* -------------------------------------------------------------------------- */
