@@ -1,7 +1,7 @@
 export default defineEventHandler(async (): Promise<UpdateBuildingResponse> => {
   try {
     const updateBuildingParamSPR = await safeParseRequestParamAs(
-      UpdateBuildingParamSchema,
+      UpdateBuildingParamSchema
     );
     if (!updateBuildingParamSPR.success) {
       return createNotFoundError();
@@ -19,7 +19,7 @@ export default defineEventHandler(async (): Promise<UpdateBuildingResponse> => {
     }
 
     const updateBuildingBodySPR = await safeParseRequestBodyAs(
-      UpdateBuildingBodySchema,
+      UpdateBuildingBodySchema
     );
     if (!updateBuildingBodySPR.success) {
       return createBadRequestError({
@@ -27,15 +27,19 @@ export default defineEventHandler(async (): Promise<UpdateBuildingResponse> => {
       });
     }
 
-    if (
-      (!is.undefined(updateBuildingBodySPR.data.floors) &&
-        updateBuildingBodySPR.data.floors === building.floors) ||
-      (!is.undefined(updateBuildingBodySPR.data.name) &&
-        updateBuildingBodySPR.data.name === building.name) ||
-      (is.undefined(updateBuildingBodySPR.data.illustration) &&
-        is.undefined(updateBuildingBodySPR.data.floors) &&
-        is.undefined(updateBuildingBodySPR.data.name))
-    ) {
+    const hasSameFloor =
+      !is.undefined(updateBuildingBodySPR.data.floors) &&
+      updateBuildingBodySPR.data.floors === building.floors;
+
+    const hasSameName =
+      !is.undefined(updateBuildingBodySPR.data.name) &&
+      updateBuildingBodySPR.data.name === building.name;
+
+    const newIllustrationNotProvided = is.undefined(
+      updateBuildingBodySPR.data.illustration
+    );
+
+    if (hasSameFloor && hasSameName && newIllustrationNotProvided) {
       return createBadRequestError({
         message: "Au moins une modification est requise.",
         errorMessage: {},
@@ -55,7 +59,7 @@ export default defineEventHandler(async (): Promise<UpdateBuildingResponse> => {
     let illustrationUrl: string | undefined;
     if (!is.undefined(updateBuildingBodySPR.data.illustration)) {
       illustrationUrl = uploadBuildingIllustration(
-        updateBuildingBodySPR.data.illustration,
+        updateBuildingBodySPR.data.illustration
       );
     }
 
