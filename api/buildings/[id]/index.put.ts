@@ -1,7 +1,7 @@
 export default defineEventHandler(async (): Promise<UpdateBuildingResponse> => {
   try {
     const updateBuildingParamSPR = await safeParseRequestParamAs(
-      UpdateBuildingParamSchema
+      UpdateBuildingParamSchema,
     );
     if (!updateBuildingParamSPR.success) {
       return createNotFoundError();
@@ -19,7 +19,7 @@ export default defineEventHandler(async (): Promise<UpdateBuildingResponse> => {
     }
 
     const updateBuildingBodySPR = await safeParseRequestBodyAs(
-      UpdateBuildingBodySchema
+      UpdateBuildingBodySchema,
     );
     if (!updateBuildingBodySPR.success) {
       return createBadRequestError({
@@ -36,7 +36,7 @@ export default defineEventHandler(async (): Promise<UpdateBuildingResponse> => {
       updateBuildingBodySPR.data.name === building.name;
 
     const newIllustrationNotProvided = is.undefined(
-      updateBuildingBodySPR.data.illustration
+      updateBuildingBodySPR.data.illustration,
     );
 
     if (hasSameFloor && hasSameName && newIllustrationNotProvided) {
@@ -59,7 +59,7 @@ export default defineEventHandler(async (): Promise<UpdateBuildingResponse> => {
     let illustrationUrl: string | undefined;
     if (!is.undefined(updateBuildingBodySPR.data.illustration)) {
       illustrationUrl = uploadBuildingIllustration(
-        updateBuildingBodySPR.data.illustration
+        updateBuildingBodySPR.data.illustration,
       );
     }
 
