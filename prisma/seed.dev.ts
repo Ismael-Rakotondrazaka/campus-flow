@@ -22,26 +22,6 @@ import {
   User,
 } from "@prisma/client";
 import { hashSync } from "bcrypt";
-import { parsePhoneNumber } from "libphonenumber-js";
-import {
-  buildingsData,
-  climatAnnouncementsData,
-  electricalMaintenanceDescriptionsData,
-  equipmentMaintenanceDescriptionsData,
-  facultiesData,
-  femaleIDCardsData,
-  hvacMaintenanceDescriptionsData,
-  maleIDCardsData,
-  newYearAnnouncementsData,
-  otherMaintenanceDescriptionsData,
-  plumbingMaintenanceDescriptionsData,
-  renewalAnnouncementsData,
-  renewalResultAnnouncementsData,
-  reservationAnnouncementsData,
-  reservationResultAnnouncementsData,
-  schoolCertificatesData,
-  scienceDayAnnouncementsData,
-} from "./seed.data";
 
 const PASSWORD_DEFAULT_VALUE = "password";
 export const hashPassword = (): string => {
@@ -54,15 +34,8 @@ const prismaClient = new PrismaClient();
 
 const main = async () => {
   const createPhoneNumber = (): string => {
-    // French phone Number
-    const rawPhoneNumber = faker.helpers.fromRegExp(
-      /[+]33 [67] [0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2}/,
-    );
-
-    const parsedPhoneNumber =
-      parsePhoneNumber(rawPhoneNumber).formatInternational();
-
-    return parsedPhoneNumber;
+    // TODO improve format
+    return faker.phone.number();
   };
 
   const createGender = (): Gender => {
@@ -101,15 +74,10 @@ const main = async () => {
     ]);
   };
 
-  const createNICUrl = (gender: Gender): string => {
-    const gettersPerGender: Record<Gender, () => string> = {
-      FEMALE: () => faker.helpers.arrayElement(femaleIDCardsData),
-      MALE: () => faker.helpers.arrayElement(maleIDCardsData),
-    };
-
-    const getter = gettersPerGender[gender];
-
-    return getter();
+  const createNICUrl = (): string => {
+    return faker.image.urlLoremFlickr({
+      category: "passport,card",
+    });
   };
 
   const createNIC = (): string => {
@@ -117,25 +85,30 @@ const main = async () => {
   };
 
   const createSchoolCertificateUrl = (): string => {
-    return faker.helpers.arrayElement(schoolCertificatesData);
+    return faker.image.urlLoremFlickr({
+      category: "book,copybook",
+    });
   };
 
   /* -------------------------------------------------------------------------- */
   /*                                   Faculty                                  */
   /* -------------------------------------------------------------------------- */
 
-  const createFaculty = (name: string): Promise<Faculty> => {
+  const createFaculty = (): Promise<Faculty> => {
     return prismaClient.faculty.create({
       data: {
-        name,
+        name: faker.company.name(),
       },
     });
   };
 
   const createFaculties = (): Promise<Faculty[]> => {
-    return Promise.all(
-      facultiesData.map((facultyName: string) => createFaculty(facultyName)),
-    );
+    const count: number = faker.number.int({
+      min: 7,
+      max: 10,
+    });
+
+    return Promise.all(new Array(count).fill(0).map(() => createFaculty()));
   };
 
   const facultyIds: number[] = await createFaculties().then(
@@ -185,33 +158,31 @@ const main = async () => {
   /*                                  Building                                  */
   /* -------------------------------------------------------------------------- */
 
-  const createBuilding = (
-    name: string,
-    illustrationUrl: string,
-  ): Promise<Building> => {
+  const createBuilding = (name: string): Promise<Building> => {
     return prismaClient.building.create({
       data: {
         floors: faker.number.int({
           min: 1,
           max: 3,
         }),
-        illustrationUrl,
+        illustrationUrl: faker.image.urlLoremFlickr({
+          category: "building,house",
+        }),
         name,
       },
     });
   };
 
-  // TODO create an array of buildings illustrations urls
-
   const createBuildings = (): Promise<Building[]> => {
+    const count: number = 3;
     let initialCharCode = 65; // A
 
     return Promise.all(
-      buildingsData.map((illustrationUrl: string) => {
+      new Array(count).fill(0).map(() => {
         const buildingName: string = String.fromCharCode(initialCharCode);
         initialCharCode += 1;
 
-        return createBuilding(buildingName, illustrationUrl);
+        return createBuilding(buildingName);
       }),
     );
   };
@@ -306,16 +277,14 @@ const main = async () => {
 
     return prismaClient.user.create({
       data: {
-        email: faker.internet
-          .email({
-            firstName,
-            lastName: name,
-          })
-          .toLowerCase(),
+        email: faker.internet.email({
+          firstName,
+          lastName: name,
+        }),
         firstName,
         name,
         password: hashPassword(),
-        phoneNumber: createPhoneNumber(),
+        phoneNumber: faker.phone.number(),
         profileUrl: faker.image.avatarLegacy(),
         createdAt,
         updatedAt: createdAt,
@@ -368,19 +337,17 @@ const main = async () => {
     const gender: Gender = createGender();
     const firstName: string = createFirstName(gender);
     const name: string = createName(gender);
-    const email: string = faker.internet
-      .email({
-        firstName,
-        lastName: name,
-      })
-      .toLowerCase();
+    const email: string = faker.internet.email({
+      firstName,
+      lastName: name,
+    });
     const createdAt: Date = faker.date.past();
 
     return prismaClient.reservation.create({
       data: {
         emergencyNumber: createPhoneNumber(),
-        NICUrl: createNICUrl(gender),
-        phoneNumber: createPhoneNumber(),
+        NICUrl: createNICUrl(),
+        phoneNumber: faker.phone.number(),
         profileUrl: faker.image.avatarLegacy(),
         schoolCertificateUrl: createSchoolCertificateUrl(),
         status,
@@ -456,7 +423,7 @@ const main = async () => {
 
     return prismaClient.student.create({
       data: {
-        emergencyNumber: createPhoneNumber(),
+        emergencyNumber: faker.phone.number(),
         gender: faker.helpers.arrayElement(["FEMALE", "MALE"]),
         NIC: faker.helpers.fromRegExp(/[0-9]{3} [0-9]{3} [0-9]{3} [0-9]{3}/),
         origin: faker.helpers.arrayElement(["NATIONAL", "FOREIGNER"]),
@@ -508,8 +475,8 @@ const main = async () => {
     return prismaClient.renewal.create({
       data: {
         emergencyNumber: student.emergencyNumber,
-        NICUrl: createNICUrl(student.gender),
-        phoneNumber: createPhoneNumber(),
+        NICUrl: createNICUrl(),
+        phoneNumber: faker.phone.number(),
         profileUrl: faker.image.avatarLegacy(),
         schoolCertificateUrl: createSchoolCertificateUrl(),
         status,
@@ -581,23 +548,6 @@ const main = async () => {
   /*                                 Maintenance                                */
   /* -------------------------------------------------------------------------- */
 
-  const createMaintenanceDescription = (type: MaintenanceType): string => {
-    const typeGetterObj: Record<MaintenanceType, () => string> = {
-      ELECTRICAL: () =>
-        faker.helpers.arrayElement(electricalMaintenanceDescriptionsData),
-      EQUIPMENT: () =>
-        faker.helpers.arrayElement(equipmentMaintenanceDescriptionsData),
-      HVAC: () => faker.helpers.arrayElement(hvacMaintenanceDescriptionsData),
-      PLUMBING: () =>
-        faker.helpers.arrayElement(plumbingMaintenanceDescriptionsData),
-      OTHER: () => faker.helpers.arrayElement(otherMaintenanceDescriptionsData),
-    };
-
-    const getter = typeGetterObj[type];
-
-    return getter();
-  };
-
   const createMaintenance = (
     status: MaintenanceStatus,
     refDate?: Date,
@@ -640,14 +590,15 @@ const main = async () => {
       }
     }
 
-    const maintenanceType: MaintenanceType = createMaintenanceType();
-
     return prismaClient.maintenance.create({
       data: {
-        type: maintenanceType,
+        type: createMaintenanceType(),
         lodgmentId: faker.helpers.arrayElement(lodgments).id,
         status,
-        description: createMaintenanceDescription(maintenanceType),
+        description: faker.lorem.paragraphs({
+          min: 3,
+          max: 5,
+        }),
         adminId: faker.helpers.arrayElement(maintenanceAdmins).userId,
         startAt,
         endAt,
@@ -667,8 +618,8 @@ const main = async () => {
     for (let i = 0; i < academicSessions.length - 1; i++) {
       const academicSession = academicSessions[i];
       const count: number = faker.number.int({
-        min: 5,
-        max: 10,
+        min: 2,
+        max: 5,
       });
 
       const maintenances: Maintenance[] = await Promise.all(
@@ -715,126 +666,61 @@ const main = async () => {
   /*                                Announcement                                */
   /* -------------------------------------------------------------------------- */
 
-  type AnnouncementSubject =
-    | "NEW_YEAR"
-    | "RENEWAL_RESULT"
-    | "RENEWAL"
-    | "RESERVATION"
-    | "RESERVATION_RESULT"
-    | "CLIMATE_CHANGE"
-    | "SCIENCE_DAY";
-
-  const announcementsDataGetters: Record<
-    AnnouncementSubject,
-    () => {
-      title: string;
-      content: string;
-      illustrationUrl: string;
-    }
-  > = {
-    NEW_YEAR: () => faker.helpers.arrayElement(newYearAnnouncementsData),
-    RENEWAL: () => faker.helpers.arrayElement(renewalAnnouncementsData),
-    RENEWAL_RESULT: () =>
-      faker.helpers.arrayElement(renewalResultAnnouncementsData),
-    RESERVATION: () => faker.helpers.arrayElement(reservationAnnouncementsData),
-    RESERVATION_RESULT: () =>
-      faker.helpers.arrayElement(reservationResultAnnouncementsData),
-    CLIMATE_CHANGE: () => faker.helpers.arrayElement(climatAnnouncementsData),
-    SCIENCE_DAY: () => faker.helpers.arrayElement(scienceDayAnnouncementsData),
-  };
-
-  // const announcementsCreators: Record<AnnouncementSubject, () => Promise<Announcement>> = {
-  //   "NEW_YEAR": () => {
-  //     const data =
-  //   }
-  // };
-
-  // const getNewAnnouncementData = () =>
-
   const createAnnouncement = (
     status: AnnouncementStatus,
-    subject: AnnouncementSubject,
     refDate?: Date,
   ): Promise<Announcement> => {
     const createdAt: Date = faker.date.future({
       refDate,
     });
 
-    const data: {
-      title: string;
-      content: string;
-      illustrationUrl: string;
-    } = announcementsDataGetters[subject]();
-
     let startAt: Date | undefined;
     let endAt: Date | undefined;
     if (
-      ["RENEWAL", "RESERVATION", "CLIMATE_CHANGE", "SCIENCE_DAY"].includes(
-        subject,
-      )
+      faker.number.int({
+        max: 10,
+      }) %
+        2 ===
+      0
     ) {
       startAt = faker.date.future({
         refDate,
       });
       endAt = faker.date.soon({
         days: faker.number.int({
-          min: 7,
-          max: 10,
+          min: 2,
+          max: 5,
         }),
         refDate: startAt,
       });
     }
 
+    let illustrationUrl: string | undefined;
+    if (
+      faker.number.int({
+        max: 10,
+      }) %
+        2 ===
+      0
+    ) {
+      illustrationUrl = faker.image.url();
+    }
+
     return prismaClient.announcement.create({
       data: {
-        title: data.title,
-        content: data.content,
+        title: faker.lorem.text(),
+        content: faker.lorem.paragraphs({
+          max: 7,
+          min: 3,
+        }),
         status,
         createdAt,
         updatedAt: createdAt,
-        illustrationUrl: data.illustrationUrl,
+        illustrationUrl,
         startAt,
         endAt,
       },
     });
-  };
-
-  const createAnnouncementsPerYear = async (
-    isPast: boolean,
-    refDate?: Date,
-  ): Promise<Announcement[]> => {
-    // it have order, so we don't use Promise.all
-    const announcements: Announcement[] = [
-      await createAnnouncement("PUBLISHED", "NEW_YEAR", refDate),
-      await createAnnouncement("PUBLISHED", "RENEWAL", refDate),
-      await createAnnouncement(
-        isPast ? "PUBLISHED" : "DRAFT",
-        "RENEWAL_RESULT",
-        refDate,
-      ),
-      await createAnnouncement(
-        isPast ? "PUBLISHED" : "DRAFT",
-        "RESERVATION",
-        refDate,
-      ),
-      await createAnnouncement(
-        isPast ? "PUBLISHED" : "DRAFT",
-        "RESERVATION_RESULT",
-        refDate,
-      ),
-      await createAnnouncement(
-        isPast ? "PUBLISHED" : "DRAFT",
-        "CLIMATE_CHANGE",
-        refDate,
-      ),
-      await createAnnouncement(
-        isPast ? "PUBLISHED" : "DRAFT",
-        "SCIENCE_DAY",
-        refDate,
-      ),
-    ];
-
-    return announcements;
   };
 
   const createAnnouncements = async (): Promise<Announcement[]> => {
@@ -843,17 +729,36 @@ const main = async () => {
     for (let i = 0; i < academicSessions.length - 1; i++) {
       const academicSession: AcademicSession = academicSessions[i];
 
-      const announcements: Announcement[] = await createAnnouncementsPerYear(
-        true,
-        academicSession.startAt,
-      );
+      const count: number = faker.number.int({
+        min: 7,
+        max: 15,
+      });
 
+      const announcements: Announcement[] = await Promise.all(
+        new Array(count)
+          .fill(0)
+          .map(() => createAnnouncement("PUBLISHED", academicSession.startAt)),
+      );
       result.push(...announcements);
     }
 
-    const announcements: Announcement[] = await createAnnouncementsPerYear(
-      false,
-      academicSessions[academicSessions.length - 1].startAt,
+    const count: number = faker.number.int({
+      min: 7,
+      max: 15,
+    });
+
+    const announcements: Announcement[] = await Promise.all(
+      new Array(count)
+        .fill(0)
+        .map(() =>
+          createAnnouncement(
+            faker.helpers.arrayElement<AnnouncementStatus>([
+              "DRAFT",
+              "PUBLISHED",
+            ]),
+            academicSessions[academicSessions.length - 1].startAt,
+          ),
+        ),
     );
     result.push(...announcements);
 

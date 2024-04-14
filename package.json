@@ -11,6 +11,7 @@
     "lint": "npm run lint:js && npm run lint:prettier",
     "lint:fix": "prettier --write --list-different . && npm run lint:js -- --fix",
     "db:seed": "npx prisma db push && npx prisma db seed",
+    "db:seed:dev": "npx prisma db push && tsx prisma/seed.dev.ts",
     "db:reset": "npx prisma migrate reset --force --skip-seed && npx prisma db push && npx prisma db seed"
   },
   "prisma": {
