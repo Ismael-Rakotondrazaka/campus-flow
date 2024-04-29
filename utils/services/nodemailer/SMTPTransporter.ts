@@ -14,7 +14,7 @@ const createSMTPTransporter =
       createTransport({
         host,
         port,
-        secure: true,
+        secure: false,
         auth: {
           user,
           pass: password,
