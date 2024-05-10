@@ -1,7 +1,7 @@
 export default defineEventHandler(async (): Promise<UpdateLodgmentResponse> => {
   try {
     const updateLodgmentParamSPR = await safeParseRequestParamAs(
-      UpdateLodgmentParamSchema
+      UpdateLodgmentParamSchema,
     );
     if (!updateLodgmentParamSPR.success) {
       return createNotFoundError();
@@ -19,7 +19,7 @@ export default defineEventHandler(async (): Promise<UpdateLodgmentResponse> => {
     }
 
     const updateLodgmentBodySPR = await safeParseRequestBodyAs(
-      UpdateLodgmentBodySchema
+      UpdateLodgmentBodySchema,
     );
     if (!updateLodgmentBodySPR.success) {
       return createBadRequestError({
