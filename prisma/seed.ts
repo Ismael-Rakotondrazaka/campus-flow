@@ -201,8 +201,6 @@ const main = async () => {
     });
   };
 
-  // TODO create an array of buildings illustrations urls
-
   const createBuildings = (): Promise<Building[]> => {
     let initialCharCode = 65; // A
 
@@ -222,13 +220,13 @@ const main = async () => {
   /*                                  Lodgment                                  */
   /* -------------------------------------------------------------------------- */
 
-  const lodgmentIdFloorArr: [number, number[]][] = [];
+  const buildingIdFloorArr: [number, number[]][] = [];
   buildings.forEach((building: Building) => {
     const floors: number[] = [];
     for (let i = 0; i <= building.floors; i++) {
       floors.push(i);
     }
-    lodgmentIdFloorArr.push([building.id, floors]);
+    buildingIdFloorArr.push([building.id, floors]);
   });
 
   const createLodgment = (
@@ -255,28 +253,24 @@ const main = async () => {
   const createLodgments = async (): Promise<Lodgment[]> => {
     const result: Lodgment[] = [];
 
-    for (const lodgmentIdFloor of lodgmentIdFloorArr) {
-      let initialRoomNumber: number = 1;
+    for (const buildingIdFloor of buildingIdFloorArr) {
+      let initialRoomNumber: number = 0;
 
       const lodgments: Lodgment[] = (
         await Promise.all(
-          lodgmentIdFloor[1].map(async (floor: number) => {
-            const roomNumber: number = initialRoomNumber;
-            initialRoomNumber += 1;
-
+          buildingIdFloor[1].map(async (floor: number) => {
             const count: number = faker.number.int({
               min: 5,
               max: 10,
             });
 
             return Promise.all(
-              new Array(count)
-                .fill(0)
-                .map(() =>
-                  createLodgment(lodgmentIdFloor[0], floor, roomNumber),
-                ),
+              new Array(count).fill(0).map(() => {
+                const roomNumber: number = ++initialRoomNumber;
+
+                return createLodgment(buildingIdFloor[0], floor, roomNumber);
+              }),
             );
-            // return createLodgment(lodgmentIdFloor[0], floor, roomNumber);
           }),
         )
       ).flatMap((value: Lodgment[]): Lodgment[] => value);
