@@ -1,7 +1,7 @@
 export default defineEventHandler(async (): Promise<UpdateLodgmentResponse> => {
   try {
     const updateLodgmentParamSPR = await safeParseRequestParamAs(
-      UpdateLodgmentParamSchema,
+      UpdateLodgmentParamSchema
     );
     if (!updateLodgmentParamSPR.success) {
       return createNotFoundError();
@@ -19,7 +19,7 @@ export default defineEventHandler(async (): Promise<UpdateLodgmentResponse> => {
     }
 
     const updateLodgmentBodySPR = await safeParseRequestBodyAs(
-      UpdateLodgmentBodySchema,
+      UpdateLodgmentBodySchema
     );
     if (!updateLodgmentBodySPR.success) {
       return createBadRequestError({
@@ -47,7 +47,10 @@ export default defineEventHandler(async (): Promise<UpdateLodgmentResponse> => {
       });
     }
 
-    if (!is.undefined(updateLodgmentBodySPR.data.buildingId)) {
+    if (
+      !is.undefined(updateLodgmentBodySPR.data.buildingId) &&
+      updateLodgmentBodySPR.data.buildingId !== lodgment.buildingId
+    ) {
       const building: BuildingFull | null =
         await buildingRepository.findFullOne({
           where: {
