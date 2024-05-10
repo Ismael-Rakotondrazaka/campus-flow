@@ -47,7 +47,10 @@ export default defineEventHandler(async (): Promise<UpdateLodgmentResponse> => {
       });
     }
 
-    if (!is.undefined(updateLodgmentBodySPR.data.buildingId)) {
+    if (
+      !is.undefined(updateLodgmentBodySPR.data.buildingId) &&
+      updateLodgmentBodySPR.data.buildingId !== lodgment.buildingId
+    ) {
       const building: BuildingFull | null =
         await buildingRepository.findFullOne({
           where: {
