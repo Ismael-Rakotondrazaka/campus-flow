@@ -1,6 +1,7 @@
 import { prismaCtx, z } from "#imports";
 import { Simplify } from "type-fest";
 import {
+  AcademicSessionSchema,
   BuildingSchema,
   FacultySchema,
   LodgmentSchema,
@@ -11,6 +12,7 @@ export type StudentFull = Simplify<
   prismaCtx.Student &
     StudentCount & {
       user: UserFiltered;
+      academicSession: prismaCtx.AcademicSession;
       faculty: prismaCtx.Faculty;
       lodgment: prismaCtx.Lodgment & {
         building: prismaCtx.Building;
@@ -29,5 +31,6 @@ export const StudentFullSchema: z.ZodType<StudentFull> = StudentSchema.and(
       }),
     ),
     faculty: FacultySchema,
+    academicSession: AcademicSessionSchema,
   }),
 );

@@ -12,6 +12,7 @@ export const createFullOne = async ({
     include: {
       user: true,
       faculty: true,
+      academicSession: true,
       lodgment: {
         include: {
           building: true,
