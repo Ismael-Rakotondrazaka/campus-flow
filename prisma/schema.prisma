@@ -64,18 +64,20 @@ model Faculty {
 }
 
 model Student {
-  userId          Int
-  user            User          @relation(fields: [userId], references: [id])
-  facultyId       Int
-  gender          Gender
-  origin          Origin
-  emergencyNumber String
-  faculty         Faculty       @relation(fields: [facultyId], references: [id])
-  NIC             String // National ID Card
-  lodgmentId      Int
-  lodgment        Lodgment      @relation(fields: [lodgmentId], references: [id])
-  renewals        Renewal[]
-  maintenances    Maintenance[]
+  userId            Int
+  user              User            @relation(fields: [userId], references: [id])
+  facultyId         Int
+  academicSessionId Int
+  academicSession   AcademicSession @relation(fields: [academicSessionId], references: [id])
+  gender            Gender
+  origin            Origin
+  emergencyNumber   String
+  faculty           Faculty         @relation(fields: [facultyId], references: [id])
+  NIC               String // National ID Card
+  lodgmentId        Int
+  lodgment          Lodgment        @relation(fields: [lodgmentId], references: [id])
+  renewals          Renewal[]
+  maintenances      Maintenance[]
 
   @@id([userId])
 }
@@ -237,6 +239,7 @@ model AcademicSession {
   deletedAt    DateTime?
   reservations Reservation[]
   renewals     Renewal[]
+  students     Student[]
 }
 
 enum ReservationStatus {

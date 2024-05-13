@@ -14,6 +14,11 @@ export const handleReservationValidated = async (
   await studentRepository.createFullOne({
     data: {
       emergencyNumber: reservation.emergencyNumber,
+      academicSession: {
+        connect: {
+          id: reservation.academicSessionId,
+        },
+      },
       gender: reservation.gender,
       NIC: reservation.NIC,
       origin: reservation.origin,

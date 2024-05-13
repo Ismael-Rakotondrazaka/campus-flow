@@ -6,5 +6,6 @@ export const handleReservationRefused = async (
   sendReservationRefusedEmail({
     email: reservation.email,
     fullName: reservation.fullName,
+    reason: reservation.refusalReason!,
   });
 };

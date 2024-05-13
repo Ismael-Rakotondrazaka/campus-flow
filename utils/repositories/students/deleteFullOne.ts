@@ -10,6 +10,7 @@ export const deleteFullOne = async (payload: {
     include: {
       user: true,
       faculty: true,
+      academicSession: true,
       lodgment: {
         include: {
           building: true,

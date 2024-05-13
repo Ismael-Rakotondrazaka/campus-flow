@@ -7,6 +7,7 @@ export type StudentFullRaw = Simplify<
       renewals: number;
     };
   } & {
+    academicSession: prismaCtx.AcademicSession;
     user: UserComputed;
     faculty: prismaCtx.Faculty;
     lodgment: prismaCtx.Lodgment & {
@@ -22,6 +23,8 @@ export const studentFullRawToStudentFull = (
     userId: student.userId,
     emergencyNumber: student.emergencyNumber,
     facultyId: student.facultyId,
+    academicSessionId: student.academicSessionId,
+    academicSession: student.academicSession,
     gender: student.gender,
     lodgmentId: student.lodgmentId,
     origin: student.origin,

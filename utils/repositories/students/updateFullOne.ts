@@ -12,6 +12,7 @@ export const updateFullOne = async (payload: {
     include: {
       user: true,
       faculty: true,
+      academicSession: true,
       lodgment: {
         include: {
           building: true,

@@ -451,6 +451,7 @@ const main = async () => {
     return prismaClient.student.create({
       data: {
         emergencyNumber: createPhoneNumber(),
+        academicSessionId: academicSession.id,
         gender: faker.helpers.arrayElement(["FEMALE", "MALE"]),
         NIC: faker.helpers.fromRegExp(/[0-9]{3} [0-9]{3} [0-9]{3} [0-9]{3}/),
         origin: faker.helpers.arrayElement(["NATIONAL", "FOREIGNER"]),
