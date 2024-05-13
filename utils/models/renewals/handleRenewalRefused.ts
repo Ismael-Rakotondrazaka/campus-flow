@@ -6,5 +6,6 @@ export const handleRenewalRefused = async (
   sendRenewalRefusedEmail({
     email: renewal.student.user.email,
     fullName: renewal.student.user.fullName,
+    reason: renewal.refusalReason!,
   });
 };
