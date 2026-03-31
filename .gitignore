@@ -1,20 +1,30 @@
-node_modules
-dist
+# Nuxt dev/build outputs
+.output
 .data
+.nuxt
 .nitro
 .cache
-.output
-.env
-package-lock.json
+dist
 
-# VSCode
+# Editor
 .vscode
 
-# VSCodeCounter
-.VSCodeCounter
+# Node dependencies
+node_modules
 
-# secret folder
-secrets
+# Logs
+logs
+*.log
 
-# GCS
-GCSServiceAccount.json
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+# Old files
+old
