@@ -1,0 +1,50 @@
+import { defineQueryOptions } from '@pinia/colada';
+
+import type { BuildingFilters } from './building.model';
+
+import { getBuilding, getBuildings } from './building.service';
+
+/**
+ * All building queries share a single root key `['buildings']`.
+ * Pinia Colada uses prefix matching for cache invalidation, so calling
+ * `invalidateQueries({ key: BUILDING_QUERY_KEYS.root })` invalidates both
+ * list and item queries in one call — useful after any create/update/delete.
+ * For surgical invalidation (e.g. after an update), use the specific key:
+ * `invalidateQueries({ key: BUILDING_QUERY_KEYS.byId(id) })`.
+ */
+export const BUILDING_QUERY_KEYS = {
+  byId: (id: string) => [...BUILDING_QUERY_KEYS.root, id] as const,
+
+  list: (filters: BuildingFilters = {}) =>
+    [...BUILDING_QUERY_KEYS.root, 'list', filters] as const,
+
+  root: ['buildings'] as const,
+};
+
+/**
+ * Usage in a component:
+ *
+ *   const filters = ref<BuildingFilters>({ page: 1 })
+ *   const { data } = useQuery(() => buildingListQuery(filters.value))
+ */
+export const buildingListQuery = defineQueryOptions(
+  (filters: BuildingFilters = {}) => ({
+    key: BUILDING_QUERY_KEYS.list(filters),
+    query: () => getBuildings(filters),
+  })
+);
+
+/**
+ * Usage in a component:
+ *
+ *   const route = useRoute()
+ *   const { data } = useQuery(() =>
+ *     buildingByIdQuery({ id: route.params.id as string }),
+ *   )
+ */
+export const buildingByIdQuery = defineQueryOptions(
+  ({ id }: { id: string }) => ({
+    key: BUILDING_QUERY_KEYS.byId(id),
+    query: () => getBuilding(id),
+  })
+);
