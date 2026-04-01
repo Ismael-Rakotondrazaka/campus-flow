@@ -35,51 +35,6 @@ export default defineNuxtConfig({
   imports: {
     presets: [
       {
-        from: '@tanstack/vue-query',
-        imports: [
-          // Composables
-          'useQuery',
-          'useInfiniteQuery',
-          'useMutation',
-          'useQueries',
-          'useQueryClient',
-          'useIsFetching',
-          'useIsMutating',
-          'useMutationState',
-
-          // Utilities
-          'queryOptions',
-          'infiniteQueryOptions',
-          'keepPreviousData',
-
-          // Classes
-          'QueryClient',
-          'QueryCache',
-          'MutationCache',
-
-          // Plugin
-          'VueQueryPlugin',
-          'VueQueryPluginOptions',
-
-          // Types (for type support)
-          'DefinedInitialDataInfiniteOptions',
-          'DefinedInitialQueryOptions',
-          'UndefinedInitialDataInfiniteOptions',
-          'UndefinedInitialQueryOptions',
-          'UseInfiniteQueryOptions',
-          'UseInfiniteQueryReturnType',
-          'UseQueryOptions',
-          'UseQueryReturnType',
-          'UseQueriesOptions',
-          'UseQueriesResults',
-          'UseMutationOptions',
-          'UseMutationReturnType',
-          'QueryFilters',
-          'MutationFilters',
-          'MutationStateOptions',
-        ],
-      },
-      {
         from: '@vueuse/router',
         imports: ['useRouteQuery'],
       },
@@ -98,6 +53,8 @@ export default defineNuxtConfig({
     '@nuxtjs/seo',
     '@vueuse/nuxt',
     '@nuxtjs/supabase',
+    '@pinia/nuxt',
+    '@pinia/colada-nuxt',
   ],
 
   robots: {
