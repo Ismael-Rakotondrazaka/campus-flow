@@ -1,5 +1,11 @@
 import { z } from 'zod';
 
+import { RefusalReason, RenewalStatus } from './renewal.model';
+
+export const RenewalStatusSchema = z.nativeEnum(RenewalStatus);
+
+export const RefusalReasonSchema = z.nativeEnum(RefusalReason);
+
 export const CreateRenewalSchema = z.object({
   academic_session_id: z.string().uuid(),
   emergency_number: z.string().min(1),
@@ -19,18 +25,9 @@ export const UpdateRenewalSchema = z.object({
   nic_url: z.string().url().optional(),
   phone_number: z.string().min(1).optional(),
   profile_url: z.string().url().optional(),
-  refusal_reason: z
-    .enum([
-      'capacity_limit_reached',
-      'falsified_documents',
-      'incomplete_documents',
-      'ineligibility',
-      'other',
-      'past_behavior',
-    ])
-    .nullish(),
+  refusal_reason: RefusalReasonSchema.nullish(),
   school_certificate_url: z.string().url().optional(),
-  status: z.enum(['pending', 'accepted', 'refused', 'validated']).optional(),
+  status: RenewalStatusSchema.optional(),
 });
 
 export type UpdateRenewal = z.infer<typeof UpdateRenewalSchema>;

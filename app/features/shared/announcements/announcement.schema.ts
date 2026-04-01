@@ -1,11 +1,15 @@
 import { z } from 'zod';
 
+import { AnnouncementStatus } from './announcement.model';
+
+export const AnnouncementStatusSchema = z.nativeEnum(AnnouncementStatus);
+
 export const CreateAnnouncementSchema = z.object({
   content: z.string().min(1),
   end_at: z.string().datetime().nullish(),
   illustration_url: z.string().url().nullish(),
   start_at: z.string().datetime().nullish(),
-  status: z.enum(['draft', 'published']).default('draft'),
+  status: AnnouncementStatusSchema.default('draft'),
   title: z.string().min(1),
 });
 
