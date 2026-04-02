@@ -54,10 +54,10 @@ begin
   insert into public.users (id, first_name, last_name, phone_number, profile_url)
   values (
     new.id,
-    coalesce(nullif(trim((new.raw_user_meta_data->>'first_name')::text), ''), 'Unknown'),
-    coalesce(nullif(trim((new.raw_user_meta_data->>'last_name')::text),  ''), 'Unknown'),
-    coalesce(nullif(trim((new.raw_user_meta_data->>'phone_number')::text), ''), ''),
-    coalesce(nullif(trim((new.raw_user_meta_data->>'profile_url')::text),  ''), '')
+    coalesce(nullif(trim((new.raw_app_meta_data->>'first_name')::text),    ''), 'Unknown'),
+    coalesce(nullif(trim((new.raw_app_meta_data->>'last_name')::text),     ''), 'Unknown'),
+    coalesce(nullif(trim((new.raw_app_meta_data->>'phone_number')::text),  ''), ''),
+    coalesce(nullif(trim((new.raw_app_meta_data->>'profile_url')::text),   ''), '')
   );
   return new;
 end;

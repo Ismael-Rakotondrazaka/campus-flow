@@ -34,13 +34,616 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      academic_sessions: {
+        Row: {
+          created_at: string
+          deleted_at: string | null
+          end_at: string
+          id: string
+          start_at: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          deleted_at?: string | null
+          end_at: string
+          id?: string
+          start_at: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          deleted_at?: string | null
+          end_at?: string
+          id?: string
+          start_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      admins: {
+        Row: {
+          created_at: string
+          role: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          role: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          role?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "admins_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      announcements: {
+        Row: {
+          content: string
+          created_at: string
+          deleted_at: string | null
+          end_at: string | null
+          id: string
+          illustration_url: string | null
+          start_at: string | null
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          deleted_at?: string | null
+          end_at?: string | null
+          id?: string
+          illustration_url?: string | null
+          start_at?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          deleted_at?: string | null
+          end_at?: string | null
+          id?: string
+          illustration_url?: string | null
+          start_at?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      buildings: {
+        Row: {
+          created_at: string
+          deleted_at: string | null
+          floors: number
+          id: string
+          illustration_url: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          deleted_at?: string | null
+          floors: number
+          id?: string
+          illustration_url: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          deleted_at?: string | null
+          floors?: number
+          id?: string
+          illustration_url?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      faculties: {
+        Row: {
+          created_at: string
+          deleted_at: string | null
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      lodgments: {
+        Row: {
+          building_id: string
+          capacity: number
+          created_at: string
+          deleted_at: string | null
+          floor: number
+          id: string
+          room_number: number
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          building_id: string
+          capacity: number
+          created_at?: string
+          deleted_at?: string | null
+          floor: number
+          id?: string
+          room_number: number
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          building_id?: string
+          capacity?: number
+          created_at?: string
+          deleted_at?: string | null
+          floor?: number
+          id?: string
+          room_number?: number
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lodgments_building_id_fkey"
+            columns: ["building_id"]
+            isOneToOne: false
+            referencedRelation: "buildings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      maintainers: {
+        Row: {
+          created_at: string
+          deleted_at: string | null
+          first_name: string
+          id: string
+          last_name: string
+          phone_number: string
+          profile_url: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          deleted_at?: string | null
+          first_name: string
+          id?: string
+          last_name: string
+          phone_number: string
+          profile_url: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          deleted_at?: string | null
+          first_name?: string
+          id?: string
+          last_name?: string
+          phone_number?: string
+          profile_url?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      maintenance_maintainers: {
+        Row: {
+          assigned_at: string
+          maintainer_id: string
+          maintenance_id: string
+        }
+        Insert: {
+          assigned_at?: string
+          maintainer_id: string
+          maintenance_id: string
+        }
+        Update: {
+          assigned_at?: string
+          maintainer_id?: string
+          maintenance_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "maintenance_maintainers_maintainer_id_fkey"
+            columns: ["maintainer_id"]
+            isOneToOne: false
+            referencedRelation: "maintainers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "maintenance_maintainers_maintenance_id_fkey"
+            columns: ["maintenance_id"]
+            isOneToOne: false
+            referencedRelation: "maintenances"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      maintenances: {
+        Row: {
+          admin_id: string | null
+          created_at: string
+          description: string | null
+          end_at: string | null
+          id: string
+          lodgment_id: string
+          start_at: string | null
+          status: string
+          student_id: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          admin_id?: string | null
+          created_at?: string
+          description?: string | null
+          end_at?: string | null
+          id?: string
+          lodgment_id: string
+          start_at?: string | null
+          status?: string
+          student_id: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          admin_id?: string | null
+          created_at?: string
+          description?: string | null
+          end_at?: string | null
+          id?: string
+          lodgment_id?: string
+          start_at?: string | null
+          status?: string
+          student_id?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "maintenances_admin_id_fkey"
+            columns: ["admin_id"]
+            isOneToOne: false
+            referencedRelation: "admins"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "maintenances_lodgment_id_fkey"
+            columns: ["lodgment_id"]
+            isOneToOne: false
+            referencedRelation: "lodgments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "maintenances_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      renewals: {
+        Row: {
+          academic_session_id: string
+          admin_id: string | null
+          created_at: string
+          emergency_number: string
+          faculty_id: string
+          id: string
+          nic_url: string
+          phone_number: string
+          profile_url: string
+          refusal_reason: string | null
+          school_certificate_url: string
+          status: string
+          student_id: string
+          updated_at: string
+        }
+        Insert: {
+          academic_session_id: string
+          admin_id?: string | null
+          created_at?: string
+          emergency_number: string
+          faculty_id: string
+          id?: string
+          nic_url: string
+          phone_number: string
+          profile_url: string
+          refusal_reason?: string | null
+          school_certificate_url: string
+          status?: string
+          student_id: string
+          updated_at?: string
+        }
+        Update: {
+          academic_session_id?: string
+          admin_id?: string | null
+          created_at?: string
+          emergency_number?: string
+          faculty_id?: string
+          id?: string
+          nic_url?: string
+          phone_number?: string
+          profile_url?: string
+          refusal_reason?: string | null
+          school_certificate_url?: string
+          status?: string
+          student_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "renewals_academic_session_id_fkey"
+            columns: ["academic_session_id"]
+            isOneToOne: false
+            referencedRelation: "academic_sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "renewals_admin_id_fkey"
+            columns: ["admin_id"]
+            isOneToOne: false
+            referencedRelation: "admins"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "renewals_faculty_id_fkey"
+            columns: ["faculty_id"]
+            isOneToOne: false
+            referencedRelation: "faculties"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "renewals_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      reservations: {
+        Row: {
+          academic_session_id: string
+          admin_id: string | null
+          created_at: string
+          email: string
+          emergency_number: string
+          faculty_id: string
+          first_name: string
+          gender: string
+          id: string
+          last_name: string
+          lodgment_id: string | null
+          nic: string
+          nic_url: string
+          origin: string
+          phone_number: string
+          profile_url: string
+          refusal_reason: string | null
+          school_certificate_url: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          academic_session_id: string
+          admin_id?: string | null
+          created_at?: string
+          email: string
+          emergency_number: string
+          faculty_id: string
+          first_name: string
+          gender: string
+          id?: string
+          last_name: string
+          lodgment_id?: string | null
+          nic: string
+          nic_url: string
+          origin: string
+          phone_number: string
+          profile_url: string
+          refusal_reason?: string | null
+          school_certificate_url: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          academic_session_id?: string
+          admin_id?: string | null
+          created_at?: string
+          email?: string
+          emergency_number?: string
+          faculty_id?: string
+          first_name?: string
+          gender?: string
+          id?: string
+          last_name?: string
+          lodgment_id?: string | null
+          nic?: string
+          nic_url?: string
+          origin?: string
+          phone_number?: string
+          profile_url?: string
+          refusal_reason?: string | null
+          school_certificate_url?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reservations_academic_session_id_fkey"
+            columns: ["academic_session_id"]
+            isOneToOne: false
+            referencedRelation: "academic_sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reservations_admin_id_fkey"
+            columns: ["admin_id"]
+            isOneToOne: false
+            referencedRelation: "admins"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "reservations_faculty_id_fkey"
+            columns: ["faculty_id"]
+            isOneToOne: false
+            referencedRelation: "faculties"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reservations_lodgment_id_fkey"
+            columns: ["lodgment_id"]
+            isOneToOne: false
+            referencedRelation: "lodgments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      students: {
+        Row: {
+          academic_session_id: string
+          created_at: string
+          emergency_number: string
+          faculty_id: string
+          gender: string
+          lodgment_id: string
+          nic: string
+          origin: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          academic_session_id: string
+          created_at?: string
+          emergency_number: string
+          faculty_id: string
+          gender: string
+          lodgment_id: string
+          nic: string
+          origin: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          academic_session_id?: string
+          created_at?: string
+          emergency_number?: string
+          faculty_id?: string
+          gender?: string
+          lodgment_id?: string
+          nic?: string
+          origin?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "students_academic_session_id_fkey"
+            columns: ["academic_session_id"]
+            isOneToOne: false
+            referencedRelation: "academic_sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "students_faculty_id_fkey"
+            columns: ["faculty_id"]
+            isOneToOne: false
+            referencedRelation: "faculties"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "students_lodgment_id_fkey"
+            columns: ["lodgment_id"]
+            isOneToOne: false
+            referencedRelation: "lodgments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "students_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      users: {
+        Row: {
+          created_at: string
+          deleted_at: string | null
+          first_name: string
+          id: string
+          last_name: string
+          phone_number: string
+          profile_url: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          deleted_at?: string | null
+          first_name: string
+          id: string
+          last_name: string
+          phone_number: string
+          profile_url: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          deleted_at?: string | null
+          first_name?: string
+          id?: string
+          last_name?: string
+          phone_number?: string
+          profile_url?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_admin_role: { Args: { p_role: string }; Returns: boolean }
+      is_admin: { Args: never; Returns: boolean }
+      is_student: { Args: never; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
