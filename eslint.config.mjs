@@ -16,6 +16,7 @@ const ignores = [
   '.data',
   'old',
   'shared/types/database.ts',
+  'docs',
 ];
 
 export default withNuxt([
