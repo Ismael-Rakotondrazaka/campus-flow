@@ -55,11 +55,20 @@ export default defineNuxtConfig({
     '@nuxtjs/supabase',
     '@pinia/nuxt',
     '@pinia/colada-nuxt',
+    '@nuxtjs/leaflet',
   ],
 
   robots: {
     allow: '*',
     disallow: ['/admin/*'],
+  },
+
+  routeRules: {
+    '/admin/maintenance/**': { appLayout: 'maintenance' },
+    '/admin/renewal/**': { appLayout: 'renewal' },
+    '/admin/reservation/**': { appLayout: 'reservation' },
+    '/admin/root/**': { appLayout: 'root' },
+    '/student/**': { appLayout: 'student' },
   },
 
   runtimeConfig: {
@@ -101,7 +110,7 @@ export default defineNuxtConfig({
     key: process.env.NUXT_PUBLIC_SUPABASE_KEY || '',
     redirectOptions: {
       callback: '/confirm',
-      exclude: [],
+      exclude: ['/'],
       include: undefined,
       login: '/login',
       saveRedirectToCookie: true,
