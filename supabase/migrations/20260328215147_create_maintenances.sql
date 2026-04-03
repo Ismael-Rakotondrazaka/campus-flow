@@ -1,6 +1,6 @@
 create table public.maintenances (
   id          uuid primary key default gen_random_uuid(),
-  student_id  uuid not null references public.students (user_id) on delete cascade,
+  resident_id uuid not null references public.residents (user_id) on delete cascade,
   admin_id    uuid references public.admins (user_id) on delete set null,
   lodgment_id uuid not null references public.lodgments (id),
   type        text not null
@@ -14,12 +14,12 @@ create table public.maintenances (
   updated_at  timestamptz not null default now()
 );
 
-comment on table public.maintenances is 'Maintenance requests submitted by students for their lodgment.';
+comment on table public.maintenances is 'Maintenance requests submitted by residents for their lodgment.';
 comment on column public.maintenances.type is 'electrical | plumbing | equipment | hvac | other';
 comment on column public.maintenances.status is 'pending | accepted | done | refused';
 comment on column public.maintenances.admin_id is 'Set when an admin accepts the request.';
 
-create index maintenances_student_id_idx on public.maintenances (student_id);
+create index maintenances_resident_id_idx on public.maintenances (resident_id);
 create index maintenances_lodgment_id_idx on public.maintenances (lodgment_id);
 create index maintenances_status_idx on public.maintenances (status);
 create index maintenances_created_at_idx on public.maintenances (created_at desc);
@@ -31,15 +31,15 @@ create policy "Maintenance admins can view all maintenance requests"
   to authenticated
   using (public.has_admin_role('maintenance'));
 
-create policy "Students can view their own maintenance requests"
+create policy "Residents can view their own maintenance requests"
   on public.maintenances for select
   to authenticated
-  using ((select auth.uid()) = student_id);
+  using ((select auth.uid()) = resident_id);
 
-create policy "Students can submit maintenance requests"
+create policy "Residents can submit maintenance requests"
   on public.maintenances for insert
   to authenticated
-  with check ((select auth.uid()) = student_id);
+  with check ((select auth.uid()) = resident_id);
 
 create policy "Maintenance admins can update maintenance requests"
   on public.maintenances for update

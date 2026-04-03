@@ -11,7 +11,7 @@ import { MaintenanceConfig } from './maintenance.config';
 
 const MAINTENANCE_SELECT = `
   *,
-  student:student_id(*),
+  resident:resident_id(*),
   lodgment:lodgment_id(*),
   maintainers:maintenance_maintainers(maintainer:maintainer_id(*), assigned_at)
 `;
@@ -25,8 +25,8 @@ export const getMaintenances = async (
     .from('maintenances')
     .select(MAINTENANCE_SELECT, { count: 'exact' });
 
-  if (filters.student_id) {
-    query = query.eq('student_id', filters.student_id);
+  if (filters.resident_id) {
+    query = query.eq('resident_id', filters.resident_id);
   }
 
   if (filters.admin_id) {

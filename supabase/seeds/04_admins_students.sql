@@ -1,7 +1,7 @@
--- Seed: admins (7) + students (30)
--- Student → lodgment: s01→l01, s02→l02, ..., s30→l30
--- Student → faculty:  cycles through f01–f10
--- Student → session:  s01–s10 → dd...001 (2023-2024), s11–s20 → dd...002 (2024-2025), s21–s30 → dd...003 (2025-2026)
+-- Seed: admins (7) + residents (30)
+-- Resident → lodgment: s01→l01, s02→l02, ..., s30→l30
+-- Resident → faculty:  cycles through f01–f10
+-- Resident → session:  s01–s10 → dd...001 (2023-2024), s11–s20 → dd...002 (2024-2025), s21–s30 → dd...003 (2025-2026)
 
 INSERT INTO public.admins (user_id, role, created_at, updated_at) VALUES
   ('aa000000-0000-0000-0000-000000000001', 'root',        '2022-09-01 08:00:00+00', '2022-09-01 08:00:00+00'),
@@ -12,7 +12,7 @@ INSERT INTO public.admins (user_id, role, created_at, updated_at) VALUES
   ('aa000000-0000-0000-0000-000000000006', 'reservation', '2022-09-01 08:00:00+00', '2022-09-01 08:00:00+00'),
   ('aa000000-0000-0000-0000-000000000007', 'reservation', '2022-09-01 08:00:00+00', '2022-09-01 08:00:00+00');
 
-INSERT INTO public.students (user_id, faculty_id, academic_session_id, lodgment_id, gender, origin, emergency_number, nic, created_at, updated_at) VALUES
+INSERT INTO public.residents (user_id, faculty_id, academic_session_id, lodgment_id, gender, origin, emergency_number, nic, created_at, updated_at) VALUES
   -- Session 2023-2024 (dd...001), lodgments l01–l10
   ('bb000000-0000-0000-0000-000000000001', 'cc000000-0000-0000-0000-000000000001', 'dd000000-0000-0000-0000-000000000001', 'ff000000-0000-0000-0000-000000000001', 'female', 'national',  '+33 6 12 00 11 22', '123 456 789 001', '2023-10-01 08:00:00+00', '2023-10-01 08:00:00+00'),
   ('bb000000-0000-0000-0000-000000000002', 'cc000000-0000-0000-0000-000000000002', 'dd000000-0000-0000-0000-000000000001', 'ff000000-0000-0000-0000-000000000002', 'male',   'national',  '+33 6 12 00 22 33', '123 456 789 002', '2023-10-01 08:00:00+00', '2023-10-01 08:00:00+00'),

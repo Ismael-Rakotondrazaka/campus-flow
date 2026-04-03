@@ -301,9 +301,9 @@ export type Database = {
           end_at: string | null
           id: string
           lodgment_id: string
+          resident_id: string
           start_at: string | null
           status: string
-          student_id: string
           type: string
           updated_at: string
         }
@@ -314,9 +314,9 @@ export type Database = {
           end_at?: string | null
           id?: string
           lodgment_id: string
+          resident_id: string
           start_at?: string | null
           status?: string
-          student_id: string
           type: string
           updated_at?: string
         }
@@ -327,9 +327,9 @@ export type Database = {
           end_at?: string | null
           id?: string
           lodgment_id?: string
+          resident_id?: string
           start_at?: string | null
           status?: string
-          student_id?: string
           type?: string
           updated_at?: string
         }
@@ -349,10 +349,10 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "maintenances_student_id_fkey"
-            columns: ["student_id"]
+            foreignKeyName: "maintenances_resident_id_fkey"
+            columns: ["resident_id"]
             isOneToOne: false
-            referencedRelation: "students"
+            referencedRelation: "residents"
             referencedColumns: ["user_id"]
           },
         ]
@@ -369,9 +369,9 @@ export type Database = {
           phone_number: string
           image_url: string
           refusal_reason: string | null
+          resident_id: string
           school_certificate_url: string
           status: string
-          student_id: string
           updated_at: string
         }
         Insert: {
@@ -385,9 +385,9 @@ export type Database = {
           phone_number: string
           image_url: string
           refusal_reason?: string | null
+          resident_id: string
           school_certificate_url: string
           status?: string
-          student_id: string
           updated_at?: string
         }
         Update: {
@@ -401,9 +401,9 @@ export type Database = {
           phone_number?: string
           image_url?: string
           refusal_reason?: string | null
+          resident_id?: string
           school_certificate_url?: string
           status?: string
-          student_id?: string
           updated_at?: string
         }
         Relationships: [
@@ -429,10 +429,10 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "renewals_student_id_fkey"
-            columns: ["student_id"]
+            foreignKeyName: "renewals_resident_id_fkey"
+            columns: ["resident_id"]
             isOneToOne: false
-            referencedRelation: "students"
+            referencedRelation: "residents"
             referencedColumns: ["user_id"]
           },
         ]
@@ -535,7 +535,7 @@ export type Database = {
           },
         ]
       }
-      students: {
+      residents: {
         Row: {
           academic_session_id: string
           created_at: string
@@ -574,28 +574,28 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "students_academic_session_id_fkey"
+            foreignKeyName: "residents_academic_session_id_fkey"
             columns: ["academic_session_id"]
             isOneToOne: false
             referencedRelation: "academic_sessions"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "students_faculty_id_fkey"
+            foreignKeyName: "residents_faculty_id_fkey"
             columns: ["faculty_id"]
             isOneToOne: false
             referencedRelation: "faculties"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "students_lodgment_id_fkey"
+            foreignKeyName: "residents_lodgment_id_fkey"
             columns: ["lodgment_id"]
             isOneToOne: false
             referencedRelation: "lodgments"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "students_user_id_fkey"
+            foreignKeyName: "residents_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: true
             referencedRelation: "users"

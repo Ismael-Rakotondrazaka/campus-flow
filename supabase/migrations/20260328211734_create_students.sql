@@ -1,4 +1,4 @@
-create table public.students (
+create table public.residents (
   user_id             uuid primary key references public.users (id) on delete cascade,
   faculty_id          uuid not null references public.faculties (id),
   academic_session_id uuid not null references public.academic_sessions (id),
@@ -11,44 +11,44 @@ create table public.students (
   updated_at          timestamptz not null default now()
 );
 
-comment on table public.students is 'Resident students; one per user, linked to their lodgment and faculty.';
-comment on column public.students.nic is 'National Identity Card number.';
-comment on column public.students.gender is 'male | female';
-comment on column public.students.origin is 'national | foreigner';
+comment on table public.residents is 'Residents; one per user, linked to their lodgment and faculty.';
+comment on column public.residents.nic is 'National Identity Card number.';
+comment on column public.residents.gender is 'male | female';
+comment on column public.residents.origin is 'national | foreigner';
 
-create index students_faculty_id_idx on public.students (faculty_id);
-create index students_lodgment_id_idx on public.students (lodgment_id);
-create index students_academic_session_id_idx on public.students (academic_session_id);
+create index residents_faculty_id_idx on public.residents (faculty_id);
+create index residents_lodgment_id_idx on public.residents (lodgment_id);
+create index residents_academic_session_id_idx on public.residents (academic_session_id);
 
-alter table public.students enable row level security;
+alter table public.residents enable row level security;
 
-create policy "Admins can view all students"
-  on public.students for select
+create policy "Admins can view all residents"
+  on public.residents for select
   to authenticated
   using (public.is_admin());
 
-create policy "Students can view their own record"
-  on public.students for select
+create policy "Residents can view their own record"
+  on public.residents for select
   to authenticated
   using ((select auth.uid()) = user_id);
 
-create policy "Reservation admins can create students"
-  on public.students for insert
+create policy "Reservation admins can create residents"
+  on public.residents for insert
   to authenticated
   with check (public.has_admin_role('reservation'));
 
-create policy "Root and renewal admins can update students"
-  on public.students for update
+create policy "Root and renewal admins can update residents"
+  on public.residents for update
   to authenticated
   using (public.has_admin_role('renewal'))
   with check (public.has_admin_role('renewal'));
 
-create policy "Root admins can delete students"
-  on public.students for delete
+create policy "Root admins can delete residents"
+  on public.residents for delete
   to authenticated
   using (public.has_admin_role('root'));
 
-create trigger update_students_updated_at
-  before update on public.students
+create trigger update_residents_updated_at
+  before update on public.residents
   for each row
   execute function public.handle_updated_at();

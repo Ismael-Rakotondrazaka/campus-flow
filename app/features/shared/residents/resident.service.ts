@@ -1,15 +1,15 @@
 import type { PaginationResult } from '@/features/shared/paginations/pagination.model';
 
 import type {
-  Student,
-  StudentFilters,
-  StudentInsert,
-  StudentUpdate,
-} from './student.model';
+  Resident,
+  ResidentFilters,
+  ResidentInsert,
+  ResidentUpdate,
+} from './resident.model';
 
-import { StudentConfig } from './student.config';
+import { ResidentConfig } from './resident.config';
 
-const STUDENT_SELECT = `
+const RESIDENT_SELECT = `
   *,
   user:user_id(*),
   faculty:faculty_id(*),
@@ -17,14 +17,14 @@ const STUDENT_SELECT = `
   lodgment:lodgment_id(*)
 `;
 
-export const getStudents = async (
-  filters: StudentFilters
-): Promise<PaginationResult<Student>> => {
+export const getResidents = async (
+  filters: ResidentFilters
+): Promise<PaginationResult<Resident>> => {
   const client = useSupabaseClient();
 
   let query = client
-    .from('students')
-    .select(STUDENT_SELECT, { count: 'exact' });
+    .from('residents')
+    .select(RESIDENT_SELECT, { count: 'exact' });
 
   if (filters.faculty_id) {
     query = query.eq('faculty_id', filters.faculty_id);
@@ -46,8 +46,8 @@ export const getStudents = async (
     query = query.eq('origin', filters.origin);
   }
 
-  const page = filters.page ?? StudentConfig.PAGE_DEFAULT;
-  const limit = filters.limit ?? StudentConfig.PAGE_SIZE_DEFAULT;
+  const page = filters.page ?? ResidentConfig.PAGE_DEFAULT;
+  const limit = filters.limit ?? ResidentConfig.PAGE_SIZE_DEFAULT;
   const from = (page - 1) * limit;
   const to = from + limit - 1;
 
@@ -59,63 +59,63 @@ export const getStudents = async (
 
   return {
     count: count ?? 0,
-    data: (data ?? []) as unknown as Student[],
+    data: (data ?? []) as unknown as Resident[],
   };
 };
 
-export const getStudent = async (userId: string): Promise<null | Student> => {
+export const getResident = async (userId: string): Promise<null | Resident> => {
   const client = useSupabaseClient();
 
   const { data, error } = await client
-    .from('students')
-    .select(STUDENT_SELECT)
+    .from('residents')
+    .select(RESIDENT_SELECT)
     .eq('user_id', userId)
     .maybeSingle();
 
   if (error) throw error;
 
-  return data as unknown as null | Student;
+  return data as unknown as null | Resident;
 };
 
-export const createStudent = async (
-  student: StudentInsert
-): Promise<Student> => {
+export const createResident = async (
+  resident: ResidentInsert
+): Promise<Resident> => {
   const client = useSupabaseClient();
 
   const { data, error } = await client
-    .from('students')
-    .insert(student)
-    .select(STUDENT_SELECT)
+    .from('residents')
+    .insert(resident)
+    .select(RESIDENT_SELECT)
     .single();
 
   if (error) throw error;
 
-  return data as unknown as Student;
+  return data as unknown as Resident;
 };
 
-export const updateStudent = async (
+export const updateResident = async (
   userId: string,
-  updates: StudentUpdate
-): Promise<Student> => {
+  updates: ResidentUpdate
+): Promise<Resident> => {
   const client = useSupabaseClient();
 
   const { data, error } = await client
-    .from('students')
+    .from('residents')
     .update(updates)
     .eq('user_id', userId)
-    .select(STUDENT_SELECT)
+    .select(RESIDENT_SELECT)
     .single();
 
   if (error) throw error;
 
-  return data as unknown as Student;
+  return data as unknown as Resident;
 };
 
-export const deleteStudent = async (userId: string): Promise<void> => {
+export const deleteResident = async (userId: string): Promise<void> => {
   const client = useSupabaseClient();
 
   const { error } = await client
-    .from('students')
+    .from('residents')
     .delete()
     .eq('user_id', userId);
 

@@ -42,8 +42,8 @@ export type Renewal = {
   academic_session: Tables<'academic_sessions'>;
   faculty: Tables<'faculties'>;
   refusal_reason: null | RefusalReason;
+  resident: Tables<'residents'>;
   status: RenewalStatus;
-  student: Tables<'students'>;
 } & Omit<Tables<'renewals'>, 'refusal_reason' | 'status'>;
 
 export interface RenewalFilters {
@@ -52,8 +52,8 @@ export interface RenewalFilters {
   faculty_id?: string;
   limit?: number;
   page?: number;
+  resident_id?: string;
   status?: RenewalStatus;
-  student_id?: string;
 }
 
 export type RenewalInsert = TablesInsert<'renewals'>;

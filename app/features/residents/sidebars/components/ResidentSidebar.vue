@@ -26,73 +26,31 @@ const menus: Menu[] = [
     icon: 'mdi:view-dashboard',
     id: 'dashboard',
     label: 'Tableau de bord',
-    to: { name: 'admin-root-dashboard' },
-  },
-  {
-    icon: 'mdi:shield-account',
-    id: 'admins',
-    label: 'Administrateurs',
-    to: { name: 'admin-root-admins' },
-  },
-  {
-    icon: 'mdi:account-group',
-    id: 'users',
-    label: 'Utilisateurs',
-    to: { name: 'admin-root-users' },
-  },
-  {
-    icon: 'mdi:school',
-    id: 'residents',
-    label: 'Résidents',
-    to: { name: 'admin-root-residents' },
-  },
-  {
-    icon: 'mdi:domain',
-    id: 'faculties',
-    label: 'Facultés',
-    to: { name: 'admin-root-faculties' },
-  },
-  {
-    icon: 'mdi:calendar-clock',
-    id: 'academic-sessions',
-    label: 'Sessions académiques',
-    to: { name: 'admin-root-academic-sessions' },
-  },
-  {
-    icon: 'mdi:bullhorn',
-    id: 'announcements',
-    label: 'Annonces',
-    to: { name: 'admin-root-announcements' },
-  },
-  {
-    icon: 'mdi:office-building',
-    id: 'buildings',
-    label: 'Bâtiments',
-    to: { name: 'admin-root-buildings' },
-  },
-  {
-    icon: 'mdi:bed',
-    id: 'lodgments',
-    label: 'Logements',
-    to: { name: 'admin-root-lodgments' },
-  },
-  {
-    icon: 'mdi:calendar-check',
-    id: 'reservations',
-    label: 'Réservations',
-    to: { name: 'admin-root-reservations' },
+    to: { name: 'residents-dashboard' },
   },
   {
     icon: 'mdi:refresh',
     id: 'renewals',
     label: 'Renouvellements',
-    to: { name: 'admin-root-renewals' },
+    to: { name: 'residents-renewals' },
+  },
+  {
+    icon: 'mdi:bullhorn',
+    id: 'announcements',
+    label: 'Annonces',
+    to: { name: 'residents-announcements' },
   },
   {
     icon: 'mdi:wrench',
     id: 'maintenances',
     label: 'Maintenances',
-    to: { name: 'admin-root-maintenances' },
+    to: { name: 'residents-maintenances' },
+  },
+  {
+    icon: 'mdi:cog',
+    id: 'settings',
+    label: 'Paramètres',
+    to: { name: 'residents-settings' },
   },
 ];
 </script>
@@ -105,9 +63,7 @@ const menus: Menu[] = [
           <SidebarMenuButton size="lg">
             <div class="flex flex-col leading-none">
               <span class="text-primary text-2xl font-bold">Lumièrebourg</span>
-              <span class="text-muted-foreground text-sm"
-                >Pour Administrateur</span
-              >
+              <span class="text-muted-foreground text-sm">Espace étudiant</span>
             </div>
           </SidebarMenuButton>
         </SidebarMenuItem>

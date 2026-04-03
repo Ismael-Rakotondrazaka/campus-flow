@@ -52,8 +52,8 @@ $$;
 
 comment on function public.has_admin_role(text) is 'Returns true if the current user has the given admin role or the root role.';
 
--- RLS helper: true if the current user has a student record
-create or replace function public.is_student()
+-- RLS helper: true if the current user has a resident record
+create or replace function public.is_resident()
 returns boolean
 language plpgsql
 stable
@@ -62,10 +62,10 @@ set search_path = ''
 as $$
 begin
   return exists (
-    select 1 from public.students
+    select 1 from public.residents
     where user_id = (select auth.uid())
   );
 end;
 $$;
 
-comment on function public.is_student() is 'Returns true if the current user has a student record.';
+comment on function public.is_resident() is 'Returns true if the current user has a resident record.';

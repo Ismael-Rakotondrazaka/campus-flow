@@ -1,12 +1,12 @@
 import { z } from 'zod';
 
-import { Gender, Origin } from './student.model';
+import { Gender, Origin } from './resident.model';
 
 export const GenderSchema = z.nativeEnum(Gender);
 
 export const OriginSchema = z.nativeEnum(Origin);
 
-export const CreateStudentSchema = z.object({
+export const CreateResidentSchema = z.object({
   academic_session_id: z.string().uuid(),
   emergency_number: z.string().min(1),
   faculty_id: z.string().uuid(),
@@ -17,10 +17,10 @@ export const CreateStudentSchema = z.object({
   user_id: z.string().uuid(),
 });
 
-export type CreateStudent = z.infer<typeof CreateStudentSchema>;
+export type CreateResident = z.infer<typeof CreateResidentSchema>;
 
-export const UpdateStudentSchema = CreateStudentSchema.omit({
+export const UpdateResidentSchema = CreateResidentSchema.omit({
   user_id: true,
 }).partial();
 
-export type UpdateStudent = z.infer<typeof UpdateStudentSchema>;
+export type UpdateResident = z.infer<typeof UpdateResidentSchema>;

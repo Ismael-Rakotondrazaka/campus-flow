@@ -68,7 +68,7 @@ export default defineNuxtConfig({
     '/admin/renewal/**': { appLayout: 'renewal' },
     '/admin/reservation/**': { appLayout: 'reservation' },
     '/admin/root/**': { appLayout: 'root' },
-    '/student/**': { appLayout: 'student' },
+    '/resident/**': { appLayout: 'resident' },
   },
 
   runtimeConfig: {

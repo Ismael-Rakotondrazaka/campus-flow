@@ -9,7 +9,7 @@ export const MaintenanceStatusSchema = z.nativeEnum(MaintenanceStatus);
 export const CreateMaintenanceSchema = z.object({
   description: z.string().min(1).nullish(),
   lodgment_id: z.string().uuid(),
-  student_id: z.string().uuid(),
+  resident_id: z.string().uuid(),
   type: MaintenanceTypeSchema,
 });
 

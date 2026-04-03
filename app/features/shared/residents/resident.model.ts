@@ -20,14 +20,14 @@ export const OriginLabel: Record<Origin, string> = {
   [Origin.national]: 'National',
 };
 
-export type Student = {
+export type Resident = {
   academic_session: Tables<'academic_sessions'>;
   faculty: Tables<'faculties'>;
   lodgment: Tables<'lodgments'>;
   user: Tables<'users'>;
-} & Tables<'students'>;
+} & Tables<'residents'>;
 
-export interface StudentFilters {
+export interface ResidentFilters {
   academic_session_id?: string;
   faculty_id?: string;
   gender?: Gender;
@@ -37,5 +37,5 @@ export interface StudentFilters {
   page?: number;
 }
 
-export type StudentInsert = TablesInsert<'students'>;
-export type StudentUpdate = TablesUpdate<'students'>;
+export type ResidentInsert = TablesInsert<'residents'>;
+export type ResidentUpdate = TablesUpdate<'residents'>;

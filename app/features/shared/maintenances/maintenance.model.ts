@@ -41,8 +41,8 @@ export const MaintenanceStatusLabel: Record<MaintenanceStatus, string> = {
 export type Maintenance = {
   lodgment: Tables<'lodgments'>;
   maintainers: { assigned_at: string; maintainer: Tables<'maintainers'> }[];
+  resident: Tables<'residents'>;
   status: MaintenanceStatus;
-  student: Tables<'students'>;
   type: MaintenanceType;
 } & Omit<Tables<'maintenances'>, 'status' | 'type'>;
 
@@ -51,8 +51,8 @@ export interface MaintenanceFilters {
   limit?: number;
   lodgment_id?: string;
   page?: number;
+  resident_id?: string;
   status?: MaintenanceStatus;
-  student_id?: string;
   type?: MaintenanceType;
 }
 
