@@ -3,7 +3,7 @@ create table public.reservations (
   first_name             text not null,
   last_name              text not null,
   phone_number           text not null,
-  profile_url            text not null,
+  image_url            text not null,
   email                  text not null,
   gender                 text not null check (gender in ('male', 'female')),
   origin                 text not null check (origin in ('national', 'foreigner')),

@@ -5,7 +5,7 @@
 -- Unique constraint: (email, academic_session_id)
 
 INSERT INTO public.reservations (
-  id, first_name, last_name, phone_number, profile_url, email,
+  id, first_name, last_name, phone_number, image_url, email,
   gender, origin, emergency_number, nic, nic_url, school_certificate_url,
   faculty_id, academic_session_id, admin_id, lodgment_id, status, refusal_reason,
   created_at, updated_at

@@ -235,7 +235,7 @@ export type Database = {
           id: string
           last_name: string
           phone_number: string
-          profile_url: string
+          image_url: string
           updated_at: string
         }
         Insert: {
@@ -245,7 +245,7 @@ export type Database = {
           id?: string
           last_name: string
           phone_number: string
-          profile_url: string
+          image_url: string
           updated_at?: string
         }
         Update: {
@@ -255,7 +255,7 @@ export type Database = {
           id?: string
           last_name?: string
           phone_number?: string
-          profile_url?: string
+          image_url?: string
           updated_at?: string
         }
         Relationships: []
@@ -367,7 +367,7 @@ export type Database = {
           id: string
           nic_url: string
           phone_number: string
-          profile_url: string
+          image_url: string
           refusal_reason: string | null
           school_certificate_url: string
           status: string
@@ -383,7 +383,7 @@ export type Database = {
           id?: string
           nic_url: string
           phone_number: string
-          profile_url: string
+          image_url: string
           refusal_reason?: string | null
           school_certificate_url: string
           status?: string
@@ -399,7 +399,7 @@ export type Database = {
           id?: string
           nic_url?: string
           phone_number?: string
-          profile_url?: string
+          image_url?: string
           refusal_reason?: string | null
           school_certificate_url?: string
           status?: string
@@ -454,7 +454,7 @@ export type Database = {
           nic_url: string
           origin: string
           phone_number: string
-          profile_url: string
+          image_url: string
           refusal_reason: string | null
           school_certificate_url: string
           status: string
@@ -476,7 +476,7 @@ export type Database = {
           nic_url: string
           origin: string
           phone_number: string
-          profile_url: string
+          image_url: string
           refusal_reason?: string | null
           school_certificate_url: string
           status?: string
@@ -498,7 +498,7 @@ export type Database = {
           nic_url?: string
           origin?: string
           phone_number?: string
-          profile_url?: string
+          image_url?: string
           refusal_reason?: string | null
           school_certificate_url?: string
           status?: string
@@ -611,7 +611,7 @@ export type Database = {
           id: string
           last_name: string
           phone_number: string
-          profile_url: string
+          image_url: string
           updated_at: string
         }
         Insert: {
@@ -621,7 +621,7 @@ export type Database = {
           id: string
           last_name: string
           phone_number: string
-          profile_url: string
+          image_url: string
           updated_at?: string
         }
         Update: {
@@ -631,7 +631,7 @@ export type Database = {
           id?: string
           last_name?: string
           phone_number?: string
-          profile_url?: string
+          image_url?: string
           updated_at?: string
         }
         Relationships: []

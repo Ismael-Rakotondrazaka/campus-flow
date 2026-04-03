@@ -3,7 +3,7 @@ create table public.maintainers (
   first_name   text not null,
   last_name    text not null,
   phone_number text not null,
-  profile_url  text not null,
+  image_url  text not null,
   created_at   timestamptz not null default now(),
   updated_at   timestamptz not null default now(),
   deleted_at   timestamptz

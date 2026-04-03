@@ -6,7 +6,7 @@
 
 INSERT INTO public.renewals (
   id, student_id, academic_session_id, faculty_id, admin_id,
-  phone_number, emergency_number, profile_url, school_certificate_url, nic_url,
+  phone_number, emergency_number, image_url, school_certificate_url, nic_url,
   status, refusal_reason, created_at, updated_at
 ) VALUES
   -- s01–s10 renewing for session 2024 (accepted)

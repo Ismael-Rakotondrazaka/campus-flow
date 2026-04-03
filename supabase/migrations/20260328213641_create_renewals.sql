@@ -6,7 +6,7 @@ create table public.renewals (
   admin_id               uuid references public.admins (user_id) on delete set null,
   phone_number           text not null,
   emergency_number       text not null,
-  profile_url            text not null,
+  image_url            text not null,
   school_certificate_url text not null,
   nic_url                text not null,
   status                 text not null default 'pending'

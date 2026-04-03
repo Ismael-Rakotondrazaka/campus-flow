@@ -3,14 +3,14 @@ create table public.users (
   first_name   text not null,
   last_name    text not null,
   phone_number text not null,
-  profile_url  text not null,
+  image_url  text not null,
   created_at   timestamptz not null default now(),
   updated_at   timestamptz not null default now(),
   deleted_at   timestamptz
 );
 
 comment on table public.users is 'Application user profiles; auth is handled by Supabase.';
-comment on column public.users.profile_url is 'URL to the user profile picture in storage.';
+comment on column public.users.image_url is 'URL to the user profile picture in storage.';
 
 create index users_deleted_at_idx on public.users (deleted_at) where deleted_at is null;
 
@@ -51,13 +51,13 @@ security definer
 set search_path = ''
 as $$
 begin
-  insert into public.users (id, first_name, last_name, phone_number, profile_url)
+  insert into public.users (id, first_name, last_name, phone_number, image_url)
   values (
     new.id,
     coalesce(nullif(trim((new.raw_app_meta_data->>'first_name')::text),    ''), 'Unknown'),
     coalesce(nullif(trim((new.raw_app_meta_data->>'last_name')::text),     ''), 'Unknown'),
     coalesce(nullif(trim((new.raw_app_meta_data->>'phone_number')::text),  ''), ''),
-    coalesce(nullif(trim((new.raw_app_meta_data->>'profile_url')::text),   ''), '')
+    coalesce(nullif(trim((new.raw_app_meta_data->>'image_url')::text),   ''), '')
   );
   return new;
 end;
