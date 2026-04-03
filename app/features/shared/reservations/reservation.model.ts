@@ -1,3 +1,5 @@
+import type { SortOrder } from '#imports';
+
 export const ReservationStatuses = [
   'pending',
   'accepted',
@@ -74,11 +76,14 @@ export interface ReservationFilters {
   faculty_id?: string;
   gender?: Gender;
   limit?: number;
+  orderBy?: ReservationOrderBy;
   origin?: Origin;
   page?: number;
   search?: string;
+  sortOrder?: SortOrder;
   status?: ReservationStatus;
 }
 
 export type ReservationInsert = TablesInsert<'reservations'>;
+export type ReservationOrderBy = 'created_at' | 'status';
 export type ReservationUpdate = TablesUpdate<'reservations'>;

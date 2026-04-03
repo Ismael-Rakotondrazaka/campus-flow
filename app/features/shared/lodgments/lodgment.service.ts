@@ -38,10 +38,19 @@ export const getLodgments = async (
   const from = (page - 1) * limit;
   const to = from + limit - 1;
 
-  query = query
-    .order('floor', { ascending: true })
-    .order('room_number', { ascending: true })
-    .range(from, to);
+  const orderBy = filters.orderBy ?? 'floor';
+  const ascending =
+    filters.sortOrder !== undefined
+      ? filters.sortOrder === SortOrder.asc
+      : true;
+
+  query = query.order(orderBy, { ascending });
+
+  if (orderBy === 'floor') {
+    query = query.order('room_number', { ascending });
+  }
+
+  query = query.range(from, to);
 
   const { count, data, error } = await query;
 
@@ -54,7 +63,7 @@ export const getLodgments = async (
 };
 
 export const getLodgmentsCount = async (
-  filters: Omit<LodgmentFilters, 'limit' | 'page'>
+  filters: Omit<LodgmentFilters, 'limit' | 'orderBy' | 'page' | 'sortOrder'>
 ): Promise<number> => {
   const client = useSupabaseClient();
 

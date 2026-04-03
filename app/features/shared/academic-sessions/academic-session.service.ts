@@ -25,7 +25,9 @@ export const getAcademicSessions = async (
   const to = from + limit - 1;
 
   const { count, data, error } = await query
-    .order('start_at', { ascending: false })
+    .order(filters.orderBy ?? 'start_at', {
+      ascending: filters.sortOrder === SortOrder.asc,
+    })
     .range(from, to);
 
   if (error) throw error;
@@ -36,7 +38,9 @@ export const getAcademicSessions = async (
   };
 };
 
-export const getAcademicSessionsCount = async (): Promise<number> => {
+export const getAcademicSessionsCount = async (
+  filters?: Omit<AcademicSessionFilters, 'limit' | 'orderBy' | 'page' | 'sortOrder'>
+): Promise<number> => {
   const client = useSupabaseClient();
 
   const { count, error } = await client

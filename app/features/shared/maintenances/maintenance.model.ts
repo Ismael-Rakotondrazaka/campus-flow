@@ -1,3 +1,5 @@
+import type { SortOrder } from '#imports';
+
 export const MaintenanceTypes = [
   'electrical',
   'equipment',
@@ -50,13 +52,15 @@ export interface MaintenanceFilters {
   admin_id?: string;
   limit?: number;
   lodgment_id?: string;
+  orderBy?: MaintenanceOrderBy;
   page?: number;
   resident_id?: string;
+  sortOrder?: SortOrder;
   status?: MaintenanceStatus;
   type?: MaintenanceType;
 }
 
 export type MaintenanceInsert = TablesInsert<'maintenances'>;
 export type MaintenanceMaintainer = Tables<'maintenance_maintainers'>;
-
+export type MaintenanceOrderBy = 'created_at' | 'status' | 'type';
 export type MaintenanceUpdate = TablesUpdate<'maintenances'>;

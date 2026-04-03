@@ -28,7 +28,14 @@ export const getBuildings = async (
   const from = (page - 1) * limit;
   const to = from + limit - 1;
 
-  query = query.order('name', { ascending: true }).range(from, to);
+  query = query
+    .order(filters.orderBy ?? 'name', {
+      ascending:
+        filters.sortOrder !== undefined
+          ? filters.sortOrder === SortOrder.asc
+          : true,
+    })
+    .range(from, to);
 
   const { count, data, error } = await query;
 
@@ -41,7 +48,7 @@ export const getBuildings = async (
 };
 
 export const getBuildingsCount = async (
-  filters: Omit<BuildingFilters, 'limit' | 'page'>
+  filters: Omit<BuildingFilters, 'limit' | 'orderBy' | 'page' | 'sortOrder'>
 ): Promise<number> => {
   const client = useSupabaseClient();
 

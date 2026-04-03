@@ -30,7 +30,11 @@ export const getMaintainers = async (
   const from = (page - 1) * limit;
   const to = from + limit - 1;
 
-  query = query.order('created_at', { ascending: false }).range(from, to);
+  query = query
+    .order(filters.orderBy ?? 'created_at', {
+      ascending: filters.sortOrder === SortOrder.asc,
+    })
+    .range(from, to);
 
   const { count, data, error } = await query;
 
@@ -43,7 +47,7 @@ export const getMaintainers = async (
 };
 
 export const getMaintainersCount = async (
-  filters: Omit<MaintainerFilters, 'limit' | 'page'>
+  filters: Omit<MaintainerFilters, 'limit' | 'orderBy' | 'page' | 'sortOrder'>
 ): Promise<number> => {
   const client = useSupabaseClient();
 

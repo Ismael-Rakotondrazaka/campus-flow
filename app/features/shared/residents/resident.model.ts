@@ -20,6 +20,8 @@ export const OriginLabel: Record<Origin, string> = {
   [Origin.national]: 'National',
 };
 
+import type { SortOrder } from '#imports';
+
 export type Resident = {
   academic_session: Tables<'academic_sessions'>;
   faculty: Tables<'faculties'>;
@@ -33,9 +35,12 @@ export interface ResidentFilters {
   gender?: Gender;
   limit?: number;
   lodgment_id?: string;
+  orderBy?: ResidentOrderBy;
   origin?: Origin;
   page?: number;
+  sortOrder?: SortOrder;
 }
 
 export type ResidentInsert = TablesInsert<'residents'>;
+export type ResidentOrderBy = 'created_at';
 export type ResidentUpdate = TablesUpdate<'residents'>;

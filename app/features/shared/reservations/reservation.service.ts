@@ -56,7 +56,11 @@ export const getReservations = async (
   const from = (page - 1) * limit;
   const to = from + limit - 1;
 
-  query = query.order('created_at', { ascending: false }).range(from, to);
+  query = query
+    .order(filters.orderBy ?? 'created_at', {
+      ascending: filters.sortOrder === SortOrder.asc,
+    })
+    .range(from, to);
 
   const { count, data, error } = await query;
 
@@ -119,7 +123,7 @@ export const updateReservation = async (
 };
 
 export const getReservationsCount = async (
-  filters: Omit<ReservationFilters, 'limit' | 'page'>
+  filters: Omit<ReservationFilters, 'limit' | 'orderBy' | 'page' | 'sortOrder'>
 ): Promise<number> => {
   const client = useSupabaseClient();
 

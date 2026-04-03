@@ -1,3 +1,5 @@
+import type { SortOrder } from '#imports';
+
 export const AnnouncementStatuses = ['draft', 'published'] as const;
 
 export const AnnouncementStatus = createEnumConstants(AnnouncementStatuses);
@@ -16,10 +18,13 @@ export type Announcement = {
 
 export interface AnnouncementFilters {
   limit?: number;
+  orderBy?: AnnouncementOrderBy;
   page?: number;
   search?: string;
+  sortOrder?: SortOrder;
   status?: AnnouncementStatus;
 }
 
 export type AnnouncementInsert = TablesInsert<'announcements'>;
+export type AnnouncementOrderBy = 'created_at' | 'title';
 export type AnnouncementUpdate = TablesUpdate<'announcements'>;

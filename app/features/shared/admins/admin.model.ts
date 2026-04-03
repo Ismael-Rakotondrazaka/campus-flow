@@ -16,15 +16,20 @@ export const AdminRoleLabel: Record<AdminRole, string> = {
   [AdminRole.root]: 'Root',
 };
 
+import type { SortOrder } from '#imports';
+
 export type Admin = {
   user: Tables<'users'>;
 } & Tables<'admins'>;
 
 export interface AdminFilters {
   limit?: number;
+  orderBy?: AdminOrderBy;
   page?: number;
   role?: AdminRole;
+  sortOrder?: SortOrder;
 }
 
 export type AdminInsert = TablesInsert<'admins'>;
+export type AdminOrderBy = 'created_at';
 export type AdminUpdate = TablesUpdate<'admins'>;

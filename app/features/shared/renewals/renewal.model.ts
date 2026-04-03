@@ -1,3 +1,5 @@
+import type { SortOrder } from '#imports';
+
 export const RenewalStatuses = [
   'pending',
   'accepted',
@@ -51,10 +53,13 @@ export interface RenewalFilters {
   admin_id?: string;
   faculty_id?: string;
   limit?: number;
+  orderBy?: RenewalOrderBy;
   page?: number;
   resident_id?: string;
+  sortOrder?: SortOrder;
   status?: RenewalStatus;
 }
 
 export type RenewalInsert = TablesInsert<'renewals'>;
+export type RenewalOrderBy = 'created_at' | 'status';
 export type RenewalUpdate = TablesUpdate<'renewals'>;
