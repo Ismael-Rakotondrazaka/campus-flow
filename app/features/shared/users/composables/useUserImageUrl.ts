@@ -25,24 +25,20 @@ const defaultOptions: FormatFallbackUrlOptions = {
   size: 200,
 };
 
+export const formatUserImageUrl = <T extends UseUserImageUrlProps>(user: T) => {
+  if (user.image_url) {
+    return user.image_url;
+  }
+
+  return formatFallbackUrl(user.first_name, user.last_name, defaultOptions);
+};
+
 export const useUserImageUrl = <
   T extends MaybeRefOrGetter<UseUserImageUrlProps>,
 >(
   user: T
 ) => {
-  return computed(() => {
-    const userValue = toValue(user);
-
-    if (userValue.image_url) {
-      return userValue.image_url;
-    }
-
-    return formatFallbackUrl(
-      userValue.first_name,
-      userValue.last_name,
-      defaultOptions
-    );
-  });
+  return computed(() => formatUserImageUrl(toValue(user)));
 };
 
 export const formatFallbackUrl = (
