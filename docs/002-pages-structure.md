@@ -70,7 +70,7 @@
       - /create
       - /[id]
         - /edit
-- /residents
+- /resident
   - /dashboard
   - /settings
   - /renewals
