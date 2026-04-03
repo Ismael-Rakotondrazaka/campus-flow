@@ -62,6 +62,42 @@ export const getMaintenances = async (
   };
 };
 
+export const getMaintenancesCount = async (
+  filters: Omit<MaintenanceFilters, 'limit' | 'page'>
+): Promise<number> => {
+  const client = useSupabaseClient();
+
+  let query = client
+    .from('maintenances')
+    .select('*', { count: 'exact', head: true });
+
+  if (filters.resident_id) {
+    query = query.eq('resident_id', filters.resident_id);
+  }
+
+  if (filters.admin_id) {
+    query = query.eq('admin_id', filters.admin_id);
+  }
+
+  if (filters.lodgment_id) {
+    query = query.eq('lodgment_id', filters.lodgment_id);
+  }
+
+  if (filters.type) {
+    query = query.eq('type', filters.type);
+  }
+
+  if (filters.status) {
+    query = query.eq('status', filters.status);
+  }
+
+  const { count, error } = await query;
+
+  if (error) throw error;
+
+  return count ?? 0;
+};
+
 export const getMaintenance = async (
   id: string
 ): Promise<Maintenance | null> => {

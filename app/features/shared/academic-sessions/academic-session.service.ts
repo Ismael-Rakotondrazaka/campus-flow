@@ -36,6 +36,19 @@ export const getAcademicSessions = async (
   };
 };
 
+export const getAcademicSessionsCount = async (): Promise<number> => {
+  const client = useSupabaseClient();
+
+  const { count, error } = await client
+    .from('academic_sessions')
+    .select('*', { count: 'exact', head: true })
+    .is('deleted_at', null);
+
+  if (error) throw error;
+
+  return count ?? 0;
+};
+
 export const getAcademicSession = async (
   id: string
 ): Promise<AcademicSession | null> => {

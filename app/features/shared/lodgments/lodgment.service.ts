@@ -53,6 +53,35 @@ export const getLodgments = async (
   };
 };
 
+export const getLodgmentsCount = async (
+  filters: Omit<LodgmentFilters, 'limit' | 'page'>
+): Promise<number> => {
+  const client = useSupabaseClient();
+
+  let query = client
+    .from('lodgments')
+    .select('*', { count: 'exact', head: true })
+    .is('deleted_at', null);
+
+  if (filters.building_id) {
+    query = query.eq('building_id', filters.building_id);
+  }
+
+  if (filters.floor !== undefined) {
+    query = query.eq('floor', filters.floor);
+  }
+
+  if (filters.status) {
+    query = query.eq('status', filters.status);
+  }
+
+  const { count, error } = await query;
+
+  if (error) throw error;
+
+  return count ?? 0;
+};
+
 export const getLodgment = async (id: string): Promise<Lodgment | null> => {
   const client = useSupabaseClient();
 

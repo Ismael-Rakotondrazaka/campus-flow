@@ -2,7 +2,11 @@ import { defineQueryOptions } from '@pinia/colada';
 
 import type { BuildingFilters } from './building.model';
 
-import { getBuilding, getBuildings } from './building.service';
+import {
+  getBuilding,
+  getBuildings,
+  getBuildingsCount,
+} from './building.service';
 
 /**
  * All building queries share a single root key `['buildings']`.
@@ -14,6 +18,9 @@ import { getBuilding, getBuildings } from './building.service';
  */
 export const BUILDING_QUERY_KEYS = {
   byId: (id: string) => [...BUILDING_QUERY_KEYS.root, id] as const,
+
+  count: (filters: Omit<BuildingFilters, 'limit' | 'page'> = {}) =>
+    [...BUILDING_QUERY_KEYS.root, 'count', filters] as const,
 
   list: (filters: BuildingFilters = {}) =>
     [...BUILDING_QUERY_KEYS.root, 'list', filters] as const,
@@ -46,5 +53,12 @@ export const buildingByIdQuery = defineQueryOptions(
   ({ id }: { id: string }) => ({
     key: BUILDING_QUERY_KEYS.byId(id),
     query: () => getBuilding(id),
+  })
+);
+
+export const buildingCountQuery = defineQueryOptions(
+  (filters: Omit<BuildingFilters, 'limit' | 'page'> = {}) => ({
+    key: BUILDING_QUERY_KEYS.count(filters),
+    query: () => getBuildingsCount(filters),
   })
 );

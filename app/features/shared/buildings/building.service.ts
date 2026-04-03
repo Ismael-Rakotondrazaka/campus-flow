@@ -40,6 +40,27 @@ export const getBuildings = async (
   };
 };
 
+export const getBuildingsCount = async (
+  filters: Omit<BuildingFilters, 'limit' | 'page'>
+): Promise<number> => {
+  const client = useSupabaseClient();
+
+  let query = client
+    .from('buildings')
+    .select('*', { count: 'exact', head: true })
+    .is('deleted_at', null);
+
+  if (filters.search) {
+    query = query.ilike('name', `%${filters.search}%`);
+  }
+
+  const { count, error } = await query;
+
+  if (error) throw error;
+
+  return count ?? 0;
+};
+
 export const getBuilding = async (id: string): Promise<Building | null> => {
   const client = useSupabaseClient();
 

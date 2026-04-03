@@ -39,6 +39,24 @@ export const getAdmins = async (
   };
 };
 
+export const getAdminsCount = async (
+  filters: Omit<AdminFilters, 'limit' | 'page'>
+): Promise<number> => {
+  const client = useSupabaseClient();
+
+  let query = client.from('admins').select('*', { count: 'exact', head: true });
+
+  if (filters.role) {
+    query = query.eq('role', filters.role);
+  }
+
+  const { count, error } = await query;
+
+  if (error) throw error;
+
+  return count ?? 0;
+};
+
 export const getAdmin = async (userId: string): Promise<Admin | null> => {
   const client = useSupabaseClient();
 

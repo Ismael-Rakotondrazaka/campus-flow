@@ -5,10 +5,13 @@ import type { AcademicSessionFilters } from './academic-session.model';
 import {
   getAcademicSession,
   getAcademicSessions,
+  getAcademicSessionsCount,
 } from './academic-session.service';
 
 export const ACADEMIC_SESSION_QUERY_KEYS = {
   byId: (id: string) => [...ACADEMIC_SESSION_QUERY_KEYS.root, id] as const,
+
+  count: () => [...ACADEMIC_SESSION_QUERY_KEYS.root, 'count'] as const,
 
   list: (filters: AcademicSessionFilters = {}) =>
     [...ACADEMIC_SESSION_QUERY_KEYS.root, 'list', filters] as const,
@@ -29,3 +32,8 @@ export const academicSessionByIdQuery = defineQueryOptions(
     query: () => getAcademicSession(id),
   })
 );
+
+export const academicSessionCountQuery = defineQueryOptions(() => ({
+  key: ACADEMIC_SESSION_QUERY_KEYS.count(),
+  query: () => getAcademicSessionsCount(),
+}));

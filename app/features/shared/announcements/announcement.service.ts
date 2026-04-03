@@ -44,6 +44,31 @@ export const getAnnouncements = async (
   };
 };
 
+export const getAnnouncementsCount = async (
+  filters: Omit<AnnouncementFilters, 'limit' | 'page'>
+): Promise<number> => {
+  const client = useSupabaseClient();
+
+  let query = client
+    .from('announcements')
+    .select('*', { count: 'exact', head: true })
+    .is('deleted_at', null);
+
+  if (filters.status) {
+    query = query.eq('status', filters.status);
+  }
+
+  if (filters.search) {
+    query = query.ilike('title', `%${filters.search}%`);
+  }
+
+  const { count, error } = await query;
+
+  if (error) throw error;
+
+  return count ?? 0;
+};
+
 export const getAnnouncement = async (
   id: string
 ): Promise<Announcement | null> => {

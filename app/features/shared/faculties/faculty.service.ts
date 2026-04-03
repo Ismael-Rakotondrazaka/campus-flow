@@ -40,6 +40,27 @@ export const getFaculties = async (
   };
 };
 
+export const getFacultiesCount = async (
+  filters: Omit<FacultyFilters, 'limit' | 'page'>
+): Promise<number> => {
+  const client = useSupabaseClient();
+
+  let query = client
+    .from('faculties')
+    .select('*', { count: 'exact', head: true })
+    .is('deleted_at', null);
+
+  if (filters.search) {
+    query = query.ilike('name', `%${filters.search}%`);
+  }
+
+  const { count, error } = await query;
+
+  if (error) throw error;
+
+  return count ?? 0;
+};
+
 export const getFaculty = async (id: string): Promise<Faculty | null> => {
   const client = useSupabaseClient();
 

@@ -42,6 +42,29 @@ export const getMaintainers = async (
   };
 };
 
+export const getMaintainersCount = async (
+  filters: Omit<MaintainerFilters, 'limit' | 'page'>
+): Promise<number> => {
+  const client = useSupabaseClient();
+
+  let query = client
+    .from('maintainers')
+    .select('*', { count: 'exact', head: true })
+    .is('deleted_at', null);
+
+  if (filters.search) {
+    query = query.or(
+      `first_name.ilike.%${filters.search}%,last_name.ilike.%${filters.search}%`
+    );
+  }
+
+  const { count, error } = await query;
+
+  if (error) throw error;
+
+  return count ?? 0;
+};
+
 export const getMaintainer = async (id: string): Promise<Maintainer | null> => {
   const client = useSupabaseClient();
 

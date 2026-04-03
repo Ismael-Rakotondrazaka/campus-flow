@@ -63,6 +63,42 @@ export const getResidents = async (
   };
 };
 
+export const getResidentsCount = async (
+  filters: Omit<ResidentFilters, 'limit' | 'page'>
+): Promise<number> => {
+  const client = useSupabaseClient();
+
+  let query = client
+    .from('residents')
+    .select('*', { count: 'exact', head: true });
+
+  if (filters.faculty_id) {
+    query = query.eq('faculty_id', filters.faculty_id);
+  }
+
+  if (filters.academic_session_id) {
+    query = query.eq('academic_session_id', filters.academic_session_id);
+  }
+
+  if (filters.lodgment_id) {
+    query = query.eq('lodgment_id', filters.lodgment_id);
+  }
+
+  if (filters.gender) {
+    query = query.eq('gender', filters.gender);
+  }
+
+  if (filters.origin) {
+    query = query.eq('origin', filters.origin);
+  }
+
+  const { count, error } = await query;
+
+  if (error) throw error;
+
+  return count ?? 0;
+};
+
 export const getResident = async (userId: string): Promise<null | Resident> => {
   const client = useSupabaseClient();
 

@@ -37,6 +37,29 @@ export const getUsers = async (
   };
 };
 
+export const getUsersCount = async (
+  filters: Omit<UserFilters, 'limit' | 'page'>
+): Promise<number> => {
+  const client = useSupabaseClient();
+
+  let query = client
+    .from('users')
+    .select('*', { count: 'exact', head: true })
+    .is('deleted_at', null);
+
+  if (filters.search) {
+    query = query.or(
+      `first_name.ilike.%${filters.search}%,last_name.ilike.%${filters.search}%`
+    );
+  }
+
+  const { count, error } = await query;
+
+  if (error) throw error;
+
+  return count ?? 0;
+};
+
 export const getUser = async (id: string): Promise<null | User> => {
   const client = useSupabaseClient();
 

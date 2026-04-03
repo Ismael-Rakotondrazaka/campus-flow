@@ -62,6 +62,42 @@ export const getRenewals = async (
   };
 };
 
+export const getRenewalsCount = async (
+  filters: Omit<RenewalFilters, 'limit' | 'page'>
+): Promise<number> => {
+  const client = useSupabaseClient();
+
+  let query = client
+    .from('renewals')
+    .select('*', { count: 'exact', head: true });
+
+  if (filters.resident_id) {
+    query = query.eq('resident_id', filters.resident_id);
+  }
+
+  if (filters.academic_session_id) {
+    query = query.eq('academic_session_id', filters.academic_session_id);
+  }
+
+  if (filters.faculty_id) {
+    query = query.eq('faculty_id', filters.faculty_id);
+  }
+
+  if (filters.admin_id) {
+    query = query.eq('admin_id', filters.admin_id);
+  }
+
+  if (filters.status) {
+    query = query.eq('status', filters.status);
+  }
+
+  const { count, error } = await query;
+
+  if (error) throw error;
+
+  return count ?? 0;
+};
+
 export const getRenewal = async (id: string): Promise<null | Renewal> => {
   const client = useSupabaseClient();
 
