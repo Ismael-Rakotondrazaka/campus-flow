@@ -20,9 +20,7 @@ export const userListQuery = defineQueryOptions(
   })
 );
 
-export const userByIdQuery = defineQueryOptions(
-  ({ id }: { id: string }) => ({
-    key: USER_QUERY_KEYS.byId(id),
-    query: () => getUser(id),
-  })
-);
+export const userByIdQuery = defineQueryOptions(({ id }: { id: string }) => ({
+  key: USER_QUERY_KEYS.byId(id),
+  query: () => getUser(id),
+}));
