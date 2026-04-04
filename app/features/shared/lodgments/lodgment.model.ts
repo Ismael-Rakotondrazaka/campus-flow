@@ -6,7 +6,7 @@ export type LodgmentStatus =
   (typeof LodgmentStatus)[keyof typeof LodgmentStatus];
 
 export const LodgmentStatusLabel: Record<LodgmentStatus, string> = {
-  [LodgmentStatus.available]: 'Available',
+  [LodgmentStatus.available]: 'Disponible',
   [LodgmentStatus.maintenance]: 'Maintenance',
 };
 

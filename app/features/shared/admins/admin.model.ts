@@ -11,9 +11,9 @@ export type AdminRole = (typeof AdminRole)[keyof typeof AdminRole];
 
 export const AdminRoleLabel: Record<AdminRole, string> = {
   [AdminRole.maintenance]: 'Maintenance',
-  [AdminRole.renewal]: 'Renewal',
-  [AdminRole.reservation]: 'Reservation',
-  [AdminRole.root]: 'Root',
+  [AdminRole.renewal]: 'Renouvellement',
+  [AdminRole.reservation]: 'Réservation',
+  [AdminRole.root]: 'Racine',
 };
 
 import type { SortOrder } from '#imports';

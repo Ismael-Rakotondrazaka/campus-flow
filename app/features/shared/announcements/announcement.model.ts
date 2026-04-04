@@ -8,8 +8,8 @@ export type AnnouncementStatus =
   (typeof AnnouncementStatus)[keyof typeof AnnouncementStatus];
 
 export const AnnouncementStatusLabel: Record<AnnouncementStatus, string> = {
-  [AnnouncementStatus.draft]: 'Draft',
-  [AnnouncementStatus.published]: 'Published',
+  [AnnouncementStatus.draft]: 'Brouillon',
+  [AnnouncementStatus.published]: 'Publié',
 };
 
 export type Announcement = {

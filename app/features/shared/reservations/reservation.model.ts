@@ -13,10 +13,10 @@ export type ReservationStatus =
   (typeof ReservationStatus)[keyof typeof ReservationStatus];
 
 export const ReservationStatusLabel: Record<ReservationStatus, string> = {
-  [ReservationStatus.accepted]: 'Accepted',
-  [ReservationStatus.pending]: 'Pending',
-  [ReservationStatus.refused]: 'Refused',
-  [ReservationStatus.validated]: 'Validated',
+  [ReservationStatus.accepted]: 'Accepté',
+  [ReservationStatus.pending]: 'En attente',
+  [ReservationStatus.refused]: 'Refusé',
+  [ReservationStatus.validated]: 'Validé',
 };
 
 export const RefusalReasons = [
@@ -33,12 +33,12 @@ export const RefusalReason = createEnumConstants(RefusalReasons);
 export type RefusalReason = (typeof RefusalReason)[keyof typeof RefusalReason];
 
 export const RefusalReasonLabel: Record<RefusalReason, string> = {
-  [RefusalReason.capacity_limit_reached]: 'Capacity Limit Reached',
-  [RefusalReason.falsified_documents]: 'Falsified Documents',
-  [RefusalReason.incomplete_documents]: 'Incomplete Documents',
-  [RefusalReason.ineligibility]: 'Ineligibility',
-  [RefusalReason.other]: 'Other',
-  [RefusalReason.past_behavior]: 'Past Behavior',
+  [RefusalReason.capacity_limit_reached]: 'Limite de capacité atteinte',
+  [RefusalReason.falsified_documents]: 'Documents falsifiés',
+  [RefusalReason.incomplete_documents]: 'Documents incomplets',
+  [RefusalReason.ineligibility]: 'Inéligibilité',
+  [RefusalReason.other]: 'Autre',
+  [RefusalReason.past_behavior]: 'Comportement antérieur',
 };
 
 export const Genders = ['male', 'female'] as const;
@@ -48,8 +48,8 @@ export const Gender = createEnumConstants(Genders);
 export type Gender = (typeof Gender)[keyof typeof Gender];
 
 export const GenderLabel: Record<Gender, string> = {
-  [Gender.female]: 'Female',
-  [Gender.male]: 'Male',
+  [Gender.female]: 'Femme',
+  [Gender.male]: 'Homme',
 };
 
 export const Origins = ['national', 'foreigner'] as const;
@@ -59,7 +59,7 @@ export const Origin = createEnumConstants(Origins);
 export type Origin = (typeof Origin)[keyof typeof Origin];
 
 export const OriginLabel: Record<Origin, string> = {
-  [Origin.foreigner]: 'Foreigner',
+  [Origin.foreigner]: 'Étranger',
   [Origin.national]: 'National',
 };
 

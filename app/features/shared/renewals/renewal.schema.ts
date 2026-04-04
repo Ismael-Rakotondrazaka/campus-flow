@@ -10,11 +10,11 @@ export const CreateRenewalSchema = z.object({
   academic_session_id: z.string().uuid(),
   emergency_number: z.string().min(1),
   faculty_id: z.string().uuid(),
+  image_url: z.string().url(),
   nic_url: z.string().url(),
   phone_number: z.string().min(1),
-  image_url: z.string().url(),
-  school_certificate_url: z.string().url(),
   resident_id: z.string().uuid(),
+  school_certificate_url: z.string().url(),
 });
 
 export type CreateRenewal = z.infer<typeof CreateRenewalSchema>;
@@ -22,9 +22,9 @@ export type CreateRenewal = z.infer<typeof CreateRenewalSchema>;
 export const UpdateRenewalSchema = z.object({
   admin_id: z.string().uuid().nullish(),
   emergency_number: z.string().min(1).optional(),
+  image_url: z.string().url().optional(),
   nic_url: z.string().url().optional(),
   phone_number: z.string().min(1).optional(),
-  image_url: z.string().url().optional(),
   refusal_reason: RefusalReasonSchema.nullish(),
   school_certificate_url: z.string().url().optional(),
   status: RenewalStatusSchema.optional(),

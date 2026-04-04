@@ -14,11 +14,11 @@ export type MaintenanceType =
   (typeof MaintenanceType)[keyof typeof MaintenanceType];
 
 export const MaintenanceTypeLabel: Record<MaintenanceType, string> = {
-  [MaintenanceType.electrical]: 'Electrical',
-  [MaintenanceType.equipment]: 'Equipment',
-  [MaintenanceType.hvac]: 'HVAC',
-  [MaintenanceType.other]: 'Other',
-  [MaintenanceType.plumbing]: 'Plumbing',
+  [MaintenanceType.electrical]: 'Électrique',
+  [MaintenanceType.equipment]: 'Équipement',
+  [MaintenanceType.hvac]: 'CVC',
+  [MaintenanceType.other]: 'Autre',
+  [MaintenanceType.plumbing]: 'Plomberie',
 };
 
 export const MaintenanceStatuses = [
@@ -34,10 +34,10 @@ export type MaintenanceStatus =
   (typeof MaintenanceStatus)[keyof typeof MaintenanceStatus];
 
 export const MaintenanceStatusLabel: Record<MaintenanceStatus, string> = {
-  [MaintenanceStatus.accepted]: 'Accepted',
-  [MaintenanceStatus.done]: 'Done',
-  [MaintenanceStatus.pending]: 'Pending',
-  [MaintenanceStatus.refused]: 'Refused',
+  [MaintenanceStatus.accepted]: 'Accepté',
+  [MaintenanceStatus.done]: 'Terminé',
+  [MaintenanceStatus.pending]: 'En attente',
+  [MaintenanceStatus.refused]: 'Refusé',
 };
 
 export type Maintenance = {

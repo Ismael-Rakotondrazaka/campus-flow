@@ -5,8 +5,8 @@ export const Gender = createEnumConstants(Genders);
 export type Gender = (typeof Gender)[keyof typeof Gender];
 
 export const GenderLabel: Record<Gender, string> = {
-  [Gender.female]: 'Female',
-  [Gender.male]: 'Male',
+  [Gender.female]: 'Femme',
+  [Gender.male]: 'Homme',
 };
 
 export const Origins = ['national', 'foreigner'] as const;
@@ -16,7 +16,7 @@ export const Origin = createEnumConstants(Origins);
 export type Origin = (typeof Origin)[keyof typeof Origin];
 
 export const OriginLabel: Record<Origin, string> = {
-  [Origin.foreigner]: 'Foreigner',
+  [Origin.foreigner]: 'Étranger',
   [Origin.national]: 'National',
 };
 

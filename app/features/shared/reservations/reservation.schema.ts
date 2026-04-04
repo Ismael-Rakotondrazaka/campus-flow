@@ -22,12 +22,12 @@ export const CreateReservationSchema = z.object({
   faculty_id: z.string().uuid(),
   first_name: z.string().min(1),
   gender: GenderSchema,
+  image_url: z.string().url(),
   last_name: z.string().min(1),
   nic: z.string().min(1),
   nic_url: z.string().url(),
   origin: OriginSchema,
   phone_number: z.string().min(1),
-  profile_url: z.string().url(),
   school_certificate_url: z.string().url(),
 });
 

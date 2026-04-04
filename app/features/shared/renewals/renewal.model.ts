@@ -12,10 +12,10 @@ export const RenewalStatus = createEnumConstants(RenewalStatuses);
 export type RenewalStatus = (typeof RenewalStatus)[keyof typeof RenewalStatus];
 
 export const RenewalStatusLabel: Record<RenewalStatus, string> = {
-  [RenewalStatus.accepted]: 'Accepted',
-  [RenewalStatus.pending]: 'Pending',
-  [RenewalStatus.refused]: 'Refused',
-  [RenewalStatus.validated]: 'Validated',
+  [RenewalStatus.accepted]: 'Accepté',
+  [RenewalStatus.pending]: 'En attente',
+  [RenewalStatus.refused]: 'Refusé',
+  [RenewalStatus.validated]: 'Validé',
 };
 
 export const RefusalReasons = [
@@ -32,12 +32,12 @@ export const RefusalReason = createEnumConstants(RefusalReasons);
 export type RefusalReason = (typeof RefusalReason)[keyof typeof RefusalReason];
 
 export const RefusalReasonLabel: Record<RefusalReason, string> = {
-  [RefusalReason.capacity_limit_reached]: 'Capacity Limit Reached',
-  [RefusalReason.falsified_documents]: 'Falsified Documents',
-  [RefusalReason.incomplete_documents]: 'Incomplete Documents',
-  [RefusalReason.ineligibility]: 'Ineligibility',
-  [RefusalReason.other]: 'Other',
-  [RefusalReason.past_behavior]: 'Past Behavior',
+  [RefusalReason.capacity_limit_reached]: 'Limite de capacité atteinte',
+  [RefusalReason.falsified_documents]: 'Documents falsifiés',
+  [RefusalReason.incomplete_documents]: 'Documents incomplets',
+  [RefusalReason.ineligibility]: 'Inéligibilité',
+  [RefusalReason.other]: 'Autre',
+  [RefusalReason.past_behavior]: 'Comportement antérieur',
 };
 
 export type Renewal = {
