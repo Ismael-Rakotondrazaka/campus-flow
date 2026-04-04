@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ColumnDef, SortingState } from '@tanstack/vue-table';
+import type { SortingState } from '@tanstack/vue-table';
 
 import {
   FlexRender,
@@ -8,12 +8,10 @@ import {
   getSortedRowModel,
   useVueTable,
 } from '@tanstack/vue-table';
-import { formatDate } from '@vueuse/core';
 import { Icon, NuxtLink } from '#components';
 
 import type { Reservation } from '~/features/shared/reservations/reservation.model';
 
-import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   Table,
@@ -26,10 +24,9 @@ import {
 import Button from '~/components/ui/button/Button.vue';
 import TableEmpty from '~/components/ui/table/TableEmpty.vue';
 import { valueUpdater } from '~/components/ui/table/utils';
-import ReservationStatusBadge from '~/features/shared/reservations/components/ReservationStatusBadge.vue';
 import { reservationListQuery } from '~/features/shared/reservations/reservation.query';
-import { getUserFullname } from '~/features/shared/users/composables/useUserFullname';
-import { formatUserImageUrl } from '~/features/shared/users/composables/useUserImageUrl';
+
+import { reservationColumns } from './reservationColumns';
 
 const { state } = useQuery(() =>
   reservationListQuery({
@@ -43,96 +40,10 @@ const reservations = computed(
   () => state.value?.data?.data ?? ([] as Reservation[])
 );
 
-const columns: ColumnDef<Reservation>[] = [
-  {
-    accessorKey: 'image_url',
-    cell: ({ row }) => {
-      const reservation = row.original;
-      const imageUrl = formatUserImageUrl(reservation);
-      const fullname = getUserFullname(reservation);
-      return h(Avatar, {}, () => [
-        h(AvatarImage, {
-          alt: fullname,
-          src: imageUrl,
-        }),
-      ]);
-    },
-    enableSorting: false,
-    header: 'Avatar',
-  },
-  {
-    accessorFn: row => {
-      const fullname = getUserFullname(row);
-      return fullname;
-    },
-    cell: ({ row }) => {
-      const fullname = getUserFullname(row.original);
-      return h('div', { class: 'font-medium' }, fullname);
-    },
-    header: 'Nom et prénom',
-    id: 'fullname',
-  },
-  {
-    accessorKey: 'email',
-    cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('email')),
-    header: 'Email',
-  },
-  {
-    accessorKey: 'phone_number',
-    cell: ({ row }) => h('div', {}, row.getValue('phone_number')),
-    header: 'Téléphone',
-  },
-  {
-    accessorKey: 'status',
-    cell: ({ row }) =>
-      h(ReservationStatusBadge, {
-        value: row.original.status,
-      }),
-    header: 'Statut',
-  },
-  {
-    accessorKey: 'created_at',
-    cell: ({ row }) => {
-      const date = new Date(row.getValue('created_at'));
-      return h(
-        'div',
-        {},
-        formatDate(date, 'DD/MM/YYYY HH:mm', { locales: 'fr' })
-      );
-    },
-    header: "Date d'envoi",
-  },
-  {
-    cell: ({ row }) => {
-      const reservationId = row.original.id;
-      return h(
-        NuxtLink,
-        {
-          class:
-            'inline-flex w-full items-center justify-center hover:text-blue-600',
-          title: 'Voir les détails',
-          to: {
-            name: 'admin-root-reservations-reservationId',
-            params: {
-              reservationId: reservationId,
-            },
-          },
-        },
-        () =>
-          h(Icon, { class: 'inline-block', name: 'mdi:eye', size: '1.2rem' })
-      );
-    },
-    enableHiding: false,
-    enableSorting: false,
-    header: 'Action',
-    id: 'view',
-  },
-];
-
 const sorting = ref<SortingState>([]);
 
 const table = useVueTable({
-  columns,
+  columns: reservationColumns,
   data: reservations.value,
   getCoreRowModel: getCoreRowModel(),
   getFilteredRowModel: getFilteredRowModel(),
@@ -185,7 +96,7 @@ const table = useVueTable({
             <template v-if="state.status === 'pending'">
               <TableRow v-for="i in 5" :key="`skeleton-${i}`">
                 <TableCell
-                  v-for="j in columns.length"
+                  v-for="j in reservationColumns.length"
                   :key="`skeleton-cell-${i}-${j}`"
                 >
                   <Skeleton class="my-2 h-5 w-full" />
@@ -202,7 +113,9 @@ const table = useVueTable({
                 </TableCell>
               </TableRow>
             </template>
-            <TableEmpty v-else>Aucun résultat.</TableEmpty>
+            <TableEmpty v-else
+              ><p class="text-center">Aucun résultat.</p></TableEmpty
+            >
           </TableBody>
         </Table>
       </div>
