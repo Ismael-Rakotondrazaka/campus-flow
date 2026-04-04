@@ -47,7 +47,7 @@ const formattedCount = useNumericAbbreviation(() => state.value?.data ?? 0);
       </div>
     </CardContent>
 
-    <CardContent v-else>
+    <CardContent v-else-if="state.data">
       <div class="flex items-center gap-4">
         <div class="bg-primary flex items-center justify-center rounded-md">
           <Icon

@@ -23,7 +23,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import Button from '~/components/ui/button/Button.vue';
+import TableEmpty from '~/components/ui/table/TableEmpty.vue';
 import { valueUpdater } from '~/components/ui/table/utils';
+import ReservationStatusBadge from '~/features/shared/reservations/components/ReservationStatusBadge.vue';
 import { reservationListQuery } from '~/features/shared/reservations/reservation.query';
 import { getUserFullname } from '~/features/shared/users/composables/useUserFullname';
 import { formatUserImageUrl } from '~/features/shared/users/composables/useUserImageUrl';
@@ -82,7 +85,9 @@ const columns: ColumnDef<Reservation>[] = [
   {
     accessorKey: 'status',
     cell: ({ row }) =>
-      h('div', { class: 'capitalize' }, row.getValue('status')),
+      h(ReservationStatusBadge, {
+        value: row.original.status,
+      }),
     header: 'Statut',
   },
   {
@@ -142,10 +147,15 @@ const table = useVueTable({
 </script>
 
 <template>
-  <div>
+  <div class="flex items-center justify-between gap-4">
     <p class="text-foreground text-lg font-bold">
       Demande de réservations récentes
     </p>
+
+    <Button variant="default" class="rounded-full">
+      Gérer
+      <Icon name="mdi:arrow-right" size="1.2rem" />
+    </Button>
   </div>
 
   <div class="w-full">
@@ -189,11 +199,7 @@ const table = useVueTable({
             </TableRow>
           </template>
 
-          <TableRow v-else>
-            <TableCell :colspan="columns.length" class="h-24 text-center">
-              Aucun résultat.
-            </TableCell>
-          </TableRow>
+          <TableEmpty v-else>Aucun résultat.</TableEmpty>
         </TableBody>
       </Table>
     </div>
