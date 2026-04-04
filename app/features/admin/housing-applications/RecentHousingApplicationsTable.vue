@@ -10,6 +10,8 @@ import {
 } from '@tanstack/vue-table';
 import { Icon, NuxtLink } from '#components';
 
+import type { HousingApplication } from '~/features/shared/housing-applications/housing-application.model';
+
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   Table,
@@ -22,29 +24,35 @@ import {
 import Button from '~/components/ui/button/Button.vue';
 import TableEmpty from '~/components/ui/table/TableEmpty.vue';
 import { valueUpdater } from '~/components/ui/table/utils';
-
-import type { HousingApplication } from './housing-application.model';
-
-import { housing_applicationListQuery } from './housing-application.query';
-import { housing_applicationColumns } from './housing-applicationColumns';
+import { housingApplicationColumns } from '~/features/admin/housing-applications/housing-application-columns';
+import { housingApplicationListQuery } from '~/features/shared/housing-applications/housing-application.query';
 
 const { state } = useQuery(() =>
-  housing_applicationListQuery({
+  housingApplicationListQuery({
     limit: 5,
     orderBy: 'created_at',
     sortOrder: SortOrder.desc,
   })
 );
 
-const housing_applications = computed(
+const housingApplications = computed(
   () => state.value?.data?.data ?? ([] as HousingApplication[])
 );
 
 const sorting = ref<SortingState>([]);
 
+const globalAcademicSessionId = useRouteQuery<
+  string | undefined,
+  string | undefined
+>('g_academic_session_id', undefined);
+
+const getGlobalAcademicSessionId = () => {
+  return globalAcademicSessionId.value;
+};
+
 const table = useVueTable({
-  columns: housing_applicationColumns,
-  data: housing_applications.value,
+  columns: housingApplicationColumns({ getGlobalAcademicSessionId }),
+  data: housingApplications.value,
   getCoreRowModel: getCoreRowModel(),
   getFilteredRowModel: getFilteredRowModel(),
   getSortedRowModel: getSortedRowModel(),
@@ -60,11 +68,11 @@ const table = useVueTable({
 <template>
   <div class="w-full">
     <div class="mb-2 flex items-center justify-between gap-4">
-      <h1 class="text-2xl font-bold">Gestion des demandes de réservation</h1>
+      <h1 class="text-2xl font-bold">Gestion des demandes de logement</h1>
       <NuxtLink
-        :to="{ name: 'admin-root-housing_applications' }"
+        :to="{ name: 'admin-root-housing-applications' }"
         class="inline-block"
-        title="Gérer les réservations"
+        title="Gérer les demandes de logement"
         as-child
       >
         <Button variant="default" class="rounded-full">
@@ -95,7 +103,7 @@ const table = useVueTable({
             <template v-if="state.status === 'pending'">
               <TableRow v-for="i in 5" :key="`skeleton-${i}`">
                 <TableCell
-                  v-for="j in housing_applicationColumns.length"
+                  v-for="j in housingApplicationColumns.length"
                   :key="`skeleton-cell-${i}-${j}`"
                 >
                   <Skeleton class="my-2 h-5 w-full" />

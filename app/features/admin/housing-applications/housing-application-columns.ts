@@ -10,13 +10,15 @@ import HousingApplicationStatusBadge from '@/features/shared/housing-application
 import { getUserFullname } from '~/features/shared/users/composables/useUserFullname';
 import { formatUserImageUrl } from '~/features/shared/users/composables/useUserImageUrl';
 
-export const housing_applicationColumns: ColumnDef<HousingApplication>[] = [
+export const housingApplicationColumns = (params: {
+  getGlobalAcademicSessionId: () => string | undefined;
+}): ColumnDef<HousingApplication>[] => [
   {
     accessorKey: 'image_url',
     cell: ({ row }) => {
-      const housing_application = row.original;
-      const imageUrl = formatUserImageUrl(housing_application);
-      const fullname = getUserFullname(housing_application);
+      const housingApplication = row.original;
+      const imageUrl = formatUserImageUrl(housingApplication);
+      const fullname = getUserFullname(housingApplication);
       return h(Avatar, {}, () => [
         h(AvatarImage, {
           alt: fullname,
@@ -71,7 +73,7 @@ export const housing_applicationColumns: ColumnDef<HousingApplication>[] = [
   },
   {
     cell: ({ row }) => {
-      const housing_applicationId = row.original.id;
+      const housingApplicationId = row.original.id;
       return h(
         NuxtLink,
         {
@@ -79,9 +81,12 @@ export const housing_applicationColumns: ColumnDef<HousingApplication>[] = [
             'inline-flex w-full items-center justify-center hover:text-blue-600',
           title: 'Voir les détails',
           to: {
-            name: 'admin-root-housing_applications-housing_applicationId',
+            name: 'admin-root-housing-applications-housingApplicationId',
             params: {
-              housing_applicationId: housing_applicationId,
+              housingApplicationId: housingApplicationId,
+            },
+            query: {
+              g_academic_session_id: params.getGlobalAcademicSessionId(),
             },
           },
         },

@@ -6,12 +6,11 @@
 
 <script lang="ts" setup>
 import Badge from '~/components/ui/badge/Badge.vue';
-
 import {
   type HousingApplicationStatus,
   HousingApplicationStatusColor,
   HousingApplicationStatusLabel,
-} from './housing-application.model';
+} from '~/features/shared/housing-applications/housing-application.model';
 
 interface Props {
   value: HousingApplicationStatus;

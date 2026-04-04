@@ -17,7 +17,7 @@ export const HOUSING_APPLICATION_QUERY_KEYS = {
   list: (filters: HousingApplicationFilters = {}) =>
     [...HOUSING_APPLICATION_QUERY_KEYS.root, 'list', filters] as const,
 
-  root: ['housing_applications'] as const,
+  root: ['housing-applications'] as const,
 };
 
 export const housingApplicationListQuery = defineQueryOptions(
