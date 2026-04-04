@@ -12,10 +12,10 @@ export const AdminRole = createEnumConstants(AdminRoles);
 export type AdminRole = (typeof AdminRole)[keyof typeof AdminRole];
 
 export const AdminRoleLabel: Record<AdminRole, string> = {
-  [AdminRole.housing_application]: 'Demandes de Logement',
-  [AdminRole.maintenance]: 'Maintenance',
-  [AdminRole.renewal]: 'Renouvellement',
-  [AdminRole.root]: 'Racine',
+  [AdminRole.housing_application]: 'Responsable de demandes de logement',
+  [AdminRole.maintenance]: 'Responsable de maintenance',
+  [AdminRole.renewal]: 'Responsable de renouvellement',
+  [AdminRole.root]: 'Administrateur technique',
 };
 
 export type Admin = {

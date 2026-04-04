@@ -5,18 +5,18 @@ import { AdminRole } from '~/features/shared/admins/admin.model';
 
 const user = useSupabaseUser();
 
-const role = computed<'student' | AdminRole | undefined>(
+const role = computed<'resident' | AdminRole | undefined>(
   () => user.value?.app_metadata?.role
 );
 
-const roleRouteMap: Record<'student' | AdminRole, NuxtLinkProps['to']> = {
+const roleRouteMap: Record<'resident' | AdminRole, NuxtLinkProps['to']> = {
   [AdminRole.housing_application]: {
     name: 'admin-housing-application-dashboard',
   },
   [AdminRole.maintenance]: { name: 'admin-maintenance-dashboard' },
   [AdminRole.renewal]: { name: 'admin-renewal-dashboard' },
   [AdminRole.root]: { name: 'admin-root-dashboard' },
-  student: { name: 'resident-dashboard' },
+  resident: { name: 'resident-dashboard' },
 };
 
 const route = computed(() =>

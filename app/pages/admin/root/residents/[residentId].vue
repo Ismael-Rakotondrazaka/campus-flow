@@ -1,3 +1,3 @@
 <template>
-  <h1>Student</h1>
+  <h1>Resident</h1>
 </template>
