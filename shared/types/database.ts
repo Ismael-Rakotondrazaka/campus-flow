@@ -183,6 +183,104 @@ export type Database = {
         }
         Relationships: []
       }
+      housing_applications: {
+        Row: {
+          academic_session_id: string
+          admin_id: string | null
+          created_at: string
+          email: string
+          emergency_number: string
+          faculty_id: string
+          first_name: string
+          gender: string
+          id: string
+          image_url: string
+          last_name: string
+          lodgment_id: string | null
+          nic: string
+          nic_url: string
+          origin: string
+          phone_number: string
+          refusal_reason: string | null
+          school_certificate_url: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          academic_session_id: string
+          admin_id?: string | null
+          created_at?: string
+          email: string
+          emergency_number: string
+          faculty_id: string
+          first_name: string
+          gender: string
+          id?: string
+          image_url: string
+          last_name: string
+          lodgment_id?: string | null
+          nic: string
+          nic_url: string
+          origin: string
+          phone_number: string
+          refusal_reason?: string | null
+          school_certificate_url: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          academic_session_id?: string
+          admin_id?: string | null
+          created_at?: string
+          email?: string
+          emergency_number?: string
+          faculty_id?: string
+          first_name?: string
+          gender?: string
+          id?: string
+          image_url?: string
+          last_name?: string
+          lodgment_id?: string | null
+          nic?: string
+          nic_url?: string
+          origin?: string
+          phone_number?: string
+          refusal_reason?: string | null
+          school_certificate_url?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "housing_applications_academic_session_id_fkey"
+            columns: ["academic_session_id"]
+            isOneToOne: false
+            referencedRelation: "academic_sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "housing_applications_admin_id_fkey"
+            columns: ["admin_id"]
+            isOneToOne: false
+            referencedRelation: "admins"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "housing_applications_faculty_id_fkey"
+            columns: ["faculty_id"]
+            isOneToOne: false
+            referencedRelation: "faculties"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "housing_applications_lodgment_id_fkey"
+            columns: ["lodgment_id"]
+            isOneToOne: false
+            referencedRelation: "lodgments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       lodgments: {
         Row: {
           building_id: string
@@ -233,9 +331,9 @@ export type Database = {
           deleted_at: string | null
           first_name: string
           id: string
+          image_url: string
           last_name: string
           phone_number: string
-          image_url: string
           updated_at: string
         }
         Insert: {
@@ -243,9 +341,9 @@ export type Database = {
           deleted_at?: string | null
           first_name: string
           id?: string
+          image_url: string
           last_name: string
           phone_number: string
-          image_url: string
           updated_at?: string
         }
         Update: {
@@ -253,9 +351,9 @@ export type Database = {
           deleted_at?: string | null
           first_name?: string
           id?: string
+          image_url?: string
           last_name?: string
           phone_number?: string
-          image_url?: string
           updated_at?: string
         }
         Relationships: []
@@ -365,9 +463,9 @@ export type Database = {
           emergency_number: string
           faculty_id: string
           id: string
+          image_url: string
           nic_url: string
           phone_number: string
-          image_url: string
           refusal_reason: string | null
           resident_id: string
           school_certificate_url: string
@@ -381,9 +479,9 @@ export type Database = {
           emergency_number: string
           faculty_id: string
           id?: string
+          image_url: string
           nic_url: string
           phone_number: string
-          image_url: string
           refusal_reason?: string | null
           resident_id: string
           school_certificate_url: string
@@ -397,9 +495,9 @@ export type Database = {
           emergency_number?: string
           faculty_id?: string
           id?: string
+          image_url?: string
           nic_url?: string
           phone_number?: string
-          image_url?: string
           refusal_reason?: string | null
           resident_id?: string
           school_certificate_url?: string
@@ -434,104 +532,6 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "residents"
             referencedColumns: ["user_id"]
-          },
-        ]
-      }
-      reservations: {
-        Row: {
-          academic_session_id: string
-          admin_id: string | null
-          created_at: string
-          email: string
-          emergency_number: string
-          faculty_id: string
-          first_name: string
-          gender: string
-          id: string
-          last_name: string
-          lodgment_id: string | null
-          nic: string
-          nic_url: string
-          origin: string
-          phone_number: string
-          image_url: string
-          refusal_reason: string | null
-          school_certificate_url: string
-          status: string
-          updated_at: string
-        }
-        Insert: {
-          academic_session_id: string
-          admin_id?: string | null
-          created_at?: string
-          email: string
-          emergency_number: string
-          faculty_id: string
-          first_name: string
-          gender: string
-          id?: string
-          last_name: string
-          lodgment_id?: string | null
-          nic: string
-          nic_url: string
-          origin: string
-          phone_number: string
-          image_url: string
-          refusal_reason?: string | null
-          school_certificate_url: string
-          status?: string
-          updated_at?: string
-        }
-        Update: {
-          academic_session_id?: string
-          admin_id?: string | null
-          created_at?: string
-          email?: string
-          emergency_number?: string
-          faculty_id?: string
-          first_name?: string
-          gender?: string
-          id?: string
-          last_name?: string
-          lodgment_id?: string | null
-          nic?: string
-          nic_url?: string
-          origin?: string
-          phone_number?: string
-          image_url?: string
-          refusal_reason?: string | null
-          school_certificate_url?: string
-          status?: string
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "reservations_academic_session_id_fkey"
-            columns: ["academic_session_id"]
-            isOneToOne: false
-            referencedRelation: "academic_sessions"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "reservations_admin_id_fkey"
-            columns: ["admin_id"]
-            isOneToOne: false
-            referencedRelation: "admins"
-            referencedColumns: ["user_id"]
-          },
-          {
-            foreignKeyName: "reservations_faculty_id_fkey"
-            columns: ["faculty_id"]
-            isOneToOne: false
-            referencedRelation: "faculties"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "reservations_lodgment_id_fkey"
-            columns: ["lodgment_id"]
-            isOneToOne: false
-            referencedRelation: "lodgments"
-            referencedColumns: ["id"]
           },
         ]
       }
@@ -609,9 +609,9 @@ export type Database = {
           deleted_at: string | null
           first_name: string
           id: string
+          image_url: string
           last_name: string
           phone_number: string
-          image_url: string
           updated_at: string
         }
         Insert: {
@@ -619,9 +619,9 @@ export type Database = {
           deleted_at?: string | null
           first_name: string
           id: string
+          image_url: string
           last_name: string
           phone_number: string
-          image_url: string
           updated_at?: string
         }
         Update: {
@@ -629,9 +629,9 @@ export type Database = {
           deleted_at?: string | null
           first_name?: string
           id?: string
+          image_url?: string
           last_name?: string
           phone_number?: string
-          image_url?: string
           updated_at?: string
         }
         Relationships: []
@@ -643,7 +643,7 @@ export type Database = {
     Functions: {
       has_admin_role: { Args: { p_role: string }; Returns: boolean }
       is_admin: { Args: never; Returns: boolean }
-      is_student: { Args: never; Returns: boolean }
+      is_resident: { Args: never; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
