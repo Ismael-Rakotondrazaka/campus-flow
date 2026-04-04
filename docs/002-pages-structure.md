@@ -2,7 +2,7 @@
 
 - /announcements
   - /
-  - /[id]
+  - /[announcementId]
 - /auth
   - /login
   - /forgot-password
@@ -12,26 +12,26 @@
     - /admins
       - /
       - /create
-      - /[id]
+      - /[adminId]
         - /edit
     - /users
       - /
-      - /[id]
+      - /[userId]
         - /edit
     - /residents
       - /
-      - /[id]
+      - /[residentId]
     - /faculties
       - /
     - /academic-sessions
       - /
       - /create
-      - /[id]
+      - /[academicSessionId]
         - /edit
     - /announcements
       - /
       - /create
-      - /[id]
+      - /[announcementId]
         - /edit
     - /buildings
       - /
@@ -39,13 +39,13 @@
       - /
     - /reservations
       - /
-      - /[id]
+      - /[reservationId]
     - /renewals
       - /
-      - /[id]
+      - /[renewalId]
     - /maintenances
       - /
-      - /[id]
+      - /[maintenanceId]
   - /reservation
     - /dashboard
     - /buildings
@@ -54,21 +54,21 @@
       - /
     - /reservations
       - /
-      - /[id]
+      - /[reservationId]
   - /renewal
     - /dashboard
     - /renewals
       - /
-      - /[id]
+      - /[renewalId]
   - /maintenance
     - /dashboard
     - /maintenances
       - /
-      - /[id]
+      - /[maintenanceId]
     - /maintainers
       - /
       - /create
-      - /[id]
+      - /[maintainerId]
         - /edit
 - /resident
   - /dashboard
@@ -76,11 +76,11 @@
   - /renewals
     - /
     - /create
-    - /[id]
+    - /[renewalId]
   - /announcements
     - /
-    - /[id]
+    - /[announcementId]
   - /maintenances
     - /
     - /create
-    - /[id]
+    - /[maintenanceId]
