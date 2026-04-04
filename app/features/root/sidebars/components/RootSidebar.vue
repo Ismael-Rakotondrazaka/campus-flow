@@ -35,13 +35,13 @@ const menus: Menu[] = [
     to: { name: 'admin-root-admins' },
   },
   {
-    icon: 'mdi:account-group',
+    icon: 'mdi:account',
     id: 'users',
     label: 'Utilisateurs',
     to: { name: 'admin-root-users' },
   },
   {
-    icon: 'mdi:school',
+    icon: 'mdi:account-group',
     id: 'residents',
     label: 'Résidents',
     to: { name: 'admin-root-residents' },
@@ -83,7 +83,7 @@ const menus: Menu[] = [
     to: { name: 'admin-root-reservations' },
   },
   {
-    icon: 'mdi:refresh',
+    icon: 'mdi:file-refresh',
     id: 'renewals',
     label: 'Renouvellements',
     to: { name: 'admin-root-renewals' },

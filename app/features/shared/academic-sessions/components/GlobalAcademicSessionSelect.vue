@@ -1,0 +1,63 @@
+<script lang="ts" setup>
+import { formatDate } from '@vueuse/core';
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+
+import { academicSessionListQuery } from '../academic-session.query';
+
+const academicSession = useRouteQuery<string | undefined, string | undefined>(
+  'g_academic_session_id',
+  undefined
+);
+
+const { data } = useQuery(() => academicSessionListQuery({ limit: 5 }));
+
+const academicSessions = computed(() => data.value?.data ?? []);
+
+watchEffect(() => {
+  if (
+    academicSession.value === undefined &&
+    academicSessions.value.length > 0 &&
+    academicSessions.value[0]?.id !== undefined
+  ) {
+    academicSession.value = academicSessions.value[0].id;
+  }
+});
+</script>
+
+<template>
+  <Select v-model="academicSession">
+    <SelectTrigger class="w-full max-w-xs">
+      <SelectValue placeholder="Sessions académiques" />
+    </SelectTrigger>
+
+    <SelectContent>
+      <SelectGroup>
+        <SelectItem
+          v-for="session in academicSessions"
+          :key="session.id"
+          :value="session.id"
+        >
+          {{
+            formatDate(new Date(session.start_at), 'DD MMMM YYYY', {
+              locales: 'fr',
+            })
+          }}
+          &nbsp;-&nbsp;
+          {{
+            formatDate(new Date(session.end_at), 'DD MMMM YYYY', {
+              locales: 'fr',
+            })
+          }}
+        </SelectItem>
+      </SelectGroup>
+    </SelectContent>
+  </Select>
+</template>

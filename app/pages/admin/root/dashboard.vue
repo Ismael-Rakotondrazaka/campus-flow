@@ -9,18 +9,21 @@ import GlobalAcademicSessionSelect from '~/features/shared/academic-sessions/com
 </script>
 
 <template>
-  <div>
-    <DashboardGreeting />
+  <div class="container mx-auto px-2">
+    <div
+      class="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <DashboardGreeting />
+      <GlobalAcademicSessionSelect />
+    </div>
 
-    <GlobalAcademicSessionSelect />
-
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       <ReservationKPICard />
       <RenewalKPICard />
       <MaintenanceKPICard />
       <ResidentKPICard />
     </div>
 
-    <RecentReservationsTable />
+    <RecentReservationsTable class="mb-4" />
   </div>
 </template>

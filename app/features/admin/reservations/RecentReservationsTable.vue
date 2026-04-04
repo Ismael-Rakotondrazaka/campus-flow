@@ -112,9 +112,9 @@ const columns: ColumnDef<Reservation>[] = [
             'inline-flex w-full items-center justify-center hover:text-blue-600',
           title: 'Voir les détails',
           to: {
-            name: 'admin-root-reservations-id',
+            name: 'admin-root-reservations-reservationId',
             params: {
-              id: reservationId,
+              reservationId: reservationId,
             },
           },
         },
@@ -147,61 +147,65 @@ const table = useVueTable({
 </script>
 
 <template>
-  <div class="flex items-center justify-between gap-4">
-    <p class="text-foreground text-lg font-bold">
-      Demande de réservations récentes
-    </p>
-
-    <Button variant="default" class="rounded-full">
-      Gérer
-      <Icon name="mdi:arrow-right" size="1.2rem" />
-    </Button>
-  </div>
-
   <div class="w-full">
-    <div class="rounded-md border">
-      <Table>
-        <TableHeader>
-          <TableRow
-            v-for="headerGroup in table.getHeaderGroups()"
-            :key="headerGroup.id"
-          >
-            <TableHead v-for="header in headerGroup.headers" :key="header.id">
-              <FlexRender
-                v-if="!header.isPlaceholder"
-                :render="header.column.columnDef.header"
-                :props="header.getContext()"
-              />
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-
-        <TableBody>
-          <template v-if="state.status === 'pending'">
-            <TableRow v-for="i in 5" :key="`skeleton-${i}`">
-              <TableCell
-                v-for="j in columns.length"
-                :key="`skeleton-cell-${i}-${j}`"
-              >
-                <Skeleton class="my-2 h-5 w-full" />
-              </TableCell>
-            </TableRow>
-          </template>
-
-          <template v-else-if="table.getRowModel().rows?.length">
-            <TableRow v-for="row in table.getRowModel().rows" :key="row.id">
-              <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
+    <div class="mb-2 flex items-center justify-between gap-4">
+      <p class="text-foreground text-lg font-bold">
+        Demande de réservations récentes
+      </p>
+      <NuxtLink
+        :to="{ name: 'admin-root-reservations' }"
+        class="inline-block"
+        title="Gérer les réservations"
+        as-child
+      >
+        <Button variant="default" class="rounded-full">
+          Gérer
+          <Icon name="mdi:arrow-right" size="1.2rem" />
+        </Button>
+      </NuxtLink>
+    </div>
+    <div class="w-full">
+      <div class="rounded-md border">
+        <Table>
+          <TableHeader>
+            <TableRow
+              v-for="headerGroup in table.getHeaderGroups()"
+              :key="headerGroup.id"
+            >
+              <TableHead v-for="header in headerGroup.headers" :key="header.id">
                 <FlexRender
-                  :render="cell.column.columnDef.cell"
-                  :props="cell.getContext()"
+                  v-if="!header.isPlaceholder"
+                  :render="header.column.columnDef.header"
+                  :props="header.getContext()"
                 />
-              </TableCell>
+              </TableHead>
             </TableRow>
-          </template>
-
-          <TableEmpty v-else>Aucun résultat.</TableEmpty>
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            <template v-if="state.status === 'pending'">
+              <TableRow v-for="i in 5" :key="`skeleton-${i}`">
+                <TableCell
+                  v-for="j in columns.length"
+                  :key="`skeleton-cell-${i}-${j}`"
+                >
+                  <Skeleton class="my-2 h-5 w-full" />
+                </TableCell>
+              </TableRow>
+            </template>
+            <template v-else-if="table.getRowModel().rows?.length">
+              <TableRow v-for="row in table.getRowModel().rows" :key="row.id">
+                <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
+                  <FlexRender
+                    :render="cell.column.columnDef.cell"
+                    :props="cell.getContext()"
+                  />
+                </TableCell>
+              </TableRow>
+            </template>
+            <TableEmpty v-else>Aucun résultat.</TableEmpty>
+          </TableBody>
+        </Table>
+      </div>
     </div>
   </div>
 </template>
