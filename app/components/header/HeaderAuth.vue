@@ -10,9 +10,11 @@ const role = computed<'student' | AdminRole | undefined>(
 );
 
 const roleRouteMap: Record<'student' | AdminRole, NuxtLinkProps['to']> = {
+  [AdminRole.housing_application]: {
+    name: 'admin-housing-application-dashboard',
+  },
   [AdminRole.maintenance]: { name: 'admin-maintenance-dashboard' },
   [AdminRole.renewal]: { name: 'admin-renewal-dashboard' },
-  [AdminRole.reservation]: { name: 'admin-reservation-dashboard' },
   [AdminRole.root]: { name: 'admin-root-dashboard' },
   student: { name: 'resident-dashboard' },
 };

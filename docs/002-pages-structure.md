@@ -37,24 +37,24 @@
       - /
     - /lodgments
       - /
-    - /reservations
+    - /housing-applications
       - /
-      - /[reservationId]
+      - /[housingApplicationId]
     - /renewals
       - /
       - /[renewalId]
     - /maintenances
       - /
       - /[maintenanceId]
-  - /reservation
+  - /housing-application
     - /dashboard
     - /buildings
       - /
     - /lodgments
       - /
-    - /reservations
+    - /housing-applications
       - /
-      - /[reservationId]
+      - /[housingApplicationId]
   - /renewal
     - /dashboard
     - /renewals

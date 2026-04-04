@@ -2,7 +2,7 @@
 -- 7 per academic year × 3 years
 -- Past years (2023, 2024): all published
 -- Current year (2025): NEW_YEAR + RENEWAL published, rest draft
--- Subjects with start/end dates: RENEWAL, RESERVATION, CLIMATE_CHANGE, SCIENCE_DAY
+-- Subjects with start/end dates: RENEWAL, HOUSING_APPLICATION, CLIMATE_CHANGE, SCIENCE_DAY
 
 INSERT INTO public.announcements (
   id, title, content, illustration_url, status, start_at, end_at, created_at, updated_at
@@ -31,14 +31,14 @@ INSERT INTO public.announcements (
    'https://images.unsplash.com/photo-1627518788331-b3b7fdaa382f?w=500&auto=format&fit=crop&q=60',
    'published', null, null, '2023-03-15 09:00:00+00', '2023-03-15 09:00:00+00'),
 
-  -- RESERVATION 2023
+  -- HOUSING_APPLICATION 2023
   ('af000000-0000-0000-0000-000000000004',
    'Ouverture du dépôt des dossiers de demande de logement !',
    E'Nous sommes heureux d''annoncer que le dépôt des dossiers pour les demandes de logement est désormais ouvert !\n\nVisitez notre site web pour obtenir les informations sur les critères d''admissibilité et les étapes à suivre. Les places sont limitées, dépêchez-vous !',
    'https://images.unsplash.com/photo-1603796846097-bee99e4a601f?w=500&auto=format&fit=crop&q=60',
    'published', '2023-04-01 00:00:00+00', '2023-04-10 00:00:00+00', '2023-03-25 09:00:00+00', '2023-03-25 09:00:00+00'),
 
-  -- RESERVATION_RESULT 2023
+  -- HOUSING_APPLICATION_RESULT 2023
   ('af000000-0000-0000-0000-000000000005',
    'Liste des demandes de logement acceptées affichée !',
    E'Chers étudiants,\n\nNous sommes heureux de vous informer que la liste des demandes de logement acceptées est désormais disponible.\n\nSi votre nom figure sur la liste, félicitations ! Veuillez suivre les instructions reçues par e-mail pour valider votre dossier.',
@@ -82,14 +82,14 @@ INSERT INTO public.announcements (
    'https://images.unsplash.com/photo-1666018215790-867b14fe4822?w=500&auto=format&fit=crop&q=60',
    'published', null, null, '2024-03-15 09:00:00+00', '2024-03-15 09:00:00+00'),
 
-  -- RESERVATION 2024
+  -- HOUSING_APPLICATION 2024
   ('af000000-0000-0000-0000-000000000011',
    'Préparez-vous à vivre sur le campus !',
    E'C''est le moment de planifier votre hébergement pour l''année universitaire ! Le dépôt des dossiers pour les demandes de logement est officiellement ouvert.\n\nProfitez des avantages de vivre sur le campus. Consultez notre site web dès aujourd''hui pour toutes les informations.',
    'https://images.unsplash.com/flagged/photo-1558963675-94dc9c4a66a9?w=500&auto=format&fit=crop&q=60',
    'published', '2024-04-01 00:00:00+00', '2024-04-10 00:00:00+00', '2024-03-25 09:00:00+00', '2024-03-25 09:00:00+00'),
 
-  -- RESERVATION_RESULT 2024
+  -- HOUSING_APPLICATION_RESULT 2024
   ('af000000-0000-0000-0000-000000000012',
    'Annonce importante : Validation des dossiers de logement',
    E'Chers résidents potentiels,\n\nNous sommes ravis de vous annoncer que la liste des demandes de logement acceptées est maintenant disponible.\n\nSi vous avez été sélectionné, félicitations ! Assurez-vous de valider votre dossier dans les délais impartis.',
@@ -133,14 +133,14 @@ INSERT INTO public.announcements (
    'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=500&auto=format&fit=crop&q=60',
    'draft', null, null, '2025-03-01 09:00:00+00', '2025-03-01 09:00:00+00'),
 
-  -- RESERVATION 2025 (draft)
+  -- HOUSING_APPLICATION 2025 (draft)
   ('af000000-0000-0000-0000-000000000018',
    'Votre aventure sur le campus commence ici !',
    E'Le dépôt des dossiers pour les demandes de logement sera bientôt ouvert à l''Université Lumièrebourg.\n\nDécouvrez notre processus de demande simple et transparent en visitant notre site web. Ne manquez pas cette occasion de faire partie d''une communauté dynamique.',
    'https://images.unsplash.com/photo-1562654501-a0ccc0fc3fb1?w=500&auto=format&fit=crop&q=60',
    'draft', '2025-04-01 00:00:00+00', '2025-04-10 00:00:00+00', '2025-03-20 09:00:00+00', '2025-03-20 09:00:00+00'),
 
-  -- RESERVATION_RESULT 2025 (draft)
+  -- HOUSING_APPLICATION_RESULT 2025 (draft)
   ('af000000-0000-0000-0000-000000000019',
    'Liste des demandes de logement acceptées : Instructions pour la validation du dossier',
    E'Chers étudiants résidents potentiels,\n\nLa liste des demandes de logement acceptées sera publiée prochainement. Préparez-vous à valider votre dossier en suivant les instructions qui vous seront envoyées par e-mail.',

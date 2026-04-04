@@ -1,3 +1,5 @@
+import type { SortOrder } from '#imports';
+
 export const Genders = ['male', 'female'] as const;
 
 export const Gender = createEnumConstants(Genders);
@@ -19,8 +21,6 @@ export const OriginLabel: Record<Origin, string> = {
   [Origin.foreigner]: 'Étranger',
   [Origin.national]: 'National',
 };
-
-import type { SortOrder } from '#imports';
 
 export type Resident = {
   academic_session: Tables<'academic_sessions'>;

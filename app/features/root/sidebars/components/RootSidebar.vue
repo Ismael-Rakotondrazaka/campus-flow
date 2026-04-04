@@ -78,9 +78,9 @@ const menus: Menu[] = [
   },
   {
     icon: 'mdi:calendar-check',
-    id: 'reservations',
-    label: 'Réservations',
-    to: { name: 'admin-root-reservations' },
+    id: 'housing-applications',
+    label: 'Demandes de Logement',
+    to: { name: 'admin-root-housing-applications' },
   },
   {
     icon: 'mdi:file-refresh',

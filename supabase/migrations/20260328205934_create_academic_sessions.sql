@@ -8,7 +8,7 @@ create table public.academic_sessions (
   constraint academic_sessions_dates_check check (end_at > start_at)
 );
 
-comment on table public.academic_sessions is 'Academic years/sessions used for reservations and renewals.';
+comment on table public.academic_sessions is 'Academic years/sessions used for housing applications and renewals.';
 
 create index academic_sessions_deleted_at_idx on public.academic_sessions (deleted_at) where deleted_at is null;
 

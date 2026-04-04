@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import { Card, CardContent } from '@/components/ui/card';
+import { HousingApplicationStatus } from '@/features/shared/housing-applications/housing-application.model';
+import { housingApplicationCountQuery } from '@/features/shared/housing-applications/housing-application.query';
 import { useNumericAbbreviation } from '~/composables/useNumericAbbreviation';
-import { ReservationStatus } from '~/features/shared/reservations/reservation.model';
-import { reservationCountQuery } from '~/features/shared/reservations/reservation.query';
 
 const { refetch, state } = useQuery(() =>
-  reservationCountQuery({
-    status: ReservationStatus.pending,
+  housingApplicationCountQuery({
+    status: HousingApplicationStatus.pending,
   })
 );
 

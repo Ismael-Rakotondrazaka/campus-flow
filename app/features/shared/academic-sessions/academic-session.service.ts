@@ -39,7 +39,10 @@ export const getAcademicSessions = async (
 };
 
 export const getAcademicSessionsCount = async (
-  filters?: Omit<AcademicSessionFilters, 'limit' | 'orderBy' | 'page' | 'sortOrder'>
+  filters?: Omit<
+    AcademicSessionFilters,
+    'limit' | 'orderBy' | 'page' | 'sortOrder'
+  >
 ): Promise<number> => {
   const client = useSupabaseClient();
 

@@ -1,3 +1,5 @@
+import type { SortOrder } from '#imports';
+
 export const LodgmentStatuses = ['available', 'maintenance'] as const;
 
 export const LodgmentStatus = createEnumConstants(LodgmentStatuses);
@@ -9,8 +11,6 @@ export const LodgmentStatusLabel: Record<LodgmentStatus, string> = {
   [LodgmentStatus.available]: 'Disponible',
   [LodgmentStatus.maintenance]: 'Maintenance',
 };
-
-import type { SortOrder } from '#imports';
 
 export type Lodgment = {
   building: Tables<'buildings'>;

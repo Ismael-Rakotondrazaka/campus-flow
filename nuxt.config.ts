@@ -64,9 +64,9 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
+    '/admin/housing-application/**': { appLayout: 'housing-application' },
     '/admin/maintenance/**': { appLayout: 'maintenance' },
     '/admin/renewal/**': { appLayout: 'renewal' },
-    '/admin/reservation/**': { appLayout: 'reservation' },
     '/admin/root/**': { appLayout: 'root' },
     '/resident/**': { appLayout: 'resident' },
   },

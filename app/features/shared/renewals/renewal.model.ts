@@ -18,6 +18,13 @@ export const RenewalStatusLabel: Record<RenewalStatus, string> = {
   [RenewalStatus.validated]: 'Validé',
 };
 
+export const RenewalStatusColor: Record<RenewalStatus, string> = {
+  [RenewalStatus.accepted]: 'bg-green-500 text-white',
+  [RenewalStatus.pending]: 'bg-yellow-500 text-white',
+  [RenewalStatus.refused]: 'bg-red-500 text-white',
+  [RenewalStatus.validated]: 'bg-green-500 text-white',
+};
+
 export const RefusalReasons = [
   'capacity_limit_reached',
   'falsified_documents',

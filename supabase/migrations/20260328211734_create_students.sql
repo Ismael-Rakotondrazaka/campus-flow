@@ -32,10 +32,10 @@ create policy "Residents can view their own record"
   to authenticated
   using ((select auth.uid()) = user_id);
 
-create policy "Reservation admins can create residents"
+create policy "Housing application admins can create residents"
   on public.residents for insert
   to authenticated
-  with check (public.has_admin_role('reservation'));
+  with check (public.has_admin_role('housing_application'));
 
 create policy "Root and renewal admins can update residents"
   on public.residents for update

@@ -9,9 +9,9 @@ values
 -- Private buckets (access controlled via RLS policies)
 insert into storage.buckets (id, name, public)
 values
-  ('reservation-documents', 'reservation-documents', false),
-  ('renewal-documents',     'renewal-documents',     false),
-  ('maintainer-profiles',   'maintainer-profiles',   false);
+  ('housing-application-documents', 'housing-application-documents', false),
+  ('renewal-documents',              'renewal-documents',              false),
+  ('maintainer-profiles',            'maintainer-profiles',            false);
 
 create policy "Public read for announcement illustrations"
   on storage.objects for select
@@ -78,32 +78,32 @@ create policy "Users can delete their own post files"
     and (storage.foldername(name))[1] = auth.uid()::text
   );
 
-create policy "Students can read their own reservation documents"
+create policy "Students can read their own housing application documents"
   on storage.objects for select
   to authenticated
   using (
-    bucket_id = 'reservation-documents'
+    bucket_id = 'housing-application-documents'
     and (storage.foldername(name))[1] = auth.uid()::text
   );
 
-create policy "Admins can read all reservation documents"
+create policy "Admins can read all housing application documents"
   on storage.objects for select
   to authenticated
-  using (bucket_id = 'reservation-documents' and public.is_admin());
+  using (bucket_id = 'housing-application-documents' and public.is_admin());
 
-create policy "Students can upload their own reservation documents"
+create policy "Students can upload their own housing application documents"
   on storage.objects for insert
   to authenticated
   with check (
-    bucket_id = 'reservation-documents'
+    bucket_id = 'housing-application-documents'
     and (storage.foldername(name))[1] = auth.uid()::text
   );
 
-create policy "Students can delete their own reservation documents"
+create policy "Students can delete their own housing application documents"
   on storage.objects for delete
   to authenticated
   using (
-    bucket_id = 'reservation-documents'
+    bucket_id = 'housing-application-documents'
     and (storage.foldername(name))[1] = auth.uid()::text
   );
 

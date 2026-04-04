@@ -26,11 +26,11 @@ create policy "Authenticated users can view active lodgments"
   to authenticated
   using (deleted_at is null);
 
-create policy "Reservation admins can manage lodgments"
+create policy "Housing application admins can manage lodgments"
   on public.lodgments for all
   to authenticated
-  using (public.has_admin_role('reservation'))
-  with check (public.has_admin_role('reservation'));
+  using (public.has_admin_role('housing_application'))
+  with check (public.has_admin_role('housing_application'));
 
 create trigger update_lodgments_updated_at
   before update on public.lodgments
