@@ -36,26 +36,38 @@ export type Database = {
     Tables: {
       academic_sessions: {
         Row: {
+          application_close_at: string
+          application_open_at: string
           created_at: string
           deleted_at: string | null
           end_at: string
           id: string
+          renewal_close_at: string
+          renewal_open_at: string
           start_at: string
           updated_at: string
         }
         Insert: {
+          application_close_at: string
+          application_open_at: string
           created_at?: string
           deleted_at?: string | null
           end_at: string
           id?: string
+          renewal_close_at: string
+          renewal_open_at: string
           start_at: string
           updated_at?: string
         }
         Update: {
+          application_close_at?: string
+          application_open_at?: string
           created_at?: string
           deleted_at?: string | null
           end_at?: string
           id?: string
+          renewal_close_at?: string
+          renewal_open_at?: string
           start_at?: string
           updated_at?: string
         }
