@@ -3,12 +3,12 @@ import type { ColumnDef } from '@tanstack/vue-table';
 import { formatDate } from '@vueuse/core';
 import { Icon, NuxtLink } from '#components';
 
+import type { HousingApplication } from '~/features/shared/housing-applications/housing-application.model';
+
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import HousingApplicationStatusBadge from '@/features/shared/housing-applications/components/HousingApplicationStatusBadge.vue';
 import { getUserFullname } from '~/features/shared/users/composables/useUserFullname';
 import { formatUserImageUrl } from '~/features/shared/users/composables/useUserImageUrl';
-
-import type { HousingApplication } from './housing-application.model';
 
 export const housing_applicationColumns: ColumnDef<HousingApplication>[] = [
   {
