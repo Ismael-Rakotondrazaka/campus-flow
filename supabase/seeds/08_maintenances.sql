@@ -2,10 +2,10 @@
 -- mn01–mn04: session 2023, done/refused
 -- mn05–mn08: session 2024, done/refused
 -- mn09–mn11: current (pending/accepted)
--- student→lodgment mapping: s01→l01, s03→l03, s05→l05, s07→l07, s11→l11, s13→l13, s15→l15, s17→l17, s21→l21, s23→l23, s25→l25
+-- resident→lodgment mapping: s01→l01, s03→l03, s05→l05, s07→l07, s11→l11, s13→l13, s15→l15, s17→l17, s21→l21, s23→l23, s25→l25
 
 INSERT INTO public.maintenances (
-  id, student_id, admin_id, lodgment_id,
+  id, resident_id, admin_id, lodgment_id,
   type, description, status, start_at, end_at,
   created_at, updated_at
 ) VALUES

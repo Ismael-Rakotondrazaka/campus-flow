@@ -27,7 +27,7 @@ create table public.housing_applications (
   constraint housing_applications_email_session_unique unique (email, academic_session_id)
 );
 
-comment on table public.housing_applications is 'Housing applications from prospective students (no account required).';
+comment on table public.housing_applications is 'Housing applications from prospective residents (no account required).';
 comment on column public.housing_applications.admin_id is 'Set when an admin processes the application.';
 comment on column public.housing_applications.lodgment_id is 'Assigned when the application is accepted or validated.';
 comment on column public.housing_applications.status is 'pending | accepted | refused | validated';

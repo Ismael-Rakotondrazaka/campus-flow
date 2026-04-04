@@ -78,7 +78,7 @@ create policy "Users can delete their own post files"
     and (storage.foldername(name))[1] = auth.uid()::text
   );
 
-create policy "Students can read their own housing application documents"
+create policy "Residents can read their own housing application documents"
   on storage.objects for select
   to authenticated
   using (
@@ -91,7 +91,7 @@ create policy "Admins can read all housing application documents"
   to authenticated
   using (bucket_id = 'housing-application-documents' and public.is_admin());
 
-create policy "Students can upload their own housing application documents"
+create policy "Residents can upload their own housing application documents"
   on storage.objects for insert
   to authenticated
   with check (
@@ -99,7 +99,7 @@ create policy "Students can upload their own housing application documents"
     and (storage.foldername(name))[1] = auth.uid()::text
   );
 
-create policy "Students can delete their own housing application documents"
+create policy "Residents can delete their own housing application documents"
   on storage.objects for delete
   to authenticated
   using (
@@ -107,7 +107,7 @@ create policy "Students can delete their own housing application documents"
     and (storage.foldername(name))[1] = auth.uid()::text
   );
 
-create policy "Students can read their own renewal documents"
+create policy "Residents can read their own renewal documents"
   on storage.objects for select
   to authenticated
   using (
@@ -120,7 +120,7 @@ create policy "Admins can read all renewal documents"
   to authenticated
   using (bucket_id = 'renewal-documents' and public.is_admin());
 
-create policy "Students can upload their own renewal documents"
+create policy "Residents can upload their own renewal documents"
   on storage.objects for insert
   to authenticated
   with check (
@@ -128,7 +128,7 @@ create policy "Students can upload their own renewal documents"
     and (storage.foldername(name))[1] = auth.uid()::text
   );
 
-create policy "Students can delete their own renewal documents"
+create policy "Residents can delete their own renewal documents"
   on storage.objects for delete
   to authenticated
   using (

@@ -6,7 +6,7 @@ create table public.faculties (
   deleted_at timestamptz
 );
 
-comment on table public.faculties is 'University faculties students belong to.';
+comment on table public.faculties is 'University faculties residents belong to.';
 
 create index faculties_deleted_at_idx on public.faculties (deleted_at) where deleted_at is null;
 

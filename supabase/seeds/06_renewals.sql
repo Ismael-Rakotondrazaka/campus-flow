@@ -2,10 +2,10 @@
 -- rn01–rn10: s01–s10 → session 2024-2025 (dd...002), status=accepted, admin_id=ren1
 -- rn11–rn20: s01–s10 → session 2025-2026 (dd...003), status=pending,  admin_id=null
 -- rn21–rn30: s11–s20 → session 2025-2026 (dd...003), status=pending,  admin_id=null
--- Unique constraint: (student_id, academic_session_id)
+-- Unique constraint: (resident_id, academic_session_id)
 
 INSERT INTO public.renewals (
-  id, student_id, academic_session_id, faculty_id, admin_id,
+  id, resident_id, academic_session_id, faculty_id, admin_id,
   phone_number, emergency_number, image_url, school_certificate_url, nic_url,
   status, refusal_reason, created_at, updated_at
 ) VALUES
