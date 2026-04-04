@@ -51,6 +51,10 @@ security definer
 set search_path = ''
 as $$
 begin
+  -- Add resident role to raw_app_meta_data if not already present
+  new.raw_app_meta_data = coalesce(new.raw_app_meta_data, '{}'::jsonb) ||
+    jsonb_build_object('role', coalesce((new.raw_app_meta_data->>'role'), 'resident'));
+
   insert into public.users (id, first_name, last_name, phone_number, image_url)
   values (
     new.id,
