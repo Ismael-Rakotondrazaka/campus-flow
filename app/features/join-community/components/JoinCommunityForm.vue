@@ -34,7 +34,7 @@ const SubmissionState = {
 } as const;
 type SubmissionState = (typeof SubmissionState)[keyof typeof SubmissionState];
 
-const currentStep = ref(3);
+const currentStep = ref(1);
 const submissionState = ref<SubmissionState>(SubmissionState.idle);
 const submissionError = ref<null | string>(null);
 
@@ -189,14 +189,17 @@ const onSubmit = handleSubmit(async (formValues: JoinCommunity) => {
       throw new Error('Tous les documents sont requis');
     }
 
-    // Upload files
-    const [imageUrl, nicUrl, schoolCertificateUrl] = await Promise.all([
-      upload(props.session.id, profilePhotoFile.value, 'photo'),
-      upload(props.session.id, nicFile.value, 'nic'),
-      upload(props.session.id, schoolCertFile.value, 'school-certificate'),
+    // Pre-generate application ID so files are stored under its path
+    const applicationId = crypto.randomUUID();
+
+    // Upload files using the application ID as folder
+    const [imagePath, nicPath, schoolCertificatePath] = await Promise.all([
+      upload(applicationId, profilePhotoFile.value, 'photo'),
+      upload(applicationId, nicFile.value, 'nic'),
+      upload(applicationId, schoolCertFile.value, 'school-certificate'),
     ]);
 
-    // Create housing application
+    // Create housing application with the pre-generated ID
     await createHousingApplicationMutation.mutation({
       academic_session_id: props.session.id,
       email: formValues.email,
@@ -204,13 +207,14 @@ const onSubmit = handleSubmit(async (formValues: JoinCommunity) => {
       faculty_id: formValues.faculty_id,
       first_name: formValues.first_name,
       gender: formValues.gender,
-      image_url: imageUrl,
+      id: applicationId,
+      image_url: imagePath,
       last_name: formValues.last_name,
       nic: formValues.nic,
-      nic_url: nicUrl,
+      nic_url: nicPath,
       origin: formValues.origin,
       phone_number: formValues.phone_number,
-      school_certificate_url: schoolCertificateUrl,
+      school_certificate_url: schoolCertificatePath,
     });
 
     submissionState.value = SubmissionState.success;

@@ -33,7 +33,6 @@ const inputRef = ref<HTMLInputElement | null>(null);
         :class="{ 'text-destructive': !!errors.length }"
         >{{ label }}</FieldLabel
       >
-      <pre>{{ errors }}</pre>
       <button
         :aria-invalid="!!errors.length"
         type="button"

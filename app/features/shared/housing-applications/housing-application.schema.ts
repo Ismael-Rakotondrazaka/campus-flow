@@ -24,13 +24,13 @@ export const CreateHousingApplicationSchema = z.object({
   faculty_id: z.string().uuid(),
   first_name: z.string().min(1),
   gender: GenderSchema,
-  image_url: z.string().url(),
+  image_url: z.string().min(1),
   last_name: z.string().min(1),
   nic: z.string().min(1),
-  nic_url: z.string().url(),
+  nic_url: z.string().min(1),
   origin: OriginSchema,
   phone_number: z.string().min(1),
-  school_certificate_url: z.string().url(),
+  school_certificate_url: z.string().min(1),
 });
 
 export type CreateHousingApplication = z.infer<

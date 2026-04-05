@@ -7,7 +7,7 @@ type DocumentType = 'nic' | 'photo' | 'school-certificate';
 
 export const useUploadHousingApplicationDocument = () => {
   const upload = async (
-    sessionId: string,
+    applicationId: string,
     file: File,
     type: DocumentType
   ): Promise<string> => {
@@ -18,7 +18,7 @@ export const useUploadHousingApplicationDocument = () => {
     const sanitizedName = slugify(baseName, { lower: true, strict: true });
     const uniqueId = nanoid();
     const uniqueName = `${type}__${sanitizedName}__${uniqueId}${ext}`;
-    const path = `${sessionId}/${uniqueName}`;
+    const path = `${applicationId}/${uniqueName}`;
 
     const { error } = await client.storage
       .from(HOUSING_APPLICATION_DOCUMENTS_BUCKET)
@@ -26,13 +26,7 @@ export const useUploadHousingApplicationDocument = () => {
 
     if (error) throw error;
 
-    const {
-      data: { publicUrl },
-    } = client.storage
-      .from(HOUSING_APPLICATION_DOCUMENTS_BUCKET)
-      .getPublicUrl(path);
-
-    return publicUrl;
+    return path;
   };
 
   return upload;
