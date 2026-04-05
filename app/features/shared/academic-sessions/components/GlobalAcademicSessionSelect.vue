@@ -33,31 +33,38 @@ watchEffect(() => {
 </script>
 
 <template>
-  <Select v-model="academicSession">
-    <SelectTrigger class="w-full max-w-xs">
-      <SelectValue placeholder="Sessions académiques" />
-    </SelectTrigger>
+  <div class="bg-primary flex items-center gap-2 rounded-xl p-2">
+    <Icon
+      name="mdi:calendar-clock"
+      size="2rem"
+      class="text-primary-foreground"
+    />
 
-    <SelectContent>
-      <SelectGroup>
-        <SelectItem
-          v-for="session in academicSessions"
-          :key="session.id"
-          :value="session.id"
-        >
-          {{
-            formatDate(new Date(session.start_at), 'DD MMMM YYYY', {
-              locales: 'fr',
-            })
-          }}
-          &nbsp;-&nbsp;
-          {{
-            formatDate(new Date(session.end_at), 'DD MMMM YYYY', {
-              locales: 'fr',
-            })
-          }}
-        </SelectItem>
-      </SelectGroup>
-    </SelectContent>
-  </Select>
+    <Select v-model="academicSession">
+      <SelectTrigger class="text-primary-foreground w-full max-w-xs">
+        <SelectValue placeholder="Sessions académiques" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectItem
+            v-for="session in academicSessions"
+            :key="session.id"
+            :value="session.id"
+          >
+            {{
+              formatDate(new Date(session.start_at), 'DD MMMM YYYY', {
+                locales: 'fr',
+              })
+            }}
+            &nbsp;-&nbsp;
+            {{
+              formatDate(new Date(session.end_at), 'DD MMMM YYYY', {
+                locales: 'fr',
+              })
+            }}
+          </SelectItem>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  </div>
 </template>
