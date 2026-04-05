@@ -5,7 +5,7 @@ import { computed } from 'vue';
 
 import { Label } from '@/components/ui/label';
 import {
-  Pagination,
+  Pagination as Pagination_,
   PaginationContent,
   PaginationEllipsis,
   PaginationItem,
@@ -35,8 +35,8 @@ const props = withDefaults(defineProps<Props>(), {
   itemLabel: 'item',
   itemLabelPlural: undefined,
   limitOptions: () => [10, 20, 25, 50, 100],
-  ofLabel: 'of',
-  rowsPerPageLabel: 'Rows per page',
+  ofLabel: 'sur',
+  rowsPerPageLabel: 'Ligne par page',
   siblingCount: 1,
 });
 
@@ -104,7 +104,7 @@ function onPageSizeChange(value: unknown) {
       </p>
     </div>
 
-    <Pagination
+    <Pagination_
       class="mx-0 w-auto"
       :items-per-page="limit"
       :page="page"
@@ -126,6 +126,6 @@ function onPageSizeChange(value: unknown) {
         </template>
         <PaginationNext />
       </PaginationContent>
-    </Pagination>
+    </Pagination_>
   </div>
 </template>

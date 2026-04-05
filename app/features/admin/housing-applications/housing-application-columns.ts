@@ -9,6 +9,8 @@ import HousingApplicationAvatar from '@/features/shared/housing-applications/com
 import HousingApplicationStatusBadge from '@/features/shared/housing-applications/components/HousingApplicationStatusBadge.vue';
 import { getUserFullname } from '~/features/shared/users/composables/useUserFullname';
 
+export const housingApplicationColumnsLength: number = 7;
+
 export const housingApplicationColumns = (params: {
   getGlobalAcademicSessionId: () => string | undefined;
 }): ColumnDef<HousingApplication>[] => [

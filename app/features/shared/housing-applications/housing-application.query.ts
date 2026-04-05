@@ -31,6 +31,7 @@ export const HOUSING_APPLICATION_QUERY_KEYS = {
 export const housingApplicationListQuery = defineQueryOptions(
   (filters: HousingApplicationFilters = {}) => ({
     key: HOUSING_APPLICATION_QUERY_KEYS.list(filters),
+    placeholderData: previousData => previousData,
     query: () => getHousingApplications(filters),
   })
 );

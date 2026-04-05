@@ -9,7 +9,7 @@ import RecentHousingApplicationsTable from '~/features/admin/housing-application
 </script>
 
 <template>
-  <div class="container mx-auto px-2">
+  <div class="container mx-auto p-2">
     <HeaderWithGlobalAcademicSessionSelect>
       <DashboardGreeting />
     </HeaderWithGlobalAcademicSessionSelect>

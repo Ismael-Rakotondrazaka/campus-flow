@@ -22,9 +22,11 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import Button from '~/components/ui/button/Button.vue';
-import TableEmpty from '~/components/ui/table/TableEmpty.vue';
 import { valueUpdater } from '~/components/ui/table/utils';
-import { housingApplicationColumns } from '~/features/admin/housing-applications/housing-application-columns';
+import {
+  housingApplicationColumns,
+  housingApplicationColumnsLength,
+} from '~/features/admin/housing-applications/housing-application-columns';
 import { housingApplicationListQuery } from '~/features/shared/housing-applications/housing-application.query';
 
 const { state } = useQuery(() =>
@@ -52,7 +54,7 @@ const getGlobalAcademicSessionId = () => {
 
 const table = useVueTable({
   columns: housingApplicationColumns({ getGlobalAcademicSessionId }),
-  data: housingApplications.value,
+  data: housingApplications,
   getCoreRowModel: getCoreRowModel(),
   getFilteredRowModel: getFilteredRowModel(),
   getSortedRowModel: getSortedRowModel(),
@@ -102,11 +104,26 @@ const table = useVueTable({
           <TableBody>
             <template v-if="state.status === 'pending'">
               <TableRow v-for="i in 5" :key="`skeleton-${i}`">
-                <TableCell
-                  v-for="j in housingApplicationColumns.length"
-                  :key="`skeleton-cell-${i}-${j}`"
-                >
-                  <Skeleton class="my-2 h-5 w-full" />
+                <TableCell>
+                  <Skeleton class="h-9 w-9 rounded-full" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton class="h-4 w-20" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton class="h-4 w-30" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton class="h-4 w-20" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton class="h-4 w-20" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton class="h-4 w-20" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton class="h-4 w-7" />
                 </TableCell>
               </TableRow>
             </template>
@@ -120,9 +137,15 @@ const table = useVueTable({
                 </TableCell>
               </TableRow>
             </template>
-            <TableEmpty v-else
-              ><p class="text-center">Aucun résultat.</p></TableEmpty
-            >
+
+            <TableRow v-else>
+              <TableCell
+                :colspan="housingApplicationColumnsLength"
+                class="h-24 text-center"
+              >
+                Aucun résultat.
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </div>
