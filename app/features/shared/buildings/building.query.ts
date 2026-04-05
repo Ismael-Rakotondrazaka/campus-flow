@@ -37,6 +37,7 @@ export const BUILDING_QUERY_KEYS = {
 export const buildingListQuery = defineQueryOptions(
   (filters: BuildingFilters = {}) => ({
     key: BUILDING_QUERY_KEYS.list(filters),
+    placeholderData: previousData => previousData,
     query: () => getBuildings(filters),
   })
 );

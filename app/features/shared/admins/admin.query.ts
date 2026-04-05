@@ -19,6 +19,7 @@ export const ADMIN_QUERY_KEYS = {
 export const adminListQuery = defineQueryOptions(
   (filters: AdminFilters = {}) => ({
     key: ADMIN_QUERY_KEYS.list(filters),
+    placeholderData: previousData => previousData,
     query: () => getAdmins(filters),
   })
 );

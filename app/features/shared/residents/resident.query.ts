@@ -23,6 +23,7 @@ export const RESIDENT_QUERY_KEYS = {
 export const residentListQuery = defineQueryOptions(
   (filters: ResidentFilters = {}) => ({
     key: RESIDENT_QUERY_KEYS.list(filters),
+    placeholderData: previousData => previousData,
     query: () => getResidents(filters),
   })
 );

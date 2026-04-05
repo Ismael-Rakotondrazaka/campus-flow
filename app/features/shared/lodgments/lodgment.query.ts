@@ -23,6 +23,7 @@ export const LODGMENT_QUERY_KEYS = {
 export const lodgmentListQuery = defineQueryOptions(
   (filters: LodgmentFilters = {}) => ({
     key: LODGMENT_QUERY_KEYS.list(filters),
+    placeholderData: previousData => previousData,
     query: () => getLodgments(filters),
   })
 );

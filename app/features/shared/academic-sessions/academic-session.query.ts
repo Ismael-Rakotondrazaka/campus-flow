@@ -23,6 +23,7 @@ export const ACADEMIC_SESSION_QUERY_KEYS = {
 export const academicSessionListQuery = defineQueryOptions(
   (filters: AcademicSessionFilters = {}) => ({
     key: ACADEMIC_SESSION_QUERY_KEYS.list(filters),
+    placeholderData: previousData => previousData,
     query: () => getAcademicSessions(filters),
   })
 );

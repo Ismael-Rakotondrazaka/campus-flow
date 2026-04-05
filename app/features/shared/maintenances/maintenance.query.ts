@@ -23,6 +23,7 @@ export const MAINTENANCE_QUERY_KEYS = {
 export const maintenanceListQuery = defineQueryOptions(
   (filters: MaintenanceFilters = {}) => ({
     key: MAINTENANCE_QUERY_KEYS.list(filters),
+    placeholderData: previousData => previousData,
     query: () => getMaintenances(filters),
   })
 );

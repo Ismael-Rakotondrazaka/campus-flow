@@ -23,6 +23,7 @@ export const ANNOUNCEMENT_QUERY_KEYS = {
 export const announcementListQuery = defineQueryOptions(
   (filters: AnnouncementFilters = {}) => ({
     key: ANNOUNCEMENT_QUERY_KEYS.list(filters),
+    placeholderData: previousData => previousData,
     query: () => getAnnouncements(filters),
   })
 );

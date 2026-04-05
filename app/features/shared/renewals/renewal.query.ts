@@ -19,6 +19,7 @@ export const RENEWAL_QUERY_KEYS = {
 export const renewalListQuery = defineQueryOptions(
   (filters: RenewalFilters = {}) => ({
     key: RENEWAL_QUERY_KEYS.list(filters),
+    placeholderData: previousData => previousData,
     query: () => getRenewals(filters),
   })
 );

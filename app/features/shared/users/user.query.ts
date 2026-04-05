@@ -19,6 +19,7 @@ export const USER_QUERY_KEYS = {
 export const userListQuery = defineQueryOptions(
   (filters: UserFilters = {}) => ({
     key: USER_QUERY_KEYS.list(filters),
+    placeholderData: previousData => previousData,
     query: () => getUsers(filters),
   })
 );
