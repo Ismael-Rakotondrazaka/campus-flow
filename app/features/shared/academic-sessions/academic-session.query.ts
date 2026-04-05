@@ -6,6 +6,7 @@ import {
   getAcademicSession,
   getAcademicSessions,
   getAcademicSessionsCount,
+  getActiveApplicationSession,
 } from './academic-session.service';
 
 export const ACADEMIC_SESSION_QUERY_KEYS = {
@@ -36,4 +37,9 @@ export const academicSessionByIdQuery = defineQueryOptions(
 export const academicSessionCountQuery = defineQueryOptions(() => ({
   key: ACADEMIC_SESSION_QUERY_KEYS.count(),
   query: () => getAcademicSessionsCount(),
+}));
+
+export const activeApplicationSessionQuery = defineQueryOptions(() => ({
+  key: [...ACADEMIC_SESSION_QUERY_KEYS.root, 'active-application'] as const,
+  query: () => getActiveApplicationSession(),
 }));

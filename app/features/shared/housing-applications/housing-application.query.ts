@@ -1,8 +1,16 @@
-import { defineQueryOptions } from '@pinia/colada';
+import {
+  defineMutation,
+  defineQueryOptions,
+  useQueryCache,
+} from '@pinia/colada';
 
-import type { HousingApplicationFilters } from './housing-application.model';
+import type {
+  HousingApplicationFilters,
+  HousingApplicationInsert,
+} from './housing-application.model';
 
 import {
+  createHousingApplication,
   getHousingApplication,
   getHousingApplications,
   getHousingApplicationsCount,
@@ -40,3 +48,16 @@ export const housingApplicationCountQuery = defineQueryOptions(
     query: () => getHousingApplicationsCount(filters),
   })
 );
+
+export const useCreateHousingApplication = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: (application: HousingApplicationInsert) =>
+      createHousingApplication(application),
+    onSuccess: () => {
+      queryCache.invalidateQueries({
+        key: HOUSING_APPLICATION_QUERY_KEYS.root,
+      });
+    },
+  };
+});

@@ -93,8 +93,7 @@ function makeErrorMap(config: ErrorMapConfig): z.ZodErrorMap {
 export default defineNuxtPlugin(() => {
   z.setErrorMap(
     makeErrorMap({
-      required: context =>
-        `Obligatoire — attendu : ${context.expected}, reçu : ${context.received}`,
+      required: () => 'Obligatoire',
       too_big: ctx => {
         const map: Record<
           z.ZodTooBigIssue['type'],

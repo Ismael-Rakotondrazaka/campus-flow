@@ -4,7 +4,7 @@
       <Skeleton class="h-6 w-20" />
       <Skeleton class="h-4 w-72" />
     </CardHeader>
-    <CardContent class="space-y-4">
+    <CardContent class="space-y-2">
       <!-- Avatar -->
       <Skeleton class="size-20 rounded-full" />
 

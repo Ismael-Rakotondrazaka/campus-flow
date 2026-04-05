@@ -4,7 +4,7 @@
       <Skeleton class="h-6 w-36" />
       <Skeleton class="h-4 w-64" />
     </CardHeader>
-    <CardContent class="space-y-4">
+    <CardContent class="space-y-2">
       <!-- New password -->
       <div class="space-y-1.5">
         <Skeleton class="h-4 w-24" />

@@ -4,7 +4,7 @@
       <Skeleton class="h-6 w-28" />
       <Skeleton class="h-4 w-44" />
     </CardHeader>
-    <CardContent class="space-y-4">
+    <CardContent class="space-y-2">
       <!-- Email field -->
       <div class="space-y-1.5">
         <Skeleton class="h-4 w-12" />

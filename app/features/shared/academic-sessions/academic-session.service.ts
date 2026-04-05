@@ -117,3 +117,21 @@ export const deleteAcademicSession = async (id: string): Promise<void> => {
 
   if (error) throw error;
 };
+
+export const getActiveApplicationSession =
+  async (): Promise<AcademicSession | null> => {
+    const client = useSupabaseClient();
+    const now = new Date().toISOString();
+
+    const { data, error } = await client
+      .from('academic_sessions')
+      .select('*')
+      .is('deleted_at', null)
+      .lte('application_open_at', now)
+      .gte('application_close_at', now)
+      .maybeSingle();
+
+    if (error) throw error;
+
+    return data;
+  };

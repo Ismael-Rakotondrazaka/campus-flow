@@ -19,6 +19,7 @@ export const FACULTY_QUERY_KEYS = {
 export const facultyListQuery = defineQueryOptions(
   (filters: FacultyFilters = {}) => ({
     key: FACULTY_QUERY_KEYS.list(filters),
+    placeholderData: previousData => previousData,
     query: () => getFaculties(filters),
   })
 );
