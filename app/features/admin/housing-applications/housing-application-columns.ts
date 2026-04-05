@@ -5,10 +5,9 @@ import { Icon, NuxtLink } from '#components';
 
 import type { HousingApplication } from '~/features/shared/housing-applications/housing-application.model';
 
-import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import HousingApplicationAvatar from '@/features/shared/housing-applications/components/HousingApplicationAvatar.vue';
 import HousingApplicationStatusBadge from '@/features/shared/housing-applications/components/HousingApplicationStatusBadge.vue';
 import { getUserFullname } from '~/features/shared/users/composables/useUserFullname';
-import { formatUserImageUrl } from '~/features/shared/users/composables/useUserImageUrl';
 
 export const housingApplicationColumns = (params: {
   getGlobalAcademicSessionId: () => string | undefined;
@@ -16,15 +15,12 @@ export const housingApplicationColumns = (params: {
   {
     accessorKey: 'image_url',
     cell: ({ row }) => {
-      const housingApplication = row.original;
-      const imageUrl = formatUserImageUrl(housingApplication);
-      const fullname = getUserFullname(housingApplication);
-      return h(Avatar, {}, () => [
-        h(AvatarImage, {
-          alt: fullname,
-          src: imageUrl,
-        }),
-      ]);
+      const { first_name, image_url, last_name } = row.original;
+      return h(HousingApplicationAvatar, {
+        firstName: first_name,
+        imageUrl: image_url,
+        lastName: last_name,
+      });
     },
     enableSorting: false,
     header: 'Photo',
