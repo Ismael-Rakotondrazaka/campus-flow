@@ -45,10 +45,19 @@ create policy "Residents can view their own renewals"
   to authenticated
   using ((select auth.uid()) = resident_id);
 
-create policy "Residents can submit their own renewals"
+create policy "Residents can submit their own renewals within window"
   on public.renewals for insert
   to authenticated
-  with check ((select auth.uid()) = resident_id);
+  with check (
+    (select auth.uid()) = resident_id
+    and exists (
+      select 1 from public.academic_sessions s
+      where s.id = academic_session_id
+        and s.deleted_at is null
+        and now() >= s.renewal_open_at
+        and now() <= s.renewal_close_at
+    )
+  );
 
 create policy "Residents can update their own pending renewals"
   on public.renewals for update

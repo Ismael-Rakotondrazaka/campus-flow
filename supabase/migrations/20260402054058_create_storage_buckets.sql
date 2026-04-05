@@ -91,12 +91,11 @@ create policy "Admins can read all housing application documents"
   to authenticated
   using (bucket_id = 'housing-application-documents' and public.is_admin());
 
-create policy "Residents can upload their own housing application documents"
+create policy "Anyone can upload housing application documents"
   on storage.objects for insert
-  to authenticated
+  to public
   with check (
     bucket_id = 'housing-application-documents'
-    and (storage.foldername(name))[1] = auth.uid()::text
   );
 
 create policy "Residents can delete their own housing application documents"

@@ -41,10 +41,18 @@ create index housing_applications_created_at_idx on public.housing_applications 
 
 alter table public.housing_applications enable row level security;
 
-create policy "Anyone can submit a housing application"
+create policy "Anyone can submit a housing application within window"
   on public.housing_applications for insert
   to authenticated, anon
-  with check (true);
+  with check (
+    exists (
+      select 1 from public.academic_sessions s
+      where s.id = academic_session_id
+        and s.deleted_at is null
+        and now() >= s.application_open_at
+        and now() <= s.application_close_at
+    )
+  );
 
 create policy "Housing application admins can view all applications"
   on public.housing_applications for select
