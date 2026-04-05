@@ -27,7 +27,7 @@ export const housingApplicationColumns = (params: {
       ]);
     },
     enableSorting: false,
-    header: 'Avatar',
+    header: 'Photo',
   },
   {
     accessorFn: row => {
