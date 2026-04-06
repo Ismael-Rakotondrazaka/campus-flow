@@ -21,16 +21,16 @@ import {
 import { AdminRole } from '~/features/shared/admins/admin.model';
 import { housingApplicationListQuery } from '~/features/shared/housing-applications/housing-application.query';
 
-const academicSession = useRouteQuery<string | undefined, string | undefined>(
-  'g_academic_session_id',
-  undefined
-);
+const globalAcademicSessionId = useRouteQuery<
+  string | undefined,
+  string | undefined
+>('g_academic_session_id', undefined);
 
 const authUser = useSupabaseUser();
 
 const { state } = useQuery(() =>
   housingApplicationListQuery({
-    academic_session_id: academicSession.value,
+    academic_session_id: globalAcademicSessionId.value,
     admin_id:
       authUser.value?.sub && authUser.value?.app_metadata?.role
         ? authUser.value?.app_metadata?.role === AdminRole.root
@@ -46,11 +46,6 @@ const { state } = useQuery(() =>
 const housingApplications = computed(
   () => state.value?.data?.data ?? ([] as HousingApplication[])
 );
-
-const globalAcademicSessionId = useRouteQuery<
-  string | undefined,
-  string | undefined
->('g_academic_session_id', undefined);
 
 const getGlobalAcademicSessionId = () => {
   return globalAcademicSessionId.value;

@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table';
 
-import type {
-  HousingApplication,
-  HousingApplicationStatus,
-} from '~/features/shared/housing-applications/housing-application.model';
+import type { Resident } from '~/features/shared/residents/resident.model';
 
-import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   Table,
@@ -17,67 +13,43 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import {
-  housingApplicationColumns,
-  housingApplicationColumnsLength,
-} from '~/features/admin/housing-applications/housing-application-columns';
-import { AdminRole } from '~/features/shared/admins/admin.model';
-import HousingApplicationStatusSelect from '~/features/shared/housing-applications/components/HousingApplicationStatusSelect.vue';
-import { HousingApplicationConfig } from '~/features/shared/housing-applications/housing-application.config';
-import { housingApplicationListQuery } from '~/features/shared/housing-applications/housing-application.query';
+  residentColumns,
+  residentColumnsLength,
+} from '~/features/admin/residents/resident-columns';
 import PaginationComponent from '~/features/shared/paginations/components/PaginationComponent.vue';
+import { ResidentConfig } from '~/features/shared/residents/resident.config';
+import { residentListQuery } from '~/features/shared/residents/resident.query';
 
 const globalAcademicSessionId = useRouteQuery<
   string | undefined,
   string | undefined
 >('g_academic_session_id', undefined);
-const search = useRouteQuery<string | undefined>('search', undefined);
-const status = useRouteQuery<'all' | HousingApplicationStatus>('status', 'all');
-const page = useRouteQuery<number>(
-  'page',
-  HousingApplicationConfig.PAGE_DEFAULT,
-  {
-    transform: Number,
-  }
-);
-const limit = useRouteQuery<number>(
-  'limit',
-  HousingApplicationConfig.PAGE_SIZE_DEFAULT,
-  {
-    transform: Number,
-  }
-);
-
-const authUser = useSupabaseUser();
+const page = useRouteQuery<number>('page', ResidentConfig.PAGE_DEFAULT, {
+  transform: Number,
+});
+const limit = useRouteQuery<number>('limit', ResidentConfig.PAGE_SIZE_DEFAULT, {
+  transform: Number,
+});
 
 const { state } = useQuery(() =>
-  housingApplicationListQuery({
+  residentListQuery({
     academic_session_id: globalAcademicSessionId.value,
-    admin_id:
-      authUser.value?.sub && authUser.value?.app_metadata?.role
-        ? authUser.value?.app_metadata?.role === AdminRole.root
-          ? undefined
-          : authUser.value?.sub
-        : undefined,
     limit: limit.value,
     orderBy: 'created_at',
     page: page.value,
-    search: search.value || undefined,
     sortOrder: SortOrder.desc,
-    status: status.value === 'all' ? undefined : status.value,
   })
 );
 
-const housingApplications = computed(
-  () => state.value?.data?.data ?? ([] as HousingApplication[])
-);
+const residents = computed(() => state.value?.data?.data ?? ([] as Resident[]));
 
 const getGlobalAcademicSessionId = () => {
   return globalAcademicSessionId.value;
 };
 
 const table = useVueTable({
-  columns: housingApplicationColumns({ getGlobalAcademicSessionId }),
-  data: housingApplications,
+  columns: residentColumns({ getGlobalAcademicSessionId }),
+  data: residents,
   getCoreRowModel: getCoreRowModel(),
 });
 
@@ -92,37 +64,28 @@ watch(totalPages, pages => {
   }
 });
 
-watch([search, status, globalAcademicSessionId], () => {
-  page.value = HousingApplicationConfig.PAGE_DEFAULT;
+watch([globalAcademicSessionId], () => {
+  page.value = ResidentConfig.PAGE_DEFAULT;
 });
 
 watch(page, value => {
-  if (
-    !Number.isFinite(value) ||
-    value < HousingApplicationConfig.PAGE_DEFAULT
-  ) {
-    page.value = HousingApplicationConfig.PAGE_DEFAULT;
+  if (!Number.isFinite(value) || value < ResidentConfig.PAGE_DEFAULT) {
+    page.value = ResidentConfig.PAGE_DEFAULT;
   }
 });
 
 watch(limit, value => {
   if (!Number.isFinite(value) || value <= 0) {
-    limit.value = HousingApplicationConfig.PAGE_SIZE_DEFAULT;
+    limit.value = ResidentConfig.PAGE_SIZE_DEFAULT;
     return;
   }
 
-  page.value = HousingApplicationConfig.PAGE_DEFAULT;
+  page.value = ResidentConfig.PAGE_DEFAULT;
 });
 </script>
 
 <template>
   <div class="w-full">
-    <div class="mb-2 flex items-center justify-between gap-2">
-      <Input v-model="search" type="text" placeholder="Rechercher" />
-
-      <HousingApplicationStatusSelect v-model="status" />
-    </div>
-
     <div class="mb-2 rounded-md border">
       <Table>
         <TableHeader>
@@ -180,7 +143,7 @@ watch(limit, value => {
 
           <TableRow v-else>
             <TableCell
-              :colspan="housingApplicationColumnsLength"
+              :colspan="residentColumnsLength"
               class="h-24 text-center"
             >
               Aucun résultat.

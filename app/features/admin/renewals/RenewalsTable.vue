@@ -26,10 +26,10 @@ import RenewalStatusSelect from '~/features/shared/renewals/components/RenewalSt
 import { RenewalConfig } from '~/features/shared/renewals/renewal.config';
 import { renewalListQuery } from '~/features/shared/renewals/renewal.query';
 
-const academicSession = useRouteQuery<string | undefined, string | undefined>(
-  'g_academic_session_id',
-  undefined
-);
+const globalAcademicSessionId = useRouteQuery<
+  string | undefined,
+  string | undefined
+>('g_academic_session_id', undefined);
 const faculty = useRouteQuery<string | undefined>('faculty_id', undefined);
 const status = useRouteQuery<'all' | RenewalStatus>('status', 'all');
 const page = useRouteQuery<number>('page', RenewalConfig.PAGE_DEFAULT, {
@@ -42,7 +42,7 @@ const authUser = useSupabaseUser();
 
 const { state } = useQuery(() =>
   renewalListQuery({
-    academic_session_id: academicSession.value,
+    academic_session_id: globalAcademicSessionId.value,
     admin_id:
       authUser.value?.sub && authUser.value?.app_metadata?.role
         ? authUser.value?.app_metadata?.role === AdminRole.root
@@ -59,11 +59,6 @@ const { state } = useQuery(() =>
 );
 
 const renewals = computed(() => state.value?.data?.data ?? ([] as Renewal[]));
-
-const globalAcademicSessionId = useRouteQuery<
-  string | undefined,
-  string | undefined
->('g_academic_session_id', undefined);
 
 const getGlobalAcademicSessionId = () => {
   return globalAcademicSessionId.value;
@@ -86,7 +81,7 @@ watch(totalPages, pages => {
   }
 });
 
-watch([status, academicSession, faculty], () => {
+watch([status, globalAcademicSessionId, faculty], () => {
   page.value = RenewalConfig.PAGE_DEFAULT;
 });
 

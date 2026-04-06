@@ -13,7 +13,7 @@ const RESIDENT_SELECT = `
   *,
   faculty:faculty_id(*),
   academic_session:academic_session_id(*),
-  lodgment:lodgment_id(*)
+  lodgment:lodgment_id(*,building:building_id(*))
 `;
 
 export const getResidents = async (

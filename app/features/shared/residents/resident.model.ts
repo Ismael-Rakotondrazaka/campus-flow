@@ -25,7 +25,11 @@ export const OriginLabel: Record<Origin, string> = {
 export type Resident = {
   academic_session: Tables<'academic_sessions'>;
   faculty: Tables<'faculties'>;
-  lodgment: null | Tables<'lodgments'>;
+  lodgment:
+    | ({
+        building: Tables<'buildings'>;
+      } & Tables<'lodgments'>)
+    | null;
 } & Tables<'residents'>;
 
 export interface ResidentFilters {
