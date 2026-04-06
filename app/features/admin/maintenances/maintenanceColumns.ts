@@ -12,6 +12,20 @@ import SignedUrlAvatar from '~/features/shared/users/components/SignedUrlAvatar.
 
 export const maintenanceColumnsLength: number = 6;
 
+const getOrdinalFloor = (floorNumber: number) => {
+  if (floorNumber === 0) {
+    return 'Rez-de-chaussée';
+  }
+
+  if (floorNumber < 0) {
+    return `Sous-sol ${Math.abs(floorNumber)}`;
+  }
+
+  const ordinal = floorNumber === 1 ? '1er' : `${floorNumber}ème`;
+
+  return `${ordinal} étage`;
+};
+
 export const maintenanceColumns = (params: {
   getGlobalAcademicSessionId: () => string | undefined;
 }): ColumnDef<Maintenance>[] => [
@@ -26,14 +40,11 @@ export const maintenanceColumns = (params: {
   {
     accessorKey: 'lodgment',
     cell: ({ row }) => {
-      const maintenance = row.original;
-      const building = maintenance.lodgment?.building?.name ?? '';
-      const roomNumber = maintenance.lodgment?.room_number ?? '';
-      const location =
-        building && roomNumber
-          ? `Bâtiment ${building} - Porte ${roomNumber}`
-          : 'N/A';
-      return h('div', {}, location);
+      return h(
+        'div',
+        {},
+        `Bâtiment ${row.original.lodgment.building.name} - ${getOrdinalFloor(row.original.lodgment.floor)} - Porte ${row.original.lodgment.room_number}`
+      );
     },
     header: 'Localisation',
     id: 'location',
