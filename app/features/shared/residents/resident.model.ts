@@ -25,7 +25,7 @@ export const OriginLabel: Record<Origin, string> = {
 export type Resident = {
   academic_session: Tables<'academic_sessions'>;
   faculty: Tables<'faculties'>;
-  lodgment: Tables<'lodgments'>;
+  lodgment: null | Tables<'lodgments'>;
 } & Tables<'residents'>;
 
 export interface ResidentFilters {

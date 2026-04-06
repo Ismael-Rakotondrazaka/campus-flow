@@ -575,7 +575,7 @@ export type Database = {
           id: string
           image_url: string
           last_name: string
-          lodgment_id: string
+          lodgment_id: string | null
           nic: string
           origin: string
           phone_number: string
@@ -592,7 +592,7 @@ export type Database = {
           id: string
           image_url: string
           last_name: string
-          lodgment_id: string
+          lodgment_id?: string | null
           nic: string
           origin: string
           phone_number: string
@@ -609,7 +609,7 @@ export type Database = {
           id?: string
           image_url?: string
           last_name?: string
-          lodgment_id?: string
+          lodgment_id?: string | null
           nic?: string
           origin?: string
           phone_number?: string
