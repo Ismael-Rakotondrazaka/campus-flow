@@ -30,11 +30,26 @@ create policy "Anyone can view active academic sessions"
   to authenticated, anon
   using (deleted_at is null);
 
-create policy "Root admins can manage academic sessions"
-  on public.academic_sessions for all
+create policy "Root admins can view academic sessions"
+  on public.academic_sessions for select
   to authenticated
-  using (public.has_admin_role('root'))
-  with check (public.has_admin_role('root'));
+  using ((select public.has_admin_role('root')));
+
+create policy "Root admins can create academic sessions"
+  on public.academic_sessions for insert
+  to authenticated
+  with check ((select public.has_admin_role('root')));
+
+create policy "Root admins can update academic sessions"
+  on public.academic_sessions for update
+  to authenticated
+  using ((select public.has_admin_role('root')))
+  with check ((select public.has_admin_role('root')));
+
+create policy "Root admins can delete academic sessions"
+  on public.academic_sessions for delete
+  to authenticated
+  using ((select public.has_admin_role('root')));
 
 create trigger update_academic_sessions_updated_at
   before update on public.academic_sessions

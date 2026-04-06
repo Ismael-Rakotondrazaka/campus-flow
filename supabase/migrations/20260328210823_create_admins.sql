@@ -21,18 +21,23 @@ alter table public.admins enable row level security;
 create policy "Admins can view all admin records"
   on public.admins for select
   to authenticated
-  using (public.is_admin());
+  using ((select public.is_admin()));
 
 create policy "Root admins can insert admins"
   on public.admins for insert
   to authenticated
-  with check (public.has_admin_role('root'));
+  with check ((select public.has_admin_role('root')));
 
 create policy "Root admins can update admins"
   on public.admins for update
   to authenticated
-  using (public.has_admin_role('root'))
-  with check (public.has_admin_role('root'));
+  using ((select public.has_admin_role('root')))
+  with check ((select public.has_admin_role('root')));
+
+create policy "Root admins can delete admins"
+  on public.admins for delete
+  to authenticated
+  using ((select public.has_admin_role('root')));
 
 create trigger update_admins_updated_at
   before update on public.admins

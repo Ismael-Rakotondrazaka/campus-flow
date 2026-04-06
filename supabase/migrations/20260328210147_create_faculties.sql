@@ -17,11 +17,26 @@ create policy "Anyone can view active faculties"
   to authenticated, anon
   using (deleted_at is null);
 
-create policy "Root admins can manage faculties"
-  on public.faculties for all
+create policy "Root admins can view faculties"
+  on public.faculties for select
   to authenticated
-  using (public.has_admin_role('root'))
-  with check (public.has_admin_role('root'));
+  using ((select public.has_admin_role('root')));
+
+create policy "Root admins can create faculties"
+  on public.faculties for insert
+  to authenticated
+  with check ((select public.has_admin_role('root')));
+
+create policy "Root admins can update faculties"
+  on public.faculties for update
+  to authenticated
+  using ((select public.has_admin_role('root')))
+  with check ((select public.has_admin_role('root')));
+
+create policy "Root admins can delete faculties"
+  on public.faculties for delete
+  to authenticated
+  using ((select public.has_admin_role('root')));
 
 create trigger update_faculties_updated_at
   before update on public.faculties

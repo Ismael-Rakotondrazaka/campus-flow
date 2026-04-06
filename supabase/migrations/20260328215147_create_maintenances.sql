@@ -31,7 +31,7 @@ alter table public.maintenances enable row level security;
 create policy "Maintenance admins can view all maintenance requests"
   on public.maintenances for select
   to authenticated
-  using (public.has_admin_role('maintenance'));
+  using ((select public.has_admin_role('maintenance')));
 
 create policy "Residents can view their own maintenance requests"
   on public.maintenances for select
@@ -46,8 +46,13 @@ create policy "Residents can submit maintenance requests"
 create policy "Maintenance admins can update maintenance requests"
   on public.maintenances for update
   to authenticated
-  using (public.has_admin_role('maintenance'))
-  with check (public.has_admin_role('maintenance'));
+  using ((select public.has_admin_role('maintenance')))
+  with check ((select public.has_admin_role('maintenance')));
+
+create policy "Maintenance admins can delete maintenance requests"
+  on public.maintenances for delete
+  to authenticated
+  using ((select public.has_admin_role('maintenance')));
 
 create trigger update_maintenances_updated_at
   before update on public.maintenances
@@ -69,8 +74,23 @@ create index maintenance_maintainers_maintainer_id_idx
 
 alter table public.maintenance_maintainers enable row level security;
 
-create policy "Maintenance admins can manage maintenance assignments"
-  on public.maintenance_maintainers for all
+create policy "Maintenance admins can view maintenance assignments"
+  on public.maintenance_maintainers for select
   to authenticated
-  using (public.has_admin_role('maintenance'))
-  with check (public.has_admin_role('maintenance'));
+  using ((select public.has_admin_role('maintenance')));
+
+create policy "Maintenance admins can create maintenance assignments"
+  on public.maintenance_maintainers for insert
+  to authenticated
+  with check ((select public.has_admin_role('maintenance')));
+
+create policy "Maintenance admins can update maintenance assignments"
+  on public.maintenance_maintainers for update
+  to authenticated
+  using ((select public.has_admin_role('maintenance')))
+  with check ((select public.has_admin_role('maintenance')));
+
+create policy "Maintenance admins can delete maintenance assignments"
+  on public.maintenance_maintainers for delete
+  to authenticated
+  using ((select public.has_admin_role('maintenance')));

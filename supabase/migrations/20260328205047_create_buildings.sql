@@ -19,11 +19,26 @@ create policy "Authenticated users can view active buildings"
   to authenticated
   using (deleted_at is null);
 
-create policy "Housing application admins can manage buildings"
-  on public.buildings for all
+create policy "Housing application admins can view buildings"
+  on public.buildings for select
   to authenticated
-  using (public.has_admin_role('housing_application'))
-  with check (public.has_admin_role('housing_application'));
+  using ((select public.has_admin_role('housing_application')));
+
+create policy "Housing application admins can create buildings"
+  on public.buildings for insert
+  to authenticated
+  with check ((select public.has_admin_role('housing_application')));
+
+create policy "Housing application admins can update buildings"
+  on public.buildings for update
+  to authenticated
+  using ((select public.has_admin_role('housing_application')))
+  with check ((select public.has_admin_role('housing_application')));
+
+create policy "Housing application admins can delete buildings"
+  on public.buildings for delete
+  to authenticated
+  using ((select public.has_admin_role('housing_application')));
 
 create trigger update_buildings_updated_at
   before update on public.buildings

@@ -59,13 +59,18 @@ create policy "Anyone can submit a housing application within window"
 create policy "Housing application admins can view all applications"
   on public.housing_applications for select
   to authenticated
-  using (public.has_admin_role('housing_application'));
+  using ((select public.has_admin_role('housing_application')));
 
 create policy "Housing application admins can update applications"
   on public.housing_applications for update
   to authenticated
-  using (public.has_admin_role('housing_application'))
-  with check (public.has_admin_role('housing_application'));
+  using ((select public.has_admin_role('housing_application')))
+  with check ((select public.has_admin_role('housing_application')));
+
+create policy "Housing application admins can delete applications"
+  on public.housing_applications for delete
+  to authenticated
+  using ((select public.has_admin_role('housing_application')));
 
 create trigger update_housing_applications_updated_at
   before update on public.housing_applications

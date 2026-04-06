@@ -18,13 +18,23 @@ alter table public.maintainers enable row level security;
 create policy "Maintenance admins can view active maintainers"
   on public.maintainers for select
   to authenticated
-  using (public.has_admin_role('maintenance') and deleted_at is null);
+  using ((select public.has_admin_role('maintenance')) and deleted_at is null);
 
-create policy "Maintenance admins can manage maintainers"
-  on public.maintainers for all
+create policy "Maintenance admins can create maintainers"
+  on public.maintainers for insert
   to authenticated
-  using (public.has_admin_role('maintenance'))
-  with check (public.has_admin_role('maintenance'));
+  with check ((select public.has_admin_role('maintenance')));
+
+create policy "Maintenance admins can update maintainers"
+  on public.maintainers for update
+  to authenticated
+  using ((select public.has_admin_role('maintenance')))
+  with check ((select public.has_admin_role('maintenance')));
+
+create policy "Maintenance admins can delete maintainers"
+  on public.maintainers for delete
+  to authenticated
+  using ((select public.has_admin_role('maintenance')));
 
 create trigger update_maintainers_updated_at
   before update on public.maintainers

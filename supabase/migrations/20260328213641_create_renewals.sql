@@ -40,7 +40,7 @@ alter table public.renewals enable row level security;
 create policy "Renewal admins can view all renewals"
   on public.renewals for select
   to authenticated
-  using (public.has_admin_role('renewal'));
+  using ((select public.has_admin_role('renewal')));
 
 create policy "Residents can view their own renewals"
   on public.renewals for select
@@ -70,8 +70,13 @@ create policy "Residents can update their own pending renewals"
 create policy "Renewal admins can update renewals"
   on public.renewals for update
   to authenticated
-  using (public.has_admin_role('renewal'))
-  with check (public.has_admin_role('renewal'));
+  using ((select public.has_admin_role('renewal')))
+  with check ((select public.has_admin_role('renewal')));
+
+create policy "Renewal admins can delete renewals"
+  on public.renewals for delete
+  to authenticated
+  using ((select public.has_admin_role('renewal')));
 
 create trigger update_renewals_updated_at
   before update on public.renewals

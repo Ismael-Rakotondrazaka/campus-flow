@@ -32,7 +32,7 @@ alter table public.residents enable row level security;
 create policy "Admins can view all residents"
   on public.residents for select
   to authenticated
-  using (public.is_admin());
+  using ((select public.is_admin()));
 
 create policy "Residents can view their own record"
   on public.residents for select
@@ -42,13 +42,23 @@ create policy "Residents can view their own record"
 create policy "Housing application admins can create residents"
   on public.residents for insert
   to authenticated
-  with check (public.has_admin_role('housing_application'));
+  with check ((select public.has_admin_role('housing_application')));
 
-create policy "Root and renewal admins can update residents"
+create policy "Renewal admins can view residents"
+  on public.residents for select
+  to authenticated
+  using ((select public.has_admin_role('renewal')));
+
+create policy "Renewal admins can update residents"
   on public.residents for update
   to authenticated
-  using (public.has_admin_role('renewal'))
-  with check (public.has_admin_role('renewal'));
+  using ((select public.has_admin_role('renewal')))
+  with check ((select public.has_admin_role('renewal')));
+
+create policy "Root admins can delete residents"
+  on public.residents for delete
+  to authenticated
+  using ((select public.has_admin_role('root')));
 
 create trigger update_residents_updated_at
   before update on public.residents

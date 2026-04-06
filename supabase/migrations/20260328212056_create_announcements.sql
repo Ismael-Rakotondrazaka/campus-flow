@@ -28,13 +28,28 @@ create policy "Authenticated users can view published announcements"
 create policy "Admins can view all announcements"
   on public.announcements for select
   to authenticated
-  using (public.is_admin());
+  using ((select public.is_admin()));
 
-create policy "Root admins can manage announcements"
-  on public.announcements for all
+create policy "Root admins can view announcements"
+  on public.announcements for select
   to authenticated
-  using (public.has_admin_role('root'))
-  with check (public.has_admin_role('root'));
+  using ((select public.has_admin_role('root')));
+
+create policy "Root admins can create announcements"
+  on public.announcements for insert
+  to authenticated
+  with check ((select public.has_admin_role('root')));
+
+create policy "Root admins can update announcements"
+  on public.announcements for update
+  to authenticated
+  using ((select public.has_admin_role('root')))
+  with check ((select public.has_admin_role('root')));
+
+create policy "Root admins can delete announcements"
+  on public.announcements for delete
+  to authenticated
+  using ((select public.has_admin_role('root')));
 
 create trigger update_announcements_updated_at
   before update on public.announcements
