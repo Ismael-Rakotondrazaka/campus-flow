@@ -1,11 +1,21 @@
-import { defineQueryOptions } from '@pinia/colada';
+import {
+  defineMutation,
+  defineQueryOptions,
+  useQueryCache,
+} from '@pinia/colada';
 
-import type { MaintenanceFilters } from './maintenance.model';
+import type {
+  MaintenanceFilters,
+  MaintenanceInsert,
+  MaintenanceUpdate,
+} from './maintenance.model';
 
 import {
+  createMaintenance,
   getMaintenance,
   getMaintenances,
   getMaintenancesCount,
+  updateMaintenance,
 } from './maintenance.service';
 
 export const MAINTENANCE_QUERY_KEYS = {
@@ -41,3 +51,25 @@ export const maintenanceCountQuery = defineQueryOptions(
     query: () => getMaintenancesCount(filters),
   })
 );
+
+export const useCreateMaintenance = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: (maintenance: MaintenanceInsert) =>
+      createMaintenance(maintenance),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: MAINTENANCE_QUERY_KEYS.root });
+    },
+  };
+});
+
+export const useUpdateMaintenance = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: ({ id, updates }: { id: string; updates: MaintenanceUpdate }) =>
+      updateMaintenance(id, updates),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: MAINTENANCE_QUERY_KEYS.root });
+    },
+  };
+});

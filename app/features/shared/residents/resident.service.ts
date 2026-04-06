@@ -11,7 +11,6 @@ import { ResidentConfig } from './resident.config';
 
 const RESIDENT_SELECT = `
   *,
-  user:user_id(*),
   faculty:faculty_id(*),
   academic_session:academic_session_id(*),
   lodgment:lodgment_id(*)
@@ -103,13 +102,13 @@ export const getResidentsCount = async (
   return count ?? 0;
 };
 
-export const getResident = async (userId: string): Promise<null | Resident> => {
+export const getResident = async (id: string): Promise<null | Resident> => {
   const client = useSupabaseClient();
 
   const { data, error } = await client
     .from('residents')
     .select(RESIDENT_SELECT)
-    .eq('user_id', userId)
+    .eq('id', id)
     .maybeSingle();
 
   if (error) throw error;
@@ -134,7 +133,7 @@ export const createResident = async (
 };
 
 export const updateResident = async (
-  userId: string,
+  id: string,
   updates: ResidentUpdate
 ): Promise<Resident> => {
   const client = useSupabaseClient();
@@ -142,7 +141,7 @@ export const updateResident = async (
   const { data, error } = await client
     .from('residents')
     .update(updates)
-    .eq('user_id', userId)
+    .eq('id', id)
     .select(RESIDENT_SELECT)
     .single();
 
@@ -151,13 +150,10 @@ export const updateResident = async (
   return data as unknown as Resident;
 };
 
-export const deleteResident = async (userId: string): Promise<void> => {
+export const deleteResident = async (id: string): Promise<void> => {
   const client = useSupabaseClient();
 
-  const { error } = await client
-    .from('residents')
-    .delete()
-    .eq('user_id', userId);
+  const { error } = await client.from('residents').delete().eq('id', id);
 
   if (error) throw error;
 };

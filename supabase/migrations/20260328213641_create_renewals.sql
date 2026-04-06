@@ -1,9 +1,9 @@
 create table public.renewals (
   id                     uuid primary key default gen_random_uuid(),
-  resident_id            uuid not null references public.residents (user_id) on delete cascade,
+  resident_id            uuid not null references public.residents (id) on delete cascade,
   academic_session_id    uuid not null references public.academic_sessions (id),
   faculty_id             uuid not null references public.faculties (id),
-  admin_id               uuid references public.admins (user_id) on delete set null,
+  admin_id               uuid references public.admins (id) on delete set null,
   phone_number           text not null,
   emergency_number       text not null,
   image_url            text not null,

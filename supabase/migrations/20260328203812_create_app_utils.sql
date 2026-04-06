@@ -26,7 +26,7 @@ as $$
 begin
   return exists (
     select 1 from public.admins
-    where user_id = (select auth.uid())
+    where id = (select auth.uid())
   );
 end;
 $$;
@@ -44,7 +44,7 @@ as $$
 begin
   return exists (
     select 1 from public.admins
-    where user_id = (select auth.uid())
+    where id = (select auth.uid())
       and (role = p_role or role = 'root')
   );
 end;
@@ -63,7 +63,7 @@ as $$
 begin
   return exists (
     select 1 from public.residents
-    where user_id = (select auth.uid())
+    where id = (select auth.uid())
   );
 end;
 $$;

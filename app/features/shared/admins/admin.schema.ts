@@ -5,8 +5,8 @@ import { AdminRole } from './admin.model';
 export const RoleSchema = z.nativeEnum(AdminRole);
 
 export const CreateAdminSchema = z.object({
+  id: z.string().uuid(),
   role: RoleSchema,
-  user_id: z.string().uuid(),
 });
 
 export type CreateAdmin = z.infer<typeof CreateAdminSchema>;

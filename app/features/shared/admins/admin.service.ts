@@ -9,7 +9,7 @@ import type {
 
 import { AdminConfig } from './admin.config';
 
-const ADMIN_SELECT = `*, user:user_id(*)`;
+const ADMIN_SELECT = `*`;
 
 export const getAdmins = async (
   filters: AdminFilters
@@ -61,13 +61,13 @@ export const getAdminsCount = async (
   return count ?? 0;
 };
 
-export const getAdmin = async (userId: string): Promise<Admin | null> => {
+export const getAdmin = async (id: string): Promise<Admin | null> => {
   const client = useSupabaseClient();
 
   const { data, error } = await client
     .from('admins')
     .select(ADMIN_SELECT)
-    .eq('user_id', userId)
+    .eq('id', id)
     .maybeSingle();
 
   if (error) throw error;
@@ -90,7 +90,7 @@ export const createAdmin = async (admin: AdminInsert): Promise<Admin> => {
 };
 
 export const updateAdmin = async (
-  userId: string,
+  id: string,
   updates: AdminUpdate
 ): Promise<Admin> => {
   const client = useSupabaseClient();
@@ -98,7 +98,7 @@ export const updateAdmin = async (
   const { data, error } = await client
     .from('admins')
     .update(updates)
-    .eq('user_id', userId)
+    .eq('id', id)
     .select(ADMIN_SELECT)
     .single();
 
@@ -107,10 +107,10 @@ export const updateAdmin = async (
   return data as unknown as Admin;
 };
 
-export const deleteAdmin = async (userId: string): Promise<void> => {
+export const deleteAdmin = async (id: string): Promise<void> => {
   const client = useSupabaseClient();
 
-  const { error } = await client.from('admins').delete().eq('user_id', userId);
+  const { error } = await client.from('admins').delete().eq('id', id);
 
   if (error) throw error;
 };

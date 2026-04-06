@@ -1,7 +1,7 @@
 create table public.maintenances (
   id          uuid primary key default gen_random_uuid(),
-  resident_id uuid not null references public.residents (user_id) on delete cascade,
-  admin_id    uuid references public.admins (user_id) on delete set null,
+  resident_id uuid not null references public.residents (id) on delete cascade,
+  admin_id    uuid references public.admins (id) on delete set null,
   lodgment_id uuid not null references public.lodgments (id),
   type        text not null
                 check (type in ('electrical', 'plumbing', 'equipment', 'hvac', 'other')),

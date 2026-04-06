@@ -1,8 +1,22 @@
-import { defineQueryOptions } from '@pinia/colada';
+import {
+  defineMutation,
+  defineQueryOptions,
+  useQueryCache,
+} from '@pinia/colada';
 
-import type { FacultyFilters } from './faculty.model';
+import type {
+  FacultyFilters,
+  FacultyInsert,
+  FacultyUpdate,
+} from './faculty.model';
 
-import { getFaculties, getFacultiesCount, getFaculty } from './faculty.service';
+import {
+  createFaculty,
+  getFaculties,
+  getFacultiesCount,
+  getFaculty,
+  updateFaculty,
+} from './faculty.service';
 
 export const FACULTY_QUERY_KEYS = {
   byId: (id: string) => [...FACULTY_QUERY_KEYS.root, id] as const,
@@ -37,3 +51,24 @@ export const facultyCountQuery = defineQueryOptions(
     query: () => getFacultiesCount(filters),
   })
 );
+
+export const useCreateFaculty = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: (faculty: FacultyInsert) => createFaculty(faculty),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: FACULTY_QUERY_KEYS.root });
+    },
+  };
+});
+
+export const useUpdateFaculty = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: ({ id, updates }: { id: string; updates: FacultyUpdate }) =>
+      updateFaculty(id, updates),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: FACULTY_QUERY_KEYS.root });
+    },
+  };
+});

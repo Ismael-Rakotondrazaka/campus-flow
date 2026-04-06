@@ -18,9 +18,7 @@ export const AdminRoleLabel: Record<AdminRole, string> = {
   [AdminRole.root]: 'Administrateur technique',
 };
 
-export type Admin = {
-  user: Tables<'users'>;
-} & Tables<'admins'>;
+export type Admin = Tables<'admins'>;
 
 export interface AdminFilters {
   limit?: number;

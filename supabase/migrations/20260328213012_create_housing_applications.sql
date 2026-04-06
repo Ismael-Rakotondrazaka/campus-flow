@@ -13,7 +13,7 @@ create table public.housing_applications (
   school_certificate_url text not null,
   faculty_id             uuid not null references public.faculties (id),
   academic_session_id    uuid not null references public.academic_sessions (id),
-  admin_id               uuid references public.admins (user_id) on delete set null,
+  admin_id               uuid references public.admins (id) on delete set null,
   lodgment_id            uuid references public.lodgments (id) on delete set null,
   status                 text not null default 'pending'
                            check (status in ('pending', 'accepted', 'refused', 'validated')),

@@ -1,14 +1,20 @@
 create table public.admins (
-  user_id    uuid primary key references public.users (id) on delete cascade,
-  role       text not null check (role in ('root', 'maintenance', 'renewal', 'housing_application')),
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
+  id           uuid primary key references auth.users (id) on delete cascade,
+  first_name   text not null,
+  last_name    text not null,
+  phone_number text not null,
+  image_url    text not null,
+  role         text not null check (role in ('root', 'maintenance', 'renewal', 'housing_application')),
+  created_at   timestamptz not null default now(),
+  updated_at   timestamptz not null default now(),
+  deleted_at   timestamptz
 );
 
 comment on table public.admins is 'Admin staff with one of four roles: root, maintenance, renewal, housing_application.';
 comment on column public.admins.role is 'root | maintenance | renewal | housing_application';
 
 create index admins_role_idx on public.admins (role);
+create index admins_deleted_at_idx on public.admins (deleted_at) where deleted_at is null;
 
 alter table public.admins enable row level security;
 

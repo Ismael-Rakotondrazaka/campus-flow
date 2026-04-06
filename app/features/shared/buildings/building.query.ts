@@ -1,11 +1,21 @@
-import { defineQueryOptions } from '@pinia/colada';
+import {
+  defineMutation,
+  defineQueryOptions,
+  useQueryCache,
+} from '@pinia/colada';
 
-import type { BuildingFilters } from './building.model';
+import type {
+  BuildingFilters,
+  BuildingInsert,
+  BuildingUpdate,
+} from './building.model';
 
 import {
+  createBuilding,
   getBuilding,
   getBuildings,
   getBuildingsCount,
+  updateBuilding,
 } from './building.service';
 
 /**
@@ -63,3 +73,24 @@ export const buildingCountQuery = defineQueryOptions(
     query: () => getBuildingsCount(filters),
   })
 );
+
+export const useCreateBuilding = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: (building: BuildingInsert) => createBuilding(building),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: BUILDING_QUERY_KEYS.root });
+    },
+  };
+});
+
+export const useUpdateBuilding = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: ({ id, updates }: { id: string; updates: BuildingUpdate }) =>
+      updateBuilding(id, updates),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: BUILDING_QUERY_KEYS.root });
+    },
+  };
+});

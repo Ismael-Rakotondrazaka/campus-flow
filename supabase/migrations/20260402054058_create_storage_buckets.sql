@@ -78,12 +78,12 @@ create policy "Users can delete their own post files"
     and (storage.foldername(name))[1] = auth.uid()::text
   );
 
-create policy "Residents can read their own housing application documents"
+create policy "Authenticated users can read photos from housing application documents"
   on storage.objects for select
   to authenticated
   using (
     bucket_id = 'housing-application-documents'
-    and (storage.foldername(name))[1] = auth.uid()::text
+    and storage.filename(name) like 'photo__%'
   );
 
 create policy "Admins can read all housing application documents"

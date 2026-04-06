@@ -26,7 +26,6 @@ export type Resident = {
   academic_session: Tables<'academic_sessions'>;
   faculty: Tables<'faculties'>;
   lodgment: Tables<'lodgments'>;
-  user: Tables<'users'>;
 } & Tables<'residents'>;
 
 export interface ResidentFilters {

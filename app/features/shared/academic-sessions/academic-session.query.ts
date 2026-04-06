@@ -1,12 +1,22 @@
-import { defineQueryOptions } from '@pinia/colada';
+import {
+  defineMutation,
+  defineQueryOptions,
+  useQueryCache,
+} from '@pinia/colada';
 
-import type { AcademicSessionFilters } from './academic-session.model';
+import type {
+  AcademicSessionFilters,
+  AcademicSessionInsert,
+  AcademicSessionUpdate,
+} from './academic-session.model';
 
 import {
+  createAcademicSession,
   getAcademicSession,
   getAcademicSessions,
   getAcademicSessionsCount,
   getActiveApplicationSession,
+  updateAcademicSession,
 } from './academic-session.service';
 
 export const ACADEMIC_SESSION_QUERY_KEYS = {
@@ -44,3 +54,30 @@ export const activeApplicationSessionQuery = defineQueryOptions(() => ({
   key: [...ACADEMIC_SESSION_QUERY_KEYS.root, 'active-application'] as const,
   query: () => getActiveApplicationSession(),
 }));
+
+export const useCreateAcademicSession = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: (session: AcademicSessionInsert) =>
+      createAcademicSession(session),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: ACADEMIC_SESSION_QUERY_KEYS.root });
+    },
+  };
+});
+
+export const useUpdateAcademicSession = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: ({
+      id,
+      updates,
+    }: {
+      id: string;
+      updates: AcademicSessionUpdate;
+    }) => updateAcademicSession(id, updates),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: ACADEMIC_SESSION_QUERY_KEYS.root });
+    },
+  };
+});

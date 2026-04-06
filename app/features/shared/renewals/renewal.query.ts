@@ -1,8 +1,22 @@
-import { defineQueryOptions } from '@pinia/colada';
+import {
+  defineMutation,
+  defineQueryOptions,
+  useQueryCache,
+} from '@pinia/colada';
 
-import type { RenewalFilters } from './renewal.model';
+import type {
+  RenewalFilters,
+  RenewalInsert,
+  RenewalUpdate,
+} from './renewal.model';
 
-import { getRenewal, getRenewals, getRenewalsCount } from './renewal.service';
+import {
+  createRenewal,
+  getRenewal,
+  getRenewals,
+  getRenewalsCount,
+  updateRenewal,
+} from './renewal.service';
 
 export const RENEWAL_QUERY_KEYS = {
   byId: (id: string) => [...RENEWAL_QUERY_KEYS.root, id] as const,
@@ -37,3 +51,24 @@ export const renewalCountQuery = defineQueryOptions(
     query: () => getRenewalsCount(filters),
   })
 );
+
+export const useCreateRenewal = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: (renewal: RenewalInsert) => createRenewal(renewal),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: RENEWAL_QUERY_KEYS.root });
+    },
+  };
+});
+
+export const useUpdateRenewal = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: ({ id, updates }: { id: string; updates: RenewalUpdate }) =>
+      updateRenewal(id, updates),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: RENEWAL_QUERY_KEYS.root });
+    },
+  };
+});

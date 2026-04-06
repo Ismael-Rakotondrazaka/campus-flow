@@ -1,15 +1,25 @@
-import { defineQueryOptions } from '@pinia/colada';
+import {
+  defineMutation,
+  defineQueryOptions,
+  useQueryCache,
+} from '@pinia/colada';
 
-import type { ResidentFilters } from './resident.model';
+import type {
+  ResidentFilters,
+  ResidentInsert,
+  ResidentUpdate,
+} from './resident.model';
 
 import {
+  createResident,
   getResident,
   getResidents,
   getResidentsCount,
+  updateResident,
 } from './resident.service';
 
 export const RESIDENT_QUERY_KEYS = {
-  byUserId: (userId: string) => [...RESIDENT_QUERY_KEYS.root, userId] as const,
+  byId: (id: string) => [...RESIDENT_QUERY_KEYS.root, id] as const,
 
   count: (filters: Omit<ResidentFilters, 'limit' | 'page'> = {}) =>
     [...RESIDENT_QUERY_KEYS.root, 'count', filters] as const,
@@ -28,10 +38,10 @@ export const residentListQuery = defineQueryOptions(
   })
 );
 
-export const residentByUserIdQuery = defineQueryOptions(
-  ({ userId }: { userId: string }) => ({
-    key: RESIDENT_QUERY_KEYS.byUserId(userId),
-    query: () => getResident(userId),
+export const residentByIdQuery = defineQueryOptions(
+  ({ id }: { id: string }) => ({
+    key: RESIDENT_QUERY_KEYS.byId(id),
+    query: () => getResident(id),
   })
 );
 
@@ -41,3 +51,24 @@ export const residentCountQuery = defineQueryOptions(
     query: () => getResidentsCount(filters),
   })
 );
+
+export const useCreateResident = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: (resident: ResidentInsert) => createResident(resident),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: RESIDENT_QUERY_KEYS.root });
+    },
+  };
+});
+
+export const useUpdateResident = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: ({ id, updates }: { id: string; updates: ResidentUpdate }) =>
+      updateResident(id, updates),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: RESIDENT_QUERY_KEYS.root });
+    },
+  };
+});

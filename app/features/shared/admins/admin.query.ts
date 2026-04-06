@@ -1,11 +1,21 @@
-import { defineQueryOptions } from '@pinia/colada';
+import {
+  defineMutation,
+  defineQueryOptions,
+  useQueryCache,
+} from '@pinia/colada';
 
-import type { AdminFilters } from './admin.model';
+import type { AdminFilters, AdminInsert, AdminUpdate } from './admin.model';
 
-import { getAdmin, getAdmins, getAdminsCount } from './admin.service';
+import {
+  createAdmin,
+  getAdmin,
+  getAdmins,
+  getAdminsCount,
+  updateAdmin,
+} from './admin.service';
 
 export const ADMIN_QUERY_KEYS = {
-  byUserId: (userId: string) => [...ADMIN_QUERY_KEYS.root, userId] as const,
+  byId: (id: string) => [...ADMIN_QUERY_KEYS.root, id] as const,
 
   count: (filters: Omit<AdminFilters, 'limit' | 'page'> = {}) =>
     [...ADMIN_QUERY_KEYS.root, 'count', filters] as const,
@@ -24,10 +34,10 @@ export const adminListQuery = defineQueryOptions(
   })
 );
 
-export const adminByUserIdQuery = defineQueryOptions(
-  ({ userId }: { userId: string }) => ({
-    key: ADMIN_QUERY_KEYS.byUserId(userId),
-    query: () => getAdmin(userId),
+export const adminByIdQuery = defineQueryOptions(
+  ({ id }: { id: string }) => ({
+    key: ADMIN_QUERY_KEYS.byId(id),
+    query: () => getAdmin(id),
   })
 );
 
@@ -37,3 +47,24 @@ export const adminCountQuery = defineQueryOptions(
     query: () => getAdminsCount(filters),
   })
 );
+
+export const useCreateAdmin = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: (admin: AdminInsert) => createAdmin(admin),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: ADMIN_QUERY_KEYS.root });
+    },
+  };
+});
+
+export const useUpdateAdmin = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: ({ id, updates }: { id: string; updates: AdminUpdate }) =>
+      updateAdmin(id, updates),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: ADMIN_QUERY_KEYS.root });
+    },
+  };
+});

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { SortingState } from '@tanstack/vue-table';
-
 import {
   FlexRender,
   getCoreRowModel,
@@ -22,7 +20,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import Button from '~/components/ui/button/Button.vue';
-import { valueUpdater } from '~/components/ui/table/utils';
 import {
   housingApplicationColumns,
   housingApplicationColumnsLength,
@@ -41,8 +38,6 @@ const housingApplications = computed(
   () => state.value?.data?.data ?? ([] as HousingApplication[])
 );
 
-const sorting = ref<SortingState>([]);
-
 const globalAcademicSessionId = useRouteQuery<
   string | undefined,
   string | undefined
@@ -58,12 +53,6 @@ const table = useVueTable({
   getCoreRowModel: getCoreRowModel(),
   getFilteredRowModel: getFilteredRowModel(),
   getSortedRowModel: getSortedRowModel(),
-  onSortingChange: updaterOrValue => valueUpdater(updaterOrValue, sorting),
-  state: {
-    get sorting() {
-      return sorting.value;
-    },
-  },
 });
 </script>
 

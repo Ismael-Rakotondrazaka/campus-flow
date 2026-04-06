@@ -1,11 +1,21 @@
-import { defineQueryOptions } from '@pinia/colada';
+import {
+  defineMutation,
+  defineQueryOptions,
+  useQueryCache,
+} from '@pinia/colada';
 
-import type { LodgmentFilters } from './lodgment.model';
+import type {
+  LodgmentFilters,
+  LodgmentInsert,
+  LodgmentUpdate,
+} from './lodgment.model';
 
 import {
+  createLodgment,
   getLodgment,
   getLodgments,
   getLodgmentsCount,
+  updateLodgment,
 } from './lodgment.service';
 
 export const LODGMENT_QUERY_KEYS = {
@@ -41,3 +51,24 @@ export const lodgmentCountQuery = defineQueryOptions(
     query: () => getLodgmentsCount(filters),
   })
 );
+
+export const useCreateLodgment = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: (lodgment: LodgmentInsert) => createLodgment(lodgment),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: LODGMENT_QUERY_KEYS.root });
+    },
+  };
+});
+
+export const useUpdateLodgment = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: ({ id, updates }: { id: string; updates: LodgmentUpdate }) =>
+      updateLodgment(id, updates),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: LODGMENT_QUERY_KEYS.root });
+    },
+  };
+});

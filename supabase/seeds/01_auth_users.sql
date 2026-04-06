@@ -1,6 +1,5 @@
 -- Seed: auth.users + auth.identities (password: password)
 -- 7 admins + 30 residents = 37 users
--- Trigger on_auth_user_created will auto-populate public.users from raw_app_meta_data
 
 INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, recovery_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at, confirmation_token, email_change, email_change_token_new, recovery_token) VALUES
   -- Admins

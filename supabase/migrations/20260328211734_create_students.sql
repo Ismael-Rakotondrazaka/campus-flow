@@ -1,5 +1,9 @@
 create table public.residents (
-  user_id             uuid primary key references public.users (id) on delete cascade,
+  id                  uuid primary key references auth.users (id) on delete cascade,
+  first_name          text not null,
+  last_name           text not null,
+  phone_number        text not null,
+  image_url           text not null,
   faculty_id          uuid not null references public.faculties (id),
   academic_session_id uuid not null references public.academic_sessions (id),
   lodgment_id         uuid not null references public.lodgments (id),
@@ -8,7 +12,8 @@ create table public.residents (
   emergency_number    text not null,
   nic                 text not null,
   created_at          timestamptz not null default now(),
-  updated_at          timestamptz not null default now()
+  updated_at          timestamptz not null default now(),
+  deleted_at          timestamptz
 );
 
 comment on table public.residents is 'Residents; one per user, linked to their lodgment and faculty.';
@@ -19,6 +24,7 @@ comment on column public.residents.origin is 'national | foreigner';
 create index residents_faculty_id_idx on public.residents (faculty_id);
 create index residents_lodgment_id_idx on public.residents (lodgment_id);
 create index residents_academic_session_id_idx on public.residents (academic_session_id);
+create index residents_deleted_at_idx on public.residents (deleted_at) where deleted_at is null;
 
 alter table public.residents enable row level security;
 
@@ -30,7 +36,7 @@ create policy "Admins can view all residents"
 create policy "Residents can view their own record"
   on public.residents for select
   to authenticated
-  using ((select auth.uid()) = user_id);
+  using ((select auth.uid()) = id);
 
 create policy "Housing application admins can create residents"
   on public.residents for insert
