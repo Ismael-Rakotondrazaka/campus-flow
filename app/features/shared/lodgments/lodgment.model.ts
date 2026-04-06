@@ -1,21 +1,48 @@
 import type { SortOrder } from '#imports';
 
-export const LodgmentStatuses = ['available', 'maintenance'] as const;
+export const LodgementOccupancyStatuses = [
+  'available',
+  'full',
+  'overbooked',
+] as const;
 
-export const LodgmentStatus = createEnumConstants(LodgmentStatuses);
+export const LodgementOccupancyStatus = createEnumConstants(
+  LodgementOccupancyStatuses
+);
 
-export type LodgmentStatus =
-  (typeof LodgmentStatus)[keyof typeof LodgmentStatus];
+export type LodgementOccupancyStatus =
+  (typeof LodgementOccupancyStatus)[keyof typeof LodgementOccupancyStatus];
 
-export const LodgmentStatusLabel: Record<LodgmentStatus, string> = {
-  [LodgmentStatus.available]: 'Disponible',
-  [LodgmentStatus.maintenance]: 'Maintenance',
+export const LodgementOccupancyStatusLabel: Record<
+  LodgementOccupancyStatus,
+  string
+> = {
+  [LodgementOccupancyStatus.available]: 'Disponible',
+  [LodgementOccupancyStatus.full]: 'Complet',
+  [LodgementOccupancyStatus.overbooked]: 'Surpeuplé',
+};
+
+export const LodgementOccupancyStatusColor: Record<
+  LodgementOccupancyStatus,
+  string
+> = {
+  [LodgementOccupancyStatus.available]: 'bg-green-500 text-white',
+  [LodgementOccupancyStatus.full]: 'bg-yellow-500 text-white',
+  [LodgementOccupancyStatus.overbooked]: 'bg-red-500 text-white',
+};
+
+export const getLodgementOccupancyStatus = (
+  residentsCount: number,
+  capacity: number
+): LodgementOccupancyStatus => {
+  if (residentsCount < capacity) return LodgementOccupancyStatus.available;
+  if (residentsCount === capacity) return LodgementOccupancyStatus.full;
+  return LodgementOccupancyStatus.overbooked;
 };
 
 export type Lodgment = {
   building: Tables<'buildings'>;
-  status: LodgmentStatus;
-} & Omit<Tables<'lodgments'>, 'status'>;
+} & Tables<'lodgments'>;
 
 export interface LodgmentFilters {
   building_id?: string;
@@ -24,9 +51,12 @@ export interface LodgmentFilters {
   orderBy?: LodgmentOrderBy;
   page?: number;
   sortOrder?: SortOrder;
-  status?: LodgmentStatus;
 }
 
 export type LodgmentInsert = TablesInsert<'lodgments'>;
-export type LodgmentOrderBy = 'created_at' | 'floor' | 'room_number';
+export type LodgmentOrderBy =
+  | 'building_id'
+  | 'created_at'
+  | 'floor'
+  | 'room_number';
 export type LodgmentUpdate = TablesUpdate<'lodgments'>;

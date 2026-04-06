@@ -29,10 +29,6 @@ export const getLodgments = async (
     query = query.eq('floor', filters.floor);
   }
 
-  if (filters.status) {
-    query = query.eq('status', filters.status);
-  }
-
   const page = filters.page ?? LodgmentConfig.PAGE_DEFAULT;
   const limit = filters.limit ?? LodgmentConfig.PAGE_SIZE_DEFAULT;
   const from = (page - 1) * limit;
@@ -78,10 +74,6 @@ export const getLodgmentsCount = async (
 
   if (filters.floor !== undefined) {
     query = query.eq('floor', filters.floor);
-  }
-
-  if (filters.status) {
-    query = query.eq('status', filters.status);
   }
 
   const { count, error } = await query;
