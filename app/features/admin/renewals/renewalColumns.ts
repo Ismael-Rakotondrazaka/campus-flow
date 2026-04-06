@@ -10,7 +10,11 @@ import RenewalStatusBadge from '~/features/shared/renewals/components/RenewalSta
 import { getUserFullname } from '~/features/shared/users/composables/useUserFullname';
 import { formatUserImageUrl } from '~/features/shared/users/composables/useUserImageUrl';
 
-export const renewalColumns: ColumnDef<Renewal>[] = [
+export const renewalColumnsLength: number = 6;
+
+export const renewalColumns = (params: {
+  getGlobalAcademicSessionId: () => string | undefined;
+}): ColumnDef<Renewal>[] => [
   {
     accessorKey: 'image_url',
     cell: ({ row }) => {
@@ -40,13 +44,6 @@ export const renewalColumns: ColumnDef<Renewal>[] = [
     id: 'fullname',
   },
   {
-    accessorFn: row => row.resident.email,
-    cell: ({ row }) =>
-      h('div', { class: 'lowercase' }, row.original.resident.email),
-    header: 'Email',
-    id: 'email',
-  },
-  {
     accessorFn: row => row.resident.phone_number,
     cell: ({ row }) => h('div', {}, row.original.resident.phone_number),
     header: 'Téléphone',
@@ -64,11 +61,7 @@ export const renewalColumns: ColumnDef<Renewal>[] = [
     accessorKey: 'created_at',
     cell: ({ row }) => {
       const date = new Date(row.getValue('created_at'));
-      return h(
-        'div',
-        {},
-        formatDate(date, 'DD/MM/YYYY HH:mm', { locales: 'fr' })
-      );
+      return h('div', {}, formatDate(date, 'DD/MM/YYYY', { locales: 'fr' }));
     },
     header: "Date d'envoi",
   },
@@ -85,6 +78,9 @@ export const renewalColumns: ColumnDef<Renewal>[] = [
             name: 'admin-root-renewals-renewalId',
             params: {
               renewalId: renewalId,
+            },
+            query: {
+              g_academic_session_id: params.getGlobalAcademicSessionId(),
             },
           },
         },
