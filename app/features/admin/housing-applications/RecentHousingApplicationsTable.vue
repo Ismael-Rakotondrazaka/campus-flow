@@ -1,11 +1,5 @@
 <script setup lang="ts">
-import {
-  FlexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getSortedRowModel,
-  useVueTable,
-} from '@tanstack/vue-table';
+import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table';
 import { Icon, NuxtLink } from '#components';
 
 import type { HousingApplication } from '~/features/shared/housing-applications/housing-application.model';
@@ -24,10 +18,25 @@ import {
   housingApplicationColumns,
   housingApplicationColumnsLength,
 } from '~/features/admin/housing-applications/housing-application-columns';
+import { AdminRole } from '~/features/shared/admins/admin.model';
 import { housingApplicationListQuery } from '~/features/shared/housing-applications/housing-application.query';
+
+const academicSession = useRouteQuery<string | undefined, string | undefined>(
+  'g_academic_session_id',
+  undefined
+);
+
+const authUser = useSupabaseUser();
 
 const { state } = useQuery(() =>
   housingApplicationListQuery({
+    academic_session_id: academicSession.value,
+    admin_id:
+      authUser.value?.sub && authUser.value?.app_metadata?.role
+        ? authUser.value?.app_metadata?.role === AdminRole.root
+          ? undefined
+          : authUser.value?.sub
+        : undefined,
     limit: 5,
     orderBy: 'created_at',
     sortOrder: SortOrder.desc,
@@ -51,8 +60,6 @@ const table = useVueTable({
   columns: housingApplicationColumns({ getGlobalAcademicSessionId }),
   data: housingApplications,
   getCoreRowModel: getCoreRowModel(),
-  getFilteredRowModel: getFilteredRowModel(),
-  getSortedRowModel: getSortedRowModel(),
 });
 </script>
 
