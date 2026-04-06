@@ -150,30 +150,42 @@ export type Database = {
       }
       buildings: {
         Row: {
+          capacity_remaining: number
           created_at: string
           deleted_at: string | null
           floors: number
           id: string
           illustration_url: string
+          lodgments_count: number
           name: string
+          residents_count: number
+          total_capacity: number
           updated_at: string
         }
         Insert: {
+          capacity_remaining?: number
           created_at?: string
           deleted_at?: string | null
           floors: number
           id?: string
           illustration_url: string
+          lodgments_count?: number
           name: string
+          residents_count?: number
+          total_capacity?: number
           updated_at?: string
         }
         Update: {
+          capacity_remaining?: number
           created_at?: string
           deleted_at?: string | null
           floors?: number
           id?: string
           illustration_url?: string
+          lodgments_count?: number
           name?: string
+          residents_count?: number
+          total_capacity?: number
           updated_at?: string
         }
         Relationships: []
@@ -653,6 +665,10 @@ export type Database = {
       has_admin_role: { Args: { p_role: string }; Returns: boolean }
       is_admin: { Args: never; Returns: boolean }
       is_resident: { Args: never; Returns: boolean }
+      update_building_occupancy: {
+        Args: { building_id_param: string }
+        Returns: undefined
+      }
       update_lodgment_occupancy: {
         Args: { lodgment_id_param: string }
         Returns: undefined
