@@ -88,6 +88,7 @@ export type HousingApplication = {
 
 export interface HousingApplicationFilters {
   academic_session_id?: string;
+  admin_id?: string;
   faculty_id?: string;
   gender?: Gender;
   include_deleted?: boolean;

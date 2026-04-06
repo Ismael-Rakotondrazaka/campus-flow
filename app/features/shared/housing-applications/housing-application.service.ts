@@ -33,6 +33,10 @@ export const getHousingApplications = async (
     query = query.eq('status', filters.status);
   }
 
+  if (filters.admin_id) {
+    query = query.eq('admin_id', filters.admin_id);
+  }
+
   if (filters.faculty_id) {
     query = query.eq('faculty_id', filters.faculty_id);
   }
@@ -144,6 +148,10 @@ export const getHousingApplicationsCount = async (
 
   if (filters.status) {
     query = query.eq('status', filters.status);
+  }
+
+  if (filters.admin_id) {
+    query = query.eq('admin_id', filters.admin_id);
   }
 
   if (filters.faculty_id) {
