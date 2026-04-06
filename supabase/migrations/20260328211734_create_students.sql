@@ -6,7 +6,7 @@ create table public.residents (
   image_url           text not null,
   faculty_id          uuid not null references public.faculties (id),
   academic_session_id uuid not null references public.academic_sessions (id),
-  lodgment_id         uuid not null references public.lodgments (id),
+  lodgment_id         uuid references public.lodgments (id),
   gender              text not null check (gender in ('male', 'female')),
   origin              text not null check (origin in ('national', 'foreigner')),
   emergency_number    text not null,
@@ -17,6 +17,7 @@ create table public.residents (
 );
 
 comment on table public.residents is 'Residents; one per user, linked to their lodgment and faculty.';
+comment on column public.residents.lodgment_id is 'Lodgment assignment; NULL when resident is not currently housed.';
 comment on column public.residents.nic is 'National Identity Card number.';
 comment on column public.residents.gender is 'male | female';
 comment on column public.residents.origin is 'national | foreigner';

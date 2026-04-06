@@ -307,10 +307,12 @@ export type Database = {
         Row: {
           building_id: string
           capacity: number
+          capacity_remaining: number
           created_at: string
           deleted_at: string | null
           floor: number
           id: string
+          residents_count: number
           room_number: number
           status: string
           updated_at: string
@@ -318,10 +320,12 @@ export type Database = {
         Insert: {
           building_id: string
           capacity: number
+          capacity_remaining?: number
           created_at?: string
           deleted_at?: string | null
           floor: number
           id?: string
+          residents_count?: number
           room_number: number
           status?: string
           updated_at?: string
@@ -329,10 +333,12 @@ export type Database = {
         Update: {
           building_id?: string
           capacity?: number
+          capacity_remaining?: number
           created_at?: string
           deleted_at?: string | null
           floor?: number
           id?: string
+          residents_count?: number
           room_number?: number
           status?: string
           updated_at?: string
@@ -647,6 +653,10 @@ export type Database = {
       has_admin_role: { Args: { p_role: string }; Returns: boolean }
       is_admin: { Args: never; Returns: boolean }
       is_resident: { Args: never; Returns: boolean }
+      update_lodgment_occupancy: {
+        Args: { lodgment_id_param: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
