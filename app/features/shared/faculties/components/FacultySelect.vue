@@ -143,7 +143,7 @@ watch(
                 @select="
                   () => {
                     selectedFaculty =
-                      selectedFaculty === faculty ? null : faculty;
+                      selectedFaculty?.id === faculty.id ? null : faculty;
                     open = false;
                   }
                 "
