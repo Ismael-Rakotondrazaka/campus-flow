@@ -25,6 +25,10 @@ export const getRenewals = async (
     .from('renewals')
     .select(RENEWAL_SELECT, { count: 'exact' });
 
+  if (!filters.include_deleted) {
+    query = query.is('deleted_at', null);
+  }
+
   if (filters.resident_id) {
     query = query.eq('resident_id', filters.resident_id);
   }
@@ -74,6 +78,10 @@ export const getRenewalsCount = async (
   let query = client
     .from('renewals')
     .select('*', { count: 'exact', head: true });
+
+  if (!filters.include_deleted) {
+    query = query.is('deleted_at', null);
+  }
 
   if (filters.resident_id) {
     query = query.eq('resident_id', filters.resident_id);

@@ -59,6 +59,7 @@ export interface RenewalFilters {
   academic_session_id?: string;
   admin_id?: string;
   faculty_id?: string;
+  include_deleted?: boolean;
   limit?: number;
   orderBy?: RenewalOrderBy;
   page?: number;

@@ -18,6 +18,10 @@ export const getAdmins = async (
 
   let query = client.from('admins').select(ADMIN_SELECT, { count: 'exact' });
 
+  if (!filters.include_deleted) {
+    query = query.is('deleted_at', null);
+  }
+
   if (filters.role) {
     query = query.eq('role', filters.role);
   }
@@ -49,6 +53,10 @@ export const getAdminsCount = async (
   const client = useSupabaseClient();
 
   let query = client.from('admins').select('*', { count: 'exact', head: true });
+
+  if (!filters.include_deleted) {
+    query = query.is('deleted_at', null);
+  }
 
   if (filters.role) {
     query = query.eq('role', filters.role);

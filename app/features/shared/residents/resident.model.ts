@@ -32,6 +32,7 @@ export interface ResidentFilters {
   academic_session_id?: string;
   faculty_id?: string;
   gender?: Gender;
+  include_deleted?: boolean;
   limit?: number;
   lodgment_id?: string;
   orderBy?: ResidentOrderBy;

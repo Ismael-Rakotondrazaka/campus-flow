@@ -21,6 +21,7 @@ export const AdminRoleLabel: Record<AdminRole, string> = {
 export type Admin = Tables<'admins'>;
 
 export interface AdminFilters {
+  include_deleted?: boolean;
   limit?: number;
   orderBy?: AdminOrderBy;
   page?: number;

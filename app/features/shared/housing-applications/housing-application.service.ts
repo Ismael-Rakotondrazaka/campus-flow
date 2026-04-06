@@ -25,6 +25,10 @@ export const getHousingApplications = async (
     .from('housing_applications')
     .select(HOUSING_APPLICATION_SELECT, { count: 'exact' });
 
+  if (!filters.include_deleted) {
+    query = query.is('deleted_at', null);
+  }
+
   if (filters.status) {
     query = query.eq('status', filters.status);
   }
@@ -133,6 +137,10 @@ export const getHousingApplicationsCount = async (
   let query = client
     .from('housing_applications')
     .select('*', { count: 'exact', head: true });
+
+  if (!filters.include_deleted) {
+    query = query.is('deleted_at', null);
+  }
 
   if (filters.status) {
     query = query.eq('status', filters.status);

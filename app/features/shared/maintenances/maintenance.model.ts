@@ -50,6 +50,7 @@ export type Maintenance = {
 
 export interface MaintenanceFilters {
   admin_id?: string;
+  include_deleted?: boolean;
   limit?: number;
   lodgment_id?: string;
   orderBy?: MaintenanceOrderBy;

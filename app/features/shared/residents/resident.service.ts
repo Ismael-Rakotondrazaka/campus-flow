@@ -25,6 +25,10 @@ export const getResidents = async (
     .from('residents')
     .select(RESIDENT_SELECT, { count: 'exact' });
 
+  if (!filters.include_deleted) {
+    query = query.is('deleted_at', null);
+  }
+
   if (filters.faculty_id) {
     query = query.eq('faculty_id', filters.faculty_id);
   }
@@ -74,6 +78,10 @@ export const getResidentsCount = async (
   let query = client
     .from('residents')
     .select('*', { count: 'exact', head: true });
+
+  if (!filters.include_deleted) {
+    query = query.is('deleted_at', null);
+  }
 
   if (filters.faculty_id) {
     query = query.eq('faculty_id', filters.faculty_id);

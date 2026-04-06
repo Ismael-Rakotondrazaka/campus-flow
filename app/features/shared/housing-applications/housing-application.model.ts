@@ -90,6 +90,7 @@ export interface HousingApplicationFilters {
   academic_session_id?: string;
   faculty_id?: string;
   gender?: Gender;
+  include_deleted?: boolean;
   limit?: number;
   orderBy?: HousingApplicationOrderBy;
   origin?: Origin;

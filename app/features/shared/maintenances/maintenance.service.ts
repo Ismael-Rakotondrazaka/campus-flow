@@ -25,6 +25,10 @@ export const getMaintenances = async (
     .from('maintenances')
     .select(MAINTENANCE_SELECT, { count: 'exact' });
 
+  if (!filters.include_deleted) {
+    query = query.is('deleted_at', null);
+  }
+
   if (filters.resident_id) {
     query = query.eq('resident_id', filters.resident_id);
   }
@@ -74,6 +78,10 @@ export const getMaintenancesCount = async (
   let query = client
     .from('maintenances')
     .select('*', { count: 'exact', head: true });
+
+  if (!filters.include_deleted) {
+    query = query.is('deleted_at', null);
+  }
 
   if (filters.resident_id) {
     query = query.eq('resident_id', filters.resident_id);
