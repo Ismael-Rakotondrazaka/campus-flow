@@ -153,7 +153,10 @@ export const updateResident = async (
 export const deleteResident = async (id: string): Promise<void> => {
   const client = useSupabaseClient();
 
-  const { error } = await client.from('residents').delete().eq('id', id);
+  const { error } = await client
+    .from('residents')
+    .update({ deleted_at: new Date().toISOString() })
+    .eq('id', id);
 
   if (error) throw error;
 };

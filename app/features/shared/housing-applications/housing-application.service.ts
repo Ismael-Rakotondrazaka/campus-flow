@@ -172,7 +172,7 @@ export const deleteHousingApplication = async (id: string): Promise<void> => {
 
   const { error } = await client
     .from('housing_applications')
-    .delete()
+    .update({ deleted_at: new Date().toISOString() })
     .eq('id', id);
 
   if (error) throw error;

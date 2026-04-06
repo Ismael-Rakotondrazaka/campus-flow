@@ -153,7 +153,10 @@ export const updateRenewal = async (
 export const deleteRenewal = async (id: string): Promise<void> => {
   const client = useSupabaseClient();
 
-  const { error } = await client.from('renewals').delete().eq('id', id);
+  const { error } = await client
+    .from('renewals')
+    .update({ deleted_at: new Date().toISOString() })
+    .eq('id', id);
 
   if (error) throw error;
 };

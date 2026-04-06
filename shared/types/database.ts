@@ -207,6 +207,7 @@ export type Database = {
           academic_session_id: string
           admin_id: string | null
           created_at: string
+          deleted_at: string | null
           email: string
           emergency_number: string
           faculty_id: string
@@ -229,6 +230,7 @@ export type Database = {
           academic_session_id: string
           admin_id?: string | null
           created_at?: string
+          deleted_at?: string | null
           email: string
           emergency_number: string
           faculty_id: string
@@ -251,6 +253,7 @@ export type Database = {
           academic_session_id?: string
           admin_id?: string | null
           created_at?: string
+          deleted_at?: string | null
           email?: string
           emergency_number?: string
           faculty_id?: string
@@ -414,6 +417,7 @@ export type Database = {
         Row: {
           admin_id: string | null
           created_at: string
+          deleted_at: string | null
           description: string | null
           end_at: string | null
           id: string
@@ -427,6 +431,7 @@ export type Database = {
         Insert: {
           admin_id?: string | null
           created_at?: string
+          deleted_at?: string | null
           description?: string | null
           end_at?: string | null
           id?: string
@@ -440,6 +445,7 @@ export type Database = {
         Update: {
           admin_id?: string | null
           created_at?: string
+          deleted_at?: string | null
           description?: string | null
           end_at?: string | null
           id?: string
@@ -479,6 +485,7 @@ export type Database = {
           academic_session_id: string
           admin_id: string | null
           created_at: string
+          deleted_at: string | null
           emergency_number: string
           faculty_id: string
           id: string
@@ -495,6 +502,7 @@ export type Database = {
           academic_session_id: string
           admin_id?: string | null
           created_at?: string
+          deleted_at?: string | null
           emergency_number: string
           faculty_id: string
           id?: string
@@ -511,6 +519,7 @@ export type Database = {
           academic_session_id?: string
           admin_id?: string | null
           created_at?: string
+          deleted_at?: string | null
           emergency_number?: string
           faculty_id?: string
           id?: string

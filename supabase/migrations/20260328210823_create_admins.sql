@@ -23,8 +23,13 @@ create policy "Admins can view all admin records"
   to authenticated
   using (public.is_admin());
 
-create policy "Root admins can manage admins"
-  on public.admins for all
+create policy "Root admins can insert admins"
+  on public.admins for insert
+  to authenticated
+  with check (public.has_admin_role('root'));
+
+create policy "Root admins can update admins"
+  on public.admins for update
   to authenticated
   using (public.has_admin_role('root'))
   with check (public.has_admin_role('root'));

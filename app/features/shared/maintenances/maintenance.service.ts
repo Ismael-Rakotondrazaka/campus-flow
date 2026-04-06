@@ -155,7 +155,10 @@ export const updateMaintenance = async (
 export const deleteMaintenance = async (id: string): Promise<void> => {
   const client = useSupabaseClient();
 
-  const { error } = await client.from('maintenances').delete().eq('id', id);
+  const { error } = await client
+    .from('maintenances')
+    .update({ deleted_at: new Date().toISOString() })
+    .eq('id', id);
 
   if (error) throw error;
 };

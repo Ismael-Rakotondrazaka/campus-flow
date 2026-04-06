@@ -18,6 +18,7 @@ create table public.renewals (
                            )),
   created_at             timestamptz not null default now(),
   updated_at             timestamptz not null default now(),
+  deleted_at             timestamptz,
   constraint renewals_resident_session_unique unique (resident_id, academic_session_id)
 );
 
@@ -32,6 +33,7 @@ create index renewals_academic_session_id_idx on public.renewals (academic_sessi
 create index renewals_status_idx on public.renewals (status);
 create index renewals_admin_id_idx on public.renewals (admin_id);
 create index renewals_created_at_idx on public.renewals (created_at desc);
+create index renewals_deleted_at_idx on public.renewals (deleted_at) where deleted_at is null;
 
 alter table public.renewals enable row level security;
 
@@ -70,11 +72,6 @@ create policy "Renewal admins can update renewals"
   to authenticated
   using (public.has_admin_role('renewal'))
   with check (public.has_admin_role('renewal'));
-
-create policy "Root admins can delete renewals"
-  on public.renewals for delete
-  to authenticated
-  using (public.has_admin_role('root'));
 
 create trigger update_renewals_updated_at
   before update on public.renewals

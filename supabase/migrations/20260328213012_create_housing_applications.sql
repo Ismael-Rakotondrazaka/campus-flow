@@ -24,6 +24,7 @@ create table public.housing_applications (
                            )),
   created_at             timestamptz not null default now(),
   updated_at             timestamptz not null default now(),
+  deleted_at             timestamptz,
   constraint housing_applications_email_session_unique unique (email, academic_session_id)
 );
 
@@ -38,6 +39,7 @@ create index housing_applications_academic_session_id_idx on public.housing_appl
 create index housing_applications_status_idx on public.housing_applications (status);
 create index housing_applications_email_idx on public.housing_applications (email);
 create index housing_applications_created_at_idx on public.housing_applications (created_at desc);
+create index housing_applications_deleted_at_idx on public.housing_applications (deleted_at) where deleted_at is null;
 
 alter table public.housing_applications enable row level security;
 
@@ -64,11 +66,6 @@ create policy "Housing application admins can update applications"
   to authenticated
   using (public.has_admin_role('housing_application'))
   with check (public.has_admin_role('housing_application'));
-
-create policy "Root admins can delete housing applications"
-  on public.housing_applications for delete
-  to authenticated
-  using (public.has_admin_role('root'));
 
 create trigger update_housing_applications_updated_at
   before update on public.housing_applications

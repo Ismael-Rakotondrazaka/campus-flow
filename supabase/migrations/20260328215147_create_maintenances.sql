@@ -11,7 +11,8 @@ create table public.maintenances (
   start_at    timestamptz,
   end_at      timestamptz,
   created_at  timestamptz not null default now(),
-  updated_at  timestamptz not null default now()
+  updated_at  timestamptz not null default now(),
+  deleted_at  timestamptz
 );
 
 comment on table public.maintenances is 'Maintenance requests submitted by residents for their lodgment.';
@@ -23,6 +24,7 @@ create index maintenances_resident_id_idx on public.maintenances (resident_id);
 create index maintenances_lodgment_id_idx on public.maintenances (lodgment_id);
 create index maintenances_status_idx on public.maintenances (status);
 create index maintenances_created_at_idx on public.maintenances (created_at desc);
+create index maintenances_deleted_at_idx on public.maintenances (deleted_at) where deleted_at is null;
 
 alter table public.maintenances enable row level security;
 
@@ -46,11 +48,6 @@ create policy "Maintenance admins can update maintenance requests"
   to authenticated
   using (public.has_admin_role('maintenance'))
   with check (public.has_admin_role('maintenance'));
-
-create policy "Root admins can delete maintenance requests"
-  on public.maintenances for delete
-  to authenticated
-  using (public.has_admin_role('root'));
 
 create trigger update_maintenances_updated_at
   before update on public.maintenances

@@ -110,7 +110,10 @@ export const updateAdmin = async (
 export const deleteAdmin = async (id: string): Promise<void> => {
   const client = useSupabaseClient();
 
-  const { error } = await client.from('admins').delete().eq('id', id);
+  const { error } = await client
+    .from('admins')
+    .update({ deleted_at: new Date().toISOString() })
+    .eq('id', id);
 
   if (error) throw error;
 };

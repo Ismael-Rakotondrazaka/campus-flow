@@ -49,11 +49,6 @@ create policy "Root and renewal admins can update residents"
   using (public.has_admin_role('renewal'))
   with check (public.has_admin_role('renewal'));
 
-create policy "Root admins can delete residents"
-  on public.residents for delete
-  to authenticated
-  using (public.has_admin_role('root'));
-
 create trigger update_residents_updated_at
   before update on public.residents
   for each row
