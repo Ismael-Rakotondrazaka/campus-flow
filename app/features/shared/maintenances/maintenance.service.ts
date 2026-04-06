@@ -12,7 +12,7 @@ import { MaintenanceConfig } from './maintenance.config';
 const MAINTENANCE_SELECT = `
   *,
   resident:resident_id(*),
-  lodgment:lodgment_id(*),
+  lodgment:lodgment_id(*, building:building_id(*)),
   maintainers:maintenance_maintainers(maintainer:maintainer_id(*), assigned_at)
 `;
 

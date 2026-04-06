@@ -40,8 +40,15 @@ export const MaintenanceStatusLabel: Record<MaintenanceStatus, string> = {
   [MaintenanceStatus.refused]: 'Refusé',
 };
 
+export const MaintenanceStatusColor: Record<MaintenanceStatus, string> = {
+  [MaintenanceStatus.accepted]: 'bg-blue-500 text-white',
+  [MaintenanceStatus.done]: 'bg-green-500 text-white',
+  [MaintenanceStatus.pending]: 'bg-yellow-500 text-white',
+  [MaintenanceStatus.refused]: 'bg-red-500 text-white',
+};
+
 export type Maintenance = {
-  lodgment: Tables<'lodgments'>;
+  lodgment: { building: Tables<'buildings'> } & Tables<'lodgments'>;
   maintainers: { assigned_at: string; maintainer: Tables<'maintainers'> }[];
   resident: Tables<'residents'>;
   status: MaintenanceStatus;

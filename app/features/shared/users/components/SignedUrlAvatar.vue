@@ -2,10 +2,13 @@
 import { useQuery } from '@pinia/colada';
 
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { housingApplicationSignedUrlQuery } from '~/features/shared/housing-applications/composables/useHousingApplicationSignedUrl';
-import { formatFallbackUrl } from '~/features/shared/users/composables/useUserImageUrl';
+
+import { storageSignedUrlQuery } from '../composables/useStorageSignedUrl';
+import { formatFallbackUrl } from '../composables/useUserImageUrl';
 
 interface Props {
+  bucket?: string;
+  dataSlot?: string;
   firstName?: null | string;
   imageUrl?: null | string;
   lastName?: null | string;
@@ -18,8 +21,11 @@ const isStoragePath = computed(
 );
 
 const { data: signedUrl } = useQuery(() => ({
-  ...housingApplicationSignedUrlQuery(props.imageUrl ?? ''),
-  enabled: isStoragePath.value,
+  ...storageSignedUrlQuery({
+    bucket: props.bucket ?? '',
+    path: props.imageUrl ?? '',
+  }),
+  enabled: isStoragePath.value && !!props.bucket,
 }));
 
 const fallbackUrl = computed(() =>
@@ -41,7 +47,7 @@ const fullname = computed(() => {
 </script>
 
 <template>
-  <Avatar>
+  <Avatar :data-slot="dataSlot">
     <AvatarImage :alt="fullname" :src="resolvedUrl" />
   </Avatar>
 </template>

@@ -6,7 +6,7 @@ import HousingApplicationsTable from '~/features/admin/housing-applications/Hous
 <template>
   <div class="container mx-auto p-2">
     <HeaderWithGlobalAcademicSessionSelect>
-      <h1 class="text-2xl font-bold">Gestion des demandes de réservation</h1>
+      <h1 class="text-2xl font-bold">Gestion des demandes de logement</h1>
     </HeaderWithGlobalAcademicSessionSelect>
     <HousingApplicationsTable />
   </div>

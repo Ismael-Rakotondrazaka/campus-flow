@@ -5,8 +5,9 @@ import { Icon, NuxtLink } from '#components';
 
 import type { HousingApplication } from '~/features/shared/housing-applications/housing-application.model';
 
-import HousingApplicationAvatar from '@/features/shared/housing-applications/components/HousingApplicationAvatar.vue';
+import { HOUSING_APPLICATION_DOCUMENTS_BUCKET } from '~/features/shared/housing-applications/housing-application.config';
 import HousingApplicationStatusBadge from '@/features/shared/housing-applications/components/HousingApplicationStatusBadge.vue';
+import SignedUrlAvatar from '~/features/shared/users/components/SignedUrlAvatar.vue';
 import { getUserFullname } from '~/features/shared/users/composables/useUserFullname';
 
 export const housingApplicationColumnsLength: number = 7;
@@ -18,7 +19,8 @@ export const housingApplicationColumns = (params: {
     accessorKey: 'image_url',
     cell: ({ row }) => {
       const { first_name, image_url, last_name } = row.original;
-      return h(HousingApplicationAvatar, {
+      return h(SignedUrlAvatar, {
+        bucket: HOUSING_APPLICATION_DOCUMENTS_BUCKET,
         firstName: first_name,
         imageUrl: image_url,
         lastName: last_name,
