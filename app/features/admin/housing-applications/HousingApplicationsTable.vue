@@ -26,6 +26,7 @@ import {
   housingApplicationColumns,
   housingApplicationColumnsLength,
 } from '~/features/admin/housing-applications/housing-application-columns';
+import { AdminRole } from '~/features/shared/admins/admin.model';
 import HousingApplicationStatusSelect from '~/features/shared/housing-applications/components/HousingApplicationStatusSelect.vue';
 import { HousingApplicationConfig } from '~/features/shared/housing-applications/housing-application.config';
 import { housingApplicationListQuery } from '~/features/shared/housing-applications/housing-application.query';
@@ -52,9 +53,17 @@ const limit = useRouteQuery<number>(
   }
 );
 
+const authUser = useSupabaseUser();
+
 const { state } = useQuery(() =>
   housingApplicationListQuery({
     academic_session_id: academicSession.value,
+    admin_id:
+      authUser.value?.sub && authUser.value?.app_metadata?.role
+        ? authUser.value?.app_metadata?.role === AdminRole.root
+          ? undefined
+          : authUser.value?.sub
+        : undefined,
     limit: limit.value,
     orderBy: 'created_at',
     page: page.value,

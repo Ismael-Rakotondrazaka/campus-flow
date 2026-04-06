@@ -28,6 +28,7 @@ import {
   renewalColumns,
   renewalColumnsLength,
 } from '~/features/admin/renewals/renewalColumns';
+import { AdminRole } from '~/features/shared/admins/admin.model';
 import FacultySelect from '~/features/shared/faculties/components/FacultySelect.vue';
 import PaginationComponent from '~/features/shared/paginations/components/PaginationComponent.vue';
 import RenewalStatusSelect from '~/features/shared/renewals/components/RenewalStatusSelect.vue';
@@ -46,10 +47,17 @@ const page = useRouteQuery<number>('page', RenewalConfig.PAGE_DEFAULT, {
 const limit = useRouteQuery<number>('limit', RenewalConfig.PAGE_SIZE_DEFAULT, {
   transform: Number,
 });
+const authUser = useSupabaseUser();
 
 const { state } = useQuery(() =>
   renewalListQuery({
     academic_session_id: academicSession.value,
+    admin_id:
+      authUser.value?.sub && authUser.value?.app_metadata?.role
+        ? authUser.value?.app_metadata?.role === AdminRole.root
+          ? undefined
+          : authUser.value?.sub
+        : undefined,
     faculty_id: faculty.value,
     limit: limit.value,
     orderBy: 'created_at',
