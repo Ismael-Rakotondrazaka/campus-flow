@@ -1,11 +1,5 @@
 <script setup lang="ts">
-import {
-  FlexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getSortedRowModel,
-  useVueTable,
-} from '@tanstack/vue-table';
+import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table';
 
 import type {
   HousingApplication,
@@ -90,8 +84,6 @@ const table = useVueTable({
   columns: housingApplicationColumns({ getGlobalAcademicSessionId }),
   data: housingApplications,
   getCoreRowModel: getCoreRowModel(),
-  getFilteredRowModel: getFilteredRowModel(),
-  getSortedRowModel: getSortedRowModel(),
 });
 
 const totalCount = computed(() => state.value?.data?.count ?? 0);

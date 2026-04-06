@@ -1,13 +1,5 @@
 <script setup lang="ts">
-import type { SortingState } from '@tanstack/vue-table';
-
-import {
-  FlexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getSortedRowModel,
-  useVueTable,
-} from '@tanstack/vue-table';
+import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table';
 
 import type {
   Renewal,
@@ -23,7 +15,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { valueUpdater } from '~/components/ui/table/utils';
 import {
   renewalColumns,
   renewalColumnsLength,
@@ -69,8 +60,6 @@ const { state } = useQuery(() =>
 
 const renewals = computed(() => state.value?.data?.data ?? ([] as Renewal[]));
 
-const sorting = ref<SortingState>([]);
-
 const globalAcademicSessionId = useRouteQuery<
   string | undefined,
   string | undefined
@@ -84,14 +73,6 @@ const table = useVueTable({
   columns: renewalColumns({ getGlobalAcademicSessionId }),
   data: renewals,
   getCoreRowModel: getCoreRowModel(),
-  getFilteredRowModel: getFilteredRowModel(),
-  getSortedRowModel: getSortedRowModel(),
-  onSortingChange: updaterOrValue => valueUpdater(updaterOrValue, sorting),
-  state: {
-    get sorting() {
-      return sorting.value;
-    },
-  },
 });
 
 const totalCount = computed(() => state.value?.data?.count ?? 0);
