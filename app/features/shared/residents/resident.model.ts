@@ -43,6 +43,7 @@ export interface ResidentFilters {
   orderBy?: ResidentOrderBy;
   origin?: Origin;
   page?: number;
+  search?: string;
   sortOrder?: SortOrder;
 }
 

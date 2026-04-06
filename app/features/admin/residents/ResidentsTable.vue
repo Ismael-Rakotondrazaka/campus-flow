@@ -3,6 +3,7 @@ import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table';
 
 import type { Resident } from '~/features/shared/residents/resident.model';
 
+import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   Table,
@@ -26,6 +27,7 @@ const globalAcademicSessionId = useRouteQuery<
   string | undefined
 >('g_academic_session_id', undefined);
 const building = useRouteQuery<string | undefined>('building_id', undefined);
+const search = useRouteQuery<string | undefined>('search', undefined);
 const page = useRouteQuery<number>('page', ResidentConfig.PAGE_DEFAULT, {
   transform: Number,
 });
@@ -40,6 +42,7 @@ const { state } = useQuery(() =>
     limit: limit.value,
     orderBy: 'created_at',
     page: page.value,
+    search: search.value,
     sortOrder: SortOrder.desc,
   })
 );
@@ -67,7 +70,7 @@ watch(totalPages, pages => {
   }
 });
 
-watch([building, globalAcademicSessionId], () => {
+watch([building, globalAcademicSessionId, search], () => {
   page.value = ResidentConfig.PAGE_DEFAULT;
 });
 
@@ -89,7 +92,8 @@ watch(limit, value => {
 
 <template>
   <div class="w-full">
-    <div class="mb-2 flex items-center justify-end gap-2">
+    <div class="mb-2 flex items-center justify-between gap-2">
+      <Input v-model="search" type="text" placeholder="Rechercher..." />
       <BuildingSelect v-model="building" class="w-56" />
     </div>
 

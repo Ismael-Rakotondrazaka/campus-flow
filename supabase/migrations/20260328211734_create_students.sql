@@ -2,6 +2,7 @@ create table public.residents (
   id                  uuid primary key references auth.users (id) on delete cascade,
   first_name          text not null,
   last_name           text not null,
+  email               text not null,
   phone_number        text not null,
   image_url           text not null,
   faculty_id          uuid not null references public.faculties (id),
@@ -17,6 +18,7 @@ create table public.residents (
 );
 
 comment on table public.residents is 'Residents; one per user, linked to their lodgment and faculty.';
+comment on column public.residents.email is 'Email address of the resident.';
 comment on column public.residents.lodgment_id is 'Lodgment assignment; NULL when resident is not currently housed.';
 comment on column public.residents.nic is 'National Identity Card number.';
 comment on column public.residents.gender is 'male | female';

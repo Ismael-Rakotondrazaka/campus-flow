@@ -326,7 +326,6 @@ export type Database = {
           id: string
           residents_count: number
           room_number: number
-          status: string
           updated_at: string
         }
         Insert: {
@@ -339,7 +338,6 @@ export type Database = {
           id?: string
           residents_count?: number
           room_number: number
-          status?: string
           updated_at?: string
         }
         Update: {
@@ -352,7 +350,6 @@ export type Database = {
           id?: string
           residents_count?: number
           room_number?: number
-          status?: string
           updated_at?: string
         }
         Relationships: [
@@ -586,6 +583,7 @@ export type Database = {
           academic_session_id: string
           created_at: string
           deleted_at: string | null
+          email: string
           emergency_number: string
           faculty_id: string
           first_name: string
@@ -603,6 +601,7 @@ export type Database = {
           academic_session_id: string
           created_at?: string
           deleted_at?: string | null
+          email: string
           emergency_number: string
           faculty_id: string
           first_name: string
@@ -620,6 +619,7 @@ export type Database = {
           academic_session_id?: string
           created_at?: string
           deleted_at?: string | null
+          email?: string
           emergency_number?: string
           faculty_id?: string
           first_name?: string

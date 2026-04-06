@@ -62,6 +62,13 @@ export const getResidents = async (
     query = query.eq('origin', filters.origin);
   }
 
+  if (filters.search) {
+    const searchTerm = `%${filters.search}%`;
+    query = query.or(
+      `first_name.ilike.${searchTerm},last_name.ilike.${searchTerm},email.ilike.${searchTerm},phone_number.ilike.${searchTerm},nic.ilike.${searchTerm}`
+    );
+  }
+
   const page = filters.page ?? ResidentConfig.PAGE_DEFAULT;
   const limit = filters.limit ?? ResidentConfig.PAGE_SIZE_DEFAULT;
   const from = (page - 1) * limit;
@@ -118,6 +125,13 @@ export const getResidentsCount = async (
 
   if (filters.origin) {
     query = query.eq('origin', filters.origin);
+  }
+
+  if (filters.search) {
+    const searchTerm = `%${filters.search}%`;
+    query = query.or(
+      `first_name.ilike.${searchTerm},last_name.ilike.${searchTerm},email.ilike.${searchTerm},phone_number.ilike.${searchTerm},nic.ilike.${searchTerm}`
+    );
   }
 
   const { count, error } = await query;

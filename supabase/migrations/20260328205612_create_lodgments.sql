@@ -4,8 +4,6 @@ create table public.lodgments (
   floor       integer not null,
   room_number integer not null,
   capacity    integer not null check (capacity > 0),
-  status      text not null default 'available'
-                check (status in ('available', 'maintenance')),
   created_at  timestamptz not null default now(),
   updated_at  timestamptz not null default now(),
   deleted_at  timestamptz,
@@ -13,10 +11,8 @@ create table public.lodgments (
 );
 
 comment on table public.lodgments is 'Individual rooms within a building.';
-comment on column public.lodgments.status is 'available | maintenance';
 
 create index lodgments_building_id_idx on public.lodgments (building_id);
-create index lodgments_status_idx on public.lodgments (status) where deleted_at is null;
 create index lodgments_deleted_at_idx on public.lodgments (deleted_at) where deleted_at is null;
 
 alter table public.lodgments enable row level security;
