@@ -34,6 +34,7 @@ export type Resident = {
 
 export interface ResidentFilters {
   academic_session_id?: string;
+  building_id?: string;
   faculty_id?: string;
   gender?: Gender;
   include_deleted?: boolean;

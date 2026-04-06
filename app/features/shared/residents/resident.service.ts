@@ -16,14 +16,23 @@ const RESIDENT_SELECT = `
   lodgment:lodgment_id(*,building:building_id(*))
 `;
 
+const RESIDENT_SELECT_INNER = `
+  *,
+  faculty:faculty_id(*),
+  academic_session:academic_session_id(*),
+  lodgment:lodgment_id!inner(*,building:building_id(*))
+`;
+
 export const getResidents = async (
   filters: ResidentFilters
 ): Promise<PaginationResult<Resident>> => {
   const client = useSupabaseClient();
 
-  let query = client
-    .from('residents')
-    .select(RESIDENT_SELECT, { count: 'exact' });
+  const selectQuery = filters.building_id
+    ? RESIDENT_SELECT_INNER
+    : RESIDENT_SELECT;
+
+  let query = client.from('residents').select(selectQuery, { count: 'exact' });
 
   if (!filters.include_deleted) {
     query = query.is('deleted_at', null);
@@ -35,6 +44,10 @@ export const getResidents = async (
 
   if (filters.academic_session_id) {
     query = query.eq('academic_session_id', filters.academic_session_id);
+  }
+
+  if (filters.building_id) {
+    query = query.eq('lodgment.building_id', filters.building_id);
   }
 
   if (filters.lodgment_id) {
@@ -89,6 +102,10 @@ export const getResidentsCount = async (
 
   if (filters.academic_session_id) {
     query = query.eq('academic_session_id', filters.academic_session_id);
+  }
+
+  if (filters.building_id) {
+    query = query.eq('lodgment.building_id', filters.building_id);
   }
 
   if (filters.lodgment_id) {

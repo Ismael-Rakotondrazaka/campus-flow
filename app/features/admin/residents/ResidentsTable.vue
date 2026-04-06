@@ -16,6 +16,7 @@ import {
   residentColumns,
   residentColumnsLength,
 } from '~/features/admin/residents/resident-columns';
+import BuildingSelect from '~/features/shared/buildings/components/BuildingSelect.vue';
 import PaginationComponent from '~/features/shared/paginations/components/PaginationComponent.vue';
 import { ResidentConfig } from '~/features/shared/residents/resident.config';
 import { residentListQuery } from '~/features/shared/residents/resident.query';
@@ -24,6 +25,7 @@ const globalAcademicSessionId = useRouteQuery<
   string | undefined,
   string | undefined
 >('g_academic_session_id', undefined);
+const building = useRouteQuery<string | undefined>('building_id', undefined);
 const page = useRouteQuery<number>('page', ResidentConfig.PAGE_DEFAULT, {
   transform: Number,
 });
@@ -34,6 +36,7 @@ const limit = useRouteQuery<number>('limit', ResidentConfig.PAGE_SIZE_DEFAULT, {
 const { state } = useQuery(() =>
   residentListQuery({
     academic_session_id: globalAcademicSessionId.value,
+    building_id: building.value,
     limit: limit.value,
     orderBy: 'created_at',
     page: page.value,
@@ -64,7 +67,7 @@ watch(totalPages, pages => {
   }
 });
 
-watch([globalAcademicSessionId], () => {
+watch([building, globalAcademicSessionId], () => {
   page.value = ResidentConfig.PAGE_DEFAULT;
 });
 
@@ -86,6 +89,10 @@ watch(limit, value => {
 
 <template>
   <div class="w-full">
+    <div class="mb-2 flex items-center justify-end gap-2">
+      <BuildingSelect v-model="building" class="w-56" />
+    </div>
+
     <div class="mb-2 rounded-md border">
       <Table>
         <TableHeader>
