@@ -21,24 +21,44 @@ interface Menu {
   to: NuxtLinkProps['to'];
 }
 
+const academicSession = useRouteQuery<string | undefined, string | undefined>(
+  'g_academic_session_id',
+  undefined
+);
+
 const menus: Menu[] = [
   {
     icon: 'mdi:view-dashboard',
     id: 'dashboard',
     label: 'Tableau de bord',
-    to: { name: 'admin-maintenance-dashboard' },
+    to: {
+      name: 'admin-maintenance-dashboard',
+      query: academicSession.value
+        ? { g_academic_session_id: academicSession.value }
+        : undefined,
+    },
   },
   {
     icon: 'mdi:wrench',
     id: 'maintenances',
     label: 'Maintenances',
-    to: { name: 'admin-maintenance-maintenances' },
+    to: {
+      name: 'admin-maintenance-maintenances',
+      query: academicSession.value
+        ? { g_academic_session_id: academicSession.value }
+        : undefined,
+    },
   },
   {
     icon: 'mdi:account-hard-hat',
     id: 'maintainers',
     label: 'Maintenanciers',
-    to: { name: 'admin-maintenance-maintainers' },
+    to: {
+      name: 'admin-maintenance-maintainers',
+      query: academicSession.value
+        ? { g_academic_session_id: academicSession.value }
+        : undefined,
+    },
   },
 ];
 </script>

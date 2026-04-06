@@ -26,31 +26,31 @@ const menus: Menu[] = [
     icon: 'mdi:view-dashboard',
     id: 'dashboard',
     label: 'Tableau de bord',
-    to: { name: 'residents-dashboard' },
+    to: { name: 'resident-dashboard' },
   },
   {
     icon: 'mdi:refresh',
     id: 'renewals',
     label: 'Renouvellements',
-    to: { name: 'residents-renewals' },
+    to: { name: 'resident-renewals' },
   },
   {
     icon: 'mdi:bullhorn',
     id: 'announcements',
     label: 'Annonces',
-    to: { name: 'residents-announcements' },
+    to: { name: 'resident-announcements' },
   },
   {
     icon: 'mdi:wrench',
     id: 'maintenances',
     label: 'Maintenances',
-    to: { name: 'residents-maintenances' },
+    to: { name: 'resident-maintenances' },
   },
   {
     icon: 'mdi:cog',
     id: 'settings',
     label: 'Paramètres',
-    to: { name: 'residents-settings' },
+    to: { name: 'resident-settings' },
   },
 ];
 </script>

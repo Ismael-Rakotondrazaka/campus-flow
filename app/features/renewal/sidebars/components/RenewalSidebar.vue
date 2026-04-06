@@ -21,18 +21,33 @@ interface Menu {
   to: NuxtLinkProps['to'];
 }
 
+const academicSession = useRouteQuery<string | undefined, string | undefined>(
+  'g_academic_session_id',
+  undefined
+);
+
 const menus: Menu[] = [
   {
     icon: 'mdi:view-dashboard',
     id: 'dashboard',
     label: 'Tableau de bord',
-    to: { name: 'admin-renewal-dashboard' },
+    to: {
+      name: 'admin-renewal-dashboard',
+      query: academicSession.value
+        ? { g_academic_session_id: academicSession.value }
+        : undefined,
+    },
   },
   {
     icon: 'mdi:refresh',
     id: 'renewals',
     label: 'Renouvellements',
-    to: { name: 'admin-renewal-renewals' },
+    to: {
+      name: 'admin-renewal-renewals',
+      query: academicSession.value
+        ? { g_academic_session_id: academicSession.value }
+        : undefined,
+    },
   },
 ];
 </script>

@@ -21,24 +21,44 @@ interface Menu {
   to: NuxtLinkProps['to'];
 }
 
+const academicSession = useRouteQuery<string | undefined, string | undefined>(
+  'g_academic_session_id',
+  undefined
+);
+
 const menus: Menu[] = [
   {
     icon: 'mdi:view-dashboard',
     id: 'dashboard',
     label: 'Tableau de bord',
-    to: { name: 'admin-housing-application-dashboard' },
+    to: {
+      name: 'admin-housing-application-dashboard',
+      query: academicSession.value
+        ? { g_academic_session_id: academicSession.value }
+        : undefined,
+    },
   },
   {
     icon: 'mdi:office-building',
     id: 'buildings',
     label: 'Bâtiments',
-    to: { name: 'admin-housing-application-buildings' },
+    to: {
+      name: 'admin-housing-application-buildings',
+      query: academicSession.value
+        ? { g_academic_session_id: academicSession.value }
+        : undefined,
+    },
   },
   {
     icon: 'mdi:bed',
     id: 'lodgments',
     label: 'Logements',
-    to: { name: 'admin-housing-application-lodgments' },
+    to: {
+      name: 'admin-housing-application-lodgments',
+      query: academicSession.value
+        ? { g_academic_session_id: academicSession.value }
+        : undefined,
+    },
   },
   {
     icon: 'mdi:calendar-check',

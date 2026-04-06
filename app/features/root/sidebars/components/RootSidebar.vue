@@ -21,80 +21,145 @@ interface Menu {
   to: NuxtLinkProps['to'];
 }
 
-const menus: Menu[] = [
+const academicSession = useRouteQuery<string | undefined, string | undefined>(
+  'g_academic_session_id',
+  undefined
+);
+
+const menus = computed<Menu[]>(() => [
   {
     icon: 'mdi:view-dashboard',
     id: 'dashboard',
     label: 'Tableau de bord',
-    to: { name: 'admin-root-dashboard' },
+    to: {
+      name: 'admin-root-dashboard',
+      query: academicSession.value
+        ? { g_academic_session_id: academicSession.value }
+        : undefined,
+    },
   },
   {
     icon: 'mdi:shield-account',
     id: 'admins',
     label: 'Administrateurs',
-    to: { name: 'admin-root-admins' },
+    to: {
+      name: 'admin-root-admins',
+      query: academicSession.value
+        ? { g_academic_session_id: academicSession.value }
+        : undefined,
+    },
   },
   {
     icon: 'mdi:account',
     id: 'users',
     label: 'Utilisateurs',
-    to: { name: 'admin-root-users' },
+    to: {
+      name: 'admin-root-users',
+      query: academicSession.value
+        ? { g_academic_session_id: academicSession.value }
+        : undefined,
+    },
   },
   {
     icon: 'mdi:account-group',
     id: 'residents',
     label: 'Résidents',
-    to: { name: 'admin-root-residents' },
+    to: {
+      name: 'admin-root-residents',
+      query: academicSession.value
+        ? { g_academic_session_id: academicSession.value }
+        : undefined,
+    },
   },
   {
     icon: 'mdi:domain',
     id: 'faculties',
     label: 'Facultés',
-    to: { name: 'admin-root-faculties' },
+    to: {
+      name: 'admin-root-faculties',
+      query: academicSession.value
+        ? { g_academic_session_id: academicSession.value }
+        : undefined,
+    },
   },
   {
     icon: 'mdi:calendar-clock',
     id: 'academic-sessions',
     label: 'Sessions académiques',
-    to: { name: 'admin-root-academic-sessions' },
+    to: {
+      name: 'admin-root-academic-sessions',
+      query: academicSession.value
+        ? { g_academic_session_id: academicSession.value }
+        : undefined,
+    },
   },
   {
     icon: 'mdi:bullhorn',
     id: 'announcements',
     label: 'Annonces',
-    to: { name: 'admin-root-announcements' },
+    to: {
+      name: 'admin-root-announcements',
+      query: academicSession.value
+        ? { g_academic_session_id: academicSession.value }
+        : undefined,
+    },
   },
   {
     icon: 'mdi:office-building',
     id: 'buildings',
     label: 'Bâtiments',
-    to: { name: 'admin-root-buildings' },
+    to: {
+      name: 'admin-root-buildings',
+      query: academicSession.value
+        ? { g_academic_session_id: academicSession.value }
+        : undefined,
+    },
   },
   {
     icon: 'mdi:bed',
     id: 'lodgments',
     label: 'Logements',
-    to: { name: 'admin-root-lodgments' },
+    to: {
+      name: 'admin-root-lodgments',
+      query: academicSession.value
+        ? { g_academic_session_id: academicSession.value }
+        : undefined,
+    },
   },
   {
     icon: 'mdi:calendar-check',
     id: 'housing-applications',
     label: 'Demandes de Logement',
-    to: { name: 'admin-root-housing-applications' },
+    to: {
+      name: 'admin-root-housing-applications',
+      query: academicSession.value
+        ? { g_academic_session_id: academicSession.value }
+        : undefined,
+    },
   },
   {
     icon: 'mdi:file-refresh',
     id: 'renewals',
     label: 'Renouvellements',
-    to: { name: 'admin-root-renewals' },
+    to: {
+      name: 'admin-root-renewals',
+      query: academicSession.value
+        ? { g_academic_session_id: academicSession.value }
+        : undefined,
+    },
   },
   {
     icon: 'mdi:wrench',
     id: 'maintenances',
     label: 'Maintenances',
-    to: { name: 'admin-root-maintenances' },
+    to: {
+      name: 'admin-root-maintenances',
+      query: academicSession.value
+        ? { g_academic_session_id: academicSession.value }
+        : undefined,
+    },
   },
-];
+]);
 </script>
 
 <template>
