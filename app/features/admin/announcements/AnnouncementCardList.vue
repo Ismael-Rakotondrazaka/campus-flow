@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import type { Announcement } from '~/features/shared/announcements/announcement.model';
+import type {
+  Announcement,
+  AnnouncementStatus,
+} from '~/features/shared/announcements/announcement.model';
 
 import { Skeleton } from '@/components/ui/skeleton';
 import AnnouncementCard from '~/features/admin/announcements/AnnouncementCard.vue';
 import { AnnouncementConfig } from '~/features/shared/announcements/announcement.config';
 import { announcementListQuery } from '~/features/shared/announcements/announcement.query';
+import AnnouncementStatusSelect from '~/features/shared/announcements/components/AnnouncementStatusSelect.vue';
 import PaginationComponent from '~/features/shared/paginations/components/PaginationComponent.vue';
 
 import AnnouncementDeleteModal from './AnnouncementDeleteModal.vue';
@@ -20,6 +24,7 @@ const limit = useRouteQuery<number>(
   }
 );
 const search = useRouteQuery<string>('search', '');
+const status = useRouteQuery<'all' | AnnouncementStatus>('status', 'all');
 
 const { state } = useQuery(() =>
   announcementListQuery({
@@ -27,6 +32,7 @@ const { state } = useQuery(() =>
     orderBy: 'created_at',
     page: page.value,
     search: search.value || undefined,
+    status: status.value === 'all' ? undefined : status.value,
   })
 );
 
@@ -45,7 +51,7 @@ watch(totalPages, pages => {
   }
 });
 
-watch([search], () => {
+watch([search, status], () => {
   page.value = AnnouncementConfig.PAGE_DEFAULT;
 });
 
@@ -80,13 +86,14 @@ const handleAnnouncementDeleted = () => {
 
 <template>
   <div class="w-full space-y-4">
-    <div class="flex items-center justify-between gap-2">
+    <div class="flex flex-wrap items-center justify-between gap-2">
       <Input
         v-model="search"
         type="text"
         placeholder="Rechercher une annonce..."
         class="max-w-xs"
       />
+      <AnnouncementStatusSelect v-model="status" />
     </div>
 
     <template v-if="state.status === 'pending'">
