@@ -12,6 +12,7 @@ import type {
 
 import {
   createAnnouncement,
+  deleteAnnouncement,
   getAnnouncement,
   getAnnouncements,
   getAnnouncementsCount,
@@ -68,6 +69,16 @@ export const useUpdateAnnouncement = defineMutation(() => {
   return {
     mutation: ({ id, updates }: { id: string; updates: AnnouncementUpdate }) =>
       updateAnnouncement(id, updates),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: ANNOUNCEMENT_QUERY_KEYS.root });
+    },
+  };
+});
+
+export const useDeleteAnnouncement = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: (id: string) => deleteAnnouncement(id),
     onSuccess: () => {
       queryCache.invalidateQueries({ key: ANNOUNCEMENT_QUERY_KEYS.root });
     },

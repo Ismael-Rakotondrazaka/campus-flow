@@ -12,6 +12,7 @@ import type {
 
 import {
   createBuilding,
+  deleteBuilding,
   getBuilding,
   getBuildings,
   getBuildingsCount,
@@ -89,6 +90,16 @@ export const useUpdateBuilding = defineMutation(() => {
   return {
     mutation: ({ id, updates }: { id: string; updates: BuildingUpdate }) =>
       updateBuilding(id, updates),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: BUILDING_QUERY_KEYS.root });
+    },
+  };
+});
+
+export const useDeleteBuilding = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: (id: string) => deleteBuilding(id),
     onSuccess: () => {
       queryCache.invalidateQueries({ key: BUILDING_QUERY_KEYS.root });
     },

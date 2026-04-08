@@ -12,6 +12,11 @@ export const AnnouncementStatusLabel: Record<AnnouncementStatus, string> = {
   [AnnouncementStatus.published]: 'Publié',
 };
 
+export const AnnouncementStatusColor: Record<AnnouncementStatus, string> = {
+  [AnnouncementStatus.draft]: 'bg-gray-500 text-white',
+  [AnnouncementStatus.published]: 'bg-blue-500 text-white',
+};
+
 export type Announcement = {
   status: AnnouncementStatus;
 } & Omit<Tables<'announcements'>, 'status'>;

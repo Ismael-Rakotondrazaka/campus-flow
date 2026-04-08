@@ -12,6 +12,7 @@ import type {
 
 import {
   createFaculty,
+  deleteFaculty,
   getFaculties,
   getFacultiesCount,
   getFaculty,
@@ -67,6 +68,16 @@ export const useUpdateFaculty = defineMutation(() => {
   return {
     mutation: ({ id, updates }: { id: string; updates: FacultyUpdate }) =>
       updateFaculty(id, updates),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: FACULTY_QUERY_KEYS.root });
+    },
+  };
+});
+
+export const useDeleteFaculty = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: (id: string) => deleteFaculty(id),
     onSuccess: () => {
       queryCache.invalidateQueries({ key: FACULTY_QUERY_KEYS.root });
     },

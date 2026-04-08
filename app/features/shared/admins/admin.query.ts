@@ -8,6 +8,7 @@ import type { AdminFilters, AdminInsert, AdminUpdate } from './admin.model';
 
 import {
   createAdmin,
+  deleteAdmin,
   getAdmin,
   getAdmins,
   getAdminsCount,
@@ -63,6 +64,16 @@ export const useUpdateAdmin = defineMutation(() => {
   return {
     mutation: ({ id, updates }: { id: string; updates: AdminUpdate }) =>
       updateAdmin(id, updates),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: ADMIN_QUERY_KEYS.root });
+    },
+  };
+});
+
+export const useDeleteAdmin = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: (id: string) => deleteAdmin(id),
     onSuccess: () => {
       queryCache.invalidateQueries({ key: ADMIN_QUERY_KEYS.root });
     },

@@ -12,6 +12,7 @@ import type {
 
 import {
   createAcademicSession,
+  deleteAcademicSession,
   getAcademicSession,
   getAcademicSessions,
   getAcademicSessionsCount,
@@ -76,6 +77,16 @@ export const useUpdateAcademicSession = defineMutation(() => {
       id: string;
       updates: AcademicSessionUpdate;
     }) => updateAcademicSession(id, updates),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: ACADEMIC_SESSION_QUERY_KEYS.root });
+    },
+  };
+});
+
+export const useDeleteAcademicSession = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: (id: string) => deleteAcademicSession(id),
     onSuccess: () => {
       queryCache.invalidateQueries({ key: ACADEMIC_SESSION_QUERY_KEYS.root });
     },

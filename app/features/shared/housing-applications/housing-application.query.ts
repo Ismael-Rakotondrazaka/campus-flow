@@ -11,6 +11,7 @@ import type {
 
 import {
   createHousingApplication,
+  deleteHousingApplication,
   getHousingApplication,
   getHousingApplications,
   getHousingApplicationsCount,
@@ -55,6 +56,18 @@ export const useCreateHousingApplication = defineMutation(() => {
   return {
     mutation: (application: HousingApplicationInsert) =>
       createHousingApplication(application),
+    onSuccess: () => {
+      queryCache.invalidateQueries({
+        key: HOUSING_APPLICATION_QUERY_KEYS.root,
+      });
+    },
+  };
+});
+
+export const useDeleteHousingApplication = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: (id: string) => deleteHousingApplication(id),
     onSuccess: () => {
       queryCache.invalidateQueries({
         key: HOUSING_APPLICATION_QUERY_KEYS.root,
