@@ -16,6 +16,7 @@ import {
   lodgmentColumns,
   lodgmentColumnsLength,
 } from '~/features/admin/lodgments/lodgment-columns';
+import BuildingSelect from '~/features/shared/buildings/components/BuildingSelect.vue';
 import { LodgmentConfig } from '~/features/shared/lodgments/lodgment.config';
 import { lodgmentListQuery } from '~/features/shared/lodgments/lodgment.query';
 import PaginationComponent from '~/features/shared/paginations/components/PaginationComponent.vue';
@@ -79,6 +80,10 @@ watch(limit, value => {
 
 <template>
   <div class="w-full">
+    <div class="mb-2 flex items-center justify-end gap-2">
+      <BuildingSelect v-model="buildingId" class="w-56" />
+    </div>
+
     <p class="text-foreground mb-2 text-base">
       Résultats: <span class="font-bold">{{ totalCount }}</span> logement{{
         totalCount > 1 ? 's' : ''
