@@ -26,9 +26,7 @@ const getOrdinalFloor = (floorNumber: number) => {
   return `${ordinal} étage`;
 };
 
-export const maintenanceColumns = (params: {
-  getGlobalAcademicSessionId: () => string | undefined;
-}): ColumnDef<Maintenance>[] => [
+export const maintenanceColumns: ColumnDef<Maintenance>[] = [
   {
     accessorKey: 'type',
     cell: ({ row }) =>
@@ -126,9 +124,6 @@ export const maintenanceColumns = (params: {
             name: 'admin-root-maintenances-maintenanceId',
             params: {
               maintenanceId: maintenanceId,
-            },
-            query: {
-              g_academic_session_id: params.getGlobalAcademicSessionId(),
             },
           },
         },

@@ -71,12 +71,8 @@ const housingApplications = computed(
   () => state.value?.data?.data ?? ([] as HousingApplication[])
 );
 
-const getGlobalAcademicSessionId = () => {
-  return globalAcademicSessionId.value;
-};
-
 const table = useVueTable({
-  columns: housingApplicationColumns({ getGlobalAcademicSessionId }),
+  columns: housingApplicationColumns,
   data: housingApplications,
   getCoreRowModel: getCoreRowModel(),
 });

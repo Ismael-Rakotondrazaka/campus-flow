@@ -12,9 +12,7 @@ import { formatUserImageUrl } from '~/features/shared/users/composables/useUserI
 
 export const renewalColumnsLength: number = 6;
 
-export const renewalColumns = (params: {
-  getGlobalAcademicSessionId: () => string | undefined;
-}): ColumnDef<Renewal>[] => [
+export const renewalColumns: ColumnDef<Renewal>[] = [
   {
     accessorKey: 'image_url',
     cell: ({ row }) => {
@@ -78,9 +76,6 @@ export const renewalColumns = (params: {
             name: 'admin-root-renewals-renewalId',
             params: {
               renewalId: renewalId,
-            },
-            query: {
-              g_academic_session_id: params.getGlobalAcademicSessionId(),
             },
           },
         },

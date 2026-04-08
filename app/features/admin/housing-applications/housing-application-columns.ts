@@ -5,16 +5,14 @@ import { Icon, NuxtLink } from '#components';
 
 import type { HousingApplication } from '~/features/shared/housing-applications/housing-application.model';
 
-import { HOUSING_APPLICATION_DOCUMENTS_BUCKET } from '~/features/shared/housing-applications/housing-application.config';
 import HousingApplicationStatusBadge from '@/features/shared/housing-applications/components/HousingApplicationStatusBadge.vue';
+import { HOUSING_APPLICATION_DOCUMENTS_BUCKET } from '~/features/shared/housing-applications/housing-application.config';
 import SignedUrlAvatar from '~/features/shared/users/components/SignedUrlAvatar.vue';
 import { getUserFullname } from '~/features/shared/users/composables/useUserFullname';
 
 export const housingApplicationColumnsLength: number = 7;
 
-export const housingApplicationColumns = (params: {
-  getGlobalAcademicSessionId: () => string | undefined;
-}): ColumnDef<HousingApplication>[] => [
+export const housingApplicationColumns: ColumnDef<HousingApplication>[] = [
   {
     accessorKey: 'image_url',
     cell: ({ row }) => {
@@ -84,9 +82,6 @@ export const housingApplicationColumns = (params: {
             name: 'admin-root-housing-applications-housingApplicationId',
             params: {
               housingApplicationId: housingApplicationId,
-            },
-            query: {
-              g_academic_session_id: params.getGlobalAcademicSessionId(),
             },
           },
         },

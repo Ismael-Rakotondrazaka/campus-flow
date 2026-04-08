@@ -21,21 +21,13 @@ interface Menu {
   to: NuxtLinkProps['to'];
 }
 
-const academicSession = useRouteQuery<string | undefined, string | undefined>(
-  'g_academic_session_id',
-  undefined
-);
-
-const menus = computed<Menu[]>(() => [
+const menus: Menu[] = [
   {
     icon: 'mdi:view-dashboard',
     id: 'dashboard',
     label: 'Tableau de bord',
     to: {
       name: 'admin-root-dashboard',
-      query: academicSession.value
-        ? { g_academic_session_id: academicSession.value }
-        : undefined,
     },
   },
   {
@@ -44,9 +36,6 @@ const menus = computed<Menu[]>(() => [
     label: 'Administrateurs',
     to: {
       name: 'admin-root-admins',
-      query: academicSession.value
-        ? { g_academic_session_id: academicSession.value }
-        : undefined,
     },
   },
   {
@@ -55,9 +44,6 @@ const menus = computed<Menu[]>(() => [
     label: 'Utilisateurs',
     to: {
       name: 'admin-root-users',
-      query: academicSession.value
-        ? { g_academic_session_id: academicSession.value }
-        : undefined,
     },
   },
   {
@@ -66,9 +52,6 @@ const menus = computed<Menu[]>(() => [
     label: 'Résidents',
     to: {
       name: 'admin-root-residents',
-      query: academicSession.value
-        ? { g_academic_session_id: academicSession.value }
-        : undefined,
     },
   },
   {
@@ -77,9 +60,6 @@ const menus = computed<Menu[]>(() => [
     label: 'Facultés',
     to: {
       name: 'admin-root-faculties',
-      query: academicSession.value
-        ? { g_academic_session_id: academicSession.value }
-        : undefined,
     },
   },
   {
@@ -88,9 +68,6 @@ const menus = computed<Menu[]>(() => [
     label: 'Sessions académiques',
     to: {
       name: 'admin-root-academic-sessions',
-      query: academicSession.value
-        ? { g_academic_session_id: academicSession.value }
-        : undefined,
     },
   },
   {
@@ -99,9 +76,6 @@ const menus = computed<Menu[]>(() => [
     label: 'Annonces',
     to: {
       name: 'admin-root-announcements',
-      query: academicSession.value
-        ? { g_academic_session_id: academicSession.value }
-        : undefined,
     },
   },
   {
@@ -110,9 +84,6 @@ const menus = computed<Menu[]>(() => [
     label: 'Bâtiments',
     to: {
       name: 'admin-root-buildings',
-      query: academicSession.value
-        ? { g_academic_session_id: academicSession.value }
-        : undefined,
     },
   },
   {
@@ -121,9 +92,6 @@ const menus = computed<Menu[]>(() => [
     label: 'Logements',
     to: {
       name: 'admin-root-lodgments',
-      query: academicSession.value
-        ? { g_academic_session_id: academicSession.value }
-        : undefined,
     },
   },
   {
@@ -132,9 +100,6 @@ const menus = computed<Menu[]>(() => [
     label: 'Demandes de Logement',
     to: {
       name: 'admin-root-housing-applications',
-      query: academicSession.value
-        ? { g_academic_session_id: academicSession.value }
-        : undefined,
     },
   },
   {
@@ -143,9 +108,6 @@ const menus = computed<Menu[]>(() => [
     label: 'Renouvellements',
     to: {
       name: 'admin-root-renewals',
-      query: academicSession.value
-        ? { g_academic_session_id: academicSession.value }
-        : undefined,
     },
   },
   {
@@ -154,12 +116,9 @@ const menus = computed<Menu[]>(() => [
     label: 'Maintenances',
     to: {
       name: 'admin-root-maintenances',
-      query: academicSession.value
-        ? { g_academic_session_id: academicSession.value }
-        : undefined,
     },
   },
-]);
+];
 </script>
 
 <template>

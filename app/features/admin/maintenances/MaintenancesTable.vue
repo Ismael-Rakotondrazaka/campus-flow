@@ -62,17 +62,8 @@ const maintenances = computed(
   () => state.value?.data?.data ?? ([] as Maintenance[])
 );
 
-const globalAcademicSessionId = useRouteQuery<
-  string | undefined,
-  string | undefined
->('g_academic_session_id', undefined);
-
-const getGlobalAcademicSessionId = () => {
-  return globalAcademicSessionId.value;
-};
-
 const table = useVueTable({
-  columns: maintenanceColumns({ getGlobalAcademicSessionId }),
+  columns: maintenanceColumns,
   data: maintenances,
   getCoreRowModel: getCoreRowModel(),
 });

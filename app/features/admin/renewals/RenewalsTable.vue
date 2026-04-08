@@ -60,12 +60,8 @@ const { state } = useQuery(() =>
 
 const renewals = computed(() => state.value?.data?.data ?? ([] as Renewal[]));
 
-const getGlobalAcademicSessionId = () => {
-  return globalAcademicSessionId.value;
-};
-
 const table = useVueTable({
-  columns: renewalColumns({ getGlobalAcademicSessionId }),
+  columns: renewalColumns,
   data: renewals,
   getCoreRowModel: getCoreRowModel(),
 });

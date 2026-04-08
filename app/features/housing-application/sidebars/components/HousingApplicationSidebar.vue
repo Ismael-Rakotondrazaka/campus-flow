@@ -21,11 +21,6 @@ interface Menu {
   to: NuxtLinkProps['to'];
 }
 
-const academicSession = useRouteQuery<string | undefined, string | undefined>(
-  'g_academic_session_id',
-  undefined
-);
-
 const menus: Menu[] = [
   {
     icon: 'mdi:view-dashboard',
@@ -33,9 +28,6 @@ const menus: Menu[] = [
     label: 'Tableau de bord',
     to: {
       name: 'admin-housing-application-dashboard',
-      query: academicSession.value
-        ? { g_academic_session_id: academicSession.value }
-        : undefined,
     },
   },
   {
@@ -44,9 +36,6 @@ const menus: Menu[] = [
     label: 'Bâtiments',
     to: {
       name: 'admin-housing-application-buildings',
-      query: academicSession.value
-        ? { g_academic_session_id: academicSession.value }
-        : undefined,
     },
   },
   {
@@ -55,9 +44,6 @@ const menus: Menu[] = [
     label: 'Logements',
     to: {
       name: 'admin-housing-application-lodgments',
-      query: academicSession.value
-        ? { g_academic_session_id: academicSession.value }
-        : undefined,
     },
   },
   {
