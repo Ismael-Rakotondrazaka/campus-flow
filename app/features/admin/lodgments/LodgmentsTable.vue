@@ -79,6 +79,12 @@ watch(limit, value => {
 
 <template>
   <div class="w-full">
+    <p class="text-foreground mb-2 text-base">
+      Résultats: <span class="font-bold">{{ totalCount }}</span> logement{{
+        totalCount > 1 ? 's' : ''
+      }}
+    </p>
+
     <div class="mb-2 rounded-md border">
       <Table>
         <TableHeader>

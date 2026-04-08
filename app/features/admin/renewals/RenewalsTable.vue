@@ -104,6 +104,12 @@ watch(limit, value => {
       <RenewalStatusSelect v-model="status" />
     </div>
 
+    <p class="text-foreground mb-2 text-base">
+      Résultats: <span class="font-bold">{{ totalCount }}</span> renouvellement{{
+        totalCount > 1 ? 's' : ''
+      }}
+    </p>
+
     <div class="mb-2 rounded-md border">
       <Table>
         <TableHeader>

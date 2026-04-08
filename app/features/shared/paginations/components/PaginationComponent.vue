@@ -3,7 +3,6 @@ import type { HTMLAttributes } from 'vue';
 
 import { computed } from 'vue';
 
-import { Label } from '@/components/ui/label';
 import {
   Pagination as Pagination_,
   PaginationContent,
@@ -17,13 +16,10 @@ import { cn } from '@/lib/utils';
 interface Props {
   class?: HTMLAttributes['class'];
   compact?: boolean;
-  itemLabel?: string;
-  itemLabelPlural?: string;
   limit: number;
   limitOptions?: number[];
   ofLabel?: string;
   page: number;
-  rowsPerPageLabel?: string;
   siblingCount?: number;
   totalCount: number;
   totalPages: number;
@@ -32,11 +28,8 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   class: undefined,
   compact: false,
-  itemLabel: 'item',
-  itemLabelPlural: undefined,
   limitOptions: () => [10, 20, 25, 50, 100],
   ofLabel: 'sur',
-  rowsPerPageLabel: 'Ligne par page',
   siblingCount: 1,
 });
 
@@ -45,16 +38,8 @@ const emit = defineEmits<{
   pageSizeChange: [size: number];
 }>();
 
-const plural = computed(() => props.itemLabelPlural ?? `${props.itemLabel}s`);
-
-const countText = computed(
-  () =>
-    `${props.totalCount} ${props.totalCount !== 1 ? plural.value : props.itemLabel}`
-);
-
 const pageInfo = computed(
-  () =>
-    `Page ${props.page} ${props.ofLabel} ${props.totalPages} (${countText.value})`
+  () => `Page ${props.page} ${props.ofLabel} ${props.totalPages}`
 );
 
 const options = computed(() =>
@@ -80,9 +65,6 @@ function onPageSizeChange(value: unknown) {
   >
     <div class="flex flex-wrap items-center gap-4">
       <div class="flex items-center gap-2">
-        <Label v-if="!compact" for="rows-per-page">
-          {{ rowsPerPageLabel }}
-        </Label>
         <Select
           :model-value="String(limit)"
           @update:model-value="onPageSizeChange"

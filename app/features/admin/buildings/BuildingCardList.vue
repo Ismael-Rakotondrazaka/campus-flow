@@ -68,6 +68,12 @@ watch(limit, value => {
       />
     </div>
 
+    <p class="text-foreground text-base">
+      Résultats: <span class="font-bold">{{ totalCount }}</span> bâtiment{{
+        totalCount > 1 ? 's' : ''
+      }}
+    </p>
+
     <template v-if="state.status === 'pending'">
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <div v-for="i in 6" :key="`skeleton-${i}`" class="space-y-2">

@@ -119,6 +119,11 @@ watch(limit, value => {
       <HousingApplicationStatusSelect v-model="status" />
     </div>
 
+    <p class="text-foreground mb-2 text-base">
+      Résultats: <span class="font-bold">{{ totalCount }}</span>
+      {{ totalCount > 1 ? 'demandes' : 'demande' }} de logement
+    </p>
+
     <div class="mb-2 rounded-md border">
       <Table>
         <TableHeader>
