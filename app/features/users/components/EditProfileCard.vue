@@ -264,24 +264,24 @@ const onSubmit = handleSubmit(async values => {
           </Field>
 
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <VeeField v-slot="{ field, errors }" name="firstName">
+            <VeeField v-slot="{ errors, componentField }" name="firstName">
               <Field :data-invalid="!!errors.length">
                 <FieldLabel for="firstName">First name</FieldLabel>
                 <Input
                   id="firstName"
-                  v-bind="field"
+                  v-bind="componentField"
                   :aria-invalid="!!errors.length"
                 />
                 <FieldError v-if="errors.length" :errors="errors" />
               </Field>
             </VeeField>
 
-            <VeeField v-slot="{ field, errors }" name="lastName">
+            <VeeField v-slot="{ errors, componentField }" name="lastName">
               <Field :data-invalid="!!errors.length">
                 <FieldLabel for="lastName">Last name</FieldLabel>
                 <Input
                   id="lastName"
-                  v-bind="field"
+                  v-bind="componentField"
                   :aria-invalid="!!errors.length"
                 />
                 <FieldError v-if="errors.length" :errors="errors" />
@@ -289,12 +289,12 @@ const onSubmit = handleSubmit(async values => {
             </VeeField>
           </div>
 
-          <VeeField v-slot="{ field, errors }" name="username">
+          <VeeField v-slot="{ errors, componentField }" name="username">
             <Field :data-invalid="!!errors.length">
               <FieldLabel for="username">Username</FieldLabel>
               <Input
                 id="username"
-                v-bind="field"
+                v-bind="componentField"
                 placeholder="yourusername"
                 :aria-invalid="!!errors.length"
               />
@@ -302,14 +302,13 @@ const onSubmit = handleSubmit(async values => {
             </Field>
           </VeeField>
 
-          <VeeField v-slot="{ field, errors }" name="tags">
+          <VeeField v-slot="{ field, errors, componentField }" name="tags">
             <Field :data-invalid="!!errors.length">
               <FieldLabel>Interests & skills</FieldLabel>
               <TagsInput
-                :model-value="field.value"
+                v-bind="componentField"
                 :aria-invalid="!!errors.length"
                 class="min-h-10"
-                @update:model-value="field.onChange"
               >
                 <TagsInputItem
                   v-for="tag in field.value"

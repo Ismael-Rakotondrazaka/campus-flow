@@ -24,7 +24,7 @@ import {
 } from '~/features/shared/faculties/faculty.query';
 import { cn } from '~/lib/utils';
 
-const value = defineModel<string | undefined>('value', {
+const modelValue = defineModel<string | undefined>({
   default: undefined,
   required: false,
 });
@@ -34,11 +34,6 @@ interface Props {
 }
 
 defineProps<Props>();
-
-type Emits = {
-  'update:modelValue': [event: string | undefined];
-};
-const emit = defineEmits<Emits>();
 
 const open = ref(false);
 const selectedFaculty = ref<Faculty | null>(null);
@@ -54,13 +49,13 @@ const { data: facultiesData, state } = useQuery(() =>
 );
 
 const shouldFetchFaculty = computed(() => {
-  if (!value.value) return false;
+  if (!modelValue.value) return false;
 
-  if (selectedFaculty.value?.id === value.value) return false;
+  if (selectedFaculty.value?.id === modelValue.value) return false;
 
   if (
     facultiesData.value?.data?.length &&
-    facultiesData.value?.data?.find(faculty => faculty.id === value.value)
+    facultiesData.value?.data?.find(faculty => faculty.id === modelValue.value)
   )
     return false;
 
@@ -68,20 +63,19 @@ const shouldFetchFaculty = computed(() => {
 });
 
 const { data: fetchedFacultyData } = useQuery(() => ({
-  ...facultyByIdQuery({ id: value.value ?? '' }),
+  ...facultyByIdQuery({ id: modelValue.value ?? '' }),
   enabled: shouldFetchFaculty.value,
 }));
 
 watch(
   () => selectedFaculty.value?.id,
   newValue => {
-    value.value = newValue;
-    emit('update:modelValue', newValue);
+    modelValue.value = newValue;
   }
 );
 
 watch(
-  () => value.value,
+  () => modelValue.value,
   newValue => {
     if (!newValue) {
       selectedFaculty.value = null;

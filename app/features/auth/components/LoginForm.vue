@@ -58,12 +58,12 @@ const handleLogin = handleSubmit(async values => {
       <CardContent>
         <form id="login" method="POST" @submit="handleLogin">
           <FieldGroup>
-            <VeeField v-slot="{ field, errors }" name="email">
+            <VeeField v-slot="{ errors, componentField }" name="email">
               <Field :data-invalid="!!errors.length">
                 <FieldLabel for="email">Email</FieldLabel>
                 <Input
                   id="email"
-                  v-bind="field"
+                  v-bind="componentField"
                   type="email"
                   placeholder="email@example.com"
                   :aria-invalid="!!errors.length"
@@ -72,7 +72,7 @@ const handleLogin = handleSubmit(async values => {
               </Field>
             </VeeField>
 
-            <VeeField v-slot="{ field, errors }" name="password">
+            <VeeField v-slot="{ errors, componentField }" name="password">
               <Field :data-invalid="!!errors.length">
                 <div class="flex items-center">
                   <FieldLabel for="password">Mot de passe</FieldLabel>
@@ -85,7 +85,7 @@ const handleLogin = handleSubmit(async values => {
                 </div>
                 <Input
                   id="password"
-                  v-bind="field"
+                  v-bind="componentField"
                   type="password"
                   :aria-invalid="!!errors.length"
                 />

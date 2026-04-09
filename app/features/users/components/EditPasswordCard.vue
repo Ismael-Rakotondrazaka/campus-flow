@@ -60,31 +60,29 @@ const onSubmit = handleSubmit(async values => {
     <CardContent>
       <form id="password" method="POST" @submit="onSubmit">
         <FieldGroup>
-          <VeeField v-slot="{ field, errors }" name="password">
+          <VeeField v-slot="{ errors, componentField }" name="password">
             <Field :data-invalid="!!errors.length">
               <FieldLabel for="password">New password</FieldLabel>
               <Input
                 id="password"
-                :model-value="field.value"
+                v-bind="componentField"
                 type="password"
                 autocomplete="new-password"
                 :aria-invalid="!!errors.length"
-                @update:model-value="field.onChange"
               />
               <FieldError v-if="errors.length" :errors="errors" />
             </Field>
           </VeeField>
 
-          <VeeField v-slot="{ field, errors }" name="confirmPassword">
+          <VeeField v-slot="{ errors, componentField }" name="confirmPassword">
             <Field :data-invalid="!!errors.length">
               <FieldLabel for="confirmPassword">Confirm password</FieldLabel>
               <Input
                 id="confirmPassword"
-                :model-value="field.value"
+                v-bind="componentField"
                 type="password"
                 autocomplete="new-password"
                 :aria-invalid="!!errors.length"
-                @update:model-value="field.onChange"
               />
               <FieldError v-if="errors.length" :errors="errors" />
             </Field>

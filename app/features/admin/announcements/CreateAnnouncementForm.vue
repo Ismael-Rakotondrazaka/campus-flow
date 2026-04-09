@@ -117,7 +117,7 @@ const onSaveDraft = handleSubmit(async (formValues: CreateAnnouncementForm) => {
       <CardContent>
         <form @submit.prevent>
           <FieldGroup class="space-y-4">
-            <VeeField v-slot="{ field, errors }" name="title">
+            <VeeField v-slot="{ errors, componentField }" name="title">
               <Field :data-invalid="!!errors.length">
                 <FieldLabel for="announcement-title">
                   Titre
@@ -125,7 +125,7 @@ const onSaveDraft = handleSubmit(async (formValues: CreateAnnouncementForm) => {
                 </FieldLabel>
                 <Input
                   id="announcement-title"
-                  v-bind="field"
+                  v-bind="componentField"
                   aria-required="true"
                   :aria-invalid="!!errors.length"
                 />
@@ -133,7 +133,7 @@ const onSaveDraft = handleSubmit(async (formValues: CreateAnnouncementForm) => {
               </Field>
             </VeeField>
 
-            <VeeField v-slot="{ field, errors }" name="content">
+            <VeeField v-slot="{ errors, componentField }" name="content">
               <Field :data-invalid="!!errors.length">
                 <FieldLabel for="announcement-content">
                   Contenu
@@ -141,7 +141,7 @@ const onSaveDraft = handleSubmit(async (formValues: CreateAnnouncementForm) => {
                 </FieldLabel>
                 <Textarea
                   id="announcement-content"
-                  v-bind="field"
+                  v-bind="componentField"
                   class="min-h-32"
                   aria-required="true"
                   :aria-invalid="!!errors.length"

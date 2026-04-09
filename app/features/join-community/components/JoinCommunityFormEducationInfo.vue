@@ -23,10 +23,10 @@ const emit = defineEmits<{
 
 <template>
   <FieldGroup class="space-y-2">
-    <VeeField v-slot="{ field, errors }" name="faculty_id">
+    <VeeField v-slot="{ errors, componentField }" name="faculty_id">
       <Field :data-invalid="!!errors.length">
         <FieldLabel>Faculté</FieldLabel>
-        <FacultySelect v-bind="field" />
+        <FacultySelect v-bind="componentField" />
       </Field>
     </VeeField>
 

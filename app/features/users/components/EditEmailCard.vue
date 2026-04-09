@@ -8,16 +8,15 @@
       <CardContent>
         <form id="email" method="POST" @submit="onSubmit">
           <FieldGroup>
-            <VeeField v-slot="{ field, errors }" name="email">
+            <VeeField v-slot="{ errors, componentField }" name="email">
               <Field :data-invalid="!!errors.length">
                 <FieldLabel for="email">Email</FieldLabel>
                 <Input
                   id="email"
-                  :model-value="field.value"
+                  v-bind="componentField"
                   type="email"
                   placeholder="email@example.com"
                   :aria-invalid="!!errors.length"
-                  @update:model-value="field.onChange"
                 />
                 <FieldError v-if="errors.length" :errors="errors" />
               </Field>

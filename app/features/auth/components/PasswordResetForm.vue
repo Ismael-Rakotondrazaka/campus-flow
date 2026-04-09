@@ -63,12 +63,12 @@ const requestResetPassword = handleSubmit(async values => {
       <CardContent>
         <form id="password-reset" method="POST" @submit="requestResetPassword">
           <FieldGroup>
-            <VeeField v-slot="{ field, errors }" name="email">
+            <VeeField v-slot="{ errors, componentField }" name="email">
               <Field :data-invalid="!!errors.length">
                 <FieldLabel for="email">Email</FieldLabel>
                 <Input
                   id="email"
-                  v-bind="field"
+                  v-bind="componentField"
                   type="email"
                   placeholder="email@example.com"
                   :aria-invalid="!!errors.length"

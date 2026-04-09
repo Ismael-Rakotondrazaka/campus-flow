@@ -40,29 +40,30 @@ const emit = defineEmits<{
       :preview="photoPreview"
       :aria-invalid="ariaInvalid"
       field-name="image_url"
+      preview-alt="Aperçu de la photo d'identité"
       @change="emit('photoChange', $event)"
     />
 
     <!-- Names -->
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-      <VeeField v-slot="{ field, errors }" name="first_name">
+      <VeeField v-slot="{ errors, componentField }" name="first_name">
         <Field :data-invalid="!!errors.length">
           <FieldLabel for="first_name">Prénom</FieldLabel>
           <Input
             id="first_name"
-            v-bind="field"
+            v-bind="componentField"
             :aria-invalid="!!errors.length"
           />
           <FieldError v-if="errors.length" :errors="errors" />
         </Field>
       </VeeField>
 
-      <VeeField v-slot="{ field, errors }" name="last_name">
+      <VeeField v-slot="{ errors, componentField }" name="last_name">
         <Field :data-invalid="!!errors.length">
           <FieldLabel for="last_name">Nom</FieldLabel>
           <Input
             id="last_name"
-            v-bind="field"
+            v-bind="componentField"
             :aria-invalid="!!errors.length"
           />
           <FieldError v-if="errors.length" :errors="errors" />
@@ -71,14 +72,10 @@ const emit = defineEmits<{
     </div>
 
     <!-- Gender -->
-    <VeeField v-slot="{ field, errors }" name="gender">
+    <VeeField v-slot="{ errors, componentField }" name="gender">
       <Field :data-invalid="!!errors.length">
         <FieldLabel>Genre</FieldLabel>
-        <RadioGroup
-          :model-value="field.value"
-          class="flex gap-6"
-          @update:model-value="field.onChange"
-        >
+        <RadioGroup v-bind="componentField" class="flex gap-6">
           <div class="flex items-center gap-2">
             <RadioGroupItem id="gender-male" value="male" />
             <FieldLabel for="gender-male" class="mb-0">
@@ -97,14 +94,10 @@ const emit = defineEmits<{
     </VeeField>
 
     <!-- Origin -->
-    <VeeField v-slot="{ field, errors }" name="origin">
+    <VeeField v-slot="{ errors, componentField }" name="origin">
       <Field :data-invalid="!!errors.length">
         <FieldLabel>Origine</FieldLabel>
-        <RadioGroup
-          :model-value="field.value"
-          class="flex gap-6"
-          @update:model-value="field.onChange"
-        >
+        <RadioGroup v-bind="componentField" class="flex gap-6">
           <div class="flex items-center gap-2">
             <RadioGroupItem id="origin-national" value="national" />
             <FieldLabel for="origin-national" class="mb-0">
@@ -123,12 +116,12 @@ const emit = defineEmits<{
     </VeeField>
 
     <!-- NIC number -->
-    <VeeField v-slot="{ field, errors }" name="nic">
+    <VeeField v-slot="{ errors, componentField }" name="nic">
       <Field :data-invalid="!!errors.length">
         <FieldLabel for="nic">Numéro de carte d'identité nationale</FieldLabel>
         <Input
           id="nic"
-          v-bind="field"
+          v-bind="componentField"
           placeholder="ex: 1234567890123"
           :aria-invalid="!!errors.length"
         />

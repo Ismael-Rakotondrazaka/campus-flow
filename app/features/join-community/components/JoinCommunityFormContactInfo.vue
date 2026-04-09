@@ -10,12 +10,12 @@ import PhoneInput from '~/components/common/PhoneInput.vue';
 
 <template>
   <FieldGroup class="space-y-2">
-    <VeeField v-slot="{ field, errors }" name="email">
+    <VeeField v-slot="{ errors, componentField }" name="email">
       <Field :data-invalid="!!errors.length">
         <FieldLabel for="email">Adresse e-mail</FieldLabel>
         <Input
           id="email"
-          v-bind="field"
+          v-bind="componentField"
           type="email"
           :aria-invalid="!!errors.length"
         />

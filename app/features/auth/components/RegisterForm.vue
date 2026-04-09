@@ -105,24 +105,24 @@ const createMessageHandler = handleSubmit(async values => {
         <form id="register" method="POST" @submit="createMessageHandler">
           <FieldGroup>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <VeeField v-slot="{ field, errors }" name="firstName">
+              <VeeField v-slot="{ errors, componentField }" name="firstName">
                 <Field :data-invalid="!!errors.length">
                   <FieldLabel for="firstName">First name</FieldLabel>
                   <Input
                     id="firstName"
-                    v-bind="field"
+                    v-bind="componentField"
                     :aria-invalid="!!errors.length"
                   />
                   <FieldError v-if="errors.length" :errors="errors" />
                 </Field>
               </VeeField>
 
-              <VeeField v-slot="{ field, errors }" name="lastName">
+              <VeeField v-slot="{ errors, componentField }" name="lastName">
                 <Field :data-invalid="!!errors.length">
                   <FieldLabel for="lastName">Last name</FieldLabel>
                   <Input
                     id="lastName"
-                    v-bind="field"
+                    v-bind="componentField"
                     :aria-invalid="!!errors.length"
                   />
                   <FieldError v-if="errors.length" :errors="errors" />
@@ -130,12 +130,12 @@ const createMessageHandler = handleSubmit(async values => {
               </VeeField>
             </div>
 
-            <VeeField v-slot="{ field, errors }" name="username">
+            <VeeField v-slot="{ errors, componentField }" name="username">
               <Field :data-invalid="!!errors.length">
                 <FieldLabel for="username">Username</FieldLabel>
                 <Input
                   id="username"
-                  v-bind="field"
+                  v-bind="componentField"
                   placeholder="yourusername"
                   :aria-invalid="!!errors.length"
                 />
@@ -143,12 +143,12 @@ const createMessageHandler = handleSubmit(async values => {
               </Field>
             </VeeField>
 
-            <VeeField v-slot="{ field, errors }" name="email">
+            <VeeField v-slot="{ errors, componentField }" name="email">
               <Field :data-invalid="!!errors.length">
                 <FieldLabel for="email">Email</FieldLabel>
                 <Input
                   id="email"
-                  v-bind="field"
+                  v-bind="componentField"
                   placeholder="email@example.com"
                   :aria-invalid="!!errors.length"
                 />
@@ -156,12 +156,12 @@ const createMessageHandler = handleSubmit(async values => {
               </Field>
             </VeeField>
 
-            <VeeField v-slot="{ field, errors }" name="password">
+            <VeeField v-slot="{ errors, componentField }" name="password">
               <Field :data-invalid="!!errors.length">
                 <FieldLabel for="password">Password</FieldLabel>
                 <Input
                   id="password"
-                  v-bind="field"
+                  v-bind="componentField"
                   type="password"
                   :aria-invalid="!!errors.length"
                 />

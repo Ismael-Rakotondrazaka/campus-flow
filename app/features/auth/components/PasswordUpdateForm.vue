@@ -65,12 +65,12 @@ const updateUserPassword = handleSubmit(async values => {
       <CardContent>
         <form id="password-update" method="POST" @submit="updateUserPassword">
           <FieldGroup>
-            <VeeField v-slot="{ field, errors }" name="password">
+            <VeeField v-slot="{ errors, componentField }" name="password">
               <Field :data-invalid="!!errors.length">
                 <FieldLabel for="password">New password</FieldLabel>
                 <Input
                   id="password"
-                  v-bind="field"
+                  v-bind="componentField"
                   type="password"
                   :aria-invalid="!!errors.length"
                 />
