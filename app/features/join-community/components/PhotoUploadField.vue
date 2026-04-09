@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Icon } from '#components';
 
+import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { cn } from '~/lib/utils';
 
@@ -10,19 +11,34 @@ interface Props {
   fileName?: null | string;
   label?: string;
   preview: null | string;
+  previewAlt?: string;
+  /** When false, user can remove the current image (emit `clear`). */
+  required?: boolean;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   ariaInvalid: false,
   fileName: null,
   label: "Photo d'identité",
+  previewAlt: 'Aperçu de la photo',
+  required: true,
 });
 
 const emit = defineEmits<{
   change: [event: Event];
+  clear: [];
 }>();
 
 const inputRef = ref<HTMLInputElement | null>(null);
+
+const showClear = computed(
+  () => !props.required && !!(props.preview || props.fileName)
+);
+
+const onClear = () => {
+  if (inputRef.value) inputRef.value.value = '';
+  emit('clear');
+};
 </script>
 
 <template>
@@ -31,35 +47,53 @@ const inputRef = ref<HTMLInputElement | null>(null);
       <FieldLabel
         :for="fieldName"
         :class="{ 'text-destructive': !!errors.length }"
-        >{{ label }}</FieldLabel
       >
-      <button
-        :aria-invalid="!!errors.length"
-        type="button"
-        :class="
-          cn(
-            'hover:bg-accent flex items-center gap-2 rounded-md border px-4 py-2',
-            errors.length
-              ? 'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive'
-              : 'aria-invalid:ring-input/20 dark:aria-invalid:ring-input/40 aria-invalid:border-input'
-          )
-        "
-        @click="inputRef?.click()"
-      >
-        <Icon name="mdi:file-upload" class="size-4" />
-        {{ fileName || label }}
-      </button>
+        {{ label }}
+        <span v-if="required" class="text-destructive" aria-hidden="true">
+          *
+        </span>
+      </FieldLabel>
+      <div class="flex flex-wrap items-center gap-2">
+        <button
+          :aria-invalid="!!errors.length"
+          :aria-required="required"
+          type="button"
+          :class="
+            cn(
+              'hover:bg-accent flex items-center gap-2 rounded-md border px-4 py-2',
+              errors.length
+                ? 'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive'
+                : 'aria-invalid:ring-input/20 dark:aria-invalid:ring-input/40 aria-invalid:border-input'
+            )
+          "
+          @click="inputRef?.click()"
+        >
+          <Icon name="mdi:file-upload" class="size-4" />
+          {{ fileName || label }}
+        </button>
+        <Button
+          v-if="showClear"
+          type="button"
+          variant="outline"
+          size="sm"
+          @click="onClear"
+        >
+          Retirer
+        </Button>
+      </div>
       <input
+        :id="fieldName"
         ref="inputRef"
         type="file"
         accept="image/jpeg,image/png,image/gif,image/webp"
         class="hidden"
+        :aria-required="required"
         @change="emit('change', $event)"
       />
       <img
         v-if="preview"
         :src="preview"
-        alt="Photo d'identité preview"
+        :alt="previewAlt"
         class="bg-muted h-48 w-40! rounded border object-cover"
       />
     </Field>

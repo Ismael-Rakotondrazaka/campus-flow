@@ -82,6 +82,13 @@ const handleAnnouncementDelete = (announcement: Announcement) => {
 const handleAnnouncementDeleted = () => {
   announcementToDelete.value = null;
 };
+
+const handleAnnouncementEdit = (announcement: Announcement) => {
+  navigateTo({
+    name: 'admin-root-announcements-announcementId-edit',
+    params: { announcementId: announcement.id },
+  });
+};
 </script>
 
 <template>
@@ -117,6 +124,7 @@ const handleAnnouncementDeleted = () => {
           :key="announcement.id"
           :announcement="announcement"
           @announcement:delete="handleAnnouncementDelete"
+          @announcement:edit="handleAnnouncementEdit"
         />
       </div>
     </template>

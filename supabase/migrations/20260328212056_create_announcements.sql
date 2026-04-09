@@ -5,8 +5,6 @@ create table public.announcements (
   illustration_url text,
   status           text not null default 'draft'
                      check (status in ('draft', 'published')),
-  start_at         timestamptz,
-  end_at           timestamptz,
   created_at       timestamptz not null default now(),
   updated_at       timestamptz not null default now(),
   deleted_at       timestamptz

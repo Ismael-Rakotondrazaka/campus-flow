@@ -14,80 +14,110 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import PhotoUploadField from '~/features/join-community/components/PhotoUploadField.vue';
 import {
-  type AnnouncementInsert,
+  type Announcement,
   AnnouncementStatus,
+  type AnnouncementUpdate,
 } from '~/features/shared/announcements/announcement.model';
-import { useCreateAnnouncement } from '~/features/shared/announcements/announcement.query';
+import { useUpdateAnnouncement } from '~/features/shared/announcements/announcement.query';
 import {
-  type CreateAnnouncementForm,
-  CreateAnnouncementFormSchema,
+  type UpdateAnnouncementForm,
+  UpdateAnnouncementFormSchema,
 } from '~/features/shared/announcements/announcement.schema';
 import { useUploadAnnouncementIllustration } from '~/features/shared/announcements/composables/useUploadAnnouncementIllustration';
 
-const createAnnouncementMutation = useCreateAnnouncement();
+const props = defineProps<{
+  announcement: Announcement;
+}>();
+
+const updateAnnouncementMutation = useUpdateAnnouncement();
 const uploadIllustration = useUploadAnnouncementIllustration();
 
 const illustrationFile = ref<File | null>(null);
-const illustrationPreview = ref<null | string>(null);
+const illustrationRemovedByUser = ref(false);
+const newFilePreviewUrl = ref<null | string>(null);
+const storedIllustrationUrl = ref<null | string>(
+  props.announcement.illustration_url
+);
+
+const illustrationPreview = computed(
+  () => newFilePreviewUrl.value ?? storedIllustrationUrl.value
+);
 
 const handleIllustrationChange = (event: Event) => {
   const input = event.target as HTMLInputElement;
   const file = input.files?.[0];
   if (!file) return;
   illustrationFile.value = file;
-  if (illustrationPreview.value) URL.revokeObjectURL(illustrationPreview.value);
-  illustrationPreview.value = URL.createObjectURL(file);
+  illustrationRemovedByUser.value = false;
+  if (newFilePreviewUrl.value) URL.revokeObjectURL(newFilePreviewUrl.value);
+  newFilePreviewUrl.value = URL.createObjectURL(file);
   input.value = '';
 };
 
 const handleIllustrationClear = () => {
-  if (illustrationPreview.value) URL.revokeObjectURL(illustrationPreview.value);
+  if (newFilePreviewUrl.value) URL.revokeObjectURL(newFilePreviewUrl.value);
+  newFilePreviewUrl.value = null;
   illustrationFile.value = null;
-  illustrationPreview.value = null;
+  storedIllustrationUrl.value = null;
+  illustrationRemovedByUser.value = true;
   setFieldValue('illustration_url', null);
 };
 
 onUnmounted(() => {
-  if (illustrationPreview.value) URL.revokeObjectURL(illustrationPreview.value);
+  if (newFilePreviewUrl.value) URL.revokeObjectURL(newFilePreviewUrl.value);
 });
 
-const { handleSubmit, isSubmitting, setFieldValue } = useForm({
+const { handleSubmit, isSubmitting, setFieldValue, setValues } = useForm({
   initialValues: {
-    content: '',
+    content: props.announcement.content,
     illustration_url: '',
-    title: '',
+    title: props.announcement.title,
   },
-  validationSchema: toTypedSchema(CreateAnnouncementFormSchema),
+  validationSchema: toTypedSchema(UpdateAnnouncementFormSchema),
 });
 
-const runCreate = async (
-  formValues: CreateAnnouncementForm,
+const applyAnnouncementToForm = (a: Announcement) => {
+  if (newFilePreviewUrl.value) {
+    URL.revokeObjectURL(newFilePreviewUrl.value);
+    newFilePreviewUrl.value = null;
+  }
+  illustrationFile.value = null;
+  illustrationRemovedByUser.value = false;
+  storedIllustrationUrl.value = a.illustration_url;
+  setValues({
+    content: a.content,
+    illustration_url: '',
+    title: a.title,
+  });
+};
+
+watch(() => props.announcement, applyAnnouncementToForm);
+
+const runUpdate = async (
+  formValues: UpdateAnnouncementForm,
   status: AnnouncementStatus
 ) => {
   try {
-    const announcementId = crypto.randomUUID();
-    let illustrationUrl: string | undefined;
-
-    if (illustrationFile.value) {
-      illustrationUrl = await uploadIllustration(
-        announcementId,
-        illustrationFile.value
-      );
-    }
-
-    const insert: AnnouncementInsert = {
+    const updates: AnnouncementUpdate = {
       content: formValues.content,
-      id: announcementId,
       status,
       title: formValues.title,
     };
 
-    if (illustrationUrl) {
-      insert.illustration_url = illustrationUrl;
+    if (illustrationFile.value) {
+      updates.illustration_url = await uploadIllustration(
+        props.announcement.id,
+        illustrationFile.value
+      );
+    } else if (illustrationRemovedByUser.value) {
+      updates.illustration_url = null;
     }
 
-    await createAnnouncementMutation.mutation(insert);
-    toast.success('Annonce créée avec succès');
+    await updateAnnouncementMutation.mutation({
+      id: props.announcement.id,
+      updates,
+    });
+    toast.success('Annonce mise à jour');
     await navigateTo({ name: 'admin-root-announcements' });
   } catch (error) {
     toast.error(
@@ -96,12 +126,12 @@ const runCreate = async (
   }
 };
 
-const onPublish = handleSubmit(async (formValues: CreateAnnouncementForm) => {
-  await runCreate(formValues, AnnouncementStatus.published);
+const onPublish = handleSubmit(async (formValues: UpdateAnnouncementForm) => {
+  await runUpdate(formValues, AnnouncementStatus.published);
 });
 
-const onSaveDraft = handleSubmit(async (formValues: CreateAnnouncementForm) => {
-  await runCreate(formValues, AnnouncementStatus.draft);
+const onSaveDraft = handleSubmit(async (formValues: UpdateAnnouncementForm) => {
+  await runUpdate(formValues, AnnouncementStatus.draft);
 });
 </script>
 
@@ -109,23 +139,24 @@ const onSaveDraft = handleSubmit(async (formValues: CreateAnnouncementForm) => {
   <div class="w-full space-y-4">
     <Card>
       <CardHeader>
-        <CardTitle>Informations de l'annonce</CardTitle>
+        <CardTitle>Modifier l'annonce</CardTitle>
         <CardDescription>
-          Renseignez le titre, le contenu et les options de publication.
+          Mettez à jour le titre, le contenu, l'illustration ou le statut de
+          publication.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form @submit.prevent>
           <FieldGroup class="space-y-4">
-            <VeeField v-slot="{ field, errors }" name="title">
+            <VeeField v-slot="{ errors, componentField }" name="title">
               <Field :data-invalid="!!errors.length">
-                <FieldLabel for="announcement-title">
+                <FieldLabel for="edit-announcement-title">
                   Titre
-                  <span class="text-destructive" aria-hidden="true"> *</span>
+                  <span class="text-destructive" aria-hidden="true">*</span>
                 </FieldLabel>
                 <Input
-                  id="announcement-title"
-                  v-bind="field"
+                  id="edit-announcement-title"
+                  v-bind="componentField"
                   aria-required="true"
                   :aria-invalid="!!errors.length"
                 />
@@ -133,15 +164,15 @@ const onSaveDraft = handleSubmit(async (formValues: CreateAnnouncementForm) => {
               </Field>
             </VeeField>
 
-            <VeeField v-slot="{ field, errors }" name="content">
+            <VeeField v-slot="{ errors, componentField }" name="content">
               <Field :data-invalid="!!errors.length">
-                <FieldLabel for="announcement-content">
+                <FieldLabel for="edit-announcement-content">
                   Contenu
-                  <span class="text-destructive" aria-hidden="true"> *</span>
+                  <span class="text-destructive" aria-hidden="true">*</span>
                 </FieldLabel>
                 <Textarea
-                  id="announcement-content"
-                  v-bind="field"
+                  id="edit-announcement-content"
+                  v-bind="componentField"
                   class="min-h-32"
                   aria-required="true"
                   :aria-invalid="!!errors.length"

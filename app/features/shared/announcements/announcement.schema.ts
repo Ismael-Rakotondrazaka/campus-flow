@@ -24,6 +24,11 @@ export type CreateAnnouncementForm = z.infer<
   typeof CreateAnnouncementFormSchema
 >;
 
+/** Same shape as create (optional illustration via file upload in the UI). */
+export const UpdateAnnouncementFormSchema = CreateAnnouncementFormSchema;
+
+export type UpdateAnnouncementForm = CreateAnnouncementForm;
+
 export const UpdateAnnouncementSchema = CreateAnnouncementSchema.partial();
 
 export type UpdateAnnouncement = z.infer<typeof UpdateAnnouncementSchema>;

@@ -114,10 +114,8 @@ export type Database = {
           content: string
           created_at: string
           deleted_at: string | null
-          end_at: string | null
           id: string
           illustration_url: string | null
-          start_at: string | null
           status: string
           title: string
           updated_at: string
@@ -126,10 +124,8 @@ export type Database = {
           content: string
           created_at?: string
           deleted_at?: string | null
-          end_at?: string | null
           id?: string
           illustration_url?: string | null
-          start_at?: string | null
           status?: string
           title: string
           updated_at?: string
@@ -138,10 +134,8 @@ export type Database = {
           content?: string
           created_at?: string
           deleted_at?: string | null
-          end_at?: string | null
           id?: string
           illustration_url?: string | null
-          start_at?: string | null
           status?: string
           title?: string
           updated_at?: string

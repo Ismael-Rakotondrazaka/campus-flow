@@ -13,6 +13,7 @@ const props = defineProps<{
 
 type Emits = {
   'announcement:delete': [announcement: Announcement];
+  'announcement:edit': [announcement: Announcement];
 };
 const emit = defineEmits<Emits>();
 
@@ -57,6 +58,7 @@ const isExpanded = ref(false);
             <AnnouncementMenu
               :announcement="props.announcement"
               @announcement:delete="emit('announcement:delete', $event)"
+              @announcement:edit="emit('announcement:edit', $event)"
             />
           </div>
 
