@@ -3,6 +3,14 @@
 -- Affected tables: lodgments, residents
 
 -- ============================================================================
+-- Add occupancy columns to lodgments
+-- ============================================================================
+
+alter table public.lodgments
+  add column if not exists residents_count   integer not null default 0,
+  add column if not exists capacity_remaining integer not null default 0;
+
+-- ============================================================================
 -- Function: update_lodgment_occupancy
 -- ============================================================================
 

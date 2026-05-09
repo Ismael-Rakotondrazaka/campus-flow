@@ -3,6 +3,16 @@
 -- Affected tables: buildings, lodgments
 
 -- ============================================================================
+-- Add occupancy columns to buildings
+-- ============================================================================
+
+alter table public.buildings
+  add column if not exists lodgments_count    integer not null default 0,
+  add column if not exists residents_count    integer not null default 0,
+  add column if not exists total_capacity     integer not null default 0,
+  add column if not exists capacity_remaining integer not null default 0;
+
+-- ============================================================================
 -- Function: update_building_occupancy
 -- ============================================================================
 
