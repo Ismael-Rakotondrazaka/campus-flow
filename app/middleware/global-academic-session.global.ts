@@ -14,7 +14,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
         ...to.query,
         g_academic_session_id: id,
       },
-      replace: true,
     });
   }
 });
