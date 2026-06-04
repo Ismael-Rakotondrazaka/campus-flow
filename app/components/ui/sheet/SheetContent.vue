@@ -11,7 +11,7 @@ import {
   useForwardPropsEmits,
 } from 'reka-ui';
 
-import { cn } from '@/lib/utils';
+import { cn } from '~/lib/utils';
 
 import SheetOverlay from './SheetOverlay.vue';
 
@@ -25,6 +25,7 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<SheetContentProps>(), {
+  class: undefined,
   side: 'right',
 });
 const emits = defineEmits<DialogContentEmits>();

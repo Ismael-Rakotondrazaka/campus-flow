@@ -5,7 +5,7 @@ import type { HTMLAttributes } from 'vue';
 import { reactiveOmit } from '@vueuse/core';
 import { DialogDescription } from 'reka-ui';
 
-import { cn } from '@/lib/utils';
+import { cn } from '~/lib/utils';
 
 const props = defineProps<
   { class?: HTMLAttributes['class'] } & DialogDescriptionProps
