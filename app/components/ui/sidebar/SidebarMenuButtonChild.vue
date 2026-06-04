@@ -4,7 +4,7 @@ import type { HTMLAttributes } from 'vue';
 
 import { Primitive } from 'reka-ui';
 
-import { cn } from '@/lib/utils';
+import { cn } from '~/lib/utils';
 
 import type { SidebarMenuButtonVariants } from '.';
 
@@ -19,6 +19,7 @@ export interface SidebarMenuButtonProps extends PrimitiveProps {
 
 const props = withDefaults(defineProps<SidebarMenuButtonProps>(), {
   as: 'button',
+  class: undefined,
   size: 'default',
   variant: 'default',
 });

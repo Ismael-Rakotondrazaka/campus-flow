@@ -7,7 +7,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
+} from '~/components/ui/tooltip';
 
 import type { SidebarMenuButtonProps } from './SidebarMenuButtonChild.vue';
 
@@ -27,6 +27,7 @@ const props = withDefaults(
   {
     as: 'button',
     size: 'default',
+    tooltip: undefined,
     variant: 'default',
   }
 );

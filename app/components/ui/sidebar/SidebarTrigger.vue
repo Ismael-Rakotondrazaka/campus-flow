@@ -3,8 +3,8 @@ import type { HTMLAttributes } from 'vue';
 
 import { PanelLeft } from 'lucide-vue-next';
 
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { Button } from '~/components/ui/button';
+import { cn } from '~/lib/utils';
 
 import { useSidebar } from './utils';
 

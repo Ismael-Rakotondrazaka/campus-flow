@@ -10,7 +10,7 @@ import {
 import { TooltipProvider } from 'reka-ui';
 import { computed, ref } from 'vue';
 
-import { cn } from '@/lib/utils';
+import { cn } from '~/lib/utils';
 
 import {
   provideSidebarContext,
@@ -28,6 +28,7 @@ const props = withDefaults(
     open?: boolean;
   }>(),
   {
+    class: undefined,
     defaultOpen: !defaultDocument?.cookie.includes(
       `${SIDEBAR_COOKIE_NAME}=false`
     ),

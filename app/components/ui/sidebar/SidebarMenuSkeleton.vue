@@ -3,8 +3,8 @@ import type { HTMLAttributes } from 'vue';
 
 import { computed } from 'vue';
 
-import { Skeleton } from '@/components/ui/skeleton';
-import { cn } from '@/lib/utils';
+import { Skeleton } from '~/components/ui/skeleton';
+import { cn } from '~/lib/utils';
 
 const props = defineProps<{
   class?: HTMLAttributes['class'];
