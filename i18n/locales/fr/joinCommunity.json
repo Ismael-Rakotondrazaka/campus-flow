@@ -1,0 +1,72 @@
+{
+  "joinCommunity": {
+    "page": {
+      "title": "Rejoindre la communauté",
+      "description": "Déposez votre demande de logement pour la session académique en cours.",
+      "metaTitle": "Rejoindre la communauté - Lumièrebourg"
+    },
+    "closed": {
+      "title": "Candidatures fermées",
+      "description": "Les demandes de logement ne sont pas ouvertes pour cette session.",
+      "hint": "Revenez lors de l'ouverture d'une nouvelle session académique.",
+      "backHome": "Retour à l'accueil"
+    },
+    "steps": {
+      "general": "Informations générales",
+      "contact": "Informations de contact",
+      "education": "Informations éducatives",
+      "verification": "Vérification"
+    },
+    "nav": {
+      "back": "Retour",
+      "next": "Suivant",
+      "submit": "Envoyer la demande",
+      "submitting": "Envoi en cours..."
+    },
+    "verification": {
+      "title": "Veuillez vérifier vos informations"
+    },
+    "success": {
+      "title": "Demande envoyée",
+      "description": "Votre demande de logement a bien été reçue.",
+      "descriptionLong": "Votre demande de logement a été reçue. Nous l'examinerons et vous recontacterons bientôt.",
+      "backHome": "Retour à l'accueil"
+    },
+    "error": {
+      "title": "Échec de l'envoi",
+      "retry": "Réessayer"
+    },
+    "fields": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "gender": "Genre",
+      "origin": "Origine",
+      "nic": "Numéro de carte d'identité",
+      "nicFull": "Numéro de carte d'identité nationale",
+      "email": "Email",
+      "emailAddress": "Adresse e-mail",
+      "phone": "Téléphone",
+      "phoneNumber": "Numéro de téléphone",
+      "emergency": "Contact d'urgence",
+      "emergencyNumber": "Numéro de contact d'urgence",
+      "faculty": "Faculté",
+      "profilePhoto": "Photo de profil",
+      "profilePhotoPreview": "Aperçu de la photo d'identité",
+      "nicPhoto": "Pièce d'identité",
+      "nicPhotoFull": "Photo de carte d'identité nationale",
+      "schoolCertificate": "Certificat de scolarité"
+    },
+    "placeholders": {
+      "nic": "ex: 1234567890123"
+    },
+    "upload": {
+      "profilePhoto": "Télécharger la photo de profil",
+      "nicPhoto": "Télécharger la pièce d'identité",
+      "remove": "Retirer"
+    },
+    "errors": {
+      "documentsRequired": "Tous les documents sont requis",
+      "submissionFailed": "La soumission a échoué"
+    }
+  }
+}
