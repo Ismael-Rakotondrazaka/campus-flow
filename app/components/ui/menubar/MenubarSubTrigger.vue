@@ -6,7 +6,7 @@ import { reactiveOmit } from '@vueuse/core';
 import { ChevronRight } from 'lucide-vue-next';
 import { MenubarSubTrigger, useForwardProps } from 'reka-ui';
 
-import { cn } from '@/lib/utils';
+import { cn } from '~/lib/utils';
 
 const props = defineProps<
   { class?: HTMLAttributes['class']; inset?: boolean } & MenubarSubTriggerProps
