@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useQuery } from '@pinia/colada';
 
-import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarImage } from '~/components/ui/avatar';
 
 import { storageSignedUrlQuery } from '../composables/useStorageSignedUrl';
 import { formatFallbackUrl } from '../composables/useUserImageUrl';
@@ -28,6 +28,8 @@ const { data: signedUrl } = useQuery(() => ({
   enabled: isStoragePath.value && !!props.bucket,
 }));
 
+const { t } = useI18n();
+
 const fallbackUrl = computed(() =>
   formatFallbackUrl(props.firstName, props.lastName)
 );
@@ -42,7 +44,7 @@ const fullname = computed(() => {
   const parts: string[] = [];
   if (props.firstName?.trim()) parts.push(props.firstName.trim());
   if (props.lastName?.trim()) parts.push(props.lastName.trim());
-  return parts.join(' ') || 'Utilisateur';
+  return parts.join(' ') || t('users.profile.defaultName');
 });
 </script>
 

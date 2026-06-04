@@ -1,20 +1,20 @@
 export interface UseUserFullnameProps {
-  first_name?: null | string;
-  last_name?: null | string;
+  firstName?: null | string;
+  lastName?: null | string;
   username?: null | string;
 }
 
 export const getUserFullname = <T extends UseUserFullnameProps>(user: T) => {
-  if (!user.username && !user.first_name && !user.last_name) {
+  if (!user.username && !user.firstName && !user.lastName) {
     return 'User';
   }
 
-  if (!user.first_name && !user.last_name) {
+  if (!user.firstName && !user.lastName) {
     return user.username || 'User';
   }
 
   return (
-    `${user.first_name || ''} ${user.last_name || ''}`.trim() ||
+    `${user.firstName || ''} ${user.lastName || ''}`.trim() ||
     user.username ||
     'User'
   );

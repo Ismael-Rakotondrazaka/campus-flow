@@ -1,9 +1,9 @@
 import { withQuery } from 'ufo';
 
 export interface UseUserImageUrlProps {
-  first_name?: null | string;
-  image_url?: null | string;
-  last_name?: null | string;
+  firstName?: null | string;
+  imageUrl?: null | string;
+  lastName?: null | string;
 }
 
 interface FormatFallbackUrlOptions {
@@ -26,11 +26,11 @@ const defaultOptions: FormatFallbackUrlOptions = {
 };
 
 export const formatUserImageUrl = <T extends UseUserImageUrlProps>(user: T) => {
-  if (user.image_url) {
-    return user.image_url;
+  if (user.imageUrl) {
+    return user.imageUrl;
   }
 
-  return formatFallbackUrl(user.first_name, user.last_name, defaultOptions);
+  return formatFallbackUrl(user.firstName, user.lastName, defaultOptions);
 };
 
 export const useUserImageUrl = <
@@ -42,16 +42,16 @@ export const useUserImageUrl = <
 };
 
 export const formatFallbackUrl = (
-  first_name?: null | string,
-  last_name?: null | string,
+  firstName?: null | string,
+  lastName?: null | string,
   options: FormatFallbackUrlOptions = {}
 ) => {
   // Determine the name to display
   let displayName = 'Utilisateur';
 
   const parts: string[] = [];
-  if (first_name?.trim()) parts.push(first_name.trim());
-  if (last_name?.trim()) parts.push(last_name.trim());
+  if (firstName?.trim()) parts.push(firstName.trim());
+  if (lastName?.trim()) parts.push(lastName.trim());
 
   if (parts.length > 0) {
     displayName = parts.join(' ');
