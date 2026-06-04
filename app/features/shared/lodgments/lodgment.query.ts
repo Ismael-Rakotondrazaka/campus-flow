@@ -1,74 +1,62 @@
-import {
-  defineMutation,
-  defineQueryOptions,
-  useQueryCache,
-} from '@pinia/colada';
+import type { LodgmentQuery } from '#shared/features/lodgments';
 
-import type {
-  LodgmentFilters,
-  LodgmentInsert,
-  LodgmentUpdate,
-} from './lodgment.model';
+import { defineQueryOptions } from '@pinia/colada';
+import { useRequestFetch } from '#app';
 
 import {
-  createLodgment,
   getLodgment,
   getLodgments,
   getLodgmentsCount,
-  updateLodgment,
 } from './lodgment.service';
 
 export const LODGMENT_QUERY_KEYS = {
   byId: (id: string) => [...LODGMENT_QUERY_KEYS.root, id] as const,
 
-  count: (filters: Omit<LodgmentFilters, 'limit' | 'page'> = {}) =>
-    [...LODGMENT_QUERY_KEYS.root, 'count', filters] as const,
+  count: (
+    filters: Omit<
+      LodgmentQuery,
+      'limit' | 'orderBy' | 'page' | 'sortOrder'
+    > = {}
+  ) => [...LODGMENT_QUERY_KEYS.root, 'count', filters] as const,
 
-  list: (filters: LodgmentFilters = {}) =>
+  list: (filters: LodgmentQuery = {}) =>
     [...LODGMENT_QUERY_KEYS.root, 'list', filters] as const,
 
   root: ['lodgments'] as const,
 };
 
 export const lodgmentListQuery = defineQueryOptions(
-  (filters: LodgmentFilters = {}) => ({
-    key: LODGMENT_QUERY_KEYS.list(filters),
-    placeholderData: previousData => previousData,
-    query: () => getLodgments(filters),
-  })
+  (filters: LodgmentQuery = {}) => {
+    const fetchFn = useRequestFetch();
+    return {
+      key: LODGMENT_QUERY_KEYS.list(filters),
+      placeholderData: previousData => previousData,
+      query: () => getLodgments(filters, fetchFn),
+    };
+  }
 );
 
 export const lodgmentByIdQuery = defineQueryOptions(
-  ({ id }: { id: string }) => ({
-    key: LODGMENT_QUERY_KEYS.byId(id),
-    query: () => getLodgment(id),
-  })
+  ({ id }: { id: string }) => {
+    const fetchFn = useRequestFetch();
+    return {
+      key: LODGMENT_QUERY_KEYS.byId(id),
+      query: () => getLodgment(id, fetchFn),
+    };
+  }
 );
 
 export const lodgmentCountQuery = defineQueryOptions(
-  (filters: Omit<LodgmentFilters, 'limit' | 'page'> = {}) => ({
-    key: LODGMENT_QUERY_KEYS.count(filters),
-    query: () => getLodgmentsCount(filters),
-  })
+  (
+    filters: Omit<
+      LodgmentQuery,
+      'limit' | 'orderBy' | 'page' | 'sortOrder'
+    > = {}
+  ) => {
+    const fetchFn = useRequestFetch();
+    return {
+      key: LODGMENT_QUERY_KEYS.count(filters),
+      query: () => getLodgmentsCount(filters, fetchFn),
+    };
+  }
 );
-
-export const useCreateLodgment = defineMutation(() => {
-  const queryCache = useQueryCache();
-  return {
-    mutation: (lodgment: LodgmentInsert) => createLodgment(lodgment),
-    onSuccess: () => {
-      queryCache.invalidateQueries({ key: LODGMENT_QUERY_KEYS.root });
-    },
-  };
-});
-
-export const useUpdateLodgment = defineMutation(() => {
-  const queryCache = useQueryCache();
-  return {
-    mutation: ({ id, updates }: { id: string; updates: LodgmentUpdate }) =>
-      updateLodgment(id, updates),
-    onSuccess: () => {
-      queryCache.invalidateQueries({ key: LODGMENT_QUERY_KEYS.root });
-    },
-  };
-});

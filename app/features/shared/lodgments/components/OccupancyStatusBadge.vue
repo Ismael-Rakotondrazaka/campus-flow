@@ -5,12 +5,12 @@
 </template>
 
 <script lang="ts" setup>
-import Badge from '~/components/ui/badge/Badge.vue';
 import {
   type LodgementOccupancyStatus,
   LodgementOccupancyStatusColor,
-  LodgementOccupancyStatusLabel,
-} from '~/features/shared/lodgments/lodgment.model';
+} from '#imports';
+
+import Badge from '~/components/ui/badge/Badge.vue';
 
 interface Props {
   value: LodgementOccupancyStatus;
@@ -18,13 +18,9 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const colorClass = computed(() => {
-  return LodgementOccupancyStatusColor[props.value];
-});
+const { t } = useI18n();
 
-const label = computed(() => {
-  return LodgementOccupancyStatusLabel[props.value];
-});
+const colorClass = computed(() => LodgementOccupancyStatusColor[props.value]);
+
+const label = computed(() => t(`common.statuses.occupancy.${props.value}`));
 </script>
-
-<style></style>
