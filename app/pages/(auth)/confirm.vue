@@ -1,7 +1,7 @@
 <script lang="ts"></script>
 
 <script setup lang="ts">
-import ConfirmPage from '@/features/auth/pages/ConfirmPage.vue';
+import ConfirmPage from '~/features/auth/pages/ConfirmPage.vue';
 
 useSeoMeta({
   ogImage: '/images/og-openmind.png',
