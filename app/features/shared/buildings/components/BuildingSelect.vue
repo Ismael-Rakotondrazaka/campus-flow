@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import type { Building } from '#imports';
+
 import { CheckIcon, ChevronsUpDownIcon } from 'lucide-vue-next';
 import { ref } from 'vue';
 
-import type { Building } from '~/features/shared/buildings/building.model';
-
-import { Button } from '@/components/ui/button';
+import { Button } from '~/components/ui/button';
 import {
   Command,
   CommandEmpty,
@@ -12,12 +12,12 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/ui/command';
+} from '~/components/ui/command';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
+} from '~/components/ui/popover';
 import {
   buildingByIdQuery,
   buildingListQuery,
@@ -41,7 +41,7 @@ type Emits = {
 const emit = defineEmits<Emits>();
 
 const open = ref(false);
-const selectedBuilding = ref<Building | null>(null);
+const selectedBuilding = ref<null | Serialize<Building>>(null);
 const search = ref('');
 
 const { data: buildingsData, state } = useQuery(() =>
@@ -123,8 +123,8 @@ watch(
         >
           {{
             selectedBuilding?.name
-              ? `Bâtiment ${selectedBuilding.name}`
-              : 'Sélectionner un bâtiment...'
+              ? $t('admin.location.building', { name: selectedBuilding.name })
+              : $t('common.selects.selectBuilding')
           }}
           <ChevronsUpDownIcon class="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -132,7 +132,10 @@ watch(
 
       <PopoverContent class="w-full p-0">
         <Command should-filter-items class="w-full">
-          <CommandInput v-model="search" placeholder="Rechercher..." />
+          <CommandInput
+            v-model="search"
+            :placeholder="$t('common.search.placeholderBuilding')"
+          />
 
           <CommandList>
             <CommandGroup v-if="state.status === 'pending'" class="space-y-1">
@@ -162,11 +165,13 @@ watch(
                     )
                   "
                 />
-                Bâtiment {{ building.name }}
+                {{ $t('admin.location.building', { name: building.name }) }}
               </CommandItem>
             </CommandGroup>
 
-            <CommandEmpty v-else>Aucun bâtiment trouvé.</CommandEmpty>
+            <CommandEmpty v-else>{{
+              $t('common.empty.noBuilding')
+            }}</CommandEmpty>
           </CommandList>
         </Command>
       </PopoverContent>
