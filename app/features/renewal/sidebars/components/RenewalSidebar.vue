@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { NuxtLinkProps } from 'nuxt/app';
+import type { RouteLocationNamedI18n } from 'vue-router';
 
 import { Icon } from '#components';
 
@@ -12,33 +12,31 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '@/components/ui/sidebar';
+} from '~/components/ui/sidebar';
 
 interface Menu {
   icon: string;
   id: string;
-  label: string;
-  to: NuxtLinkProps['to'];
+  labelKey: string;
+  to: RouteLocationNamedI18n;
 }
 
-const menus: Menu[] = [
+const { t } = useI18n();
+
+const menus = computed<Menu[]>(() => [
   {
     icon: 'mdi:view-dashboard',
     id: 'dashboard',
-    label: 'Tableau de bord',
-    to: {
-      name: 'admin-renewal-dashboard',
-    },
+    labelKey: 'sider.shared.dashboard',
+    to: { name: 'admin-renewal-dashboard' },
   },
   {
-    icon: 'mdi:refresh',
+    icon: 'mdi:file-refresh',
     id: 'renewals',
-    label: 'Renouvellements',
-    to: {
-      name: 'admin-renewal-renewals',
-    },
+    labelKey: 'sider.shared.renewals',
+    to: { name: 'admin-renewal-renewals' },
   },
-];
+]);
 </script>
 
 <template>
@@ -48,10 +46,12 @@ const menus: Menu[] = [
         <SidebarMenuItem>
           <SidebarMenuButton size="lg">
             <div class="flex flex-col leading-none">
-              <span class="text-primary text-2xl font-bold">Lumièrebourg</span>
-              <span class="text-muted-foreground text-sm"
-                >Pour Renouvellement</span
-              >
+              <span class="text-primary text-2xl font-bold">{{
+                $t('common.brand.name')
+              }}</span>
+              <span class="text-muted-foreground text-sm">{{
+                $t('sider.renewal.subtitle')
+              }}</span>
             </div>
           </SidebarMenuButton>
         </SidebarMenuItem>
@@ -64,10 +64,14 @@ const menus: Menu[] = [
           <SidebarMenu>
             <SidebarMenuItem v-for="menu in menus" :key="menu.id">
               <SidebarMenuButton as-child>
-                <NuxtLink :to="menu.to">
-                  <Icon :name="menu.icon" size="16px" class="shrink-0" />
-                  <span>{{ menu.label }}</span>
-                </NuxtLink>
+                <NuxtLinkLocale :to="menu.to">
+                  <Icon
+                    :name="menu.icon"
+                    size="16px"
+                    class="text-primary shrink-0"
+                  />
+                  <span>{{ t(menu.labelKey) }}</span>
+                </NuxtLinkLocale>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
