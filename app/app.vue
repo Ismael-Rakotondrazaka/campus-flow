@@ -2,7 +2,7 @@
 import 'vue-sonner/style.css';
 import { PiniaColadaDevtools } from '@pinia/colada-devtools';
 
-import { Toaster } from '@/components/ui/sonner';
+import { Toaster } from '~/components/ui/sonner';
 </script>
 
 <template>
