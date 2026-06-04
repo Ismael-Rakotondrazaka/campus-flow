@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import type { Lodgment } from '#imports';
+
 import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table';
 
-import type { Lodgment } from '~/features/shared/lodgments/lodgment.model';
-
-import { Skeleton } from '@/components/ui/skeleton';
+import { Skeleton } from '~/components/ui/skeleton';
 import {
   Table,
   TableBody,
@@ -11,17 +11,18 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from '~/components/ui/table';
 import {
-  lodgmentColumns,
   lodgmentColumnsLength,
-} from '~/features/admin/lodgments/lodgment-columns';
+  useLodgmentColumns,
+} from '~/features/admin/lodgments/useLodgmentColumns';
 import BuildingSelect from '~/features/shared/buildings/components/BuildingSelect.vue';
-import { LodgmentConfig } from '~/features/shared/lodgments/lodgment.config';
 import { lodgmentListQuery } from '~/features/shared/lodgments/lodgment.query';
 import PaginationComponent from '~/features/shared/paginations/components/PaginationComponent.vue';
 
-const buildingId = useRouteQuery<string | undefined>('building_id', undefined);
+const columns = useLodgmentColumns();
+
+const buildingId = useRouteQuery<string | undefined>('buildingId', undefined);
 const page = useRouteQuery<number>('page', LodgmentConfig.PAGE_DEFAULT, {
   transform: Number,
 });
@@ -31,18 +32,22 @@ const limit = useRouteQuery<number>('limit', LodgmentConfig.PAGE_SIZE_DEFAULT, {
 
 const { state } = useQuery(() =>
   lodgmentListQuery({
-    building_id: buildingId.value || undefined,
+    buildingId: buildingId.value || undefined,
     limit: limit.value,
-    orderBy: 'building_id',
+    orderBy: 'buildingId',
     page: page.value,
     sortOrder: SortOrder.asc,
   })
 );
 
-const lodgments = computed(() => state.value?.data?.data ?? ([] as Lodgment[]));
+const lodgments = computed<Serialize<Lodgment>[]>(
+  () => state.value?.data?.data ?? []
+);
 
 const table = useVueTable({
-  columns: lodgmentColumns,
+  get columns() {
+    return columns.value;
+  },
   data: lodgments,
   getCoreRowModel: getCoreRowModel(),
 });
@@ -85,9 +90,9 @@ watch(limit, value => {
     </div>
 
     <p class="text-foreground mb-2 text-base">
-      Résultats: <span class="font-bold">{{ totalCount }}</span> logement{{
-        totalCount > 1 ? 's' : ''
-      }}
+      {{ $t('common.results.countLabel') }}
+      <span class="font-bold">{{ totalCount }}</span>
+      {{ $t('admin.results.lodgment', totalCount) }}
     </p>
 
     <div class="mb-2 rounded-md border">
@@ -144,7 +149,7 @@ watch(limit, value => {
               :colspan="lodgmentColumnsLength"
               class="h-24 text-center"
             >
-              Aucun résultat.
+              {{ $t('common.empty.noResults') }}
             </TableCell>
           </TableRow>
         </TableBody>
