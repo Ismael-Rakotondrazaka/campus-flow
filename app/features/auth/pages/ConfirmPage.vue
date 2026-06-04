@@ -1,16 +1,12 @@
-<script></script>
-
 <script setup lang="ts">
-import { authErrorCodeMessageMap } from '~~/shared/utils/errors';
-
 import {
   Empty,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from '@/components/ui/empty';
-import { Spinner } from '@/components/ui/spinner';
+} from '~/components/ui/empty';
+import { Spinner } from '~/components/ui/spinner';
 
 const ConfirmStatus = {
   failed: 'failed',
@@ -19,8 +15,8 @@ const ConfirmStatus = {
 } as const;
 
 type ConfirmSuccess = (typeof ConfirmStatus)[keyof typeof ConfirmStatus];
-const user = useSupabaseUser();
-const redirectInfo = useSupabaseCookieRedirect();
+const { fetch: refreshSession, user } = useUserSession();
+const { t } = useI18n();
 
 const status = ref<ConfirmSuccess>(ConfirmStatus.processing);
 
@@ -43,9 +39,15 @@ const descriptionMap: Record<ConfirmSuccess, string> = {
   [ConfirmStatus.success]: 'Your email has been confirmed. Redirecting...',
 };
 
+const authConfirmErrorMessage = (code: string) => {
+  const key = `errors.requests.auth.signin.${code}`;
+  const message = t(key);
+  return message === key ? t('errors.requests.auth.signin.default') : message;
+};
+
 const description = computed(() =>
   errorCode.value
-    ? (authErrorCodeMessageMap[errorCode.value] ?? 'Could not confirm.')
+    ? authConfirmErrorMessage(errorCode.value)
     : descriptionMap[status.value]
 );
 
@@ -58,13 +60,10 @@ onMounted(() => {
   }, 3000);
 });
 
-const queryClient = useQueryClient();
-const supabase = useSupabaseClient();
+const localeRoute = useLocaleRoute();
 
-const refreshAuthUserData = () => {
-  // Supabase client does not automatically update the user data after email confirmation
-  supabase.auth.refreshSession();
-  queryClient.invalidateQueries({ queryKey: ['auth-user'] });
+const refreshAuthUserData = async () => {
+  await refreshSession();
 };
 
 watch(
@@ -74,13 +73,10 @@ watch(
       setTimeout(() => {
         status.value = ConfirmStatus.success;
 
-        refreshAuthUserData();
+        void refreshAuthUserData();
 
-        setTimeout(() => {
-          // Get redirect path, and clear it from the cookie
-          const path = redirectInfo.pluck();
-          // Redirect to the saved path, or fallback to home
-          return navigateTo(path || '/');
+        setTimeout(async () => {
+          await navigateTo(localeRoute({ name: 'index' }));
         }, 3000);
       }, 3000);
     }
