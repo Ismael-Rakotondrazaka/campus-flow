@@ -1,0 +1,220 @@
+{
+  "common": {
+    "brand": {
+      "name": "Lumièrebourg"
+    },
+    "buttons": {
+      "delete": "Supprimer",
+      "edit": "Modifier",
+      "create": "Créer",
+      "confirm": "Confirmer",
+      "confirmAccept": "Confirmer l'acceptation",
+      "confirmReject": "Confirmer le refus",
+      "confirmValidate": "Confirmer la validation",
+      "accept": "Accepter",
+      "reject": "Refuser",
+      "validate": "Valider",
+      "back": "Retour",
+      "backToHome": "Retour à l'accueil",
+      "next": "Suivant",
+      "retry": "Réessayer",
+      "close": "Fermer",
+      "publish": "Publier",
+      "saveDraft": "Enregistrer comme brouillon",
+      "viewDetails": "Voir les détails",
+      "viewProfile": "Voir le profil",
+      "viewDocument": "Voir le document",
+      "viewPhoto": "Voir la photo",
+      "viewMyRequest": "Voir ma demande",
+      "joinCommunity": "Rejoindre la communauté",
+      "dashboard": "Tableau de bord",
+      "logout": "Se déconnecter",
+      "changeEmail": "Changer l'email",
+      "update": "Mettre à jour"
+    },
+    "loading": {
+      "saving": "Enregistrement...",
+      "submitting": "Envoi en cours...",
+      "signingIn": "Connexion...",
+      "updating": "Modification...",
+      "deleting": "Suppression..."
+    },
+    "search": {
+      "placeholder": "Rechercher...",
+      "placeholderBuilding": "Rechercher un bâtiment...",
+      "placeholderAnnouncement": "Rechercher une annonce...",
+      "placeholderFaculty": "Rechercher une filière...",
+      "placeholderMaintainer": "Rechercher un mainteneur...",
+      "country": "Rechercher un pays..."
+    },
+    "empty": {
+      "noResults": "Aucun résultat.",
+      "noBuilding": "Aucun bâtiment trouvé.",
+      "noFaculty": "Aucune faculté trouvée.",
+      "noCountry": "Aucun pays trouvé.",
+      "noFileSelected": "Aucun fichier sélectionné",
+      "notAvailable": "Non disponible"
+    },
+    "results": {
+      "countLabel": "Résultats :"
+    },
+    "cards": {
+      "personalInfo": "Informations personnelles",
+      "contact": "Contact",
+      "scolarite": "Scolarité",
+      "documents": "Documents",
+      "lodgment": "Logement",
+      "location": "Localisation",
+      "information": "Informations",
+      "assignedLodgment": "Chambre assignée",
+      "fullName": "Nom et prénom",
+      "gender": "Genre",
+      "origin": "Origine",
+      "nicNumber": "Numéro de carte d'identité",
+      "email": "Email",
+      "phone": "Téléphone",
+      "emergencyContact": "Contact d'urgence",
+      "faculty": "Faculté",
+      "academicSession": "Session académique",
+      "building": "Bâtiment",
+      "floor": "Étage",
+      "room": "Chambre",
+      "capacity": "Capacité",
+      "occupation": "Occupation",
+      "type": "Type",
+      "status": "Statut",
+      "reportedAt": "Date de signalement",
+      "workStart": "Début des travaux",
+      "workEnd": "Fin des travaux",
+      "description": "Description",
+      "actions": "Actions"
+    },
+    "deleteModal": {
+      "title": "Supprimer {entity}",
+      "description": "Cette action est irréversible."
+    },
+    "toasts": {
+      "deleteFailed": "Une erreur est survenue lors de la suppression.",
+      "notAssignedToLodgment": "Vous n'êtes pas encore assigné à un logement",
+      "documentsRequired": "Tous les documents sont requis",
+      "announcement": {
+        "created": "Annonce créée avec succès",
+        "updated": "Annonce mise à jour",
+        "deleted": "L'annonce a été supprimée avec succès"
+      },
+      "academicSession": {
+        "created": "Session académique créée",
+        "updated": "Session académique mise à jour",
+        "deleted": "La session académique a été supprimée avec succès"
+      },
+      "maintainer": {
+        "created": "Mainteneur créé avec succès",
+        "updated": "Mainteneur mis à jour avec succès",
+        "deleted": "Le mainteneur a été supprimé avec succès"
+      },
+      "admin": {
+        "deleted": "L'administrateur a été supprimé avec succès",
+        "roleUpdated": "Rôle mis à jour"
+      },
+      "housingApplication": {
+        "updated": "Demande mise à jour"
+      },
+      "renewal": {
+        "updated": "Renouvellement mis à jour",
+        "submitted": "Demande de renouvellement envoyée"
+      },
+      "maintenance": {
+        "submitted": "Demande de maintenance envoyée",
+        "statusUpdated": "Statut mis à jour"
+      }
+    },
+    "workflow": {
+      "acceptDialog": {
+        "title": "Accepter la demande",
+        "hint": "Confirmez que vous souhaitez accepter cette demande."
+      },
+      "rejectDialog": {
+        "title": "Refuser la demande",
+        "confirm": "Confirmer le refus"
+      },
+      "validateDialog": {
+        "title": "Valider la demande",
+        "hint": "Assignez une chambre avant de valider.",
+        "confirm": "Confirmer la validation"
+      },
+      "chooseReason": "Choisir un motif",
+      "chooseLodgment": "Choisir une chambre",
+      "chooseRole": "Choisir un rôle"
+    },
+    "tables": {
+      "photo": "Photo",
+      "fullName": "Nom et prénom",
+      "email": "Email",
+      "phone": "Téléphone",
+      "status": "Statut",
+      "submittedAt": "Date d'envoi",
+      "action": "Action",
+      "actions": "Actions"
+    },
+    "notFound": {
+      "renewal": "Renouvellement introuvable ou supprimé.",
+      "housingApplication": "Demande introuvable ou supprimée.",
+      "maintenance": "Maintenance introuvable ou supprimée.",
+      "announcement": "Annonce introuvable ou supprimée."
+    },
+    "allRoles": "Tous les rôles",
+    "announcements": {
+      "listTitle": "Annonces",
+      "detailTitle": "Annonce"
+    },
+    "pagination": {
+      "rowsPerPage": "Lignes par page",
+      "pageOf": "Page {page} sur {total}"
+    },
+    "selects": {
+      "status": "Statut",
+      "type": "Type",
+      "allStatuses": "Tous les statuts",
+      "allTypes": "Tous les types",
+      "selectFaculty": "Sélectionner une faculté...",
+      "selectBuilding": "Sélectionner un bâtiment...",
+      "academicSessions": "Sessions académiques"
+    },
+    "statuses": {
+      "renewal": {
+        "pending": "En attente",
+        "accepted": "Accepté",
+        "refused": "Refusé",
+        "validated": "Validé"
+      },
+      "maintenance": {
+        "pending": "En attente",
+        "accepted": "Accepté",
+        "refused": "Refusé",
+        "done": "Terminé"
+      },
+      "maintenanceType": {
+        "electrical": "Électrique",
+        "equipment": "Équipement",
+        "hvac": "CVC",
+        "other": "Autre",
+        "plumbing": "Plomberie"
+      },
+      "housingApplication": {
+        "pending": "En attente",
+        "accepted": "Accepté",
+        "refused": "Refusé",
+        "validated": "Validé"
+      },
+      "announcement": {
+        "draft": "Brouillon",
+        "published": "Publié"
+      },
+      "occupancy": {
+        "available": "Disponible",
+        "full": "Complet",
+        "overbooked": "Surpeuplé"
+      }
+    }
+  }
+}
