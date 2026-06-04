@@ -6,7 +6,7 @@ import { reactiveOmit } from '@vueuse/core';
 import { Plus } from 'lucide-vue-next';
 import { NumberFieldIncrement, useForwardProps } from 'reka-ui';
 
-import { cn } from '@/lib/utils';
+import { cn } from '~/lib/utils';
 
 const props = defineProps<
   { class?: HTMLAttributes['class'] } & NumberFieldIncrementProps
