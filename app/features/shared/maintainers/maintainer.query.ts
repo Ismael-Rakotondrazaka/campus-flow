@@ -1,17 +1,18 @@
+import type {
+  CreateMaintainer,
+  MaintainerQuery,
+  UpdateMaintainer,
+} from '#shared/features/maintainers';
+
 import {
   defineMutation,
   defineQueryOptions,
   useQueryCache,
 } from '@pinia/colada';
 
-import type {
-  MaintainerFilters,
-  MaintainerInsert,
-  MaintainerUpdate,
-} from './maintainer.model';
-
 import {
   createMaintainer,
+  deleteMaintainer,
   getMaintainer,
   getMaintainers,
   getMaintainersCount,
@@ -21,41 +22,59 @@ import {
 export const MAINTAINER_QUERY_KEYS = {
   byId: (id: string) => [...MAINTAINER_QUERY_KEYS.root, id] as const,
 
-  count: (filters: Omit<MaintainerFilters, 'limit' | 'page'> = {}) =>
-    [...MAINTAINER_QUERY_KEYS.root, 'count', filters] as const,
+  count: (
+    filters: Omit<
+      MaintainerQuery,
+      'limit' | 'orderBy' | 'page' | 'sortOrder'
+    > = {}
+  ) => [...MAINTAINER_QUERY_KEYS.root, 'count', filters] as const,
 
-  list: (filters: MaintainerFilters = {}) =>
+  list: (filters: MaintainerQuery = {}) =>
     [...MAINTAINER_QUERY_KEYS.root, 'list', filters] as const,
 
   root: ['maintainers'] as const,
 };
 
 export const maintainerListQuery = defineQueryOptions(
-  (filters: MaintainerFilters = {}) => ({
-    key: MAINTAINER_QUERY_KEYS.list(filters),
-    placeholderData: previousData => previousData,
-    query: () => getMaintainers(filters),
-  })
+  (filters: MaintainerQuery = {}) => {
+    const fetchFn = useRequestFetch();
+    return {
+      key: MAINTAINER_QUERY_KEYS.list(filters),
+      placeholderData: previousData => previousData,
+      query: () => getMaintainers(filters, fetchFn),
+    };
+  }
 );
 
 export const maintainerByIdQuery = defineQueryOptions(
-  ({ id }: { id: string }) => ({
-    key: MAINTAINER_QUERY_KEYS.byId(id),
-    query: () => getMaintainer(id),
-  })
+  ({ id }: { id: string }) => {
+    const fetchFn = useRequestFetch();
+    return {
+      key: MAINTAINER_QUERY_KEYS.byId(id),
+      query: () => getMaintainer(id, fetchFn),
+    };
+  }
 );
 
 export const maintainerCountQuery = defineQueryOptions(
-  (filters: Omit<MaintainerFilters, 'limit' | 'page'> = {}) => ({
-    key: MAINTAINER_QUERY_KEYS.count(filters),
-    query: () => getMaintainersCount(filters),
-  })
+  (
+    filters: Omit<
+      MaintainerQuery,
+      'limit' | 'orderBy' | 'page' | 'sortOrder'
+    > = {}
+  ) => {
+    const fetchFn = useRequestFetch();
+    return {
+      key: MAINTAINER_QUERY_KEYS.count(filters),
+      query: () => getMaintainersCount(filters, fetchFn),
+    };
+  }
 );
 
 export const useCreateMaintainer = defineMutation(() => {
   const queryCache = useQueryCache();
   return {
-    mutation: (maintainer: MaintainerInsert) => createMaintainer(maintainer),
+    mutation: (maintainer: CreateMaintainer) => createMaintainer(maintainer),
     onSuccess: () => {
       queryCache.invalidateQueries({ key: MAINTAINER_QUERY_KEYS.root });
     },
@@ -65,8 +84,18 @@ export const useCreateMaintainer = defineMutation(() => {
 export const useUpdateMaintainer = defineMutation(() => {
   const queryCache = useQueryCache();
   return {
-    mutation: ({ id, updates }: { id: string; updates: MaintainerUpdate }) =>
+    mutation: ({ id, updates }: { id: string; updates: UpdateMaintainer }) =>
       updateMaintainer(id, updates),
+    onSuccess: () => {
+      queryCache.invalidateQueries({ key: MAINTAINER_QUERY_KEYS.root });
+    },
+  };
+});
+
+export const useDeleteMaintainer = defineMutation(() => {
+  const queryCache = useQueryCache();
+  return {
+    mutation: (id: string) => deleteMaintainer(id),
     onSuccess: () => {
       queryCache.invalidateQueries({ key: MAINTAINER_QUERY_KEYS.root });
     },
