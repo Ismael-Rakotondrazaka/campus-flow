@@ -1,0 +1,30 @@
+{
+  "dashboard": {
+    "welcome": "Welcome back {firstName}!",
+    "admin": {
+      "title": "Dashboard",
+      "greeting": "Welcome, {name}"
+    },
+    "resident": {
+      "greeting": "Hello, {firstName}",
+      "subtitle": "Welcome to your dashboard",
+      "maintenances": {
+        "title": "Maintenance",
+        "countSubtitle": "Number of maintenance requests",
+        "viewMine": "View my requests"
+      },
+      "renewals": {
+        "title": "Renewals",
+        "lastStatus": "Latest status",
+        "none": "No renewal request yet",
+        "viewMine": "View my renewals"
+      },
+      "lodgment": {
+        "title": "My room",
+        "subtitle": "Your current assignment",
+        "none": "No room assigned yet",
+        "floorRoom": "Floor {floor} - Room {room}"
+      }
+    }
+  }
+}
