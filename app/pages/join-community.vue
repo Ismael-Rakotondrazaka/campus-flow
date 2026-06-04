@@ -5,12 +5,14 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '~/components/ui/card';
 import JoinCommunityForm from '~/features/join-community/components/JoinCommunityForm.vue';
 import { activeApplicationSessionQuery } from '~/features/shared/academic-sessions/academic-session.query';
 
+const { t } = useI18n();
+
 useHead({
-  title: 'Rejoindre la Communauté - Campus Flow',
+  title: () => t('joinCommunity.page.metaTitle'),
 });
 
 const { data: activeSession, isPending } = useQuery(() =>
@@ -24,10 +26,11 @@ const { data: activeSession, isPending } = useQuery(() =>
   >
     <div class="mx-auto max-w-3xl">
       <div class="mb-8">
-        <h1 class="text-primary text-3xl font-bold">Rejoindre la communauté</h1>
+        <h1 class="text-primary text-3xl font-bold">
+          {{ $t('joinCommunity.page.title') }}
+        </h1>
         <p class="text-muted-foreground mt-2 text-lg">
-          Pour rejoindre la communauté, veuillez remplir les informations
-          suivantes pour soumettre votre demande.
+          {{ $t('joinCommunity.page.description') }}
         </p>
       </div>
 
@@ -45,25 +48,27 @@ const { data: activeSession, isPending } = useQuery(() =>
               <Icon name="mdi:information" class="size-8 text-amber-600" />
               <div>
                 <CardTitle>
-                  Les Candidatures sont actuellement fermées
+                  {{ $t('joinCommunity.closed.title') }}
                 </CardTitle>
                 <CardDescription>
-                  Les demandes de logement ne sont pas actuellement ouvertes
+                  {{ $t('joinCommunity.closed.description') }}
                 </CardDescription>
               </div>
             </div>
           </CardHeader>
           <CardContent>
             <p class="text-muted-foreground mb-4 text-sm">
-              Veuillez revenir plus tard pendant la période de candidature. Nous
-              accepterons bientôt les demandes de logement.
+              {{ $t('joinCommunity.closed.hint') }}
             </p>
-            <NuxtLink to="/" class="text-primary hover:underline">
+            <NuxtLinkLocale
+              :to="{ name: 'index' }"
+              class="text-primary hover:underline"
+            >
               <Button variant="ghost">
                 <Icon name="mdi:arrow-left" />
-                Retour à l'accueil
+                {{ $t('joinCommunity.closed.backHome') }}
               </Button>
-            </NuxtLink>
+            </NuxtLinkLocale>
           </CardContent>
         </Card>
       </div>
