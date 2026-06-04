@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import type { Faculty } from '~/features/shared/faculties/faculty.model';
+import type { Faculty } from '#imports';
 
-import { Skeleton } from '@/components/ui/skeleton';
+import { FacultyConfig } from '#imports';
+
+import { Skeleton } from '~/components/ui/skeleton';
 import {
   Table,
   TableBody,
@@ -9,8 +11,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { FacultyConfig } from '~/features/shared/faculties/faculty.config';
+} from '~/components/ui/table';
 import { facultyListQuery } from '~/features/shared/faculties/faculty.query';
 import PaginationComponent from '~/features/shared/paginations/components/PaginationComponent.vue';
 
@@ -68,15 +69,15 @@ watch(limit, value => {
       <Input
         v-model="search"
         type="text"
-        placeholder="Rechercher une filière..."
+        :placeholder="$t('common.search.placeholderFaculty')"
         class="max-w-xs"
       />
     </div>
 
     <p class="text-foreground text-base">
-      Résultats: <span class="font-bold">{{ totalCount }}</span> filière{{
-        totalCount > 1 ? 's' : ''
-      }}
+      {{ $t('common.results.countLabel') }}
+      <span class="font-bold">{{ totalCount }}</span>
+      {{ $t('admin.results.faculty', totalCount) }}
     </p>
 
     <template v-if="state.status === 'pending'">
@@ -89,7 +90,7 @@ watch(limit, value => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Nom</TableHead>
+            <TableHead>{{ $t('admin.tables.name') }}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -104,7 +105,7 @@ watch(limit, value => {
       <div
         class="rounded-md border border-dashed border-gray-300 py-12 text-center"
       >
-        <p class="text-gray-500">Aucune filière trouvée.</p>
+        <p class="text-gray-500">{{ $t('common.empty.noFaculty') }}</p>
       </div>
     </template>
 
