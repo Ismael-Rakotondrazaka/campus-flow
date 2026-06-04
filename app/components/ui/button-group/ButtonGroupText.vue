@@ -4,7 +4,7 @@ import type { HTMLAttributes } from 'vue';
 
 import { Primitive } from 'reka-ui';
 
-import { cn } from '@/lib/utils';
+import { cn } from '~/lib/utils';
 
 import type { ButtonGroupVariants } from '.';
 
@@ -15,6 +15,8 @@ interface Props extends PrimitiveProps {
 
 const props = withDefaults(defineProps<Props>(), {
   as: 'div',
+  class: undefined,
+  orientation: undefined,
 });
 </script>
 

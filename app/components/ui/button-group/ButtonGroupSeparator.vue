@@ -4,12 +4,13 @@ import type { HTMLAttributes } from 'vue';
 
 import { reactiveOmit } from '@vueuse/core';
 
-import { Separator } from '@/components/ui/separator';
-import { cn } from '@/lib/utils';
+import { Separator } from '~/components/ui/separator';
+import { cn } from '~/lib/utils';
 
 const props = withDefaults(
   defineProps<{ class?: HTMLAttributes['class'] } & SeparatorProps>(),
   {
+    class: undefined,
     orientation: 'vertical',
   }
 );
