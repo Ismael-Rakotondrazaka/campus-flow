@@ -2,6 +2,51 @@ import type { NuxtConfig } from 'nuxt/schema';
 
 import tailwindcss from '@tailwindcss/vite';
 
+const makeLocaleFiles = (locale: string) =>
+  [
+    'admin',
+    'app',
+    'auth',
+    'common',
+    'dashboard',
+    'dates',
+    'errors',
+    'footer',
+    'forms',
+    'header',
+    'home',
+    'housingApplication',
+    'joinCommunity',
+    'legal',
+    'maintenance',
+    'renewal',
+    'resident',
+    'sider',
+    'users',
+  ].map(name => `${locale}/${name}.json`);
+
+const i18nLocaleCodes = ['en', 'fr'] as const;
+
+const appLayoutRouteRules = {
+  '/admin/housing-application/**': { appLayout: 'housing-application' },
+  '/admin/maintenance/**': { appLayout: 'maintenance' },
+  '/admin/renewal/**': { appLayout: 'renewal' },
+  '/admin/root/**': { appLayout: 'root' },
+  '/resident/**': { appLayout: 'resident' },
+} as const;
+
+/** i18n `prefix` strategy prepends `/en`, `/fr`, etc. - route rules must match. */
+function withLocalePrefixedRouteRules(
+  rules: typeof appLayoutRouteRules,
+  locales: readonly string[]
+) {
+  return Object.fromEntries(
+    Object.entries(rules).flatMap(([path, rule]) =>
+      locales.map(locale => [`/${locale}${path}`, rule])
+    )
+  );
+}
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -32,6 +77,37 @@ export default defineNuxtConfig({
     typedPages: true,
   },
 
+  fonts: {
+    families: [
+      { name: 'DM Sans', provider: 'google' },
+      { name: 'Playfair Display', provider: 'google' },
+    ],
+  },
+
+  i18n: {
+    defaultLocale: 'fr',
+    experimental: {
+      localeDetector: './localeDetector.ts',
+    },
+    langDir: 'locales',
+    locales: [
+      {
+        code: 'en',
+        files: makeLocaleFiles('en'),
+        iso: 'en-GB',
+        name: 'English',
+      },
+      {
+        code: 'fr',
+        files: makeLocaleFiles('fr'),
+        iso: 'fr-FR',
+        name: 'Français',
+      },
+    ],
+    strategy: 'prefix',
+    vueI18n: './i18n.config.ts',
+  },
+
   imports: {
     presets: [
       {
@@ -52,10 +128,13 @@ export default defineNuxtConfig({
     '@vee-validate/nuxt',
     '@nuxtjs/seo',
     '@vueuse/nuxt',
-    '@nuxtjs/supabase',
     '@pinia/nuxt',
     '@pinia/colada-nuxt',
     '@nuxtjs/leaflet',
+    'nuxt-auth-utils',
+    'nuxt-zod-i18n',
+    '@nuxtjs/i18n',
+    'nuxt-authorization',
   ],
 
   robots: {
@@ -63,18 +142,24 @@ export default defineNuxtConfig({
     disallow: ['/admin/*'],
   },
 
-  routeRules: {
-    '/admin/housing-application/**': { appLayout: 'housing-application' },
-    '/admin/maintenance/**': { appLayout: 'maintenance' },
-    '/admin/renewal/**': { appLayout: 'renewal' },
-    '/admin/root/**': { appLayout: 'root' },
-    '/resident/**': { appLayout: 'resident' },
-  },
+  routeRules: withLocalePrefixedRouteRules(
+    appLayoutRouteRules,
+    i18nLocaleCodes
+  ),
 
   runtimeConfig: {
+    brevo: {
+      apiKey: '', // NUXT_BREVO_API_KEY
+    },
     public: {
       appUrl: process.env.NUXT_PUBLIC_APP_URL || 'http://localhost:3000',
       appVersion: process.env.NUXT_PUBLIC_APP_VERSION || 'latest',
+    },
+    s3: {
+      accessKey: '', // NUXT_S3_ACCESS_KEY
+      host: '', // NUXT_S3_HOST
+      region: '', // NUXT_S3_REGION
+      secretKey: '', // NUXT_S3_SECRET_KEY
     },
   },
 
@@ -106,23 +191,9 @@ export default defineNuxtConfig({
     },
   },
 
-  supabase: {
-    key: process.env.NUXT_PUBLIC_SUPABASE_KEY || '',
-    redirectOptions: {
-      callback: '/confirm',
-      exclude: ['/'],
-      include: undefined,
-      login: '/login',
-      saveRedirectToCookie: true,
-    },
-    secretKey: process.env.NUXT_SUPABASE_SECRET_KEY || '',
-    types: '#shared/types/database.ts',
-    url: process.env.NUXT_PUBLIC_SUPABASE_URL || 'http://localhost:54321',
-  },
-
   typescript: {
     tsConfig: {
-      exclude: ['shared/types/database.ts'],
+      exclude: ['shared/types/database.ts', 'prisma/generated/**'],
     },
   },
 
@@ -142,5 +213,16 @@ export default defineNuxtConfig({
     plugins: [
       tailwindcss() as Exclude<NuxtConfig['vite'], undefined>['plugins'],
     ],
+  },
+
+  zodI18n: {
+    /**
+     * Since we choose to use 'en' and 'fr' as locales' code,
+     * we have to tell zodI18n to use those codes instead of the default ones.
+     */
+    localeCodesMapping: {
+      'en-GB': 'en',
+      'fr-FR': 'fr',
+    },
   },
 });
