@@ -4,7 +4,6 @@ import { z } from 'zod';
 export const PhoneNumberSchema = z.string().transform((value, ctx) => {
   const invalidIssueData: z.IssueData = {
     code: z.ZodIssueCode.custom,
-    message: 'Invalide',
   };
 
   try {
@@ -25,19 +24,3 @@ export const PhoneNumberSchema = z.string().transform((value, ctx) => {
     return z.NEVER;
   }
 });
-
-/* export const PhoneNumberSchema = z.string().refine(
-  value => {
-    try {
-      const result = parsePhoneNumberWithError(value);
-      return result.isValid();
-    } catch {
-      return false;
-    }
-  },
-  {
-    message: 'Invalide',
-  }
-); */
-
-// export const PhoneNumberSchema = z.string();
