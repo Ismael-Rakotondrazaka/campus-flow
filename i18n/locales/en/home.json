@@ -1,0 +1,131 @@
+{
+  "home": {
+    "hero": {
+      "badge": "University City · Paris, France",
+      "title": {
+        "line1": "Where Knowledge",
+        "emphasis": "meets",
+        "line2": "Life"
+      },
+      "subtitle": "Discover a dynamic environment where the student community thrives — a place for learning, growth, and connection.",
+      "cta": {
+        "join": "Join the community",
+        "signIn": "Sign in"
+      },
+      "stats": {
+        "students": "Students",
+        "rooms": "Rooms",
+        "location": "Paris"
+      },
+      "imageAlt": "Lumièrebourg"
+    },
+    "features": {
+      "eyebrow": "Our mission",
+      "title": {
+        "line1": "A living environment",
+        "line2": "designed for you"
+      },
+      "intro": "Lumièrebourg University City offers a complete environment so you can focus on what matters.",
+      "items": {
+        "comfort": {
+          "title": "Comfortable housing",
+          "description": "150 furnished rooms offering a pleasant setting conducive to study."
+        },
+        "community": {
+          "title": "Community life",
+          "description": "A community of 580 students, shared spaces, and regular events."
+        },
+        "services": {
+          "title": "Services & maintenance",
+          "description": "Dedicated teams to keep your accommodation running smoothly."
+        }
+      }
+    },
+    "testimonials": {
+      "eyebrow": "They trust us",
+      "title": {
+        "line1": "The voice of our",
+        "line2": "residents"
+      },
+      "intro": "Students from around the world share their experience at Lumièrebourg University City.",
+      "cards": {
+        "row1": [
+          {
+            "author": "Amara Diallo",
+            "avatar": "AD",
+            "faculty": "Sciences Po · M1",
+            "quote": "Lumièrebourg gave me much more than housing. I found a family, a network, and memories for life. The management team is always listening."
+          },
+          {
+            "author": "Théo Marchand",
+            "avatar": "TM",
+            "faculty": "HEC Paris · L3",
+            "quote": "The common spaces are really designed for working and relaxing. I met my best friends here during cultural evenings organized by the city."
+          },
+          {
+            "author": "Yuki Nakamura",
+            "avatar": "YN",
+            "faculty": "Sorbonne · M2 Physics",
+            "quote": "As an international student, Lumièrebourg made my integration in Paris incredibly easy. Administration speaks several languages and procedures are simple."
+          },
+          {
+            "author": "Léa Fontaine",
+            "avatar": "LF",
+            "faculty": "ENSAD · L2 Design",
+            "quote": "The room quality far exceeds my expectations for the price. And the fiber connection is excellent — essential for my creative projects."
+          },
+          {
+            "author": "Ibrahim Koné",
+            "avatar": "IK",
+            "faculty": "Polytechnique · M1",
+            "quote": "Two years at Lumièrebourg and I don't regret a single day. Maintenance requests are handled in less than 48 hours — it really changes daily life."
+          }
+        ],
+        "row2": [
+          {
+            "author": "Camille Rousseau",
+            "avatar": "CR",
+            "faculty": "Université Paris-Est · L3",
+            "quote": "The online application process is really well designed. In a few clicks, I had secured my room. A real time-saver during a stressful period."
+          },
+          {
+            "author": "Omar Benali",
+            "avatar": "OB",
+            "faculty": "ESCP · MBA",
+            "quote": "The community diversity is incredible. I connected with students from more than 30 nationalities. These encounters transformed my worldview."
+          },
+          {
+            "author": "Sofia Petrov",
+            "avatar": "SP",
+            "faculty": "UPMC · M2 Bio",
+            "quote": "The site's calm is perfect for revision while being 20 minutes from major Parisian universities. The ideal balance between study and social life."
+          },
+          {
+            "author": "Antoine Lebrun",
+            "avatar": "AL",
+            "faculty": "Dauphine · L2 Economics",
+            "quote": "Renewing your lease online is surprisingly simple. You get reminders, sign electronically — never had to make unnecessary trips."
+          },
+          {
+            "author": "Priya Sharma",
+            "avatar": "PS",
+            "faculty": "ESSEC · Grande École",
+            "quote": "Lumièrebourg perfectly embodies the student city spirit: serious when needed, festive and welcoming the rest of the time. I recommend it to everyone."
+          }
+        ]
+      }
+    },
+    "map": {
+      "eyebrow": "Location",
+      "title": "Find us"
+    },
+    "cta": {
+      "title": {
+        "line1": "Ready to join",
+        "line2": "the community?"
+      },
+      "subtitle": "Submit your housing application in a few minutes and become part of life at Lumièrebourg.",
+      "button": "Submit my application"
+    }
+  }
+}

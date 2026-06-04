@@ -1,0 +1,131 @@
+{
+  "home": {
+    "hero": {
+      "badge": "Cité Universitaire · Paris, France",
+      "title": {
+        "line1": "Où le Savoir",
+        "emphasis": "rencontre",
+        "line2": "la Vie"
+      },
+      "subtitle": "Découvrez un environnement dynamique où la communauté étudiante prospère - un lieu d'apprentissage, de croissance et de rencontres.",
+      "cta": {
+        "join": "Rejoindre la communauté",
+        "signIn": "Se connecter"
+      },
+      "stats": {
+        "students": "Étudiants",
+        "rooms": "Chambres",
+        "location": "Paris"
+      },
+      "imageAlt": "Lumièrebourg"
+    },
+    "features": {
+      "eyebrow": "Notre mission",
+      "title": {
+        "line1": "Un cadre de vie",
+        "line2": "pensé pour vous"
+      },
+      "intro": "La Cité Universitaire Lumièrebourg offre un environnement complet pour que vous puissiez vous concentrer sur l'essentiel.",
+      "items": {
+        "comfort": {
+          "title": "Logements confortables",
+          "description": "150 chambres aménagées pour offrir un cadre de vie agréable et propice aux études."
+        },
+        "community": {
+          "title": "Vie communautaire",
+          "description": "Une communauté de 580 étudiants, des espaces partagés et des événements réguliers."
+        },
+        "services": {
+          "title": "Services & maintenance",
+          "description": "Des équipes dédiées pour assurer le bon fonctionnement et le confort de votre logement."
+        }
+      }
+    },
+    "testimonials": {
+      "eyebrow": "Ils nous font confiance",
+      "title": {
+        "line1": "La voix de nos",
+        "line2": "résidents"
+      },
+      "intro": "Des étudiants du monde entier partagent leur expérience à la Cité Universitaire Lumièrebourg.",
+      "cards": {
+        "row1": [
+          {
+            "author": "Amara Diallo",
+            "avatar": "AD",
+            "faculty": "Sciences Po · M1",
+            "quote": "Lumièrebourg m'a offert bien plus qu'un logement. J'ai trouvé une famille, un réseau, et des souvenirs pour la vie. L'équipe de direction est toujours à l'écoute."
+          },
+          {
+            "author": "Théo Marchand",
+            "avatar": "TM",
+            "faculty": "HEC Paris · L3",
+            "quote": "Les espaces communs sont vraiment pensés pour travailler et se détendre. J'ai rencontré mes meilleurs amis ici, lors de soirées culturelles organisées par la cité."
+          },
+          {
+            "author": "Yuki Nakamura",
+            "avatar": "YN",
+            "faculty": "Sorbonne · M2 Physique",
+            "quote": "En tant qu'étudiante internationale, Lumièrebourg a rendu mon intégration à Paris incroyablement facile. L'administration parle plusieurs langues et les démarches sont simples."
+          },
+          {
+            "author": "Léa Fontaine",
+            "avatar": "LF",
+            "faculty": "ENSAD · L2 Design",
+            "quote": "La qualité des chambres dépasse largement mes attentes pour le prix. Et la connexion fibre est excellente — indispensable pour mes projets créatifs."
+          },
+          {
+            "author": "Ibrahim Koné",
+            "avatar": "IK",
+            "faculty": "Polytechnique · M1",
+            "quote": "Deux ans à Lumièrebourg et je ne regrette pas une seule journée. Les demandes de maintenance sont traitées en moins de 48h — ça change vraiment la vie au quotidien."
+          }
+        ],
+        "row2": [
+          {
+            "author": "Camille Rousseau",
+            "avatar": "CR",
+            "faculty": "Université Paris-Est · L3",
+            "quote": "Le processus de candidature en ligne est vraiment bien conçu. En quelques clics, j'avais validé ma chambre. Un vrai gain de temps lors d'une période stressante."
+          },
+          {
+            "author": "Omar Benali",
+            "avatar": "OB",
+            "faculty": "ESCP · MBA",
+            "quote": "La diversité de la communauté est incroyable. J'ai noué des liens avec des étudiants de plus de 30 nationalités. Ces rencontres ont transformé ma vision du monde."
+          },
+          {
+            "author": "Sofia Petrov",
+            "avatar": "SP",
+            "faculty": "UPMC · M2 Bio",
+            "quote": "Le calme du site est parfait pour les révisions tout en étant à 20 minutes des grandes universités parisiennes. L'équilibre idéal entre studieux et vie sociale."
+          },
+          {
+            "author": "Antoine Lebrun",
+            "avatar": "AL",
+            "faculty": "Dauphine · L2 Éco",
+            "quote": "Renouveler son bail en ligne est d'une simplicité déconcertante. On reçoit des rappels, on signe électroniquement — jamais eu à me déplacer inutilement."
+          },
+          {
+            "author": "Priya Sharma",
+            "avatar": "PS",
+            "faculty": "ESSEC · Grande École",
+            "quote": "Lumièrebourg incarne parfaitement l'esprit de la cité étudiante : sérieuse quand il le faut, festive et accueillante le reste du temps. Je la recommande à tous."
+          }
+        ]
+      }
+    },
+    "map": {
+      "eyebrow": "Localisation",
+      "title": "Nous trouver"
+    },
+    "cta": {
+      "title": {
+        "line1": "Prêt à rejoindre",
+        "line2": "la communauté ?"
+      },
+      "subtitle": "Faites votre demande de logement en quelques minutes et intégrez la vie à Lumièrebourg.",
+      "button": "Déposer ma candidature"
+    }
+  }
+}
