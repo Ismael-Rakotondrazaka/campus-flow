@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table';
+import { type Resident, ResidentConfig, ResidentOrderBy } from '#imports';
 
-import type { Resident } from '~/features/shared/residents/resident.model';
-
-import { Input } from '@/components/ui/input';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Input } from '~/components/ui/input';
+import { Skeleton } from '~/components/ui/skeleton';
 import {
   Table,
   TableBody,
@@ -12,21 +11,22 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from '~/components/ui/table';
 import {
-  residentColumns,
   residentColumnsLength,
-} from '~/features/admin/residents/resident-columns';
+  useResidentColumns,
+} from '~/features/admin/residents/useResidentColumns';
 import BuildingSelect from '~/features/shared/buildings/components/BuildingSelect.vue';
 import PaginationComponent from '~/features/shared/paginations/components/PaginationComponent.vue';
-import { ResidentConfig } from '~/features/shared/residents/resident.config';
 import { residentListQuery } from '~/features/shared/residents/resident.query';
+
+const columns = useResidentColumns();
 
 const globalAcademicSessionId = useRouteQuery<
   string | undefined,
   string | undefined
 >('g_academic_session_id', undefined);
-const building = useRouteQuery<string | undefined>('building_id', undefined);
+const building = useRouteQuery<string | undefined>('buildingId', undefined);
 const search = useRouteQuery<string | undefined>('search', undefined);
 const page = useRouteQuery<number>('page', ResidentConfig.PAGE_DEFAULT, {
   transform: Number,
@@ -37,24 +37,24 @@ const limit = useRouteQuery<number>('limit', ResidentConfig.PAGE_SIZE_DEFAULT, {
 
 const { state } = useQuery(() =>
   residentListQuery({
-    academic_session_id: globalAcademicSessionId.value,
-    building_id: building.value,
+    academicSessionId: globalAcademicSessionId.value,
+    buildingId: building.value,
     limit: limit.value,
-    orderBy: 'created_at',
+    orderBy: ResidentOrderBy.createdAt,
     page: page.value,
     search: search.value,
     sortOrder: SortOrder.desc,
   })
 );
 
-const residents = computed(() => state.value?.data?.data ?? ([] as Resident[]));
-
-const getGlobalAcademicSessionId = () => {
-  return globalAcademicSessionId.value;
-};
+const residents = computed<Serialize<Resident>[]>(
+  () => state.value?.data?.data ?? []
+);
 
 const table = useVueTable({
-  columns: residentColumns({ getGlobalAcademicSessionId }),
+  get columns() {
+    return columns.value;
+  },
   data: residents,
   getCoreRowModel: getCoreRowModel(),
 });
@@ -93,14 +93,18 @@ watch(limit, value => {
 <template>
   <div class="w-full">
     <div class="mb-2 flex items-center justify-between gap-2">
-      <Input v-model="search" type="text" placeholder="Rechercher..." />
+      <Input
+        v-model="search"
+        type="text"
+        :placeholder="$t('common.search.placeholder')"
+      />
       <BuildingSelect v-model="building" class="w-56" />
     </div>
 
     <p class="text-foreground mb-2 text-base">
-      Résultats: <span class="font-bold">{{ totalCount }}</span> résident{{
-        totalCount > 1 ? 's' : ''
-      }}
+      {{ $t('common.results.countLabel') }}
+      <span class="font-bold">{{ totalCount }}</span>
+      {{ $t('admin.results.resident', totalCount) }}
     </p>
 
     <div class="mb-2 rounded-md border">
@@ -163,7 +167,7 @@ watch(limit, value => {
               :colspan="residentColumnsLength"
               class="h-24 text-center"
             >
-              Aucun résultat.
+              {{ $t('common.empty.noResults') }}
             </TableCell>
           </TableRow>
         </TableBody>
