@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { Icon } from '#components';
 
-import { Button } from '@/components/ui/button';
-import { Field, FieldLabel } from '@/components/ui/field';
+import { Button } from '~/components/ui/button';
+import { Field, FieldLabel } from '~/components/ui/field';
 import { cn } from '~/lib/utils';
 
 interface Props {
   ariaInvalid?: 'false' | 'true' | boolean;
   fieldName: string;
   fileName?: null | string;
-  label?: string;
+  label: string;
   preview: null | string;
-  previewAlt?: string;
+  previewAlt: string;
   /** When false, user can remove the current image (emit `clear`). */
   required?: boolean;
 }
@@ -19,8 +19,6 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   ariaInvalid: false,
   fileName: null,
-  label: "Photo d'identité",
-  previewAlt: 'Aperçu de la photo',
   required: true,
 });
 
@@ -28,6 +26,8 @@ const emit = defineEmits<{
   change: [event: Event];
   clear: [];
 }>();
+
+const { t } = useI18n();
 
 const inputRef = ref<HTMLInputElement | null>(null);
 
@@ -69,7 +69,7 @@ const onClear = () => {
           @click="inputRef?.click()"
         >
           <Icon name="mdi:file-upload" class="size-4" />
-          {{ fileName || label }}
+          {{ fileName || t('joinCommunity.upload.profilePhoto') }}
         </button>
         <Button
           v-if="showClear"
@@ -78,7 +78,7 @@ const onClear = () => {
           size="sm"
           @click="onClear"
         >
-          Retirer
+          {{ t('joinCommunity.upload.remove') }}
         </Button>
       </div>
       <input

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Icon } from '#components';
 
-import { Field, FieldLabel } from '@/components/ui/field';
+import { Field, FieldLabel } from '~/components/ui/field';
 import { cn } from '~/lib/utils';
 
 interface Props {

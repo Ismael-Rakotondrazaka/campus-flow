@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { Icon } from '#components';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '~/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '~/components/ui/card';
 
 interface Props {
-  error: null | string;
+  error?: null | string;
 }
 
 defineProps<Props>();
@@ -21,6 +21,8 @@ type Emits = {
 };
 
 const emit = defineEmits<Emits>();
+
+const { t } = useI18n();
 </script>
 
 <template>
@@ -29,13 +31,15 @@ const emit = defineEmits<Emits>();
       <div class="flex items-center gap-3">
         <Icon name="mdi:alert-circle" class="size-8 text-red-600" />
         <div>
-          <CardTitle>La soumission a échoué</CardTitle>
-          <CardDescription>{{ error }}</CardDescription>
+          <CardTitle>{{ t('joinCommunity.error.title') }}</CardTitle>
+          <CardDescription v-if="error">{{ error }}</CardDescription>
         </div>
       </div>
     </CardHeader>
     <CardContent>
-      <Button @click="emit('retry')">Réessayer</Button>
+      <Button @click="emit('retry')">
+        {{ t('joinCommunity.error.retry') }}
+      </Button>
     </CardContent>
   </Card>
 </template>

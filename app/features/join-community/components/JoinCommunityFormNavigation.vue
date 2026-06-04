@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/button';
+import { Button } from '~/components/ui/button';
 
 interface Props {
   currentStep: number;
@@ -13,6 +13,8 @@ const emit = defineEmits<{
   next: [];
   submit: [];
 }>();
+
+const { t } = useI18n();
 </script>
 
 <template>
@@ -24,7 +26,8 @@ const emit = defineEmits<{
       :disabled="isSubmitting"
       @click="emit('back')"
     >
-      Retour
+      <Icon name="mdi:arrow-left" />
+      {{ t('joinCommunity.nav.back') }}
     </Button>
     <div class="flex-1" />
     <Button
@@ -33,7 +36,8 @@ const emit = defineEmits<{
       :disabled="isSubmitting"
       @click="emit('next')"
     >
-      Suivant
+      {{ t('joinCommunity.nav.next') }}
+      <Icon name="mdi:arrow-right" />
     </Button>
     <Button
       v-else
@@ -41,7 +45,13 @@ const emit = defineEmits<{
       :disabled="isSubmitting"
       @click="emit('submit')"
     >
-      {{ isSubmitting ? 'Envoi en cours...' : 'Soumettre la demande' }}
+      <Icon v-if="isSubmitting" name="mdi:loading" class="animate-spin" />
+      <Icon v-else name="mdi:send" />
+      {{
+        isSubmitting
+          ? t('joinCommunity.nav.submitting')
+          : t('joinCommunity.nav.submit')
+      }}
     </Button>
   </div>
 </template>

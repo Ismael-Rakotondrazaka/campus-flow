@@ -1,18 +1,22 @@
 <script setup lang="ts">
+import PhoneInput from '~/components/common/PhoneInput.vue';
 import {
   Field,
   FieldError,
   FieldGroup,
   FieldLabel,
-} from '@/components/ui/field';
-import PhoneInput from '~/components/common/PhoneInput.vue';
+} from '~/components/ui/field';
+
+const { t } = useI18n();
 </script>
 
 <template>
   <FieldGroup class="space-y-2">
     <VeeField v-slot="{ errors, componentField }" name="email">
       <Field :data-invalid="!!errors.length">
-        <FieldLabel for="email">Adresse e-mail</FieldLabel>
+        <FieldLabel for="email">
+          {{ t('joinCommunity.fields.emailAddress') }}
+        </FieldLabel>
         <Input
           id="email"
           v-bind="componentField"
@@ -23,11 +27,13 @@ import PhoneInput from '~/components/common/PhoneInput.vue';
       </Field>
     </VeeField>
 
-    <VeeField v-slot="{ field, errors }" name="phone_number">
+    <VeeField v-slot="{ field, errors }" name="phoneNumber">
       <Field :data-invalid="!!errors.length">
-        <FieldLabel for="phone_number">Numéro de téléphone</FieldLabel>
+        <FieldLabel for="phoneNumber">
+          {{ t('joinCommunity.fields.phoneNumber') }}
+        </FieldLabel>
         <PhoneInput
-          id="phone_number"
+          id="phoneNumber"
           :aria-invalid="!!errors.length"
           @on-update:model-value="field['onUpdate:modelValue']"
         />
@@ -35,13 +41,13 @@ import PhoneInput from '~/components/common/PhoneInput.vue';
       </Field>
     </VeeField>
 
-    <VeeField v-slot="{ field, errors }" name="emergency_number">
+    <VeeField v-slot="{ field, errors }" name="emergencyNumber">
       <Field :data-invalid="!!errors.length">
-        <FieldLabel for="emergency_number">
-          Numéro de contact d'urgence
+        <FieldLabel for="emergencyNumber">
+          {{ t('joinCommunity.fields.emergencyNumber') }}
         </FieldLabel>
         <PhoneInput
-          id="emergency_number"
+          id="emergencyNumber"
           :aria-invalid="!!errors.length"
           @on-update:model-value="field['onUpdate:modelValue']"
         />

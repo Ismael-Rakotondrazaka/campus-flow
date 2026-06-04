@@ -6,13 +6,15 @@ import {
   StepperSeparator,
   StepperTitle,
   StepperTrigger,
-} from '@/components/ui/stepper';
+} from '~/components/ui/stepper';
 
 interface Props {
   currentStep: number;
 }
 
 defineProps<Props>();
+
+const { t } = useI18n();
 </script>
 
 <template>
@@ -23,7 +25,7 @@ defineProps<Props>();
           <Icon name="mdi:information-outline" />
         </StepperIndicator>
         <div>
-          <StepperTitle>Informations générales</StepperTitle>
+          <StepperTitle>{{ t('joinCommunity.steps.general') }}</StepperTitle>
         </div>
       </StepperTrigger>
       <StepperSeparator />
@@ -35,7 +37,7 @@ defineProps<Props>();
           <Icon name="mdi:phone-outline" />
         </StepperIndicator>
         <div>
-          <StepperTitle>Informations de contact</StepperTitle>
+          <StepperTitle>{{ t('joinCommunity.steps.contact') }}</StepperTitle>
         </div>
       </StepperTrigger>
       <StepperSeparator />
@@ -47,7 +49,7 @@ defineProps<Props>();
           <Icon name="mdi:book-open-outline" />
         </StepperIndicator>
         <div>
-          <StepperTitle>Informations éducatives</StepperTitle>
+          <StepperTitle>{{ t('joinCommunity.steps.education') }}</StepperTitle>
         </div>
       </StepperTrigger>
       <StepperSeparator />
@@ -59,7 +61,9 @@ defineProps<Props>();
           <Icon name="mdi:check-circle-outline" />
         </StepperIndicator>
         <div>
-          <StepperTitle>Vérification</StepperTitle>
+          <StepperTitle>
+            {{ t('joinCommunity.steps.verification') }}
+          </StepperTitle>
         </div>
       </StepperTrigger>
     </StepperItem>

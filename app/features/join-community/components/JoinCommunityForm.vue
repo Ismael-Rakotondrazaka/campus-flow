@@ -1,15 +1,12 @@
 <script setup lang="ts">
-import type { AcademicSession } from '~/features/shared/academic-sessions/academic-session.model';
+import type { AcademicSession, JoinCommunity } from '#imports';
 
-import { Card, CardContent } from '@/components/ui/card';
-import { useUploadHousingApplicationDocument } from '~/features/join-community/composables/useUploadHousingApplicationDocument';
-import {
-  type JoinCommunity,
-  JoinCommunitySchema,
-} from '~/features/join-community/join-community.schema';
+import { Gender, JoinCommunitySchema, Origin } from '#imports';
+
+import { Card, CardContent } from '~/components/ui/card';
 import { facultyListQuery } from '~/features/shared/faculties/faculty.query';
+import { uploadHousingApplicationDocument } from '~/features/shared/housing-applications';
 import { useCreateHousingApplication } from '~/features/shared/housing-applications/housing-application.query';
-import { Gender, Origin } from '~/features/shared/residents/resident.model';
 
 import JoinCommunityFormContactInfo from './JoinCommunityFormContactInfo.vue';
 import JoinCommunityFormEducationInfo from './JoinCommunityFormEducationInfo.vue';
@@ -21,7 +18,7 @@ import JoinCommunityFormSuccess from './JoinCommunityFormSuccess.vue';
 import JoinCommunityFormVerification from './JoinCommunityFormVerification.vue';
 
 interface Props {
-  session: AcademicSession;
+  session: Serialize<AcademicSession>;
 }
 
 const props = defineProps<Props>();
@@ -36,7 +33,6 @@ type SubmissionState = (typeof SubmissionState)[keyof typeof SubmissionState];
 
 const currentStep = ref(1);
 const submissionState = ref<SubmissionState>(SubmissionState.idle);
-const submissionError = ref<null | string>(null);
 
 // File refs for uploads
 const profilePhotoFile = ref<File | null>(null);
@@ -45,29 +41,35 @@ const nicFile = ref<File | null>(null);
 const nicPreview = ref<null | string>(null);
 const schoolCertFile = ref<File | null>(null);
 
-const { handleSubmit, isSubmitting, setFieldError, validateField, values } =
-  useForm({
-    initialValues: {
-      email: '',
-      emergency_number: '',
-      faculty_id: '',
-      first_name: '',
-      gender: Gender.male,
-      last_name: '',
-      nic: '',
-      origin: Origin.national,
-      phone_number: '',
-    },
-    validationSchema: toTypedSchema(JoinCommunitySchema),
-  });
+const { t } = useI18n();
+
+const {
+  handleSubmit,
+  isSubmitting,
+  setErrors,
+  setFieldError,
+  validateField,
+  values,
+} = useForm({
+  initialValues: {
+    email: '',
+    emergencyNumber: '',
+    facultyId: '',
+    firstName: '',
+    gender: Gender.male,
+    lastName: '',
+    nic: '',
+    origin: Origin.national,
+    phoneNumber: '',
+  },
+  validationSchema: toTypedSchema(JoinCommunitySchema),
+});
 
 // Queries and mutations
 const { data: facultiesData } = useQuery(() =>
   facultyListQuery({ limit: 100 })
 );
 const createHousingApplicationMutation = useCreateHousingApplication();
-
-const upload = useUploadHousingApplicationDocument();
 
 const facultyList = computed(() => facultiesData.value?.data ?? []);
 
@@ -105,7 +107,7 @@ const goNext = async () => {
   type FormField = keyof JoinCommunity;
   let fieldsToValidate: FormField[] = [];
   const fileFieldValidation: Record<
-    'image_url' | 'nic_url' | 'school_certificate_url',
+    'imageUrl' | 'nicUrl' | 'schoolCertificateUrl',
     | {
         errorMessage: null;
         isSuccess: true;
@@ -115,44 +117,44 @@ const goNext = async () => {
         isSuccess: false;
       }
   > = {
-    image_url: {
+    imageUrl: {
       errorMessage: null,
       isSuccess: true,
     },
-    nic_url: {
+    nicUrl: {
       errorMessage: null,
       isSuccess: true,
     },
-    school_certificate_url: {
+    schoolCertificateUrl: {
       errorMessage: null,
       isSuccess: true,
     },
   };
 
   if (currentStep.value === 1) {
-    fieldsToValidate = ['first_name', 'last_name', 'gender', 'nic'];
+    fieldsToValidate = ['firstName', 'lastName', 'gender', 'nic'];
 
     if (profilePhotoFile.value === null) {
-      fileFieldValidation.image_url = {
-        errorMessage: 'Obligatoire',
+      fileFieldValidation.imageUrl = {
+        errorMessage: t('forms.validation.photoRequired'),
         isSuccess: false,
       };
     }
 
     if (nicFile.value === null) {
-      fileFieldValidation.nic_url = {
-        errorMessage: 'Obligatoire',
+      fileFieldValidation.nicUrl = {
+        errorMessage: t('joinCommunity.errors.documentsRequired'),
         isSuccess: false,
       };
     }
   } else if (currentStep.value === 2) {
-    fieldsToValidate = ['email', 'phone_number', 'emergency_number'];
+    fieldsToValidate = ['email', 'phoneNumber', 'emergencyNumber'];
   } else if (currentStep.value === 3) {
-    fieldsToValidate = ['faculty_id'];
+    fieldsToValidate = ['facultyId'];
 
     if (schoolCertFile.value === null) {
-      fileFieldValidation.school_certificate_url = {
-        errorMessage: 'Obligatoire',
+      fileFieldValidation.schoolCertificateUrl = {
+        errorMessage: t('joinCommunity.errors.documentsRequired'),
         isSuccess: false,
       };
     }
@@ -165,7 +167,7 @@ const goNext = async () => {
 
   Object.entries(fileFieldValidation).forEach(([field, validation]) => {
     setFieldError(
-      field as 'image_url' | 'nic_url' | 'school_certificate_url',
+      field as 'imageUrl' | 'nicUrl' | 'schoolCertificateUrl',
       validation.isSuccess ? undefined : validation.errorMessage
     );
   });
@@ -186,7 +188,7 @@ const onSubmit = handleSubmit(async (formValues: JoinCommunity) => {
 
     // Guard: all files present
     if (!profilePhotoFile.value || !nicFile.value || !schoolCertFile.value) {
-      throw new Error('Tous les documents sont requis');
+      throw new Error(t('joinCommunity.errors.documentsRequired'));
     }
 
     // Pre-generate application ID so files are stored under its path
@@ -194,33 +196,40 @@ const onSubmit = handleSubmit(async (formValues: JoinCommunity) => {
 
     // Upload files using the application ID as folder
     const [imagePath, nicPath, schoolCertificatePath] = await Promise.all([
-      upload(applicationId, profilePhotoFile.value, 'photo'),
-      upload(applicationId, nicFile.value, 'nic'),
-      upload(applicationId, schoolCertFile.value, 'school-certificate'),
+      uploadHousingApplicationDocument(
+        applicationId,
+        profilePhotoFile.value,
+        'photo'
+      ),
+      uploadHousingApplicationDocument(applicationId, nicFile.value, 'nic'),
+      uploadHousingApplicationDocument(
+        applicationId,
+        schoolCertFile.value,
+        'school-certificate'
+      ),
     ]);
 
     // Create housing application with the pre-generated ID
     await createHousingApplicationMutation.mutation({
-      academic_session_id: props.session.id,
+      academicSessionId: props.session.id,
       email: formValues.email,
-      emergency_number: formValues.emergency_number,
-      faculty_id: formValues.faculty_id,
-      first_name: formValues.first_name,
+      emergencyNumber: formValues.emergencyNumber,
+      facultyId: formValues.facultyId,
+      firstName: formValues.firstName,
       gender: formValues.gender,
       id: applicationId,
-      image_url: imagePath,
-      last_name: formValues.last_name,
+      imageUrl: imagePath,
+      lastName: formValues.lastName,
       nic: formValues.nic,
-      nic_url: nicPath,
+      nicUrl: nicPath,
       origin: formValues.origin,
-      phone_number: formValues.phone_number,
-      school_certificate_url: schoolCertificatePath,
+      phoneNumber: formValues.phoneNumber,
+      schoolCertificateUrl: schoolCertificatePath,
     });
 
     submissionState.value = SubmissionState.success;
   } catch (error) {
-    submissionError.value =
-      error instanceof Error ? error.message : "Une erreur s'est produite";
+    handleFetchError(error, t, setErrors);
     submissionState.value = SubmissionState.error;
   }
 });
@@ -234,7 +243,6 @@ const onSubmit = handleSubmit(async (formValues: JoinCommunity) => {
 
     <JoinCommunityFormError
       v-else-if="submissionState === SubmissionState.error"
-      :error="submissionError"
       @retry="onSubmit"
     />
 
@@ -244,7 +252,7 @@ const onSubmit = handleSubmit(async (formValues: JoinCommunity) => {
 
         <JoinCommunityFormGeneralInfo
           v-show="currentStep === 1"
-          :first-name-initial="values.first_name?.charAt(0) ?? 'P'"
+          :first-name-initial="values.firstName?.charAt(0) ?? 'P'"
           :nic-file-name="nicFile?.name ?? null"
           :nic-preview="nicPreview"
           :photo-file-name="profilePhotoFile?.name ?? null"
@@ -264,15 +272,15 @@ const onSubmit = handleSubmit(async (formValues: JoinCommunity) => {
 
         <JoinCommunityFormVerification
           v-show="currentStep === 4"
-          :first-name="values.first_name"
-          :last-name="values.last_name"
+          :first-name="values.firstName"
+          :last-name="values.lastName"
           :gender="values.gender ?? null"
           :origin="values.origin ?? null"
           :email="values.email"
-          :phone-number="values.phone_number"
-          :emergency-number="values.emergency_number"
+          :phone-number="values.phoneNumber"
+          :emergency-number="values.emergencyNumber"
           :nic-number="values.nic"
-          :faculty-id="values.faculty_id"
+          :faculty-id="values.facultyId"
           :faculties="facultyList"
           :profile-photo-file-name="profilePhotoFile?.name ?? null"
           :nic-file-name="nicFile?.name ?? null"

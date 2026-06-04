@@ -1,14 +1,21 @@
 <script setup lang="ts">
 import { Icon } from '#components';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '~/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '~/components/ui/card';
+
+const localeRoute = useLocaleRoute();
+const { t } = useI18n();
+
+const handleReturnToHome = async () => {
+  await navigateTo(localeRoute({ name: 'index' }));
+};
 </script>
 
 <template>
@@ -17,16 +24,17 @@ import {
       <div class="flex items-center gap-3">
         <Icon name="mdi:check-circle" class="size-8 text-green-600" />
         <div>
-          <CardTitle>Demande soumise avec succès</CardTitle>
+          <CardTitle>{{ t('joinCommunity.success.title') }}</CardTitle>
           <CardDescription>
-            Votre demande de logement a été reçue. Nous l'examinerons et vous
-            recontacterons bientôt.
+            {{ t('joinCommunity.success.descriptionLong') }}
           </CardDescription>
         </div>
       </div>
     </CardHeader>
     <CardContent>
-      <Button @click="() => navigateTo('/')"> Retour à l'accueil </Button>
+      <Button @click="handleReturnToHome">
+        {{ t('joinCommunity.success.backHome') }}
+      </Button>
     </CardContent>
   </Card>
 </template>

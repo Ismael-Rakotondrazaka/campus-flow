@@ -1,16 +1,14 @@
 <script setup lang="ts">
+import { GenderLabel, OriginLabel } from '#imports';
+
 import {
   Field,
   FieldError,
   FieldGroup,
   FieldLabel,
-} from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import {
-  GenderLabel,
-  OriginLabel,
-} from '~/features/shared/housing-applications/housing-application.model';
+} from '~/components/ui/field';
+import { Input } from '~/components/ui/input';
+import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group';
 
 import DocumentUploadField from './DocumentUploadField.vue';
 import PhotoUploadField from './PhotoUploadField.vue';
@@ -30,6 +28,8 @@ const emit = defineEmits<{
   nicChange: [event: Event];
   photoChange: [event: Event];
 }>();
+
+const { t } = useI18n();
 </script>
 
 <template>
@@ -39,18 +39,21 @@ const emit = defineEmits<{
       :file-name="photoFileName"
       :preview="photoPreview"
       :aria-invalid="ariaInvalid"
-      field-name="image_url"
-      preview-alt="Aperçu de la photo d'identité"
+      field-name="imageUrl"
+      :label="t('joinCommunity.fields.profilePhoto')"
+      :preview-alt="t('joinCommunity.fields.profilePhotoPreview')"
       @change="emit('photoChange', $event)"
     />
 
     <!-- Names -->
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-      <VeeField v-slot="{ errors, componentField }" name="first_name">
+      <VeeField v-slot="{ errors, componentField }" name="firstName">
         <Field :data-invalid="!!errors.length">
-          <FieldLabel for="first_name">Prénom</FieldLabel>
+          <FieldLabel for="firstName">
+            {{ t('joinCommunity.fields.firstName') }}
+          </FieldLabel>
           <Input
-            id="first_name"
+            id="firstName"
             v-bind="componentField"
             :aria-invalid="!!errors.length"
           />
@@ -58,11 +61,13 @@ const emit = defineEmits<{
         </Field>
       </VeeField>
 
-      <VeeField v-slot="{ errors, componentField }" name="last_name">
+      <VeeField v-slot="{ errors, componentField }" name="lastName">
         <Field :data-invalid="!!errors.length">
-          <FieldLabel for="last_name">Nom</FieldLabel>
+          <FieldLabel for="lastName">
+            {{ t('joinCommunity.fields.lastName') }}
+          </FieldLabel>
           <Input
-            id="last_name"
+            id="lastName"
             v-bind="componentField"
             :aria-invalid="!!errors.length"
           />
@@ -74,7 +79,7 @@ const emit = defineEmits<{
     <!-- Gender -->
     <VeeField v-slot="{ errors, componentField }" name="gender">
       <Field :data-invalid="!!errors.length">
-        <FieldLabel>Genre</FieldLabel>
+        <FieldLabel>{{ t('joinCommunity.fields.gender') }}</FieldLabel>
         <RadioGroup v-bind="componentField" class="flex gap-6">
           <div class="flex items-center gap-2">
             <RadioGroupItem id="gender-male" value="male" />
@@ -96,7 +101,7 @@ const emit = defineEmits<{
     <!-- Origin -->
     <VeeField v-slot="{ errors, componentField }" name="origin">
       <Field :data-invalid="!!errors.length">
-        <FieldLabel>Origine</FieldLabel>
+        <FieldLabel>{{ t('joinCommunity.fields.origin') }}</FieldLabel>
         <RadioGroup v-bind="componentField" class="flex gap-6">
           <div class="flex items-center gap-2">
             <RadioGroupItem id="origin-national" value="national" />
@@ -118,11 +123,13 @@ const emit = defineEmits<{
     <!-- NIC number -->
     <VeeField v-slot="{ errors, componentField }" name="nic">
       <Field :data-invalid="!!errors.length">
-        <FieldLabel for="nic">Numéro de carte d'identité nationale</FieldLabel>
+        <FieldLabel for="nic">
+          {{ t('joinCommunity.fields.nicFull') }}
+        </FieldLabel>
         <Input
           id="nic"
           v-bind="componentField"
-          placeholder="ex: 1234567890123"
+          :placeholder="t('joinCommunity.placeholders.nic')"
           :aria-invalid="!!errors.length"
         />
         <FieldError v-if="errors.length" :errors="errors" />
@@ -131,8 +138,8 @@ const emit = defineEmits<{
 
     <!-- NIC document -->
     <DocumentUploadField
-      field-name="nic_url"
-      label="Photo de carte d'identité nationale"
+      field-name="nicUrl"
+      :label="t('joinCommunity.fields.nicPhotoFull')"
       :file-name="nicFileName"
       :preview="nicPreview"
       accept="image/jpeg,image/png"
