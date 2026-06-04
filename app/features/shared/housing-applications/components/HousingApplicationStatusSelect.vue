@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import type { HousingApplicationStatus } from '#imports';
+
+import { HousingApplicationStatuses } from '#imports';
+
 import {
   Select,
   SelectContent,
@@ -6,14 +10,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-
-import type { HousingApplicationStatus } from '../housing-application.model';
-
-import {
-  HousingApplicationStatuses,
-  HousingApplicationStatusLabel,
-} from '../housing-application.model';
+} from '~/components/ui/select';
 
 const value = defineModel<'all' | HousingApplicationStatus>('all', {
   default: 'all',
@@ -24,17 +21,20 @@ const value = defineModel<'all' | HousingApplicationStatus>('all', {
 <template>
   <Select v-model="value">
     <SelectTrigger class="">
-      <SelectValue placeholder="Status" />
+      <SelectValue :placeholder="$t('common.selects.status')" />
     </SelectTrigger>
     <SelectContent>
       <SelectGroup>
-        <SelectItem value="all">Tous les status</SelectItem>
+        <SelectItem value="all">
+          {{ $t('common.selects.allStatuses') }}
+        </SelectItem>
         <SelectItem
           v-for="status in HousingApplicationStatuses"
           :key="status"
           :value="status"
-          >{{ HousingApplicationStatusLabel[status] }}</SelectItem
         >
+          {{ $t(`common.statuses.housingApplication.${status}`) }}
+        </SelectItem>
       </SelectGroup>
     </SelectContent>
   </Select>

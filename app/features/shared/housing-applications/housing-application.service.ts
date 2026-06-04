@@ -1,195 +1,100 @@
-import type { PaginationResult } from '@/features/shared/paginations/pagination.model';
-
 import type {
-  HousingApplication,
-  HousingApplicationFilters,
-  HousingApplicationInsert,
-  HousingApplicationUpdate,
-} from './housing-application.model';
-
-import { HousingApplicationConfig } from './housing-application.config';
-
-const HOUSING_APPLICATION_SELECT = `
-  *,
-  faculty:faculty_id(*),
-  academic_session:academic_session_id(*),
-  lodgment:lodgment_id(*)
-`;
+  CreateHousingApplication,
+  HousingApplicationQuery,
+  UpdateHousingApplication,
+} from '#shared/features/housing-applications';
+import type { H3Event$Fetch } from 'nitropack/types';
 
 export const getHousingApplications = async (
-  filters: HousingApplicationFilters
-): Promise<PaginationResult<HousingApplication>> => {
-  const client = useSupabaseClient();
-
-  let query = client
-    .from('housing_applications')
-    .select(HOUSING_APPLICATION_SELECT, { count: 'exact' });
-
-  if (!filters.include_deleted) {
-    query = query.is('deleted_at', null);
-  }
-
-  if (filters.status) {
-    query = query.eq('status', filters.status);
-  }
-
-  if (filters.admin_id) {
-    query = query.eq('admin_id', filters.admin_id);
-  }
-
-  if (filters.faculty_id) {
-    query = query.eq('faculty_id', filters.faculty_id);
-  }
-
-  if (filters.academic_session_id) {
-    query = query.eq('academic_session_id', filters.academic_session_id);
-  }
-
-  if (filters.gender) {
-    query = query.eq('gender', filters.gender);
-  }
-
-  if (filters.origin) {
-    query = query.eq('origin', filters.origin);
-  }
-
-  if (filters.search) {
-    query = query.or(
-      `first_name.ilike.%${filters.search}%,last_name.ilike.%${filters.search}%,email.ilike.%${filters.search}%`
-    );
-  }
-
-  const page = filters.page ?? HousingApplicationConfig.PAGE_DEFAULT;
-  const limit = filters.limit ?? HousingApplicationConfig.PAGE_SIZE_DEFAULT;
-  const from = (page - 1) * limit;
-  const to = from + limit - 1;
-
-  query = query
-    .order(filters.orderBy ?? 'created_at', {
-      ascending: filters.sortOrder === SortOrder.asc,
-    })
-    .range(from, to);
-
-  const { count, data, error } = await query;
-
-  if (error) throw error;
-
-  return {
-    count: count ?? 0,
-    data: (data ?? []) as unknown as HousingApplication[],
-  };
-};
-
-export const getHousingApplication = async (
-  id: string
-): Promise<HousingApplication | null> => {
-  const client = useSupabaseClient();
-
-  const { data, error } = await client
-    .from('housing_applications')
-    .select(HOUSING_APPLICATION_SELECT)
-    .eq('id', id)
-    .maybeSingle();
-
-  if (error) throw error;
-
-  return data as unknown as HousingApplication | null;
-};
-
-export const createHousingApplication = async (
-  housingApplication: HousingApplicationInsert
-): Promise<HousingApplication> => {
-  const client = useSupabaseClient();
-
-  const { data, error } = await client
-    .from('housing_applications')
-    .insert(housingApplication)
-    .select(HOUSING_APPLICATION_SELECT)
-    .single();
-
-  if (error) throw error;
-
-  return data as unknown as HousingApplication;
-};
-
-export const updateHousingApplication = async (
-  id: string,
-  updates: HousingApplicationUpdate
-): Promise<HousingApplication> => {
-  const client = useSupabaseClient();
-
-  const { data, error } = await client
-    .from('housing_applications')
-    .update(updates)
-    .eq('id', id)
-    .select(HOUSING_APPLICATION_SELECT)
-    .single();
-
-  if (error) throw error;
-
-  return data as unknown as HousingApplication;
+  filters: HousingApplicationQuery,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  return fetchFn('/api/housing-applications', { query: filters });
 };
 
 export const getHousingApplicationsCount = async (
-  filters: Omit<
-    HousingApplicationFilters,
-    'limit' | 'orderBy' | 'page' | 'sortOrder'
-  >
-): Promise<number> => {
-  const client = useSupabaseClient();
-
-  let query = client
-    .from('housing_applications')
-    .select('*', { count: 'exact', head: true });
-
-  if (!filters.include_deleted) {
-    query = query.is('deleted_at', null);
-  }
-
-  if (filters.status) {
-    query = query.eq('status', filters.status);
-  }
-
-  if (filters.admin_id) {
-    query = query.eq('admin_id', filters.admin_id);
-  }
-
-  if (filters.faculty_id) {
-    query = query.eq('faculty_id', filters.faculty_id);
-  }
-
-  if (filters.academic_session_id) {
-    query = query.eq('academic_session_id', filters.academic_session_id);
-  }
-
-  if (filters.gender) {
-    query = query.eq('gender', filters.gender);
-  }
-
-  if (filters.origin) {
-    query = query.eq('origin', filters.origin);
-  }
-
-  if (filters.search) {
-    query = query.or(
-      `first_name.ilike.%${filters.search}%,last_name.ilike.%${filters.search}%,email.ilike.%${filters.search}%`
-    );
-  }
-
-  const { count, error } = await query;
-
-  if (error) throw error;
-
-  return count ?? 0;
+  filters: Omit<HousingApplicationQuery, 'limit' | 'page' | 'sortOrder'>,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { count } = await fetchFn('/api/housing-applications/count', {
+    query: filters,
+  });
+  return count;
 };
 
-export const deleteHousingApplication = async (id: string): Promise<void> => {
-  const client = useSupabaseClient();
+export const getHousingApplication = async (
+  housingApplicationId: string,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { data } = await fetchFn(
+    `/api/housing-applications/${housingApplicationId}` as '/api/housing-applications/${housingApplicationId}'
+  );
+  return data;
+};
 
-  const { error } = await client
-    .from('housing_applications')
-    .update({ deleted_at: new Date().toISOString() })
-    .eq('id', id);
+export const createHousingApplication = async (
+  input: CreateHousingApplication,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { data } = await fetchFn('/api/housing-applications', {
+    body: input,
+    method: 'POST',
+  });
+  return data;
+};
 
-  if (error) throw error;
+export const updateHousingApplication = async (
+  housingApplicationId: string,
+  input: UpdateHousingApplication,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { data } = await fetchFn(
+    `/api/housing-applications/${housingApplicationId}` as '/api/housing-applications/${housingApplicationId}',
+    {
+      body: input,
+      method: 'PUT',
+    }
+  );
+  return data;
+};
+
+export const deleteHousingApplication = async (
+  housingApplicationId: string,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  await fetchFn(
+    `/api/housing-applications/${housingApplicationId}` as '/api/housing-applications/${housingApplicationId}',
+    { method: 'DELETE' }
+  );
+};
+
+type DocumentType = 'nic' | 'photo' | 'school-certificate';
+
+export const uploadHousingApplicationDocument = async (
+  applicationId: string,
+  file: File,
+  type: DocumentType
+): Promise<string> => {
+  const { path, uploadUrl } = await $fetch<{
+    path: string;
+    uploadUrl: string;
+  }>(
+    `/api/storage/housing-applications/${applicationId}/documents/${type}/presign`,
+    {
+      body: { contentType: file.type, fileName: file.name },
+      method: 'POST',
+    }
+  );
+
+  const response = await fetch(uploadUrl, {
+    body: file,
+    headers: { 'Content-Type': file.type },
+    method: 'PUT',
+  });
+
+  if (!response.ok) {
+    throw new Error(`Upload failed: ${response.status}`);
+  }
+
+  return path;
 };
