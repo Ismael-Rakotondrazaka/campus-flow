@@ -1,3 +1,3 @@
 <template>
-  <h1>Announcement</h1>
+  <h1>{{ $t('common.announcements.detailTitle') }}</h1>
 </template>
