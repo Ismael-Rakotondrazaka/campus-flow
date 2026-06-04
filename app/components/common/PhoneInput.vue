@@ -4,7 +4,7 @@
       no-use-browser-locale
       fetch-country
       class="flex"
-      country-locale="fr-FR"
+      :country-locale="countryLocale"
       placeholder="+33 06 00 00 00 00"
       @update="updateValue"
     >
@@ -21,8 +21,8 @@
           </PopoverTrigger>
           <PopoverContent class="w-[300px] p-0">
             <Command>
-              <CommandInput placeholder="Search country..." />
-              <CommandEmpty>Aucun pays trouvé.</CommandEmpty>
+              <CommandInput :placeholder="$t('common.search.country')" />
+              <CommandEmpty>{{ $t('common.empty.noCountry') }}</CommandEmpty>
               <CommandList>
                 <CommandGroup>
                   <CommandItem
@@ -77,7 +77,7 @@ import { useFocus } from '@vueuse/core';
 import PhoneInput_ from 'base-vue-phone-input';
 import { ChevronsUpDown } from 'lucide-vue-next';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '~/components/ui/button';
 import {
   Command,
   CommandEmpty,
@@ -85,12 +85,12 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/ui/command';
+} from '~/components/ui/command';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
+} from '~/components/ui/popover';
 
 interface Props {
   ariaInvalid?: 'false' | 'true' | boolean;
@@ -118,6 +118,12 @@ type Results = {
   type?: NumberType;
   uri?: string;
 };
+
+const { locale } = useI18n();
+
+const countryLocale = computed(() =>
+  locale.value === 'fr' ? 'fr-FR' : 'en-GB'
+);
 
 const open = ref<boolean>(false);
 const phoneInput = ref<HTMLInputElement | null>(null);
