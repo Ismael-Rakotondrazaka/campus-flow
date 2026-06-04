@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table';
-import { Icon, NuxtLink } from '#components';
+import { Icon } from '#components';
 
-import type { HousingApplication } from '~/features/shared/housing-applications/housing-application.model';
-
-import { Skeleton } from '@/components/ui/skeleton';
+import Button from '~/components/ui/button/Button.vue';
+import { Skeleton } from '~/components/ui/skeleton';
 import {
   Table,
   TableBody,
@@ -12,43 +11,37 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import Button from '~/components/ui/button/Button.vue';
+} from '~/components/ui/table';
 import {
-  housingApplicationColumns,
   housingApplicationColumnsLength,
-} from '~/features/admin/housing-applications/housing-application-columns';
-import { AdminRole } from '~/features/shared/admins/admin.model';
+  useHousingApplicationColumns,
+} from '~/features/admin/housing-applications/useHousingApplicationColumns';
 import { housingApplicationListQuery } from '~/features/shared/housing-applications/housing-application.query';
+
+const columns = useHousingApplicationColumns();
 
 const globalAcademicSessionId = useRouteQuery<
   string | undefined,
   string | undefined
 >('g_academic_session_id', undefined);
 
-const authUser = useSupabaseUser();
-
 const { state } = useQuery(() =>
   housingApplicationListQuery({
-    academic_session_id: globalAcademicSessionId.value,
-    admin_id:
-      authUser.value?.sub && authUser.value?.app_metadata?.role
-        ? authUser.value?.app_metadata?.role === AdminRole.root
-          ? undefined
-          : authUser.value?.sub
-        : undefined,
+    academicSessionId: globalAcademicSessionId.value,
     limit: 5,
-    orderBy: 'created_at',
+    orderBy: HousingApplicationOrderBy.createdAt,
     sortOrder: SortOrder.desc,
   })
 );
 
-const housingApplications = computed(
-  () => state.value?.data?.data ?? ([] as HousingApplication[])
+const housingApplications = computed<Serialize<HousingApplication>[]>(
+  () => state.value?.data?.data ?? []
 );
 
 const table = useVueTable({
-  columns: housingApplicationColumns,
+  get columns() {
+    return columns.value;
+  },
   data: housingApplications,
   getCoreRowModel: getCoreRowModel(),
 });
@@ -57,18 +50,20 @@ const table = useVueTable({
 <template>
   <div class="w-full">
     <div class="mb-2 flex items-center justify-between gap-4">
-      <h1 class="text-2xl font-bold">Gestion des demandes de logement</h1>
-      <NuxtLink
+      <h1 class="text-2xl font-bold">
+        {{ $t('admin.housingApplications.listTitle') }}
+      </h1>
+      <NuxtLinkLocale
         :to="{ name: 'admin-root-housing-applications' }"
         class="inline-block"
-        title="Gérer les demandes de logement"
+        :title="$t('admin.housingApplications.manageCtaTitle')"
         as-child
       >
         <Button variant="default" class="rounded-full">
-          Gérer
+          {{ $t('admin.housingApplications.manageCta') }}
           <Icon name="mdi:arrow-right" size="1.2rem" />
         </Button>
-      </NuxtLink>
+      </NuxtLinkLocale>
     </div>
 
     <div class="w-full">
@@ -130,7 +125,7 @@ const table = useVueTable({
                 :colspan="housingApplicationColumnsLength"
                 class="h-24 text-center"
               >
-                Aucun résultat.
+                {{ $t('common.empty.noResults') }}
               </TableCell>
             </TableRow>
           </TableBody>

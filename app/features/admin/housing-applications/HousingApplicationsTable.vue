@@ -1,13 +1,10 @@
 <script setup lang="ts">
+import type { HousingApplicationStatus } from '#imports';
+
 import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table';
 
-import type {
-  HousingApplication,
-  HousingApplicationStatus,
-} from '~/features/shared/housing-applications/housing-application.model';
-
-import { Input } from '@/components/ui/input';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Input } from '~/components/ui/input';
+import { Skeleton } from '~/components/ui/skeleton';
 import {
   Table,
   TableBody,
@@ -15,16 +12,16 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from '~/components/ui/table';
 import {
-  housingApplicationColumns,
   housingApplicationColumnsLength,
-} from '~/features/admin/housing-applications/housing-application-columns';
-import { AdminRole } from '~/features/shared/admins/admin.model';
+  useHousingApplicationColumns,
+} from '~/features/admin/housing-applications/useHousingApplicationColumns';
 import HousingApplicationStatusSelect from '~/features/shared/housing-applications/components/HousingApplicationStatusSelect.vue';
-import { HousingApplicationConfig } from '~/features/shared/housing-applications/housing-application.config';
 import { housingApplicationListQuery } from '~/features/shared/housing-applications/housing-application.query';
 import PaginationComponent from '~/features/shared/paginations/components/PaginationComponent.vue';
+
+const columns = useHousingApplicationColumns();
 
 const globalAcademicSessionId = useRouteQuery<
   string | undefined,
@@ -47,19 +44,11 @@ const limit = useRouteQuery<number>(
   }
 );
 
-const authUser = useSupabaseUser();
-
 const { state } = useQuery(() =>
   housingApplicationListQuery({
-    academic_session_id: globalAcademicSessionId.value,
-    admin_id:
-      authUser.value?.sub && authUser.value?.app_metadata?.role
-        ? authUser.value?.app_metadata?.role === AdminRole.root
-          ? undefined
-          : authUser.value?.sub
-        : undefined,
+    academicSessionId: globalAcademicSessionId.value,
     limit: limit.value,
-    orderBy: 'created_at',
+    orderBy: HousingApplicationOrderBy.createdAt,
     page: page.value,
     search: search.value || undefined,
     sortOrder: SortOrder.desc,
@@ -67,12 +56,14 @@ const { state } = useQuery(() =>
   })
 );
 
-const housingApplications = computed(
-  () => state.value?.data?.data ?? ([] as HousingApplication[])
+const housingApplications = computed<Serialize<HousingApplication>[]>(
+  () => state.value?.data?.data ?? []
 );
 
 const table = useVueTable({
-  columns: housingApplicationColumns,
+  get columns() {
+    return columns.value;
+  },
   data: housingApplications,
   getCoreRowModel: getCoreRowModel(),
 });
@@ -114,14 +105,19 @@ watch(limit, value => {
 <template>
   <div class="w-full">
     <div class="mb-2 flex items-center justify-between gap-2">
-      <Input v-model="search" type="text" placeholder="Rechercher" />
+      <Input
+        v-model="search"
+        type="text"
+        :placeholder="$t('common.search.placeholder')"
+      />
 
       <HousingApplicationStatusSelect v-model="status" />
     </div>
 
     <p class="text-foreground mb-2 text-base">
-      Résultats: <span class="font-bold">{{ totalCount }}</span>
-      {{ totalCount > 1 ? 'demandes' : 'demande' }} de logement
+      {{ $t('common.results.countLabel') }}
+      <span class="font-bold">{{ totalCount }}</span>
+      {{ $t('admin.results.housingApplication', totalCount) }}
     </p>
 
     <div class="mb-2 rounded-md border">
@@ -184,7 +180,7 @@ watch(limit, value => {
               :colspan="housingApplicationColumnsLength"
               class="h-24 text-center"
             >
-              Aucun résultat.
+              {{ $t('common.empty.noResults') }}
             </TableCell>
           </TableRow>
         </TableBody>
