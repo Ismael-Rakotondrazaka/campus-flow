@@ -11,8 +11,8 @@ import { computed, toRaw } from 'vue';
 import {
   NativeSelect,
   NativeSelectOption,
-} from '@/components/ui/native-select';
-import { cn } from '@/lib/utils';
+} from '~/components/ui/native-select';
+import { cn } from '~/lib/utils';
 
 import type { LayoutTypes } from '.';
 
@@ -39,8 +39,10 @@ const props = withDefaults(
     } & CalendarRootProps
   >(),
   {
+    class: undefined,
     layout: undefined,
     modelValue: undefined,
+    yearRange: undefined,
   }
 );
 const emits = defineEmits<CalendarRootEmits>();
