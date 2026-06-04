@@ -3,8 +3,8 @@ import type { HTMLAttributes } from 'vue';
 
 import { DialogClose } from 'reka-ui';
 
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { Button } from '~/components/ui/button';
+import { cn } from '~/lib/utils';
 
 const props = withDefaults(
   defineProps<{
@@ -12,6 +12,7 @@ const props = withDefaults(
     showCloseButton?: boolean;
   }>(),
   {
+    class: undefined,
     showCloseButton: false,
   }
 );

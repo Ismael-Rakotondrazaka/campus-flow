@@ -11,7 +11,7 @@ import {
   useForwardPropsEmits,
 } from 'reka-ui';
 
-import { cn } from '@/lib/utils';
+import { cn } from '~/lib/utils';
 
 import DialogOverlay from './DialogOverlay.vue';
 
@@ -27,6 +27,7 @@ const props = withDefaults(
     } & DialogContentProps
   >(),
   {
+    class: undefined,
     showCloseButton: true,
   }
 );
