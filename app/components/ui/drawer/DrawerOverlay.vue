@@ -5,7 +5,7 @@ import type { HTMLAttributes } from 'vue';
 import { reactiveOmit } from '@vueuse/core';
 import { DrawerOverlay } from 'vaul-vue';
 
-import { cn } from '@/lib/utils';
+import { cn } from '~/lib/utils';
 
 const props = defineProps<
   { class?: HTMLAttributes['class'] } & DialogOverlayProps
