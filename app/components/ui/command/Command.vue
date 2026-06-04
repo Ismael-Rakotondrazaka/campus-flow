@@ -6,13 +6,14 @@ import { reactiveOmit } from '@vueuse/core';
 import { ListboxRoot, useFilter, useForwardPropsEmits } from 'reka-ui';
 import { reactive, ref, watch } from 'vue';
 
-import { cn } from '@/lib/utils';
+import { cn } from '~/lib/utils';
 
 import { provideCommandContext } from '.';
 
 const props = withDefaults(
   defineProps<{ class?: HTMLAttributes['class'] } & ListboxRootProps>(),
   {
+    class: undefined,
     modelValue: '',
   }
 );
