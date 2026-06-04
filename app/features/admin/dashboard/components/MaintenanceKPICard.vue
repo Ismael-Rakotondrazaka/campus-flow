@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { Card, CardContent } from '@/components/ui/card';
+import { MaintenanceStatus } from '#imports';
+
+import { Card, CardContent } from '~/components/ui/card';
 import { useNumericAbbreviation } from '~/composables/useNumericAbbreviation';
-import { MaintenanceStatus } from '~/features/shared/maintenances/maintenance.model';
 import { maintenanceCountQuery } from '~/features/shared/maintenances/maintenance.query';
 
 const { refetch, state } = useQuery(() =>
@@ -26,9 +27,11 @@ const formattedCount = useNumericAbbreviation(() => state.value?.data ?? 0);
         </div>
 
         <div>
-          <p class="text-foreground text-base font-bold">Maintenances</p>
+          <p class="text-foreground text-base font-bold">
+            {{ $t('admin.kpi.maintenances') }}
+          </p>
           <p class="text-muted-foreground text-sm">
-            Nombre de maintenances en attente de traitement
+            {{ $t('admin.kpi.maintenancesSubtitle') }}
           </p>
           <Skeleton class="mt-1 h-8 w-20" />
         </div>
@@ -47,7 +50,7 @@ const formattedCount = useNumericAbbreviation(() => state.value?.data ?? 0);
       </div>
     </CardContent>
 
-    <CardContent v-else-if="state.data">
+    <CardContent v-else-if="state.data != null">
       <div class="flex items-center gap-4">
         <div class="bg-primary flex items-center justify-center rounded-md">
           <Icon
@@ -58,9 +61,11 @@ const formattedCount = useNumericAbbreviation(() => state.value?.data ?? 0);
         </div>
 
         <div>
-          <p class="text-foreground text-base font-bold">Maintenances</p>
+          <p class="text-foreground text-base font-bold">
+            {{ $t('admin.kpi.maintenances') }}
+          </p>
           <p class="text-muted-foreground text-sm">
-            Nombre de maintenances en attente de traitement
+            {{ $t('admin.kpi.maintenancesSubtitle') }}
           </p>
           <div class="text-2xl font-bold">{{ formattedCount }}</div>
         </div>

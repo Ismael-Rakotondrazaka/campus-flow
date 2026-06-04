@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent } from '~/components/ui/card';
 import { useNumericAbbreviation } from '~/composables/useNumericAbbreviation';
 import { residentCountQuery } from '~/features/shared/residents/resident.query';
 
@@ -21,9 +21,11 @@ const formattedCount = useNumericAbbreviation(() => state.value?.data ?? 0);
         </div>
 
         <div>
-          <p class="text-foreground text-base font-bold">Résidents</p>
+          <p class="text-foreground text-base font-bold">
+            {{ $t('admin.kpi.residents') }}
+          </p>
           <p class="text-muted-foreground text-sm">
-            Nombre total de résidents enregistrés
+            {{ $t('admin.kpi.residentsSubtitle') }}
           </p>
           <Skeleton class="mt-1 h-8 w-20" />
         </div>
@@ -42,7 +44,7 @@ const formattedCount = useNumericAbbreviation(() => state.value?.data ?? 0);
       </div>
     </CardContent>
 
-    <CardContent v-else-if="state.data">
+    <CardContent v-else-if="state.data != null">
       <div class="flex items-center gap-4">
         <div class="bg-primary flex items-center justify-center rounded-md">
           <Icon
@@ -53,9 +55,11 @@ const formattedCount = useNumericAbbreviation(() => state.value?.data ?? 0);
         </div>
 
         <div>
-          <p class="text-foreground text-base font-bold">Résidents</p>
+          <p class="text-foreground text-base font-bold">
+            {{ $t('admin.kpi.residents') }}
+          </p>
           <p class="text-muted-foreground text-sm">
-            Nombre total de résidents enregistrés
+            {{ $t('admin.kpi.residentsSubtitle') }}
           </p>
           <div class="text-2xl font-bold">{{ formattedCount }}</div>
         </div>

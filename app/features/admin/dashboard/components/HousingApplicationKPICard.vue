@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { Card, CardContent } from '@/components/ui/card';
-import { HousingApplicationStatus } from '@/features/shared/housing-applications/housing-application.model';
-import { housingApplicationCountQuery } from '@/features/shared/housing-applications/housing-application.query';
+import { HousingApplicationStatus } from '#imports';
+
+import { Card, CardContent } from '~/components/ui/card';
 import { useNumericAbbreviation } from '~/composables/useNumericAbbreviation';
+import { housingApplicationCountQuery } from '~/features/shared/housing-applications/housing-application.query';
 
 const { refetch, state } = useQuery(() =>
   housingApplicationCountQuery({
@@ -26,9 +27,11 @@ const formattedCount = useNumericAbbreviation(() => state.value?.data ?? 0);
         </div>
 
         <div>
-          <p class="text-foreground text-base font-bold">Réservations</p>
+          <p class="text-foreground text-base font-bold">
+            {{ $t('admin.kpi.housingApplications') }}
+          </p>
           <p class="text-muted-foreground text-sm">
-            Nombre de réservations en attente de validation
+            {{ $t('admin.kpi.housingApplicationsSubtitle') }}
           </p>
           <Skeleton class="mt-1 h-8 w-20" />
         </div>
@@ -47,7 +50,7 @@ const formattedCount = useNumericAbbreviation(() => state.value?.data ?? 0);
       </div>
     </CardContent>
 
-    <CardContent v-else-if="state.data">
+    <CardContent v-else-if="state.data != null">
       <div class="flex items-center gap-4">
         <div class="bg-primary flex items-center justify-center rounded-md">
           <Icon
@@ -58,9 +61,11 @@ const formattedCount = useNumericAbbreviation(() => state.value?.data ?? 0);
         </div>
 
         <div>
-          <p class="text-foreground text-base font-bold">Réservations</p>
+          <p class="text-foreground text-base font-bold">
+            {{ $t('admin.kpi.housingApplications') }}
+          </p>
           <p class="text-muted-foreground text-sm">
-            Nombre de réservations en attente de validation
+            {{ $t('admin.kpi.housingApplicationsSubtitle') }}
           </p>
           <div class="text-2xl font-bold">{{ formattedCount }}</div>
         </div>
