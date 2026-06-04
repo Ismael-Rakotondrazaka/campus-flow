@@ -1,0 +1,147 @@
+{
+  "legal": {
+    "backHome": "Accueil",
+    "officialDocument": "Document officiel",
+    "rules": {
+      "title": "Règlement intérieur",
+      "subtitle": "Cité Universitaire Lumièrebourg · Dernière mise à jour : janvier 2025",
+      "intro": "Le présent règlement intérieur s'applique à l'ensemble des résidents, visiteurs et personnels de la Cité Universitaire Lumièrebourg. Il a pour objet de définir les droits et obligations de chacun afin de garantir un cadre de vie serein, respectueux et propice aux études.",
+      "seoTitle": "Règlement intérieur — Lumièrebourg",
+      "seoDescription": "Consultez le règlement intérieur de la Cité Universitaire Lumièrebourg.",
+      "sections": {
+        "housing": {
+          "title": "Conditions d'hébergement",
+          "articles": {
+            "1": {
+              "title": "Article 1 — Attribution du logement.",
+              "body": "L'attribution d'un logement est strictement personnelle. La chambre ne peut être cédée, sous-louée ou occupée par une tierce personne sans autorisation expresse de l'administration."
+            },
+            "2": {
+              "title": "Article 2 — Durée du séjour.",
+              "body": "Le contrat d'hébergement est conclu pour la durée de l'année universitaire en cours. Tout renouvellement est soumis à l'approbation de l'administration et à la vérification du statut étudiant du résident."
+            },
+            "3": {
+              "title": "Article 3 — Entrée dans les lieux.",
+              "body": "À son arrivée, le résident procède à un état des lieux contradictoire avec un représentant de la cité. Tout dommage constaté à l'entrée est consigné dans ce document."
+            }
+          }
+        },
+        "community": {
+          "title": "Vie en communauté",
+          "articles": {
+            "4": {
+              "title": "Article 4 — Respect du voisinage.",
+              "body": "Les résidents sont tenus de respecter la tranquillité de leurs voisins. Le calme est exigé entre 22h et 8h. Tout trouble répété à l'ordre public de la résidence peut entraîner une procédure disciplinaire."
+            },
+            "5": {
+              "title": "Article 5 — Parties communes.",
+              "body": "Les espaces partagés (cuisines, salles de travail, buanderies, halls) doivent être laissés propres après usage. Il est interdit d'y introduire des denrées périssables non conditionnées ou du matériel encombrant."
+            },
+            "6": {
+              "title": "Article 6 — Visiteurs.",
+              "body": "Les visiteurs sont autorisés entre 8h et 22h. Ils ne peuvent séjourner dans les chambres au-delà de 72h consécutives. Le résident est responsable du comportement de ses invités pendant toute la durée de leur visite."
+            }
+          }
+        },
+        "safety": {
+          "title": "Sécurité et entretien",
+          "articles": {
+            "7": {
+              "title": "Article 7 — Équipements.",
+              "body": "Le résident s'engage à utiliser les équipements mis à sa disposition avec soin et à signaler immédiatement toute panne ou dégradation via le portail de demandes de maintenance."
+            },
+            "8": {
+              "title": "Article 8 — Sécurité incendie.",
+              "body": "Il est formellement interdit de neutraliser ou d'obstruer les dispositifs de sécurité incendie. L'utilisation de bougies, de réchauds à gaz ou de tout appareil à flamme nue dans les chambres est prohibée."
+            },
+            "9": {
+              "title": "Article 9 — Accès.",
+              "body": "La carte d'accès est personnelle et intransmissible. En cas de perte, le résident doit en informer immédiatement l'administration et procéder au remplacement à ses frais."
+            }
+          }
+        },
+        "sanctions": {
+          "title": "Sanctions disciplinaires",
+          "intro": "Tout manquement au présent règlement peut donner lieu à l'une des sanctions suivantes, prononcées par la commission disciplinaire selon la gravité des faits :",
+          "items": [
+            "Avertissement écrit",
+            "Mise en demeure avec obligation de remédiation",
+            "Résiliation anticipée du contrat d'hébergement"
+          ],
+          "outro": "Le résident est informé de toute procédure engagée à son encontre et dispose d'un délai de quinze jours pour présenter ses observations."
+        }
+      },
+      "footer": "Pour toute question relative au présent règlement, veuillez contacter l'administration à l'adresse"
+    },
+    "privacy": {
+      "title": "Politique de confidentialité",
+      "subtitle": "Cité Universitaire Lumièrebourg · Dernière mise à jour : janvier 2025",
+      "intro": "La Cité Universitaire Lumièrebourg s'engage à protéger la vie privée de ses résidents et utilisateurs. La présente politique décrit la nature des données personnelles collectées, les finalités de leur traitement et les droits dont vous disposez conformément au Règlement général sur la protection des données (RGPD — UE 2016/679).",
+      "seoTitle": "Politique de confidentialité — Lumièrebourg",
+      "seoDescription": "Politique de confidentialité et traitement des données personnelles de la Cité Universitaire Lumièrebourg.",
+      "sections": {
+        "controller": {
+          "title": "Responsable du traitement",
+          "p1": "Le responsable du traitement des données personnelles collectées via la plateforme Campus Flow est la Cité Universitaire Lumièrebourg, dont le siège est situé à Paris, France.",
+          "p2": "Pour toute question relative à la protection des données, vous pouvez contacter notre délégué à la protection des données (DPO) à l'adresse"
+        },
+        "collected": {
+          "title": "Données collectées",
+          "intro": "Dans le cadre de la gestion de votre hébergement, nous collectons :",
+          "items": [
+            "Données d'identification : nom, prénom, date de naissance, numéro étudiant",
+            "Coordonnées : adresse e-mail, numéro de téléphone",
+            "Données académiques : faculté, niveau d'études, établissement",
+            "Documents justificatifs : carte étudiante, justificatif de domicile",
+            "Données de connexion : adresse IP, horodatages des sessions"
+          ]
+        },
+        "purposes": {
+          "title": "Finalités du traitement",
+          "intro": "Vos données sont utilisées exclusivement aux fins suivantes :",
+          "items": [
+            "Traitement des demandes d'hébergement et gestion des contrats",
+            "Communication relative à votre séjour (notifications, annonces)",
+            "Gestion des demandes de maintenance et de renouvellement",
+            "Obligations légales et réglementaires"
+          ],
+          "outro": "Aucune donnée n'est cédée à des tiers à des fins commerciales."
+        },
+        "retention": {
+          "title": "Conservation des données",
+          "p1": "Les données personnelles sont conservées pour la durée strictement nécessaire aux finalités pour lesquelles elles ont été collectées, et ce conformément aux obligations légales applicables.",
+          "p2": "À l'expiration du contrat d'hébergement, vos données sont archivées pendant une durée de cinq ans pour répondre aux obligations légales, puis supprimées définitivement."
+        },
+        "rights": {
+          "title": "Vos droits",
+          "intro": "Conformément au RGPD, vous disposez des droits suivants concernant vos données personnelles :",
+          "items": {
+            "access": {
+              "title": "Droit d'accès",
+              "body": "obtenir une copie de vos données"
+            },
+            "rectification": {
+              "title": "Droit de rectification",
+              "body": "corriger des données inexactes"
+            },
+            "erasure": {
+              "title": "Droit à l'effacement",
+              "body": "demander la suppression de vos données"
+            },
+            "portability": {
+              "title": "Droit à la portabilité",
+              "body": "recevoir vos données dans un format structuré"
+            },
+            "objection": {
+              "title": "Droit d'opposition",
+              "body": "vous opposer à certains traitements"
+            }
+          },
+          "outro": "Pour exercer vos droits, adressez votre demande à",
+          "complaint": "Vous disposez également du droit d'introduire une réclamation auprès de la CNIL (www.cnil.fr)."
+        }
+      },
+      "footer": "Pour toute question relative à la présente politique, contactez-nous à"
+    }
+  }
+}
