@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import type { MaintenanceStatus } from '#imports';
+
+import { MaintenanceStatuses } from '#imports';
+
 import {
   Select,
   SelectContent,
@@ -6,14 +10,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-
-import type { MaintenanceStatus } from '../maintenance.model';
-
-import {
-  MaintenanceStatuses,
-  MaintenanceStatusLabel,
-} from '../maintenance.model';
+} from '~/components/ui/select';
 
 const value = defineModel<'all' | MaintenanceStatus>('all', {
   default: 'all',
@@ -24,17 +21,20 @@ const value = defineModel<'all' | MaintenanceStatus>('all', {
 <template>
   <Select v-model="value">
     <SelectTrigger class="">
-      <SelectValue placeholder="Status" />
+      <SelectValue :placeholder="$t('common.selects.status')" />
     </SelectTrigger>
     <SelectContent>
       <SelectGroup>
-        <SelectItem value="all">Tous les status</SelectItem>
+        <SelectItem value="all">
+          {{ $t('common.selects.allStatuses') }}
+        </SelectItem>
         <SelectItem
           v-for="status in MaintenanceStatuses"
           :key="status"
           :value="status"
-          >{{ MaintenanceStatusLabel[status] }}</SelectItem
         >
+          {{ $t(`common.statuses.maintenance.${status}`) }}
+        </SelectItem>
       </SelectGroup>
     </SelectContent>
   </Select>

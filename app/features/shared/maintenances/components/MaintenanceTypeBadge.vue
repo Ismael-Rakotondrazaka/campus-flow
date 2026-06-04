@@ -5,17 +5,17 @@
 </template>
 
 <script lang="ts" setup>
+import type { MaintenanceType } from '#imports';
+
 import Badge from '~/components/ui/badge/Badge.vue';
-
-import type { MaintenanceType } from '../maintenance.model';
-
-import { MaintenanceTypeLabel } from '../maintenance.model';
 
 interface Props {
   value: MaintenanceType;
 }
 
 const props = defineProps<Props>();
+
+const { t } = useI18n();
 
 const colorClass = computed(() => {
   const colors: Record<MaintenanceType, string> = {
@@ -28,9 +28,7 @@ const colorClass = computed(() => {
   return colors[props.value];
 });
 
-const label = computed(() => {
-  return MaintenanceTypeLabel[props.value];
-});
+const label = computed(() =>
+  t(`common.statuses.maintenanceType.${props.value}`)
+);
 </script>
-
-<style></style>
