@@ -1,12 +1,10 @@
 <script setup lang="ts">
+import type { Renewal, RenewalStatus } from '#imports';
+
 import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table';
+import { RenewalConfig } from '#imports';
 
-import type {
-  Renewal,
-  RenewalStatus,
-} from '~/features/shared/renewals/renewal.model';
-
-import { Skeleton } from '@/components/ui/skeleton';
+import { Skeleton } from '~/components/ui/skeleton';
 import {
   Table,
   TableBody,
@@ -14,23 +12,23 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from '~/components/ui/table';
 import {
-  renewalColumns,
   renewalColumnsLength,
-} from '~/features/admin/renewals/renewalColumns';
-import { AdminRole } from '~/features/shared/admins/admin.model';
+  useRenewalColumns,
+} from '~/features/admin/renewals/useRenewalColumns';
 import FacultySelect from '~/features/shared/faculties/components/FacultySelect.vue';
 import PaginationComponent from '~/features/shared/paginations/components/PaginationComponent.vue';
 import RenewalStatusSelect from '~/features/shared/renewals/components/RenewalStatusSelect.vue';
-import { RenewalConfig } from '~/features/shared/renewals/renewal.config';
 import { renewalListQuery } from '~/features/shared/renewals/renewal.query';
+
+const columns = useRenewalColumns();
 
 const globalAcademicSessionId = useRouteQuery<
   string | undefined,
   string | undefined
 >('g_academic_session_id', undefined);
-const faculty = useRouteQuery<string | undefined>('faculty_id', undefined);
+const faculty = useRouteQuery<string | undefined>('facultyId', undefined);
 const status = useRouteQuery<'all' | RenewalStatus>('status', 'all');
 const page = useRouteQuery<number>('page', RenewalConfig.PAGE_DEFAULT, {
   transform: Number,
@@ -38,30 +36,26 @@ const page = useRouteQuery<number>('page', RenewalConfig.PAGE_DEFAULT, {
 const limit = useRouteQuery<number>('limit', RenewalConfig.PAGE_SIZE_DEFAULT, {
   transform: Number,
 });
-const authUser = useSupabaseUser();
-
 const { state } = useQuery(() =>
   renewalListQuery({
-    academic_session_id: globalAcademicSessionId.value,
-    admin_id:
-      authUser.value?.sub && authUser.value?.app_metadata?.role
-        ? authUser.value?.app_metadata?.role === AdminRole.root
-          ? undefined
-          : authUser.value?.sub
-        : undefined,
-    faculty_id: faculty.value,
+    academicSessionId: globalAcademicSessionId.value,
+    facultyId: faculty.value,
     limit: limit.value,
-    orderBy: 'created_at',
+    orderBy: RenewalOrderBy.createdAt,
     page: page.value,
     sortOrder: SortOrder.desc,
     status: status.value === 'all' ? undefined : status.value,
   })
 );
 
-const renewals = computed(() => state.value?.data?.data ?? ([] as Renewal[]));
+const renewals = computed<Serialize<Renewal>[]>(
+  () => state.value?.data?.data ?? []
+);
 
 const table = useVueTable({
-  columns: renewalColumns,
+  get columns() {
+    return columns.value;
+  },
   data: renewals,
   getCoreRowModel: getCoreRowModel(),
 });
@@ -105,9 +99,9 @@ watch(limit, value => {
     </div>
 
     <p class="text-foreground mb-2 text-base">
-      Résultats: <span class="font-bold">{{ totalCount }}</span> renouvellement{{
-        totalCount > 1 ? 's' : ''
-      }}
+      {{ $t('common.results.countLabel') }}
+      <span class="font-bold">{{ totalCount }}</span>
+      {{ $t('admin.results.renewal', totalCount) }}
     </p>
 
     <div class="mb-2 rounded-md border">
@@ -167,7 +161,7 @@ watch(limit, value => {
 
           <TableRow v-else>
             <TableCell :colspan="renewalColumnsLength" class="h-24 text-center">
-              Aucun résultat.
+              {{ $t('common.empty.noResults') }}
             </TableCell>
           </TableRow>
         </TableBody>
