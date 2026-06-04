@@ -6,7 +6,7 @@ import { reactiveOmit } from '@vueuse/core';
 import { ChevronDown } from 'lucide-vue-next';
 import { SelectIcon, SelectTrigger, useForwardProps } from 'reka-ui';
 
-import { cn } from '@/lib/utils';
+import { cn } from '~/lib/utils';
 
 const props = withDefaults(
   defineProps<
@@ -15,7 +15,7 @@ const props = withDefaults(
       size?: 'default' | 'sm';
     } & SelectTriggerProps
   >(),
-  { size: 'default' }
+  { class: undefined, size: 'default' }
 );
 
 const delegatedProps = reactiveOmit(props, 'class', 'size');
