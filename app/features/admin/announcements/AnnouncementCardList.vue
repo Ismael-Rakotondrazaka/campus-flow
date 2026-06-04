@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import type {
-  Announcement,
-  AnnouncementStatus,
-} from '~/features/shared/announcements/announcement.model';
+import type { Announcement, AnnouncementStatus } from '#imports';
 
-import { Skeleton } from '@/components/ui/skeleton';
+import { AnnouncementConfig } from '#imports';
+
+import { Skeleton } from '~/components/ui/skeleton';
 import AnnouncementCard from '~/features/admin/announcements/AnnouncementCard.vue';
-import { AnnouncementConfig } from '~/features/shared/announcements/announcement.config';
 import { announcementListQuery } from '~/features/shared/announcements/announcement.query';
 import AnnouncementStatusSelect from '~/features/shared/announcements/components/AnnouncementStatusSelect.vue';
 import PaginationComponent from '~/features/shared/paginations/components/PaginationComponent.vue';
@@ -29,7 +27,7 @@ const status = useRouteQuery<'all' | AnnouncementStatus>('status', 'all');
 const { state } = useQuery(() =>
   announcementListQuery({
     limit: limit.value,
-    orderBy: 'created_at',
+    orderBy: 'createdAt',
     page: page.value,
     search: search.value || undefined,
     status: status.value === 'all' ? undefined : status.value,
@@ -37,7 +35,7 @@ const { state } = useQuery(() =>
 );
 
 const announcements = computed(
-  () => state.value?.data?.data ?? ([] as Announcement[])
+  () => state.value?.data?.data ?? ([] as Serialize<Announcement>[])
 );
 
 const totalCount = computed(() => state.value?.data?.count ?? 0);
@@ -70,11 +68,11 @@ watch(limit, value => {
   page.value = AnnouncementConfig.PAGE_DEFAULT;
 });
 
-const announcementToDelete = ref<Announcement | null>(null);
+const announcementToDelete = ref<null | Serialize<Announcement>>(null);
 
 const openAnnouncementDeleteModal = ref(false);
 
-const handleAnnouncementDelete = (announcement: Announcement) => {
+const handleAnnouncementDelete = (announcement: Serialize<Announcement>) => {
   announcementToDelete.value = announcement;
   openAnnouncementDeleteModal.value = true;
 };
@@ -83,11 +81,17 @@ const handleAnnouncementDeleted = () => {
   announcementToDelete.value = null;
 };
 
-const handleAnnouncementEdit = (announcement: Announcement) => {
-  navigateTo({
-    name: 'admin-root-announcements-announcementId-edit',
-    params: { announcementId: announcement.id },
-  });
+const localeRoute = useLocaleRoute();
+
+const handleAnnouncementEdit = async (
+  announcement: Serialize<Announcement>
+) => {
+  await navigateTo(
+    localeRoute({
+      name: 'admin-root-announcements-announcementId-edit',
+      params: { announcementId: announcement.id },
+    })
+  );
 };
 </script>
 
@@ -97,16 +101,16 @@ const handleAnnouncementEdit = (announcement: Announcement) => {
       <Input
         v-model="search"
         type="text"
-        placeholder="Rechercher une annonce..."
+        :placeholder="$t('common.search.placeholderAnnouncement')"
         class="max-w-xs"
       />
       <AnnouncementStatusSelect v-model="status" />
     </div>
 
     <p class="text-foreground text-base">
-      Résultats: <span class="font-bold">{{ totalCount }}</span> annonce{{
-        totalCount > 1 ? 's' : ''
-      }}
+      {{ $t('common.results.countLabel') }}
+      <span class="font-bold">{{ totalCount }}</span>
+      {{ $t('admin.results.announcement', totalCount) }}
     </p>
 
     <template v-if="state.status === 'pending'">
@@ -133,7 +137,7 @@ const handleAnnouncementEdit = (announcement: Announcement) => {
       <div
         class="rounded-md border border-dashed border-gray-300 py-12 text-center"
       >
-        <p class="text-gray-500">Aucune annonce trouvée.</p>
+        <p class="text-gray-500">{{ $t('admin.announcements.empty') }}</p>
       </div>
     </template>
 

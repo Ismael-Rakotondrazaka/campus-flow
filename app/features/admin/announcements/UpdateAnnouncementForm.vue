@@ -1,42 +1,41 @@
 <script setup lang="ts">
+import {
+  type Announcement,
+  AnnouncementStatus,
+  type UpdateAnnouncement,
+} from '#imports';
 import { toast } from 'vue-sonner';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '~/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+} from '~/components/ui/card';
+import { Field, FieldGroup, FieldLabel } from '~/components/ui/field';
+import { Input } from '~/components/ui/input';
+import { Textarea } from '~/components/ui/textarea';
 import PhotoUploadField from '~/features/join-community/components/PhotoUploadField.vue';
 import {
-  type Announcement,
-  AnnouncementStatus,
-  type AnnouncementUpdate,
-} from '~/features/shared/announcements/announcement.model';
-import { useUpdateAnnouncement } from '~/features/shared/announcements/announcement.query';
-import {
-  type UpdateAnnouncementForm,
-  UpdateAnnouncementFormSchema,
-} from '~/features/shared/announcements/announcement.schema';
-import { useUploadAnnouncementIllustration } from '~/features/shared/announcements/composables/useUploadAnnouncementIllustration';
+  uploadAnnouncementIllustration,
+  useUpdateAnnouncement,
+} from '~/features/shared/announcements';
 
-const props = defineProps<{
-  announcement: Announcement;
-}>();
+interface Props {
+  announcement: Serialize<Announcement>;
+}
+
+const props = defineProps<Props>();
 
 const updateAnnouncementMutation = useUpdateAnnouncement();
-const uploadIllustration = useUploadAnnouncementIllustration();
 
 const illustrationFile = ref<File | null>(null);
 const illustrationRemovedByUser = ref(false);
 const newFilePreviewUrl = ref<null | string>(null);
 const storedIllustrationUrl = ref<null | string>(
-  props.announcement.illustration_url
+  props.announcement.illustrationUrl
 );
 
 const illustrationPreview = computed(
@@ -60,36 +59,41 @@ const handleIllustrationClear = () => {
   illustrationFile.value = null;
   storedIllustrationUrl.value = null;
   illustrationRemovedByUser.value = true;
-  setFieldValue('illustration_url', null);
+  setFieldValue('illustrationUrl', null);
 };
 
 onUnmounted(() => {
   if (newFilePreviewUrl.value) URL.revokeObjectURL(newFilePreviewUrl.value);
 });
 
-const { handleSubmit, isSubmitting, setFieldValue, setValues } = useForm({
-  initialValues: {
-    content: props.announcement.content,
-    illustration_url: '',
-    title: props.announcement.title,
-  },
-  validationSchema: toTypedSchema(UpdateAnnouncementFormSchema),
-});
+const { t } = useI18n();
 
-const applyAnnouncementToForm = (a: Announcement) => {
+const { handleSubmit, isSubmitting, setErrors, setFieldValue, setValues } =
+  useForm({
+    initialValues: {
+      content: props.announcement.content,
+      illustrationUrl: '',
+      title: props.announcement.title,
+    },
+    validationSchema: toTypedSchema(UpdateAnnouncementFormSchema),
+  });
+
+const applyAnnouncementToForm = (a: Serialize<Announcement>) => {
   if (newFilePreviewUrl.value) {
     URL.revokeObjectURL(newFilePreviewUrl.value);
     newFilePreviewUrl.value = null;
   }
   illustrationFile.value = null;
   illustrationRemovedByUser.value = false;
-  storedIllustrationUrl.value = a.illustration_url;
+  storedIllustrationUrl.value = a.illustrationUrl;
   setValues({
     content: a.content,
-    illustration_url: '',
+    illustrationUrl: '',
     title: a.title,
   });
 };
+
+const localeRoute = useLocaleRoute();
 
 watch(() => props.announcement, applyAnnouncementToForm);
 
@@ -98,31 +102,29 @@ const runUpdate = async (
   status: AnnouncementStatus
 ) => {
   try {
-    const updates: AnnouncementUpdate = {
+    const updates: UpdateAnnouncement = {
       content: formValues.content,
       status,
       title: formValues.title,
     };
 
     if (illustrationFile.value) {
-      updates.illustration_url = await uploadIllustration(
+      updates.illustrationUrl = await uploadAnnouncementIllustration(
         props.announcement.id,
         illustrationFile.value
       );
     } else if (illustrationRemovedByUser.value) {
-      updates.illustration_url = null;
+      updates.illustrationUrl = null;
     }
 
     await updateAnnouncementMutation.mutation({
       id: props.announcement.id,
       updates,
     });
-    toast.success('Annonce mise à jour');
-    await navigateTo({ name: 'admin-root-announcements' });
+    toast.success(t('common.toasts.announcement.updated'));
+    await navigateTo(localeRoute({ name: 'admin-root-announcements' }));
   } catch (error) {
-    toast.error(
-      error instanceof Error ? error.message : "Une erreur s'est produite"
-    );
+    handleFetchError(error, t, setErrors);
   }
 };
 
@@ -139,10 +141,9 @@ const onSaveDraft = handleSubmit(async (formValues: UpdateAnnouncementForm) => {
   <div class="w-full space-y-4">
     <Card>
       <CardHeader>
-        <CardTitle>Modifier l'annonce</CardTitle>
+        <CardTitle>{{ $t('admin.announcements.editTitle') }}</CardTitle>
         <CardDescription>
-          Mettez à jour le titre, le contenu, l'illustration ou le statut de
-          publication.
+          {{ $t('admin.announcements.editDescription') }}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -151,7 +152,7 @@ const onSaveDraft = handleSubmit(async (formValues: UpdateAnnouncementForm) => {
             <VeeField v-slot="{ errors, componentField }" name="title">
               <Field :data-invalid="!!errors.length">
                 <FieldLabel for="edit-announcement-title">
-                  Titre
+                  {{ $t('forms.fields.title.label') }}
                   <span class="text-destructive" aria-hidden="true">*</span>
                 </FieldLabel>
                 <Input
@@ -167,7 +168,7 @@ const onSaveDraft = handleSubmit(async (formValues: UpdateAnnouncementForm) => {
             <VeeField v-slot="{ errors, componentField }" name="content">
               <Field :data-invalid="!!errors.length">
                 <FieldLabel for="edit-announcement-content">
-                  Contenu
+                  {{ $t('forms.fields.content.label') }}
                   <span class="text-destructive" aria-hidden="true">*</span>
                 </FieldLabel>
                 <Textarea
@@ -184,9 +185,9 @@ const onSaveDraft = handleSubmit(async (formValues: UpdateAnnouncementForm) => {
             <PhotoUploadField
               :file-name="illustrationFile?.name ?? null"
               :preview="illustrationPreview"
-              field-name="illustration_url"
-              label="Illustration"
-              preview-alt="Aperçu de l'illustration"
+              field-name="illustrationUrl"
+              :label="$t('admin.announcements.illustration')"
+              :preview-alt="$t('admin.announcements.illustrationPreview')"
               :required="false"
               @change="handleIllustrationChange"
               @clear="handleIllustrationClear"
@@ -202,7 +203,7 @@ const onSaveDraft = handleSubmit(async (formValues: UpdateAnnouncementForm) => {
                 @click="onPublish"
               >
                 <Icon name="mdi:publish" />
-                Publier
+                {{ $t('common.buttons.publish') }}
               </Button>
               <Button
                 class="w-full sm:w-min!"
@@ -212,7 +213,7 @@ const onSaveDraft = handleSubmit(async (formValues: UpdateAnnouncementForm) => {
                 @click="onSaveDraft"
               >
                 <Icon name="mdi:draft" />
-                Brouillon
+                {{ $t('admin.announcements.draft') }}
               </Button>
             </Field>
           </FieldGroup>

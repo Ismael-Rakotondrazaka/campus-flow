@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import type { Announcement } from '~/features/shared/announcements/announcement.model';
+import type { Announcement } from '#imports';
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '~/components/ui/dropdown-menu';
 
 interface Props {
-  announcement: Announcement;
+  announcement: Serialize<Announcement>;
 }
 
 const props = defineProps<Props>();
 
 type Emits = {
-  'announcement:delete': [announcement: Announcement];
-  'announcement:edit': [announcement: Announcement];
+  'announcement:delete': [announcement: Serialize<Announcement>];
+  'announcement:edit': [announcement: Serialize<Announcement>];
 };
 const emit = defineEmits<Emits>();
 </script>
@@ -30,7 +30,7 @@ const emit = defineEmits<Emits>();
 
     <DropdownMenuContent class="w-56" align="start">
       <DropdownMenuItem @click="emit('announcement:edit', props.announcement)">
-        Modifier
+        {{ $t('common.buttons.edit') }}
         <DropdownMenuShortcut>
           <Icon name="mdi:pencil" size="1rem" />
         </DropdownMenuShortcut>
@@ -39,7 +39,7 @@ const emit = defineEmits<Emits>();
       <DropdownMenuItem
         @click="emit('announcement:delete', props.announcement)"
       >
-        Supprimer
+        {{ $t('common.buttons.delete') }}
         <DropdownMenuShortcut>
           <Icon name="mdi:delete" size="1rem" />
         </DropdownMenuShortcut>

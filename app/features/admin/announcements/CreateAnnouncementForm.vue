@@ -1,31 +1,28 @@
 <script setup lang="ts">
+import {
+  AnnouncementStatus,
+  type CreateAnnouncement,
+  type CreateAnnouncementForm,
+  CreateAnnouncementFormSchema,
+} from '#imports';
 import { toast } from 'vue-sonner';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '~/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+} from '~/components/ui/card';
+import { Field, FieldGroup, FieldLabel } from '~/components/ui/field';
+import { Input } from '~/components/ui/input';
+import { Textarea } from '~/components/ui/textarea';
 import PhotoUploadField from '~/features/join-community/components/PhotoUploadField.vue';
-import {
-  type AnnouncementInsert,
-  AnnouncementStatus,
-} from '~/features/shared/announcements/announcement.model';
+import { uploadAnnouncementIllustration } from '~/features/shared/announcements';
 import { useCreateAnnouncement } from '~/features/shared/announcements/announcement.query';
-import {
-  type CreateAnnouncementForm,
-  CreateAnnouncementFormSchema,
-} from '~/features/shared/announcements/announcement.schema';
-import { useUploadAnnouncementIllustration } from '~/features/shared/announcements/composables/useUploadAnnouncementIllustration';
 
 const createAnnouncementMutation = useCreateAnnouncement();
-const uploadIllustration = useUploadAnnouncementIllustration();
 
 const illustrationFile = ref<File | null>(null);
 const illustrationPreview = ref<null | string>(null);
@@ -44,21 +41,25 @@ const handleIllustrationClear = () => {
   if (illustrationPreview.value) URL.revokeObjectURL(illustrationPreview.value);
   illustrationFile.value = null;
   illustrationPreview.value = null;
-  setFieldValue('illustration_url', null);
+  setFieldValue('illustrationUrl', null);
 };
 
 onUnmounted(() => {
   if (illustrationPreview.value) URL.revokeObjectURL(illustrationPreview.value);
 });
 
-const { handleSubmit, isSubmitting, setFieldValue } = useForm({
+const { t } = useI18n();
+
+const { handleSubmit, isSubmitting, setErrors, setFieldValue } = useForm({
   initialValues: {
     content: '',
-    illustration_url: '',
+    illustrationUrl: '',
     title: '',
   },
   validationSchema: toTypedSchema(CreateAnnouncementFormSchema),
 });
+
+const localeRoute = useLocaleRoute();
 
 const runCreate = async (
   formValues: CreateAnnouncementForm,
@@ -69,30 +70,28 @@ const runCreate = async (
     let illustrationUrl: string | undefined;
 
     if (illustrationFile.value) {
-      illustrationUrl = await uploadIllustration(
+      illustrationUrl = await uploadAnnouncementIllustration(
         announcementId,
         illustrationFile.value
       );
     }
 
-    const insert: AnnouncementInsert = {
+    const insert: CreateAnnouncement = {
       content: formValues.content,
-      id: announcementId,
       status,
       title: formValues.title,
     };
 
     if (illustrationUrl) {
-      insert.illustration_url = illustrationUrl;
+      insert.illustrationUrl = illustrationUrl;
     }
 
     await createAnnouncementMutation.mutation(insert);
-    toast.success('Annonce créée avec succès');
-    await navigateTo({ name: 'admin-root-announcements' });
+    toast.success(t('common.toasts.announcement.created'));
+
+    await navigateTo(localeRoute({ name: 'admin-root-announcements' }));
   } catch (error) {
-    toast.error(
-      error instanceof Error ? error.message : "Une erreur s'est produite"
-    );
+    handleFetchError(error, t, setErrors);
   }
 };
 
@@ -109,9 +108,9 @@ const onSaveDraft = handleSubmit(async (formValues: CreateAnnouncementForm) => {
   <div class="w-full space-y-4">
     <Card>
       <CardHeader>
-        <CardTitle>Informations de l'annonce</CardTitle>
+        <CardTitle>{{ $t('admin.announcements.formTitle') }}</CardTitle>
         <CardDescription>
-          Renseignez le titre, le contenu et les options de publication.
+          {{ $t('admin.announcements.createDescription') }}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -120,7 +119,7 @@ const onSaveDraft = handleSubmit(async (formValues: CreateAnnouncementForm) => {
             <VeeField v-slot="{ errors, componentField }" name="title">
               <Field :data-invalid="!!errors.length">
                 <FieldLabel for="announcement-title">
-                  Titre
+                  {{ $t('forms.fields.title.label') }}
                   <span class="text-destructive" aria-hidden="true"> *</span>
                 </FieldLabel>
                 <Input
@@ -136,7 +135,7 @@ const onSaveDraft = handleSubmit(async (formValues: CreateAnnouncementForm) => {
             <VeeField v-slot="{ errors, componentField }" name="content">
               <Field :data-invalid="!!errors.length">
                 <FieldLabel for="announcement-content">
-                  Contenu
+                  {{ $t('forms.fields.content.label') }}
                   <span class="text-destructive" aria-hidden="true"> *</span>
                 </FieldLabel>
                 <Textarea
@@ -153,9 +152,9 @@ const onSaveDraft = handleSubmit(async (formValues: CreateAnnouncementForm) => {
             <PhotoUploadField
               :file-name="illustrationFile?.name ?? null"
               :preview="illustrationPreview"
-              field-name="illustration_url"
-              label="Illustration"
-              preview-alt="Aperçu de l'illustration"
+              field-name="illustrationUrl"
+              :label="$t('admin.announcements.illustration')"
+              :preview-alt="$t('admin.announcements.illustrationPreview')"
               :required="false"
               @change="handleIllustrationChange"
               @clear="handleIllustrationClear"
@@ -171,7 +170,7 @@ const onSaveDraft = handleSubmit(async (formValues: CreateAnnouncementForm) => {
                 @click="onPublish"
               >
                 <Icon name="mdi:publish" />
-                Publier
+                {{ $t('common.buttons.publish') }}
               </Button>
               <Button
                 class="w-full sm:w-min!"
@@ -181,7 +180,7 @@ const onSaveDraft = handleSubmit(async (formValues: CreateAnnouncementForm) => {
                 @click="onSaveDraft"
               >
                 <Icon name="mdi:draft" />
-                Brouillon
+                {{ $t('admin.announcements.draft') }}
               </Button>
             </Field>
           </FieldGroup>

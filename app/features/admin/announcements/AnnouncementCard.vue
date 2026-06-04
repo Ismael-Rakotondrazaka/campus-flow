@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Announcement } from '~/features/shared/announcements/announcement.model';
+import type { Announcement } from '#imports';
 
 import { Button } from '~/components/ui/button';
 import { Card, CardContent } from '~/components/ui/card';
@@ -7,15 +7,19 @@ import AnnouncementStatusBadge from '~/features/shared/announcements/components/
 
 import AnnouncementMenu from './AnnouncementMenu.vue';
 
-const props = defineProps<{
-  announcement: Announcement;
-}>();
+interface Props {
+  announcement: Serialize<Announcement>;
+}
+
+const props = defineProps<Props>();
 
 type Emits = {
-  'announcement:delete': [announcement: Announcement];
-  'announcement:edit': [announcement: Announcement];
+  'announcement:delete': [announcement: Serialize<Announcement>];
+  'announcement:edit': [announcement: Serialize<Announcement>];
 };
 const emit = defineEmits<Emits>();
+
+const { locale } = useI18n();
 
 const isExpanded = ref(false);
 </script>
@@ -25,11 +29,11 @@ const isExpanded = ref(false);
     <CardContent class="relative flex flex-1 flex-row gap-2">
       <!-- Left side: Image -->
       <div
-        v-if="props.announcement.illustration_url"
+        v-if="props.announcement.illustrationUrl"
         class="shrink-0 overflow-hidden"
       >
         <img
-          :src="props.announcement.illustration_url"
+          :src="props.announcement.illustrationUrl"
           :alt="props.announcement.title"
           class="h-full w-36 rounded-md object-cover"
         />
@@ -46,8 +50,8 @@ const isExpanded = ref(false);
               <div class="flex items-center justify-start gap-2">
                 <p class="text-muted-foreground text-xs font-medium">
                   {{
-                    new Date(props.announcement.created_at).toLocaleDateString(
-                      'fr'
+                    new Date(props.announcement.createdAt).toLocaleDateString(
+                      locale
                     )
                   }}
                 </p>
@@ -77,7 +81,11 @@ const isExpanded = ref(false);
               class="w-fit px-0"
               @click="isExpanded = !isExpanded"
             >
-              {{ isExpanded ? 'Afficher moins' : 'Afficher plus' }}
+              {{
+                isExpanded
+                  ? $t('admin.announcements.showLess')
+                  : $t('admin.announcements.showMore')
+              }}
             </Button>
           </div>
         </div>
