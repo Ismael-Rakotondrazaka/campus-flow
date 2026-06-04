@@ -5,11 +5,11 @@
 </template>
 
 <script lang="ts" setup>
+import type { RenewalStatus } from '#imports';
+
+import { RenewalStatusColor } from '#imports';
+
 import Badge from '~/components/ui/badge/Badge.vue';
-
-import type { RenewalStatus } from '../renewal.model';
-
-import { RenewalStatusColor, RenewalStatusLabel } from '../renewal.model';
 
 interface Props {
   value: RenewalStatus;
@@ -17,13 +17,9 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const colorClass = computed(() => {
-  return RenewalStatusColor[props.value];
-});
+const { t } = useI18n();
 
-const label = computed(() => {
-  return RenewalStatusLabel[props.value];
-});
+const colorClass = computed(() => RenewalStatusColor[props.value]);
+
+const label = computed(() => t(`common.statuses.renewal.${props.value}`));
 </script>
-
-<style></style>

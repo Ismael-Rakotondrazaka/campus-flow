@@ -1,170 +1,101 @@
-import type { PaginationResult } from '@/features/shared/paginations/pagination.model';
-
 import type {
-  Renewal,
-  RenewalFilters,
-  RenewalInsert,
-  RenewalUpdate,
-} from './renewal.model';
-
-import { RenewalConfig } from './renewal.config';
-
-const RENEWAL_SELECT = `
-  *,
-  resident:resident_id(*),
-  faculty:faculty_id(*),
-  academic_session:academic_session_id(*)
-`;
+  CreateRenewal,
+  RenewalQuery,
+  UpdateRenewal,
+} from '#shared/features/renewals';
+import type { H3Event$Fetch } from 'nitropack/types';
 
 export const getRenewals = async (
-  filters: RenewalFilters
-): Promise<PaginationResult<Renewal>> => {
-  const client = useSupabaseClient();
-
-  let query = client
-    .from('renewals')
-    .select(RENEWAL_SELECT, { count: 'exact' });
-
-  if (!filters.include_deleted) {
-    query = query.is('deleted_at', null);
-  }
-
-  if (filters.resident_id) {
-    query = query.eq('resident_id', filters.resident_id);
-  }
-
-  if (filters.academic_session_id) {
-    query = query.eq('academic_session_id', filters.academic_session_id);
-  }
-
-  if (filters.faculty_id) {
-    query = query.eq('faculty_id', filters.faculty_id);
-  }
-
-  if (filters.admin_id) {
-    query = query.eq('admin_id', filters.admin_id);
-  }
-
-  if (filters.status) {
-    query = query.eq('status', filters.status);
-  }
-
-  const page = filters.page ?? RenewalConfig.PAGE_DEFAULT;
-  const limit = filters.limit ?? RenewalConfig.PAGE_SIZE_DEFAULT;
-  const from = (page - 1) * limit;
-  const to = from + limit - 1;
-
-  query = query
-    .order(filters.orderBy ?? 'created_at', {
-      ascending: filters.sortOrder === SortOrder.asc,
-    })
-    .range(from, to);
-
-  const { count, data, error } = await query;
-
-  if (error) throw error;
-
-  return {
-    count: count ?? 0,
-    data: (data ?? []) as unknown as Renewal[],
-  };
+  filters: RenewalQuery,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  return fetchFn('/api/renewals', {
+    query: filters,
+  });
 };
 
 export const getRenewalsCount = async (
-  filters: Omit<RenewalFilters, 'limit' | 'orderBy' | 'page' | 'sortOrder'>
-): Promise<number> => {
-  const client = useSupabaseClient();
-
-  let query = client
-    .from('renewals')
-    .select('*', { count: 'exact', head: true });
-
-  if (!filters.include_deleted) {
-    query = query.is('deleted_at', null);
-  }
-
-  if (filters.resident_id) {
-    query = query.eq('resident_id', filters.resident_id);
-  }
-
-  if (filters.academic_session_id) {
-    query = query.eq('academic_session_id', filters.academic_session_id);
-  }
-
-  if (filters.faculty_id) {
-    query = query.eq('faculty_id', filters.faculty_id);
-  }
-
-  if (filters.admin_id) {
-    query = query.eq('admin_id', filters.admin_id);
-  }
-
-  if (filters.status) {
-    query = query.eq('status', filters.status);
-  }
-
-  const { count, error } = await query;
-
-  if (error) throw error;
-
-  return count ?? 0;
+  filters: Omit<RenewalQuery, 'limit' | 'orderBy' | 'page' | 'sortOrder'>,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { count } = await fetchFn('/api/renewals/count', {
+    query: filters,
+  });
+  return count;
 };
 
-export const getRenewal = async (id: string): Promise<null | Renewal> => {
-  const client = useSupabaseClient();
-
-  const { data, error } = await client
-    .from('renewals')
-    .select(RENEWAL_SELECT)
-    .eq('id', id)
-    .maybeSingle();
-
-  if (error) throw error;
-
-  return data as unknown as null | Renewal;
+export const getRenewal = async (
+  renewalId: string,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { data } = await fetchFn(
+    `/api/renewals/${renewalId}` as '/api/renewals/${renewalId}'
+  );
+  return data;
 };
 
 export const createRenewal = async (
-  renewal: RenewalInsert
-): Promise<Renewal> => {
-  const client = useSupabaseClient();
-
-  const { data, error } = await client
-    .from('renewals')
-    .insert(renewal)
-    .select(RENEWAL_SELECT)
-    .single();
-
-  if (error) throw error;
-
-  return data as unknown as Renewal;
+  input: CreateRenewal,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { data } = await fetchFn('/api/renewals', {
+    body: input,
+    method: 'POST',
+  });
+  return data;
 };
 
 export const updateRenewal = async (
-  id: string,
-  updates: RenewalUpdate
-): Promise<Renewal> => {
-  const client = useSupabaseClient();
-
-  const { data, error } = await client
-    .from('renewals')
-    .update(updates)
-    .eq('id', id)
-    .select(RENEWAL_SELECT)
-    .single();
-
-  if (error) throw error;
-
-  return data as unknown as Renewal;
+  renewalId: string,
+  input: UpdateRenewal,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { data } = await fetchFn(
+    `/api/renewals/${renewalId}` as '/api/renewals/${renewalId}',
+    {
+      body: input,
+      method: 'PUT',
+    }
+  );
+  return data;
 };
 
-export const deleteRenewal = async (id: string): Promise<void> => {
-  const client = useSupabaseClient();
+type RenewalDocumentType = 'nic' | 'photo' | 'school-certificate';
 
-  const { error } = await client
-    .from('renewals')
-    .update({ deleted_at: new Date().toISOString() })
-    .eq('id', id);
+export const uploadRenewalDocument = async (
+  folderId: string,
+  file: File,
+  type: RenewalDocumentType
+): Promise<string> => {
+  const { path, uploadUrl } = await $fetch<{
+    path: string;
+    uploadUrl: string;
+  }>(
+    `/api/storage/renewals/${folderId}/documents/${type}/presign` as '/api/storage/renewals/${folderId}/documents/${type}/presign',
+    {
+      body: { contentType: file.type, fileName: file.name },
+      method: 'POST',
+    }
+  );
 
-  if (error) throw error;
+  const response = await fetch(uploadUrl, {
+    body: file,
+    headers: { 'Content-Type': file.type },
+    method: 'PUT',
+  });
+
+  if (!response.ok) {
+    throw new Error(`Upload échoué: ${response.status}`);
+  }
+
+  return path;
+};
+
+export const deleteRenewal = async (
+  renewalId: string,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  await fetchFn(`/api/renewals/${renewalId}` as '/api/renewals/${renewalId}', {
+    method: 'DELETE',
+  });
 };
