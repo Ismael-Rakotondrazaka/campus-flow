@@ -1,0 +1,211 @@
+{
+  "admin": {
+    "floor": {
+      "ground": "Rez-de-chaussée",
+      "basement": "Sous-sol {n}",
+      "first": "1er étage",
+      "ordinal": "{n}ème étage"
+    },
+    "location": {
+      "building": "Bâtiment {name}",
+      "room": "Porte {number}",
+      "line": "{building} - {floor} - {room}"
+    },
+    "tables": {
+      "avatar": "Avatar",
+      "name": "Nom",
+      "role": "Rôle",
+      "location": "Localisation",
+      "maintainers": "Mainteneurs",
+      "noMaintainer": "Aucun mainteneur"
+    },
+    "results": {
+      "announcement": "annonce | annonces",
+      "housingApplication": "demande de logement | demandes de logement",
+      "resident": "résident | résidents",
+      "faculty": "faculté | facultés",
+      "maintainer": "mainteneur | mainteneurs",
+      "academicSession": "session académique | sessions académiques",
+      "building": "bâtiment | bâtiments",
+      "lodgment": "logement | logements",
+      "maintenance": "maintenance | maintenances",
+      "admin": "administrateur | administrateurs",
+      "renewal": "renouvellement | renouvellements"
+    },
+    "announcements": {
+      "listTitle": "Gestion des annonces",
+      "createNew": "Nouvelle annonce",
+      "createTitle": "Créer une annonce",
+      "editTitle": "Modifier l'annonce",
+      "formTitle": "Informations de l'annonce",
+      "formDescription": "Renseignez les informations ci-dessous.",
+      "createDescription": "Renseignez le titre, le contenu et les options de publication.",
+      "editDescription": "Mettez à jour le titre, le contenu, l'illustration ou le statut de publication.",
+      "deleteEntity": "l'annonce",
+      "empty": "Aucune annonce trouvée.",
+      "draft": "Brouillon",
+      "illustration": "Illustration",
+      "illustrationPreview": "Aperçu de l'illustration",
+      "showMore": "Afficher plus",
+      "showLess": "Afficher moins",
+      "backToList": "Retour aux annonces"
+    },
+    "academicSessions": {
+      "listTitle": "Sessions académiques",
+      "manageTitle": "Gestion des sessions académiques",
+      "createTitle": "Créer une session académique",
+      "editTitle": "Modifier la session académique",
+      "createNew": "Nouvelle session",
+      "deleteEntity": "la session académique",
+      "formNewTitle": "Nouvelle session académique",
+      "createDescription": "Définissez les dates de la session, des candidatures et des renouvellements.",
+      "editDescription": "Mettez à jour les dates de la session, des candidatures et des renouvellements.",
+      "columns": {
+        "period": "Période",
+        "applications": "Candidatures",
+        "renewals": "Renouvellements",
+        "createdAt": "Créée le"
+      },
+      "form": {
+        "sessionPeriod": "Période de la session",
+        "applicationPeriod": "Période des candidatures",
+        "renewalPeriod": "Période des renouvellements",
+        "start": "Début",
+        "end": "Fin",
+        "open": "Ouverture",
+        "close": "Fermeture"
+      },
+      "backToList": "Retour aux sessions"
+    },
+    "admins": {
+      "listTitle": "Administrateurs",
+      "manageTitle": "Gestion des administrateurs",
+      "editTitle": "Modifier l'administrateur",
+      "editRoleTitle": "Modifier le rôle",
+      "editRoleDescription": "Changez le rôle attribué à cet administrateur.",
+      "deleteEntity": "l'administrateur",
+      "backToList": "Retour aux administrateurs"
+    },
+    "residents": {
+      "listTitle": "Résidents",
+      "manageTitle": "Gestion des résidents",
+      "backToList": "Retour aux résidents"
+    },
+    "roles": {
+      "root": "Administrateur technique",
+      "maintenance": "Responsable de maintenance",
+      "renewal": "Responsable de renouvellement",
+      "housing_application": "Responsable de demandes de logement"
+    },
+    "faculties": {
+      "listTitle": "Liste des facultés"
+    },
+    "buildings": {
+      "listTitle": "Bâtiments",
+      "buildingTitle": "Bâtiment {name}",
+      "lodgments": "Logements",
+      "floors": "Étages"
+    },
+    "lodgments": {
+      "listTitle": "Logements",
+      "columns": {
+        "building": "Bâtiment",
+        "floor": "Étage",
+        "roomNumber": "Numéro de chambre"
+      }
+    },
+    "housingApplications": {
+      "listTitle": "Demandes de logement",
+      "manageTitle": "Gérer la demande",
+      "manageDescription": "Consultez et mettez à jour cette demande de logement.",
+      "backToList": "Retour aux demandes",
+      "deleteEntity": "la demande",
+      "manageCta": "Gérer",
+      "manageCtaTitle": "Gérer les demandes de logement",
+      "workflow": {
+        "acceptDescription": "Vous êtes sur le point d'accepter cette demande de logement. Vous pourrez ensuite lui attribuer un logement pour la valider.",
+        "rejectDescription": "Veuillez sélectionner un motif de refus. Cette action est définitive.",
+        "validateDescription": "Vous êtes sur le point de valider définitivement cette demande et d'attribuer le logement suivant :",
+        "validateDescriptionFooter": "Cette action est définitive.",
+        "assignedLodgment": "Logement attribué",
+        "lodgmentOption": "{building} - Chambre {room} (Étage {floor})"
+      }
+    },
+    "renewals": {
+      "listTitle": "Renouvellements",
+      "manageTitle": "Gérer le renouvellement",
+      "manageDescription": "Consultez et mettez à jour cette demande de renouvellement.",
+      "backToList": "Retour aux renouvellements",
+      "statusHint": "Mettez à jour le statut du renouvellement.",
+      "workflow": {
+        "acceptTitle": "Accepter le renouvellement",
+        "acceptDescription": "Vous êtes sur le point d'accepter ce renouvellement. Vous pourrez ensuite le valider définitivement.",
+        "rejectTitle": "Refuser le renouvellement",
+        "rejectDescription": "Veuillez sélectionner un motif de refus. Cette action est définitive.",
+        "validateTitle": "Valider le renouvellement",
+        "validateDescription": "Vous êtes sur le point de valider définitivement ce renouvellement. Cette action est définitive."
+      }
+    },
+    "maintenances": {
+      "listTitle": "Demandes de maintenance",
+      "manageTitle": "Gestion des maintenances",
+      "detailTitleWithLocation": "Maintenance - {building}, porte {room}",
+      "backToList": "Retour aux maintenances",
+      "infoCardTitle": "Détails de la maintenance",
+      "currentStatus": "Statut actuel",
+      "residentCardTitle": "Résident",
+      "maintainersCard": {
+        "title": "Mainteneurs assignés",
+        "assign": "Assigner un mainteneur",
+        "none": "Aucun mainteneur assigné",
+        "search": "Rechercher un mainteneur",
+        "choose": "Choisir un mainteneur...",
+        "emptySearch": "Aucun mainteneur trouvé."
+      },
+      "workflow": {
+        "acceptTitle": "Accepter la maintenance",
+        "acceptDescription": "Vous êtes sur le point d'accepter cette demande de maintenance. Vous pourrez ensuite la marquer comme terminée.",
+        "rejectTitle": "Refuser la maintenance",
+        "rejectDescription": "Vous êtes sur le point de refuser cette demande de maintenance. Cette action est définitive.",
+        "doneTitle": "Terminer la maintenance",
+        "doneDescription": "Vous êtes sur le point de marquer cette maintenance comme terminée. Cette action est définitive.",
+        "markDone": "Marquer comme terminé",
+        "terminalDone": "terminée",
+        "terminalRefused": "refusée"
+      }
+    },
+    "maintainers": {
+      "listTitle": "Mainteneurs",
+      "manageTitle": "Gestion des mainteneurs",
+      "createTitle": "Créer un mainteneur",
+      "editTitle": "Modifier le mainteneur",
+      "createNew": "Nouveau mainteneur",
+      "formInfoTitle": "Informations du mainteneur",
+      "createDescription": "Renseignez les informations du nouveau mainteneur.",
+      "backToList": "Retour aux mainteneurs",
+      "deleteEntity": "le mainteneur"
+    },
+    "documents": {
+      "nic": "Carte d'identité (CIN)",
+      "schoolCertificate": "Certificat de scolarité"
+    },
+    "workflow": {
+      "refusalReason": "Motif de refus",
+      "terminalValidated": "validée",
+      "terminalRefused": "refusée",
+      "terminalPrefix": "Cette demande est {status} et ne peut plus être modifiée.",
+      "renewalTerminalPrefix": "Ce renouvellement est {status} et ne peut plus être modifié.",
+      "maintenanceTerminalPrefix": "Cette maintenance est {status} et ne peut plus être modifiée."
+    },
+    "kpi": {
+      "residents": "Résidents",
+      "residentsSubtitle": "Nombre total de résidents enregistrés",
+      "renewals": "Renouvellements",
+      "renewalsSubtitle": "Nombre de renouvellements en attente de validation",
+      "maintenances": "Maintenances",
+      "maintenancesSubtitle": "Nombre de maintenances en attente de traitement",
+      "housingApplications": "Réservations",
+      "housingApplicationsSubtitle": "Nombre de réservations en attente de validation"
+    }
+  }
+}

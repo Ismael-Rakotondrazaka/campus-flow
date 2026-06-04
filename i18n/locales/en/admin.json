@@ -1,0 +1,211 @@
+{
+  "admin": {
+    "floor": {
+      "ground": "Ground floor",
+      "basement": "Basement {n}",
+      "first": "1st floor",
+      "ordinal": "{n}th floor"
+    },
+    "location": {
+      "building": "Building {name}",
+      "room": "Door {number}",
+      "line": "{building} - {floor} - {room}"
+    },
+    "tables": {
+      "avatar": "Avatar",
+      "name": "Name",
+      "role": "Role",
+      "location": "Location",
+      "maintainers": "Maintainers",
+      "noMaintainer": "No maintainer"
+    },
+    "results": {
+      "announcement": "announcement | announcements",
+      "housingApplication": "housing application | housing applications",
+      "resident": "resident | residents",
+      "faculty": "faculty | faculties",
+      "maintainer": "maintainer | maintainers",
+      "academicSession": "academic session | academic sessions",
+      "building": "building | buildings",
+      "lodgment": "lodging | lodgings",
+      "maintenance": "maintenance request | maintenance requests",
+      "admin": "administrator | administrators",
+      "renewal": "renewal | renewals"
+    },
+    "announcements": {
+      "listTitle": "Announcements management",
+      "createNew": "New announcement",
+      "createTitle": "Create announcement",
+      "editTitle": "Edit announcement",
+      "formTitle": "Announcement information",
+      "formDescription": "Fill in the details below.",
+      "createDescription": "Enter the title, content, and publication options.",
+      "editDescription": "Update the title, content, illustration, or publication status.",
+      "deleteEntity": "announcement",
+      "empty": "No announcement found.",
+      "draft": "Draft",
+      "illustration": "Illustration",
+      "illustrationPreview": "Illustration preview",
+      "showMore": "Show more",
+      "showLess": "Show less",
+      "backToList": "Back to announcements"
+    },
+    "academicSessions": {
+      "listTitle": "Academic sessions",
+      "manageTitle": "Academic session management",
+      "createTitle": "Create academic session",
+      "editTitle": "Edit academic session",
+      "createNew": "New session",
+      "deleteEntity": "academic session",
+      "formNewTitle": "New academic session",
+      "createDescription": "Set session, application, and renewal dates.",
+      "editDescription": "Update session, application, and renewal dates.",
+      "columns": {
+        "period": "Period",
+        "applications": "Applications",
+        "renewals": "Renewals",
+        "createdAt": "Created on"
+      },
+      "form": {
+        "sessionPeriod": "Session period",
+        "applicationPeriod": "Application period",
+        "renewalPeriod": "Renewal period",
+        "start": "Start",
+        "end": "End",
+        "open": "Opens",
+        "close": "Closes"
+      },
+      "backToList": "Back to sessions"
+    },
+    "admins": {
+      "listTitle": "Administrators",
+      "manageTitle": "Administrator management",
+      "editTitle": "Edit administrator",
+      "editRoleTitle": "Edit role",
+      "editRoleDescription": "Change the role assigned to this administrator.",
+      "deleteEntity": "administrator",
+      "backToList": "Back to administrators"
+    },
+    "residents": {
+      "listTitle": "Residents",
+      "manageTitle": "Resident management",
+      "backToList": "Back to residents"
+    },
+    "roles": {
+      "root": "Technical administrator",
+      "maintenance": "Maintenance manager",
+      "renewal": "Renewal manager",
+      "housing_application": "Housing application manager"
+    },
+    "faculties": {
+      "listTitle": "Faculties"
+    },
+    "buildings": {
+      "listTitle": "Buildings",
+      "buildingTitle": "Building {name}",
+      "lodgments": "Rooms",
+      "floors": "Floors"
+    },
+    "lodgments": {
+      "listTitle": "Lodgings",
+      "columns": {
+        "building": "Building",
+        "floor": "Floor",
+        "roomNumber": "Room number"
+      }
+    },
+    "housingApplications": {
+      "listTitle": "Housing applications",
+      "manageTitle": "Manage application",
+      "manageDescription": "Review and update this housing application.",
+      "backToList": "Back to applications",
+      "deleteEntity": "application",
+      "manageCta": "Manage",
+      "manageCtaTitle": "Manage housing applications",
+      "workflow": {
+        "acceptDescription": "You are about to accept this housing application. You can then assign a room to validate it.",
+        "rejectDescription": "Please select a refusal reason. This action is final.",
+        "validateDescription": "You are about to permanently validate this application and assign the following room:",
+        "validateDescriptionFooter": "This action is final.",
+        "assignedLodgment": "Assigned room",
+        "lodgmentOption": "{building} - Room {room} (Floor {floor})"
+      }
+    },
+    "renewals": {
+      "listTitle": "Renewals",
+      "manageTitle": "Manage renewal",
+      "manageDescription": "Review and update this renewal request.",
+      "backToList": "Back to renewals",
+      "statusHint": "Update the renewal status.",
+      "workflow": {
+        "acceptTitle": "Accept renewal",
+        "acceptDescription": "You are about to accept this renewal. You can then validate it permanently.",
+        "rejectTitle": "Reject renewal",
+        "rejectDescription": "Please select a refusal reason. This action is final.",
+        "validateTitle": "Validate renewal",
+        "validateDescription": "You are about to permanently validate this renewal. This action is final."
+      }
+    },
+    "maintenances": {
+      "listTitle": "Maintenance requests",
+      "manageTitle": "Maintenance management",
+      "detailTitleWithLocation": "Maintenance - {building}, door {room}",
+      "backToList": "Back to maintenance",
+      "infoCardTitle": "Maintenance details",
+      "currentStatus": "Current status",
+      "residentCardTitle": "Resident",
+      "maintainersCard": {
+        "title": "Assigned maintainers",
+        "assign": "Assign maintainer",
+        "none": "No maintainer assigned",
+        "search": "Search maintainers",
+        "choose": "Choose a maintainer...",
+        "emptySearch": "No maintainer found."
+      },
+      "workflow": {
+        "acceptTitle": "Accept maintenance",
+        "acceptDescription": "You are about to accept this maintenance request. You can then mark it as done.",
+        "rejectTitle": "Reject maintenance",
+        "rejectDescription": "You are about to reject this maintenance request. This action is final.",
+        "doneTitle": "Complete maintenance",
+        "doneDescription": "You are about to mark this maintenance as done. This action is final.",
+        "markDone": "Mark as done",
+        "terminalDone": "completed",
+        "terminalRefused": "rejected"
+      }
+    },
+    "maintainers": {
+      "listTitle": "Maintainers",
+      "manageTitle": "Maintainer management",
+      "createTitle": "Create maintainer",
+      "editTitle": "Edit maintainer",
+      "createNew": "New maintainer",
+      "formInfoTitle": "Maintainer information",
+      "createDescription": "Enter the new maintainer details.",
+      "backToList": "Back to maintainers",
+      "deleteEntity": "maintainer"
+    },
+    "documents": {
+      "nic": "ID card (NIC)",
+      "schoolCertificate": "School certificate"
+    },
+    "workflow": {
+      "refusalReason": "Refusal reason",
+      "terminalValidated": "validated",
+      "terminalRefused": "refused",
+      "terminalPrefix": "This request has been {status} and can no longer be modified.",
+      "renewalTerminalPrefix": "This renewal has been {status} and can no longer be modified.",
+      "maintenanceTerminalPrefix": "This maintenance has been {status} and can no longer be modified."
+    },
+    "kpi": {
+      "residents": "Residents",
+      "residentsSubtitle": "Total registered residents",
+      "renewals": "Renewals",
+      "renewalsSubtitle": "Renewals pending validation",
+      "maintenances": "Maintenance",
+      "maintenancesSubtitle": "Maintenance requests pending processing",
+      "housingApplications": "Bookings",
+      "housingApplicationsSubtitle": "Bookings pending validation"
+    }
+  }
+}
