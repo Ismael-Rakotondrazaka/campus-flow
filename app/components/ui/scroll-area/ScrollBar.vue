@@ -5,11 +5,12 @@ import type { HTMLAttributes } from 'vue';
 import { reactiveOmit } from '@vueuse/core';
 import { ScrollAreaScrollbar, ScrollAreaThumb } from 'reka-ui';
 
-import { cn } from '@/lib/utils';
+import { cn } from '~/lib/utils';
 
 const props = withDefaults(
   defineProps<{ class?: HTMLAttributes['class'] } & ScrollAreaScrollbarProps>(),
   {
+    class: undefined,
     orientation: 'vertical',
   }
 );
