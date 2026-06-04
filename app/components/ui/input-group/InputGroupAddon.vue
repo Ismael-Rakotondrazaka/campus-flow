@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
 
-import { cn } from '@/lib/utils';
+import { cn } from '~/lib/utils';
 
 import type { InputGroupVariants } from '.';
 
@@ -14,6 +14,7 @@ const props = withDefaults(
   }>(),
   {
     align: 'inline-start',
+    class: undefined,
   }
 );
 

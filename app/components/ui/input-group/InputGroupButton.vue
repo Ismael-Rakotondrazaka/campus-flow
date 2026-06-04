@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
 
-import type { ButtonVariants } from '@/components/ui/button';
+import type { ButtonVariants } from '~/components/ui/button';
 
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { Button } from '~/components/ui/button';
+import { cn } from '~/lib/utils';
 
 import type { InputGroupButtonVariants } from '.';
 
@@ -17,6 +17,7 @@ interface InputGroupButtonProps {
 }
 
 const props = withDefaults(defineProps<InputGroupButtonProps>(), {
+  class: undefined,
   size: 'xs',
   variant: 'ghost',
 });
