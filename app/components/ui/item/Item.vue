@@ -4,7 +4,7 @@ import type { HTMLAttributes } from 'vue';
 
 import { Primitive } from 'reka-ui';
 
-import { cn } from '@/lib/utils';
+import { cn } from '~/lib/utils';
 
 import type { ItemVariants } from '.';
 
@@ -20,6 +20,9 @@ const props = withDefaults(
   >(),
   {
     as: 'div',
+    class: undefined,
+    size: undefined,
+    variant: undefined,
   }
 );
 </script>
