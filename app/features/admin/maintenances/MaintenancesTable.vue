@@ -1,13 +1,9 @@
 <script setup lang="ts">
+import type { MaintenanceStatus, MaintenanceType } from '#imports';
+
 import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table';
 
-import type {
-  Maintenance,
-  MaintenanceStatus,
-  MaintenanceType,
-} from '~/features/shared/maintenances/maintenance.model';
-
-import { Skeleton } from '@/components/ui/skeleton';
+import { Skeleton } from '~/components/ui/skeleton';
 import {
   Table,
   TableBody,
@@ -15,17 +11,17 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from '~/components/ui/table';
 import {
-  maintenanceColumns,
   maintenanceColumnsLength,
-} from '~/features/admin/maintenances/maintenanceColumns';
-import { AdminRole } from '~/features/shared/admins/admin.model';
+  useMaintenanceColumns,
+} from '~/features/admin/maintenances/useMaintenanceColumns';
 import MaintenanceStatusSelect from '~/features/shared/maintenances/components/MaintenanceStatusSelect.vue';
 import MaintenanceTypeSelect from '~/features/shared/maintenances/components/MaintenanceTypeSelect.vue';
-import { MaintenanceConfig } from '~/features/shared/maintenances/maintenance.config';
 import { maintenanceListQuery } from '~/features/shared/maintenances/maintenance.query';
 import PaginationComponent from '~/features/shared/paginations/components/PaginationComponent.vue';
+
+const columns = useMaintenanceColumns();
 
 const status = useRouteQuery<'all' | MaintenanceStatus>('status', 'all');
 const type = useRouteQuery<'all' | MaintenanceType>('type', 'all');
@@ -39,18 +35,10 @@ const limit = useRouteQuery<number>(
     transform: Number,
   }
 );
-const authUser = useSupabaseUser();
-
 const { state } = useQuery(() =>
   maintenanceListQuery({
-    admin_id:
-      authUser.value?.sub && authUser.value?.app_metadata?.role
-        ? authUser.value?.app_metadata?.role === AdminRole.root
-          ? undefined
-          : authUser.value?.sub
-        : undefined,
     limit: limit.value,
-    orderBy: 'created_at',
+    orderBy: MaintenanceOrderBy.createdAt,
     page: page.value,
     sortOrder: SortOrder.desc,
     status: status.value === 'all' ? undefined : status.value,
@@ -58,12 +46,14 @@ const { state } = useQuery(() =>
   })
 );
 
-const maintenances = computed(
-  () => state.value?.data?.data ?? ([] as Maintenance[])
+const maintenances = computed<Serialize<Maintenance>[]>(
+  () => state.value?.data?.data ?? []
 );
 
 const table = useVueTable({
-  columns: maintenanceColumns,
+  get columns() {
+    return columns.value;
+  },
   data: maintenances,
   getCoreRowModel: getCoreRowModel(),
 });
@@ -107,9 +97,9 @@ watch(limit, value => {
     </div>
 
     <p class="text-foreground mb-2 text-base">
-      Résultats: <span class="font-bold">{{ totalCount }}</span> maintenance{{
-        totalCount > 1 ? 's' : ''
-      }}
+      {{ $t('common.results.countLabel') }}
+      <span class="font-bold">{{ totalCount }}</span>
+      {{ $t('admin.results.maintenance', totalCount) }}
     </p>
 
     <div class="mb-2 rounded-md border">
@@ -169,7 +159,7 @@ watch(limit, value => {
               :colspan="maintenanceColumnsLength"
               class="h-24 text-center"
             >
-              Aucun résultat.
+              {{ $t('common.empty.noResults') }}
             </TableCell>
           </TableRow>
         </TableBody>
