@@ -1,201 +1,58 @@
-import type { PaginationResult } from '@/features/shared/paginations/pagination.model';
-
-import type {
-  Resident,
-  ResidentFilters,
-  ResidentInsert,
-  ResidentUpdate,
-} from './resident.model';
-
-import { ResidentConfig } from './resident.config';
-
-const RESIDENT_SELECT = `
-  *,
-  faculty:faculty_id(*),
-  academic_session:academic_session_id(*),
-  lodgment:lodgment_id(*,building:building_id(*))
-`;
-
-const RESIDENT_SELECT_INNER = `
-  *,
-  faculty:faculty_id(*),
-  academic_session:academic_session_id(*),
-  lodgment:lodgment_id!inner(*,building:building_id(*))
-`;
+import type { ResidentQuery, UpdateResident } from '#shared/features/residents';
+import type { H3Event$Fetch } from 'nitropack/types';
 
 export const getResidents = async (
-  filters: ResidentFilters
-): Promise<PaginationResult<Resident>> => {
-  const client = useSupabaseClient();
-
-  const selectQuery = filters.building_id
-    ? RESIDENT_SELECT_INNER
-    : RESIDENT_SELECT;
-
-  let query = client.from('residents').select(selectQuery, { count: 'exact' });
-
-  if (!filters.include_deleted) {
-    query = query.is('deleted_at', null);
-  }
-
-  if (filters.faculty_id) {
-    query = query.eq('faculty_id', filters.faculty_id);
-  }
-
-  if (filters.academic_session_id) {
-    query = query.eq('academic_session_id', filters.academic_session_id);
-  }
-
-  if (filters.building_id) {
-    query = query.eq('lodgment.building_id', filters.building_id);
-  }
-
-  if (filters.lodgment_id) {
-    query = query.eq('lodgment_id', filters.lodgment_id);
-  }
-
-  if (filters.gender) {
-    query = query.eq('gender', filters.gender);
-  }
-
-  if (filters.origin) {
-    query = query.eq('origin', filters.origin);
-  }
-
-  if (filters.search) {
-    const searchTerm = `%${filters.search}%`;
-    query = query.or(
-      `first_name.ilike.${searchTerm},last_name.ilike.${searchTerm},email.ilike.${searchTerm},phone_number.ilike.${searchTerm},nic.ilike.${searchTerm}`
-    );
-  }
-
-  const page = filters.page ?? ResidentConfig.PAGE_DEFAULT;
-  const limit = filters.limit ?? ResidentConfig.PAGE_SIZE_DEFAULT;
-  const from = (page - 1) * limit;
-  const to = from + limit - 1;
-
-  query = query
-    .order(filters.orderBy ?? 'created_at', {
-      ascending: filters.sortOrder === SortOrder.asc,
-    })
-    .range(from, to);
-
-  const { count, data, error } = await query;
-
-  if (error) throw error;
-
-  return {
-    count: count ?? 0,
-    data: (data ?? []) as unknown as Resident[],
-  };
+  filters: ResidentQuery,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  return fetchFn('/api/residents', {
+    query: filters,
+  });
 };
 
 export const getResidentsCount = async (
-  filters: Omit<ResidentFilters, 'limit' | 'orderBy' | 'page' | 'sortOrder'>
-): Promise<number> => {
-  const client = useSupabaseClient();
-
-  let query = client
-    .from('residents')
-    .select('*', { count: 'exact', head: true });
-
-  if (!filters.include_deleted) {
-    query = query.is('deleted_at', null);
-  }
-
-  if (filters.faculty_id) {
-    query = query.eq('faculty_id', filters.faculty_id);
-  }
-
-  if (filters.academic_session_id) {
-    query = query.eq('academic_session_id', filters.academic_session_id);
-  }
-
-  if (filters.building_id) {
-    query = query.eq('lodgment.building_id', filters.building_id);
-  }
-
-  if (filters.lodgment_id) {
-    query = query.eq('lodgment_id', filters.lodgment_id);
-  }
-
-  if (filters.gender) {
-    query = query.eq('gender', filters.gender);
-  }
-
-  if (filters.origin) {
-    query = query.eq('origin', filters.origin);
-  }
-
-  if (filters.search) {
-    const searchTerm = `%${filters.search}%`;
-    query = query.or(
-      `first_name.ilike.${searchTerm},last_name.ilike.${searchTerm},email.ilike.${searchTerm},phone_number.ilike.${searchTerm},nic.ilike.${searchTerm}`
-    );
-  }
-
-  const { count, error } = await query;
-
-  if (error) throw error;
-
-  return count ?? 0;
+  filters: Omit<ResidentQuery, 'limit' | 'orderBy' | 'page' | 'sortOrder'>,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { count } = await fetchFn('/api/residents/count', {
+    query: filters,
+  });
+  return count;
 };
 
-export const getResident = async (id: string): Promise<null | Resident> => {
-  const client = useSupabaseClient();
-
-  const { data, error } = await client
-    .from('residents')
-    .select(RESIDENT_SELECT)
-    .eq('id', id)
-    .maybeSingle();
-
-  if (error) throw error;
-
-  return data as unknown as null | Resident;
-};
-
-export const createResident = async (
-  resident: ResidentInsert
-): Promise<Resident> => {
-  const client = useSupabaseClient();
-
-  const { data, error } = await client
-    .from('residents')
-    .insert(resident)
-    .select(RESIDENT_SELECT)
-    .single();
-
-  if (error) throw error;
-
-  return data as unknown as Resident;
+export const getResident = async (
+  residentId: string,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { data } = await fetchFn(
+    `/api/residents/${residentId}` as '/api/residents/${residentId}'
+  );
+  return data;
 };
 
 export const updateResident = async (
-  id: string,
-  updates: ResidentUpdate
-): Promise<Resident> => {
-  const client = useSupabaseClient();
-
-  const { data, error } = await client
-    .from('residents')
-    .update(updates)
-    .eq('id', id)
-    .select(RESIDENT_SELECT)
-    .single();
-
-  if (error) throw error;
-
-  return data as unknown as Resident;
+  residentId: string,
+  input: UpdateResident,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { data } = await fetchFn(
+    `/api/residents/${residentId}` as '/api/residents/${residentId}',
+    {
+      body: input,
+      method: 'PUT',
+    }
+  );
+  return data;
 };
 
-export const deleteResident = async (id: string): Promise<void> => {
-  const client = useSupabaseClient();
-
-  const { error } = await client
-    .from('residents')
-    .update({ deleted_at: new Date().toISOString() })
-    .eq('id', id);
-
-  if (error) throw error;
+export const deleteResident = async (
+  residentId: string,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  await fetchFn(
+    `/api/residents/${residentId}` as '/api/residents/${residentId}',
+    {
+      method: 'DELETE',
+    }
+  );
 };

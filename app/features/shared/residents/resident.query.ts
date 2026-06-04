@@ -1,17 +1,12 @@
+import type { ResidentQuery, UpdateResident } from '#shared/features/residents';
+
 import {
   defineMutation,
   defineQueryOptions,
   useQueryCache,
 } from '@pinia/colada';
 
-import type {
-  ResidentFilters,
-  ResidentInsert,
-  ResidentUpdate,
-} from './resident.model';
-
 import {
-  createResident,
   getResident,
   getResidents,
   getResidentsCount,
@@ -21,51 +16,59 @@ import {
 export const RESIDENT_QUERY_KEYS = {
   byId: (id: string) => [...RESIDENT_QUERY_KEYS.root, id] as const,
 
-  count: (filters: Omit<ResidentFilters, 'limit' | 'page'> = {}) =>
-    [...RESIDENT_QUERY_KEYS.root, 'count', filters] as const,
+  count: (
+    filters: Omit<
+      ResidentQuery,
+      'limit' | 'orderBy' | 'page' | 'sortOrder'
+    > = {}
+  ) => [...RESIDENT_QUERY_KEYS.root, 'count', filters] as const,
 
-  list: (filters: ResidentFilters = {}) =>
+  list: (filters: ResidentQuery = {}) =>
     [...RESIDENT_QUERY_KEYS.root, 'list', filters] as const,
 
   root: ['residents'] as const,
 };
 
 export const residentListQuery = defineQueryOptions(
-  (filters: ResidentFilters = {}) => ({
-    key: RESIDENT_QUERY_KEYS.list(filters),
-    placeholderData: previousData => previousData,
-    query: () => getResidents(filters),
-  })
+  (filters: ResidentQuery = {}) => {
+    const fetchFn = useRequestFetch();
+    return {
+      key: RESIDENT_QUERY_KEYS.list(filters),
+      placeholderData: previousData => previousData,
+      query: () => getResidents(filters, fetchFn),
+    };
+  }
 );
 
 export const residentByIdQuery = defineQueryOptions(
-  ({ id }: { id: string }) => ({
-    key: RESIDENT_QUERY_KEYS.byId(id),
-    query: () => getResident(id),
-  })
+  ({ id }: { id: string }) => {
+    const fetchFn = useRequestFetch();
+    return {
+      key: RESIDENT_QUERY_KEYS.byId(id),
+      query: () => getResident(id, fetchFn),
+    };
+  }
 );
 
 export const residentCountQuery = defineQueryOptions(
-  (filters: Omit<ResidentFilters, 'limit' | 'page'> = {}) => ({
-    key: RESIDENT_QUERY_KEYS.count(filters),
-    query: () => getResidentsCount(filters),
-  })
+  (
+    filters: Omit<
+      ResidentQuery,
+      'limit' | 'orderBy' | 'page' | 'sortOrder'
+    > = {}
+  ) => {
+    const fetchFn = useRequestFetch();
+    return {
+      key: RESIDENT_QUERY_KEYS.count(filters),
+      query: () => getResidentsCount(filters, fetchFn),
+    };
+  }
 );
-
-export const useCreateResident = defineMutation(() => {
-  const queryCache = useQueryCache();
-  return {
-    mutation: (resident: ResidentInsert) => createResident(resident),
-    onSuccess: () => {
-      queryCache.invalidateQueries({ key: RESIDENT_QUERY_KEYS.root });
-    },
-  };
-});
 
 export const useUpdateResident = defineMutation(() => {
   const queryCache = useQueryCache();
   return {
-    mutation: ({ id, updates }: { id: string; updates: ResidentUpdate }) =>
+    mutation: ({ id, updates }: { id: string; updates: UpdateResident }) =>
       updateResident(id, updates),
     onSuccess: () => {
       queryCache.invalidateQueries({ key: RESIDENT_QUERY_KEYS.root });
