@@ -10,15 +10,14 @@ import {
   PaginationItem,
   PaginationNext,
   PaginationPrevious,
-} from '@/components/ui/pagination';
-import { cn } from '@/lib/utils';
+} from '~/components/ui/pagination';
+import { cn } from '~/lib/utils';
 
 interface Props {
   class?: HTMLAttributes['class'];
   compact?: boolean;
   limit: number;
   limitOptions?: number[];
-  ofLabel?: string;
   page: number;
   siblingCount?: number;
   totalCount: number;
@@ -29,7 +28,6 @@ const props = withDefaults(defineProps<Props>(), {
   class: undefined,
   compact: false,
   limitOptions: () => [10, 20, 25, 50, 100],
-  ofLabel: 'sur',
   siblingCount: 1,
 });
 
@@ -38,8 +36,13 @@ const emit = defineEmits<{
   pageSizeChange: [size: number];
 }>();
 
-const pageInfo = computed(
-  () => `Page ${props.page} ${props.ofLabel} ${props.totalPages}`
+const { t } = useI18n();
+
+const pageInfo = computed(() =>
+  t('common.pagination.pageOf', {
+    page: props.page,
+    total: props.totalPages,
+  })
 );
 
 const options = computed(() =>

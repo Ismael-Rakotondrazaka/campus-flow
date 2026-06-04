@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Label } from '@/components/ui/label';
+import { Label } from '~/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -7,8 +7,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
+} from '~/components/ui/select';
+import { Skeleton } from '~/components/ui/skeleton';
 
 interface Props {
   compact?: boolean;
@@ -23,7 +23,9 @@ withDefaults(defineProps<Props>(), {
   <div class="flex flex-wrap items-center justify-between gap-4">
     <div class="flex flex-wrap items-center gap-4">
       <div class="flex items-center gap-2">
-        <Label v-if="!compact" for="rows-per-page">Rows per page</Label>
+        <Label v-if="!compact" for="rows-per-page">
+          {{ $t('common.pagination.rowsPerPage') }}
+        </Label>
         <Select disabled :model-value="'20'">
           <SelectTrigger id="rows-per-page" class="w-20">
             <SelectValue />
