@@ -1,0 +1,340 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------------------------------------------------------------------------
+// Auth: Users
+// ---------------------------------------------------------------------------
+
+/// One row per person — holds identity and role, no credentials here
+model User {
+  id        String    @id @default(uuid()) @db.Uuid
+  email     String    @unique
+  /// admin | resident
+  role      String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  identities UserIdentity[]
+  admin      Admin?
+  resident   Resident?
+
+  @@map("users")
+}
+
+/// One row per provider per user — supports email/password and any OAuth provider
+model UserIdentity {
+  id         String    @id @default(uuid()) @db.Uuid
+  userId     String    @map("user_id") @db.Uuid
+  /// email | google | github | facebook | ...
+  provider   String
+  /// Provider's own user ID; null for email/password
+  providerId String?   @map("provider_id")
+  /// scrypt hash (nuxt-auth-utils hashPassword); only set when provider = 'email'
+  password   String?
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerId], map: "user_identities_provider_provider_id_unique")
+  @@map("user_identities")
+}
+
+// ---------------------------------------------------------------------------
+// Buildings & Lodgments
+// ---------------------------------------------------------------------------
+
+model Building {
+  id                String    @id @default(uuid()) @db.Uuid
+  name              String
+  floors            Int
+  illustrationUrl   String    @map("illustration_url")
+  lodgmentsCount    Int       @default(0) @map("lodgments_count")
+  residentsCount    Int       @default(0) @map("residents_count")
+  totalCapacity     Int       @default(0) @map("total_capacity")
+  capacityRemaining Int       @default(0) @map("capacity_remaining")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+  deletedAt         DateTime? @map("deleted_at")
+
+  lodgments Lodgment[]
+
+  @@map("buildings")
+}
+
+model Lodgment {
+  id                String    @id @default(uuid()) @db.Uuid
+  buildingId        String    @map("building_id") @db.Uuid
+  floor             Int
+  roomNumber        Int       @map("room_number")
+  capacity          Int
+  residentsCount    Int       @default(0) @map("residents_count")
+  capacityRemaining Int       @default(0) @map("capacity_remaining")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+  deletedAt         DateTime? @map("deleted_at")
+
+  building            Building             @relation(fields: [buildingId], references: [id], onDelete: Cascade)
+  residents           Resident[]
+  housingApplications HousingApplication[]
+  maintenances        Maintenance[]
+
+  @@unique([buildingId, floor, roomNumber], map: "lodgments_room_unique")
+  @@map("lodgments")
+}
+
+// ---------------------------------------------------------------------------
+// Academic Sessions & Faculties
+// ---------------------------------------------------------------------------
+
+model AcademicSession {
+  id                 String    @id @default(uuid()) @db.Uuid
+  startAt            DateTime  @map("start_at")
+  endAt              DateTime  @map("end_at")
+  applicationOpenAt  DateTime  @map("application_open_at")
+  applicationCloseAt DateTime  @map("application_close_at")
+  renewalOpenAt      DateTime  @map("renewal_open_at")
+  renewalCloseAt     DateTime  @map("renewal_close_at")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @updatedAt @map("updated_at")
+  deletedAt          DateTime? @map("deleted_at")
+
+  residents           Resident[]
+  housingApplications HousingApplication[]
+  renewals            Renewal[]
+
+  @@map("academic_sessions")
+}
+
+model Faculty {
+  id        String    @id @default(uuid()) @db.Uuid
+  name      String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  residents           Resident[]
+  housingApplications HousingApplication[]
+  renewals            Renewal[]
+
+  @@map("faculties")
+}
+
+// ---------------------------------------------------------------------------
+// Users: Admins & Residents (both reference auth.users via id)
+// ---------------------------------------------------------------------------
+
+/// Admin staff with one of four roles: root | maintenance | renewal | housing_application
+model Admin {
+  id          String    @id @db.Uuid
+  firstName   String    @map("first_name")
+  lastName    String    @map("last_name")
+  phoneNumber String    @map("phone_number")
+  imageUrl    String    @map("image_url")
+  /// root | maintenance | renewal | housing_application
+  role        String
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  user User @relation(fields: [id], references: [id], onDelete: Cascade)
+
+  @@map("admins")
+}
+
+/// Residents linked to their lodgment and faculty; id = users.id
+model Resident {
+  id                String    @id @db.Uuid
+  firstName         String    @map("first_name")
+  lastName          String    @map("last_name")
+  phoneNumber       String    @map("phone_number")
+  imageUrl          String    @map("image_url")
+  facultyId         String    @map("faculty_id") @db.Uuid
+  academicSessionId String    @map("academic_session_id") @db.Uuid
+  lodgmentId        String?   @map("lodgment_id") @db.Uuid
+  /// male | female
+  gender            String
+  /// national | foreigner
+  origin            String
+  emergencyNumber   String    @map("emergency_number")
+  nic               String
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+  deletedAt         DateTime? @map("deleted_at")
+
+  user            User            @relation(fields: [id], references: [id], onDelete: Cascade)
+  faculty         Faculty         @relation(fields: [facultyId], references: [id])
+  academicSession AcademicSession @relation(fields: [academicSessionId], references: [id])
+  lodgment        Lodgment?       @relation(fields: [lodgmentId], references: [id])
+  renewals        Renewal[]
+  maintenances    Maintenance[]
+
+  @@map("residents")
+}
+
+// ---------------------------------------------------------------------------
+// Announcements
+// ---------------------------------------------------------------------------
+
+/// Campus announcements; drafts visible to admins only
+model Announcement {
+  id              String    @id @default(uuid()) @db.Uuid
+  title           String
+  content         String
+  illustrationUrl String?   @map("illustration_url")
+  /// draft | published
+  status          String    @default("draft")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  deletedAt       DateTime? @map("deleted_at")
+
+  @@map("announcements")
+}
+
+// ---------------------------------------------------------------------------
+// Housing Applications
+// ---------------------------------------------------------------------------
+
+model HousingApplication {
+  id                   String    @id @default(uuid()) @db.Uuid
+  firstName            String    @map("first_name")
+  lastName             String    @map("last_name")
+  phoneNumber          String    @map("phone_number")
+  imageUrl             String    @map("image_url")
+  email                String
+  /// male | female
+  gender               String
+  /// national | foreigner
+  origin               String
+  emergencyNumber      String    @map("emergency_number")
+  nic                  String
+  nicUrl               String    @map("nic_url")
+  schoolCertificateUrl String    @map("school_certificate_url")
+  facultyId            String    @map("faculty_id") @db.Uuid
+  academicSessionId    String    @map("academic_session_id") @db.Uuid
+  lodgmentId           String?   @map("lodgment_id") @db.Uuid
+  /// pending | accepted | refused | validated
+  status               String    @default("pending")
+  /// capacity_limit_reached | incomplete_documents | falsified_documents | past_behavior | ineligibility | other
+  refusalReason        String?   @map("refusal_reason")
+  createdAt            DateTime  @default(now()) @map("created_at")
+  updatedAt            DateTime  @updatedAt @map("updated_at")
+  deletedAt            DateTime? @map("deleted_at")
+
+  faculty         Faculty         @relation(fields: [facultyId], references: [id])
+  academicSession AcademicSession @relation(fields: [academicSessionId], references: [id])
+  lodgment        Lodgment?       @relation(fields: [lodgmentId], references: [id], onDelete: SetNull)
+
+  @@unique([email, academicSessionId], map: "housing_applications_email_session_unique")
+  @@map("housing_applications")
+}
+
+// ---------------------------------------------------------------------------
+// Renewals
+// ---------------------------------------------------------------------------
+
+model Renewal {
+  id                   String    @id @default(uuid()) @db.Uuid
+  residentId           String    @map("resident_id") @db.Uuid
+  academicSessionId    String    @map("academic_session_id") @db.Uuid
+  facultyId            String    @map("faculty_id") @db.Uuid
+  phoneNumber          String    @map("phone_number")
+  emergencyNumber      String    @map("emergency_number")
+  imageUrl             String    @map("image_url")
+  schoolCertificateUrl String    @map("school_certificate_url")
+  nicUrl               String    @map("nic_url")
+  /// pending | accepted | refused | validated
+  status               String    @default("pending")
+  /// capacity_limit_reached | incomplete_documents | falsified_documents | past_behavior | ineligibility | other
+  refusalReason        String?   @map("refusal_reason")
+  createdAt            DateTime  @default(now()) @map("created_at")
+  updatedAt            DateTime  @updatedAt @map("updated_at")
+  deletedAt            DateTime? @map("deleted_at")
+
+  resident        Resident        @relation(fields: [residentId], references: [id], onDelete: Cascade)
+  academicSession AcademicSession @relation(fields: [academicSessionId], references: [id])
+  faculty         Faculty         @relation(fields: [facultyId], references: [id])
+
+  @@unique([residentId, academicSessionId], map: "renewals_resident_session_unique")
+  @@map("renewals")
+}
+
+// ---------------------------------------------------------------------------
+// Maintenances & Maintainers
+// ---------------------------------------------------------------------------
+
+/// External maintenance workers assignable to maintenance requests
+model Maintainer {
+  id          String    @id @default(uuid()) @db.Uuid
+  firstName   String    @map("first_name")
+  lastName    String    @map("last_name")
+  phoneNumber String    @map("phone_number")
+  imageUrl    String    @map("image_url")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  maintenanceMaintainers MaintenanceMaintainer[]
+
+  @@map("maintainers")
+}
+
+/// Maintenance requests submitted by residents for their lodgment
+model Maintenance {
+  id          String    @id @default(uuid()) @db.Uuid
+  residentId  String    @map("resident_id") @db.Uuid
+  lodgmentId  String    @map("lodgment_id") @db.Uuid
+  /// electrical | plumbing | equipment | hvac | other
+  type        String
+  description String?
+  /// pending | accepted | done | refused
+  status      String    @default("pending")
+  startAt     DateTime? @map("start_at")
+  endAt       DateTime? @map("end_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  resident               Resident               @relation(fields: [residentId], references: [id], onDelete: Cascade)
+  lodgment               Lodgment               @relation(fields: [lodgmentId], references: [id])
+  maintenanceMaintainers MaintenanceMaintainer[]
+
+  @@map("maintenances")
+}
+
+// ---------------------------------------------------------------------------
+// Audit Log
+// ---------------------------------------------------------------------------
+
+/// Append-only record of every admin decision on a domain record
+model AuditLog {
+  id          String   @id @default(uuid()) @db.Uuid
+  actorId     String?  @map("actor_id") @db.Uuid
+  action      String
+  targetTable String   @map("target_table")
+  targetId    String   @map("target_id") @db.Uuid
+  metadata    Json?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("audit_logs")
+}
+
+/// Junction table: many-to-many between maintenances and maintainers
+model MaintenanceMaintainer {
+  maintenanceId String   @map("maintenance_id") @db.Uuid
+  maintainerId  String   @map("maintainer_id") @db.Uuid
+  assignedAt    DateTime @default(now()) @map("assigned_at")
+
+  maintenance Maintenance @relation(fields: [maintenanceId], references: [id], onDelete: Cascade)
+  maintainer  Maintainer  @relation(fields: [maintainerId], references: [id], onDelete: Cascade)
+
+  @@id([maintenanceId, maintainerId])
+  @@map("maintenance_maintainers")
+}
