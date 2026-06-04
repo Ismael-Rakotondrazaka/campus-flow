@@ -1,18 +1,21 @@
 <script setup lang="ts">
-import type { Building } from '~/features/shared/buildings/building.model';
+import type { Building } from '#imports';
+
+import { getBuildingOccupancyStatus } from '#imports';
 
 import { Card, CardContent } from '~/components/ui/card';
-import { getBuildingOccupancyStatus } from '~/features/shared/buildings/building.model';
 import BuildingOccupancyStatusBadge from '~/features/shared/buildings/components/BuildingOccupancyStatusBadge.vue';
 
-const props = defineProps<{
-  building: Building;
-}>();
+interface Props {
+  building: Serialize<Building>;
+}
+
+const props = defineProps<Props>();
 
 const occupancyStatus = computed(() =>
   getBuildingOccupancyStatus(
-    props.building.residents_count,
-    props.building.total_capacity
+    props.building.residentsCount,
+    props.building.totalCapacity
   )
 );
 </script>
@@ -23,29 +26,37 @@ const occupancyStatus = computed(() =>
       <!-- Left side: Info -->
       <div class="flex w-full flex-col justify-between">
         <h3 class="text-foreground text-lg font-bold">
-          Bâtiment {{ props.building.name }}
+          {{
+            $t('admin.buildings.buildingTitle', { name: props.building.name })
+          }}
         </h3>
 
         <div class="flex flex-col gap-2">
           <div class="flex flex-col">
             <p class="text-lg font-bold text-gray-900">
-              {{ props.building.lodgments_count }}
+              {{ props.building.lodgmentsCount }}
             </p>
-            <p class="text-xs text-gray-600">Logements</p>
+            <p class="text-xs text-gray-600">
+              {{ $t('admin.buildings.lodgments') }}
+            </p>
           </div>
           <div class="flex flex-col">
             <p class="text-lg font-bold text-gray-900">
               {{ props.building.floors }}
             </p>
-            <p class="text-xs text-gray-600">Étages</p>
+            <p class="text-xs text-gray-600">
+              {{ $t('admin.buildings.floors') }}
+            </p>
           </div>
           <div class="flex flex-col">
             <p class="text-lg font-bold text-gray-900">
-              {{ props.building.residents_count }}/{{
-                props.building.total_capacity
+              {{ props.building.residentsCount }}/{{
+                props.building.totalCapacity
               }}
             </p>
-            <p class="text-xs text-gray-600">Capacité</p>
+            <p class="text-xs text-gray-600">
+              {{ $t('common.cards.capacity') }}
+            </p>
           </div>
         </div>
       </div>
@@ -57,12 +68,14 @@ const occupancyStatus = computed(() =>
 
       <!-- Right side: Image -->
       <div
-        v-if="props.building.illustration_url"
+        v-if="props.building.illustrationUrl"
         class="shrink-0 overflow-hidden"
       >
         <img
-          :src="props.building.illustration_url"
-          :alt="`Bâtiment ${props.building.name}`"
+          :src="props.building.illustrationUrl"
+          :alt="
+            $t('admin.buildings.buildingTitle', { name: props.building.name })
+          "
           class="h-48 w-36 rounded-md object-cover"
         />
       </div>

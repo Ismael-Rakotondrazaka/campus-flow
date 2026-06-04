@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { Building } from '~/features/shared/buildings/building.model';
+import type { Building } from '#imports';
 
-import { Skeleton } from '@/components/ui/skeleton';
+import { BuildingConfig } from '#imports';
+
+import { Skeleton } from '~/components/ui/skeleton';
 import BuildingCard from '~/features/admin/buildings/BuildingCard.vue';
-import { BuildingConfig } from '~/features/shared/buildings/building.config';
 import { buildingListQuery } from '~/features/shared/buildings/building.query';
 import PaginationComponent from '~/features/shared/paginations/components/PaginationComponent.vue';
 
@@ -24,7 +25,9 @@ const { state } = useQuery(() =>
   })
 );
 
-const buildings = computed(() => state.value?.data?.data ?? ([] as Building[]));
+const buildings = computed<Serialize<Building>[]>(
+  () => state.value?.data?.data ?? []
+);
 
 const totalCount = computed(() => state.value?.data?.count ?? 0);
 const totalPages = computed(() =>
@@ -63,15 +66,15 @@ watch(limit, value => {
       <Input
         v-model="search"
         type="text"
-        placeholder="Rechercher un bâtiment..."
+        :placeholder="$t('common.search.placeholderBuilding')"
         class="max-w-xs"
       />
     </div>
 
     <p class="text-foreground text-base">
-      Résultats: <span class="font-bold">{{ totalCount }}</span> bâtiment{{
-        totalCount > 1 ? 's' : ''
-      }}
+      {{ $t('common.results.countLabel') }}
+      <span class="font-bold">{{ totalCount }}</span>
+      {{ $t('admin.results.building', totalCount) }}
     </p>
 
     <template v-if="state.status === 'pending'">
@@ -96,7 +99,7 @@ watch(limit, value => {
       <div
         class="rounded-md border border-dashed border-gray-300 py-12 text-center"
       >
-        <p class="text-gray-500">Aucun bâtiment trouvé.</p>
+        <p class="text-gray-500">{{ $t('common.empty.noBuilding') }}</p>
       </div>
     </template>
 
