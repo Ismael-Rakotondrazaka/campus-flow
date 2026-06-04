@@ -1,137 +1,82 @@
-import type { PaginationResult } from '@/features/shared/paginations/pagination.model';
-
 import type {
-  AcademicSession,
-  AcademicSessionFilters,
-  AcademicSessionInsert,
-  AcademicSessionUpdate,
-} from './academic-session.model';
-
-import { AcademicSessionConfig } from './academic-session.config';
+  AcademicSessionQuery,
+  CreateAcademicSession,
+  UpdateAcademicSession,
+} from '#shared/features/academic-sessions';
+import type { H3Event$Fetch } from 'nitropack/types';
 
 export const getAcademicSessions = async (
-  filters: AcademicSessionFilters
-): Promise<PaginationResult<AcademicSession>> => {
-  const client = useSupabaseClient();
-
-  const query = client
-    .from('academic_sessions')
-    .select('*', { count: 'exact' })
-    .is('deleted_at', null);
-
-  const page = filters.page ?? AcademicSessionConfig.PAGE_DEFAULT;
-  const limit = filters.limit ?? AcademicSessionConfig.PAGE_SIZE_DEFAULT;
-  const from = (page - 1) * limit;
-  const to = from + limit - 1;
-
-  const { count, data, error } = await query
-    .order(filters.orderBy ?? 'start_at', {
-      ascending: filters.sortOrder === SortOrder.asc,
-    })
-    .range(from, to);
-
-  if (error) throw error;
-
-  return {
-    count: count ?? 0,
-    data: data ?? [],
-  };
+  filters: AcademicSessionQuery,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  return fetchFn('/api/academic-sessions', {
+    query: filters,
+  });
 };
 
 export const getAcademicSessionsCount = async (
-  filters?: Omit<
-    AcademicSessionFilters,
-    'limit' | 'orderBy' | 'page' | 'sortOrder'
-  >
-): Promise<number> => {
-  const client = useSupabaseClient();
-
-  const { count, error } = await client
-    .from('academic_sessions')
-    .select('*', { count: 'exact', head: true })
-    .is('deleted_at', null);
-
-  if (error) throw error;
-
-  return count ?? 0;
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { count } = await fetchFn('/api/academic-sessions/count');
+  return count;
 };
 
 export const getAcademicSession = async (
-  id: string
-): Promise<AcademicSession | null> => {
-  const client = useSupabaseClient();
-
-  const { data, error } = await client
-    .from('academic_sessions')
-    .select('*')
-    .eq('id', id)
-    .is('deleted_at', null)
-    .maybeSingle();
-
-  if (error) throw error;
-
+  academicSessionId: string,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { data } = await fetchFn(
+    `/api/academic-sessions/${academicSessionId}` as '/api/academic-sessions/${academicSessionId}'
+  );
   return data;
 };
 
 export const createAcademicSession = async (
-  session: AcademicSessionInsert
-): Promise<AcademicSession> => {
-  const client = useSupabaseClient();
-
-  const { data, error } = await client
-    .from('academic_sessions')
-    .insert(session)
-    .select()
-    .single();
-
-  if (error) throw error;
-
+  input: CreateAcademicSession,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { data } = await fetchFn('/api/academic-sessions', {
+    body: input,
+    method: 'POST',
+  });
   return data;
 };
 
 export const updateAcademicSession = async (
-  id: string,
-  updates: AcademicSessionUpdate
-): Promise<AcademicSession> => {
-  const client = useSupabaseClient();
-
-  const { data, error } = await client
-    .from('academic_sessions')
-    .update(updates)
-    .eq('id', id)
-    .select()
-    .single();
-
-  if (error) throw error;
-
+  academicSessionId: string,
+  input: UpdateAcademicSession,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { data } = await fetchFn(
+    `/api/academic-sessions/${academicSessionId}` as '/api/academic-sessions/${academicSessionId}',
+    {
+      body: input,
+      method: 'PUT',
+    }
+  );
   return data;
 };
 
-export const deleteAcademicSession = async (id: string): Promise<void> => {
-  const client = useSupabaseClient();
-
-  const { error } = await client
-    .from('academic_sessions')
-    .update({ deleted_at: new Date().toISOString() })
-    .eq('id', id);
-
-  if (error) throw error;
+export const deleteAcademicSession = async (
+  academicSessionId: string,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  await fetchFn(
+    `/api/academic-sessions/${academicSessionId}` as '/api/academic-sessions/${academicSessionId}',
+    { method: 'DELETE' }
+  );
 };
 
-export const getActiveApplicationSession =
-  async (): Promise<AcademicSession | null> => {
-    const client = useSupabaseClient();
-    const now = new Date().toISOString();
+export const getActiveApplicationSession = async (
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { data } = await fetchFn('/api/academic-sessions/active');
+  return data;
+};
 
-    const { data, error } = await client
-      .from('academic_sessions')
-      .select('*')
-      .is('deleted_at', null)
-      .lte('application_open_at', now)
-      .gte('application_close_at', now)
-      .maybeSingle();
-
-    if (error) throw error;
-
-    return data;
-  };
+export const getActiveRenewalSession = async (
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { data } = await fetchFn('/api/academic-sessions/active-renewal');
+  return data;
+};

@@ -8,9 +8,11 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from '~/components/ui/select';
 
 import { academicSessionListQuery } from '../academic-session.query';
+
+const { locale, t } = useI18n();
 
 const academicSession = useRouteQuery<string | undefined, string | undefined>(
   'g_academic_session_id',
@@ -42,7 +44,7 @@ watchEffect(() => {
 
     <Select v-model="academicSession">
       <SelectTrigger class="text-primary-foreground w-full max-w-xs">
-        <SelectValue placeholder="Sessions académiques" />
+        <SelectValue :placeholder="t('common.selects.academicSessions')" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
@@ -52,14 +54,14 @@ watchEffect(() => {
             :value="session.id"
           >
             {{
-              formatDate(new Date(session.start_at), 'DD MMMM YYYY', {
-                locales: 'fr',
+              formatDate(new Date(session.startAt), 'DD MMMM YYYY', {
+                locales: locale,
               })
             }}
             &nbsp;-&nbsp;
             {{
-              formatDate(new Date(session.end_at), 'DD MMMM YYYY', {
-                locales: 'fr',
+              formatDate(new Date(session.endAt), 'DD MMMM YYYY', {
+                locales: locale,
               })
             }}
           </SelectItem>
