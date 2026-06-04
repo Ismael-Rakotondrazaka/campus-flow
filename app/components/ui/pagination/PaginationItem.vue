@@ -5,10 +5,10 @@ import type { HTMLAttributes } from 'vue';
 import { reactiveOmit } from '@vueuse/core';
 import { PaginationListItem } from 'reka-ui';
 
-import type { ButtonVariants } from '@/components/ui/button';
+import type { ButtonVariants } from '~/components/ui/button';
 
-import { buttonVariants } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { buttonVariants } from '~/components/ui/button';
+import { cn } from '~/lib/utils';
 
 const props = withDefaults(
   defineProps<
@@ -19,6 +19,7 @@ const props = withDefaults(
     } & PaginationListItemProps
   >(),
   {
+    class: undefined,
     size: 'icon',
   }
 );

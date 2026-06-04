@@ -6,10 +6,10 @@ import { reactiveOmit } from '@vueuse/core';
 import { ChevronLeftIcon } from 'lucide-vue-next';
 import { PaginationFirst, useForwardProps } from 'reka-ui';
 
-import type { ButtonVariants } from '@/components/ui/button';
+import type { ButtonVariants } from '~/components/ui/button';
 
-import { buttonVariants } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { buttonVariants } from '~/components/ui/button';
+import { cn } from '~/lib/utils';
 
 const props = withDefaults(
   defineProps<
@@ -19,6 +19,7 @@ const props = withDefaults(
     } & PaginationFirstProps
   >(),
   {
+    class: undefined,
     size: 'default',
   }
 );
