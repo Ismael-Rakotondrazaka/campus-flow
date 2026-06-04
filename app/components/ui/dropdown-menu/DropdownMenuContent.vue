@@ -12,7 +12,7 @@ import {
   useForwardPropsEmits,
 } from 'reka-ui';
 
-import { cn } from '@/lib/utils';
+import { cn } from '~/lib/utils';
 
 defineOptions({
   inheritAttrs: false,
@@ -21,6 +21,7 @@ defineOptions({
 const props = withDefaults(
   defineProps<{ class?: HTMLAttributes['class'] } & DropdownMenuContentProps>(),
   {
+    class: undefined,
     sideOffset: 4,
   }
 );
