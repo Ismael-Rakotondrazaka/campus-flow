@@ -1,0 +1,83 @@
+{
+  "resident": {
+    "announcements": {
+      "listTitle": "Annonces",
+      "empty": "Aucune annonce disponible pour le moment.",
+      "backToList": "Retour aux annonces"
+    },
+    "maintenances": {
+      "listTitle": "Mes maintenances",
+      "createTitle": "Signaler une maintenance",
+      "createPageTitle": "Nouvelle demande de maintenance",
+      "createCardTitle": "Nouvelle demande de maintenance",
+      "reportCta": "Signaler une maintenance",
+      "listEmpty": "Vous n'avez pas encore de demande de maintenance.",
+      "listEmptyShort": "Aucune demande de maintenance.",
+      "backToList": "Retour aux maintenances",
+      "detailTitle": "Demande de maintenance",
+      "detailTitleWithLocation": "Maintenance - {building}, porte {room}",
+      "locationLine": "Bâtiment {building} - {floor} - Porte {room}",
+      "door": "Porte",
+      "roomNumber": "N° {room}",
+      "form": {
+        "cardDescription": "Décrivez le problème rencontré dans votre logement.",
+        "typeLabel": "Type de problème",
+        "typePlaceholder": "Sélectionner le type",
+        "descriptionPlaceholder": "Décrivez le problème",
+        "descriptionPlaceholderLong": "Décrivez le problème en détail...",
+        "notAssignedHint": "Vous n'êtes pas encore assigné à un logement. Contactez l'administration.",
+        "submitRequest": "Envoyer la demande"
+      },
+      "floor": {
+        "ground": "Rez-de-chaussée",
+        "basement": "Sous-sol",
+        "basementNumber": "Sous-sol {n}",
+        "first": "1er étage",
+        "ordinal": "{n}ème étage"
+      }
+    },
+    "renewals": {
+      "listTitle": "Mes renouvellements",
+      "createTitle": "Renouveler mon contrat",
+      "createPageTitle": "Nouvelle demande de renouvellement",
+      "createCardTitle": "Demande de renouvellement",
+      "renewCta": "Renouveler mon contrat",
+      "listEmpty": "Vous n'avez pas encore de demande de renouvellement.",
+      "listEmptyShort": "Aucun renouvellement trouvé.",
+      "resultsCount": "1 renouvellement | {count} renouvellements",
+      "backToList": "Retour aux renouvellements",
+      "backToMine": "Retour à mes renouvellements",
+      "detailTitlePrefix": "Renouvellement du {date}",
+      "refusalReason": "Motif de refus",
+      "table": {
+        "academicSession": "Session académique",
+        "faculty": "Faculté",
+        "submittedAt": "Date d'envoi"
+      },
+      "form": {
+        "deadlineDescription": "Vérifiez vos informations et fournissez les documents requis. Date limite :",
+        "emergencyNumber": "Numéro d'urgence",
+        "photo": "Photo",
+        "nic": "Carte d'identité nationale (CIN)",
+        "submitRequest": "Envoyer la demande"
+      },
+      "closed": {
+        "title": "Renouvellements fermés",
+        "description": "Les renouvellements ne sont pas ouverts pour cette session.",
+        "return": "Retour au tableau de bord"
+      },
+      "alreadySubmitted": {
+        "title": "Demande déjà envoyée",
+        "description": "Vous avez déjà une demande de renouvellement pour cette session.",
+        "view": "Voir ma demande"
+      }
+    },
+    "settings": {
+      "title": "Paramètres",
+      "subtitle": "Gérez votre profil et vos préférences",
+      "profileSubtitle": "Informations de votre profil résident",
+      "loadError": "Impossible de charger les paramètres.",
+      "profileLoadError": "Erreur lors du chargement du profil."
+    }
+  }
+}
