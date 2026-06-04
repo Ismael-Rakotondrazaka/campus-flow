@@ -5,12 +5,9 @@
 </template>
 
 <script lang="ts" setup>
+import { type AnnouncementStatus, AnnouncementStatusColor } from '#imports';
+
 import Badge from '~/components/ui/badge/Badge.vue';
-import {
-  type AnnouncementStatus,
-  AnnouncementStatusColor,
-  AnnouncementStatusLabel,
-} from '~/features/shared/announcements/announcement.model';
 
 interface Props {
   value: AnnouncementStatus;
@@ -18,13 +15,9 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const colorClass = computed(() => {
-  return AnnouncementStatusColor[props.value];
-});
+const { t } = useI18n();
 
-const label = computed(() => {
-  return AnnouncementStatusLabel[props.value];
-});
+const colorClass = computed(() => AnnouncementStatusColor[props.value]);
+
+const label = computed(() => t(`common.statuses.announcement.${props.value}`));
 </script>
-
-<style></style>

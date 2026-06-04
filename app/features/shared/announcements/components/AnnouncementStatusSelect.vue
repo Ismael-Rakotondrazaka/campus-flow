@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { type AnnouncementStatus, AnnouncementStatuses } from '#imports';
+
 import {
   Select,
   SelectContent,
@@ -6,13 +8,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-
-import {
-  type AnnouncementStatus,
-  AnnouncementStatuses,
-  AnnouncementStatusLabel,
-} from '../announcement.model';
+} from '~/components/ui/select';
 
 const value = defineModel<'all' | AnnouncementStatus>({
   default: 'all',
@@ -23,17 +19,19 @@ const value = defineModel<'all' | AnnouncementStatus>({
 <template>
   <Select v-model="value">
     <SelectTrigger class="w-[200px]">
-      <SelectValue placeholder="Statut" />
+      <SelectValue :placeholder="$t('common.selects.status')" />
     </SelectTrigger>
     <SelectContent>
       <SelectGroup>
-        <SelectItem value="all">Tous les statuts</SelectItem>
+        <SelectItem value="all">
+          {{ $t('common.selects.allStatuses') }}
+        </SelectItem>
         <SelectItem
           v-for="status in AnnouncementStatuses"
           :key="status"
           :value="status"
         >
-          {{ AnnouncementStatusLabel[status] }}
+          {{ $t(`common.statuses.announcement.${status}`) }}
         </SelectItem>
       </SelectGroup>
     </SelectContent>

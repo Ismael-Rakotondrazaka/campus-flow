@@ -1,136 +1,94 @@
-import type { PaginationResult } from '@/features/shared/paginations/pagination.model';
-
 import type {
-  Announcement,
-  AnnouncementFilters,
-  AnnouncementInsert,
-  AnnouncementUpdate,
-} from './announcement.model';
-
-import { AnnouncementConfig } from './announcement.config';
+  AnnouncementQuery,
+  CreateAnnouncement,
+  UpdateAnnouncement,
+} from '#shared/features/announcements';
+import type { H3Event$Fetch } from 'nitropack/types';
 
 export const getAnnouncements = async (
-  filters: AnnouncementFilters
-): Promise<PaginationResult<Announcement>> => {
-  const client = useSupabaseClient();
-
-  let query = client
-    .from('announcements')
-    .select('*', { count: 'exact' })
-    .is('deleted_at', null);
-
-  if (filters.status) {
-    query = query.eq('status', filters.status);
-  }
-
-  if (filters.search) {
-    query = query.ilike('title', `%${filters.search}%`);
-  }
-
-  const page = filters.page ?? AnnouncementConfig.PAGE_DEFAULT;
-  const limit = filters.limit ?? AnnouncementConfig.PAGE_SIZE_DEFAULT;
-  const from = (page - 1) * limit;
-  const to = from + limit - 1;
-
-  query = query
-    .order(filters.orderBy ?? 'created_at', {
-      ascending: filters.sortOrder === SortOrder.asc,
-    })
-    .range(from, to);
-
-  const { count, data, error } = await query;
-
-  if (error) throw error;
-
-  return {
-    count: count ?? 0,
-    data: (data ?? []) as unknown as Announcement[],
-  };
+  filters: AnnouncementQuery,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  return fetchFn('/api/announcements', {
+    query: filters,
+  });
 };
 
 export const getAnnouncementsCount = async (
-  filters: Omit<AnnouncementFilters, 'limit' | 'orderBy' | 'page' | 'sortOrder'>
-): Promise<number> => {
-  const client = useSupabaseClient();
-
-  let query = client
-    .from('announcements')
-    .select('*', { count: 'exact', head: true })
-    .is('deleted_at', null);
-
-  if (filters.status) {
-    query = query.eq('status', filters.status);
-  }
-
-  if (filters.search) {
-    query = query.ilike('title', `%${filters.search}%`);
-  }
-
-  const { count, error } = await query;
-
-  if (error) throw error;
-
-  return count ?? 0;
+  filters: Omit<AnnouncementQuery, 'limit' | 'orderBy' | 'page' | 'sortOrder'>,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { count } = await fetchFn('/api/announcements/count', {
+    query: filters,
+  });
+  return count;
 };
 
 export const getAnnouncement = async (
-  id: string
-): Promise<Announcement | null> => {
-  const client = useSupabaseClient();
-
-  const { data, error } = await client
-    .from('announcements')
-    .select('*')
-    .eq('id', id)
-    .is('deleted_at', null)
-    .maybeSingle();
-
-  if (error) throw error;
-
-  return data as unknown as Announcement | null;
+  announcementId: string,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { data } = await fetchFn(
+    `/api/announcements/${announcementId}` as '/api/announcements/${announcementId}'
+  );
+  return data;
 };
 
 export const createAnnouncement = async (
-  announcement: AnnouncementInsert
-): Promise<Announcement> => {
-  const client = useSupabaseClient();
-
-  const { data, error } = await client
-    .from('announcements')
-    .insert(announcement)
-    .select()
-    .single();
-
-  if (error) throw error;
-
-  return data as unknown as Announcement;
+  input: CreateAnnouncement,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { data } = await fetchFn('/api/announcements', {
+    body: input,
+    method: 'POST',
+  });
+  return data;
 };
 
 export const updateAnnouncement = async (
-  id: string,
-  updates: AnnouncementUpdate
-): Promise<Announcement> => {
-  const client = useSupabaseClient();
-
-  const { data, error } = await client
-    .from('announcements')
-    .update(updates)
-    .eq('id', id)
-    .select()
-    .single();
-
-  if (error) throw error;
-
-  return data as unknown as Announcement;
+  announcementId: string,
+  input: UpdateAnnouncement,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  const { data } = await fetchFn(
+    `/api/announcements/${announcementId}` as '/api/announcements/${announcementId}',
+    {
+      body: input,
+      method: 'PUT',
+    }
+  );
+  return data;
 };
 
-export const deleteAnnouncement = async (id: string): Promise<void> => {
-  const client = useSupabaseClient();
+export const deleteAnnouncement = async (
+  announcementId: string,
+  fetchFn: H3Event$Fetch | typeof $fetch = $fetch
+) => {
+  await fetchFn(
+    `/api/announcements/${announcementId}` as '/api/announcements/${announcementId}',
+    {
+      method: 'DELETE',
+    }
+  );
+};
 
-  const { error } = await client
-    .from('announcements')
-    .update({ deleted_at: new Date().toISOString() })
-    .eq('id', id);
+export const uploadAnnouncementIllustration = async (
+  announcementId: string,
+  file: File
+): Promise<string> => {
+  const { publicUrl, uploadUrl } = await $fetch<{
+    publicUrl: string;
+    uploadUrl: string;
+  }>(`/api/storage/announcements/${announcementId}/illustration/presign`, {
+    body: { contentType: file.type, fileName: file.name },
+    method: 'POST',
+  });
 
-  if (error) throw error;
+  await fetch(uploadUrl, {
+    body: file,
+    headers: { 'Content-Type': file.type },
+    method: 'PUT',
+  });
+
+  return publicUrl;
 };
