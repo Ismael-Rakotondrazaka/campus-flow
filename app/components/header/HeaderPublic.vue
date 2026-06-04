@@ -4,29 +4,31 @@
       class="container mx-auto flex w-full items-center justify-between gap-4"
     >
       <div class="flex items-center">
-        <NuxtLink :to="{ name: 'index' }" as-child>
+        <NuxtLinkLocale :to="{ name: 'index' }" as-child>
           <Button variant="ghost">
             <span
               class="text-primary sr-only text-base font-bold md:not-sr-only"
-              >Lumièrebourg</span
+              >{{ $t('header.brand.name') }}</span
             >
           </Button>
-        </NuxtLink>
+        </NuxtLinkLocale>
       </div>
 
       <div class="flex items-center gap-2">
-        <NuxtLink :to="{ name: 'login' }">
-          <Button variant="ghost">
-            <span class="">Se connecter</span>
-          </Button>
-        </NuxtLink>
+        <HeaderLocaleSwitcher />
 
-        <NuxtLink :to="{ name: 'join-community' }">
+        <NuxtLinkLocale :to="{ name: 'login' }">
+          <Button variant="ghost">
+            <span>{{ $t('header.end.signIn') }}</span>
+          </Button>
+        </NuxtLinkLocale>
+
+        <NuxtLinkLocale :to="{ name: 'join-community' }">
           <Button variant="default" class="rounded-full">
-            <span class="">Rejoindre la communauté</span>
+            <span>{{ $t('header.end.joinCommunity') }}</span>
             <Icon name="mdi:arrow-right" />
           </Button>
-        </NuxtLink>
+        </NuxtLinkLocale>
       </div>
     </nav>
   </header>

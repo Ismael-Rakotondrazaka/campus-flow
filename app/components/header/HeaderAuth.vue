@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import type { NuxtLinkProps } from '#app';
+import type { RouteLocationNamedI18n } from 'vue-router';
 
-import { AdminRole } from '~/features/shared/admins/admin.model';
+import { AdminRole } from '#imports';
 
-const user = useSupabaseUser();
+const { user } = useUserSession();
 
 const role = computed<'resident' | AdminRole | undefined>(
-  () => user.value?.app_metadata?.role
+  () => user.value?.role
 );
 
-const roleRouteMap: Record<'resident' | AdminRole, NuxtLinkProps['to']> = {
+const roleRouteMap: Record<'resident' | AdminRole, RouteLocationNamedI18n> = {
   [AdminRole.housing_application]: {
     name: 'admin-housing-application-dashboard',
   },
@@ -30,23 +30,25 @@ const route = computed(() =>
       class="container mx-auto flex w-full items-center justify-between gap-4"
     >
       <div class="flex items-center">
-        <NuxtLink :to="{ name: 'index' }" as-child>
+        <NuxtLinkLocale :to="{ name: 'index' }" as-child>
           <Button variant="ghost">
             <span
               class="text-primary sr-only text-base font-bold md:not-sr-only"
-              >Lumièrebourg</span
+              >{{ $t('header.brand.name') }}</span
             >
           </Button>
-        </NuxtLink>
+        </NuxtLinkLocale>
       </div>
 
       <div class="flex items-center gap-2">
-        <NuxtLink v-if="route" :to="route">
+        <HeaderLocaleSwitcher />
+
+        <NuxtLinkLocale v-if="route" :to="route">
           <Button variant="default" class="rounded-full">
-            <span class="">Dashboard</span>
+            <span>{{ $t('header.end.dashboard') }}</span>
             <Icon name="mdi:arrow-right" />
           </Button>
-        </NuxtLink>
+        </NuxtLinkLocale>
       </div>
     </nav>
   </header>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-const user = useSupabaseUser();
+const { loggedIn } = useUserSession();
 </script>
 <template>
-  <HeaderPublic v-if="!user" />
+  <HeaderPublic v-if="!loggedIn" />
   <HeaderAuth v-else />
 </template>

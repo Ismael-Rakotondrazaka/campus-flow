@@ -3,8 +3,8 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuSeparator,
-} from '@/components/ui/dropdown-menu';
-import { SidebarTrigger } from '@/components/ui/sidebar';
+} from '~/components/ui/dropdown-menu';
+import { SidebarTrigger } from '~/components/ui/sidebar';
 </script>
 
 <template>
@@ -12,6 +12,8 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
     <nav class="flex items-center justify-between gap-4">
       <SidebarTrigger />
       <div class="flex items-center gap-2">
+        <HeaderLocaleSwitcher />
+
         <DropdownMenu>
           <HeaderDropdownMenuAvatar />
 
