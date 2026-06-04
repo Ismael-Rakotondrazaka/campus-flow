@@ -6,7 +6,7 @@ import RenewalsTable from '~/features/admin/renewals/RenewalsTable.vue';
 <template>
   <div class="container mx-auto p-2">
     <HeaderWithGlobalAcademicSessionSelect>
-      <h1 class="text-2xl font-bold">Gestion des renouvellements</h1>
+      <h1 class="text-2xl font-bold">{{ $t('admin.renewals.listTitle') }}</h1>
     </HeaderWithGlobalAcademicSessionSelect>
     <RenewalsTable />
   </div>

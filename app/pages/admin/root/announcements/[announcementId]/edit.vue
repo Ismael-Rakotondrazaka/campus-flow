@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { Announcement } from '~/features/shared/announcements/announcement.model';
+import type { Announcement } from '#imports';
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '~/components/ui/button';
+import { Card, CardContent, CardHeader } from '~/components/ui/card';
+import { Skeleton } from '~/components/ui/skeleton';
 import UpdateAnnouncementForm from '~/features/admin/announcements/UpdateAnnouncementForm.vue';
 import { announcementByIdQuery } from '~/features/shared/announcements/announcement.query';
 
@@ -14,14 +14,16 @@ const { state } = useQuery(() =>
   announcementByIdQuery({ id: announcementId.value })
 );
 
-const announcement = computed(
-  () => (state.value?.data ?? null) as Announcement | null
+const announcement = computed<null | Serialize<Announcement>>(
+  () => state.value?.data ?? null
 );
 </script>
 
 <template>
   <div class="container mx-auto p-2">
-    <h1 class="mb-4 text-2xl font-bold">Modifier l'annonce</h1>
+    <h1 class="mb-4 text-2xl font-bold">
+      {{ $t('admin.announcements.editTitle') }}
+    </h1>
 
     <template v-if="state.status === 'pending'">
       <Card>
@@ -50,9 +52,9 @@ const announcement = computed(
         Cette annonce est introuvable ou a été supprimée.
       </p>
       <Button variant="outline" as-child>
-        <NuxtLink :to="{ name: 'admin-root-announcements' }">
-          Retour aux annonces
-        </NuxtLink>
+        <NuxtLinkLocale :to="{ name: 'admin-root-announcements' }">
+          {{ $t('admin.announcements.backToList') }}
+        </NuxtLinkLocale>
       </Button>
     </template>
   </div>
