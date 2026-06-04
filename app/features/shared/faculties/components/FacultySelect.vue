@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import type { Faculty } from '#imports';
+
 import { CheckIcon, ChevronsUpDownIcon } from 'lucide-vue-next';
 import { ref } from 'vue';
 
-import type { Faculty } from '~/features/shared/faculties/faculty.model';
-
-import { Button } from '@/components/ui/button';
+import { Button } from '~/components/ui/button';
 import {
   Command,
   CommandEmpty,
@@ -12,12 +12,12 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/ui/command';
+} from '~/components/ui/command';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
+} from '~/components/ui/popover';
 import {
   facultyByIdQuery,
   facultyListQuery,
@@ -36,7 +36,7 @@ interface Props {
 defineProps<Props>();
 
 const open = ref(false);
-const selectedFaculty = ref<Faculty | null>(null);
+const selectedFaculty = ref<null | Serialize<Faculty>>(null);
 const search = ref('');
 
 const { data: facultiesData, state } = useQuery(() =>
@@ -115,14 +115,17 @@ watch(
           :aria-expanded="open"
           class="w-full justify-between"
         >
-          {{ selectedFaculty?.name ?? 'Sélectionner une faculté...' }}
+          {{ selectedFaculty?.name ?? $t('common.selects.selectFaculty') }}
           <ChevronsUpDownIcon class="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
 
       <PopoverContent class="w-full p-0">
         <Command should-filter-items class="w-full">
-          <CommandInput v-model="search" placeholder="Rechercher..." />
+          <CommandInput
+            v-model="search"
+            :placeholder="$t('common.search.placeholderFaculty')"
+          />
 
           <CommandList>
             <CommandGroup v-if="state.status === 'pending'" class="space-y-1">
@@ -156,7 +159,9 @@ watch(
               </CommandItem>
             </CommandGroup>
 
-            <CommandEmpty v-else>Aucune faculté trouvée.</CommandEmpty>
+            <CommandEmpty v-else>{{
+              $t('common.empty.noFaculty')
+            }}</CommandEmpty>
           </CommandList>
         </Command>
       </PopoverContent>
