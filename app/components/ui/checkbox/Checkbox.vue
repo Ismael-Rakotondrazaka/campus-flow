@@ -6,7 +6,7 @@ import { reactiveOmit } from '@vueuse/core';
 import { Check } from 'lucide-vue-next';
 import { CheckboxIndicator, CheckboxRoot, useForwardPropsEmits } from 'reka-ui';
 
-import { cn } from '@/lib/utils';
+import { cn } from '~/lib/utils';
 
 const props = defineProps<
   { class?: HTMLAttributes['class'] } & CheckboxRootProps
