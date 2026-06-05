@@ -191,7 +191,7 @@
                       )
                     }}
                   </strong>
-                  —
+                  -
                   {{
                     $t(`legal.privacy.sections.rights.items.${rightKey}.body`)
                   }}

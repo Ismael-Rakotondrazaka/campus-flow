@@ -11,7 +11,10 @@ import { activeApplicationSessionQuery } from '~/features/shared/academic-sessio
 
 const { t } = useI18n();
 
-useHead({
+useSeoMeta({
+  description: () => t('joinCommunity.page.metaDescription'),
+  ogDescription: () => t('joinCommunity.page.metaDescription'),
+  ogTitle: () => t('joinCommunity.page.metaTitle'),
   title: () => t('joinCommunity.page.metaTitle'),
 });
 

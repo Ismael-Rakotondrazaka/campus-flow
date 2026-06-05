@@ -164,8 +164,9 @@
     },
     "allRoles": "Tous les rôles",
     "announcements": {
-      "listTitle": "Annonces",
-      "detailTitle": "Annonce"
+      "detailTitle": "Annonce",
+      "listDescription": "Restez informé des dernières actualités et événements de la Cité Universitaire Lumièrebourg.",
+      "listTitle": "Annonces"
     },
     "pagination": {
       "rowsPerPage": "Lignes par page",

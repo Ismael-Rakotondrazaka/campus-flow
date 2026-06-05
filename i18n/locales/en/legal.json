@@ -6,22 +6,22 @@
       "title": "House rules",
       "subtitle": "Lumièrebourg University City · Last updated: January 2025",
       "intro": "These house rules apply to all residents, visitors, and staff of Lumièrebourg University City. They define everyone's rights and obligations to ensure a calm, respectful environment conducive to study.",
-      "seoTitle": "House rules — Lumièrebourg",
+      "seoTitle": "House rules",
       "seoDescription": "Read the house rules of Lumièrebourg University City.",
       "sections": {
         "housing": {
           "title": "Housing conditions",
           "articles": {
             "1": {
-              "title": "Article 1 — Room assignment.",
+              "title": "Article 1 - Room assignment.",
               "body": "Room assignment is strictly personal. The room may not be transferred, sublet, or occupied by a third party without express authorization from the administration."
             },
             "2": {
-              "title": "Article 2 — Length of stay.",
+              "title": "Article 2 - Length of stay.",
               "body": "The housing contract is concluded for the current academic year. Any renewal is subject to administration approval and verification of the resident's student status."
             },
             "3": {
-              "title": "Article 3 — Move-in.",
+              "title": "Article 3 - Move-in.",
               "body": "Upon arrival, the resident completes a joint inventory with a city representative. Any damage noted at move-in is recorded in this document."
             }
           }
@@ -30,15 +30,15 @@
           "title": "Community life",
           "articles": {
             "4": {
-              "title": "Article 4 — Respect for neighbors.",
+              "title": "Article 4 - Respect for neighbors.",
               "body": "Residents must respect their neighbors' peace and quiet. Quiet hours are required between 10 p.m. and 8 a.m. Repeated disturbances may lead to disciplinary action."
             },
             "5": {
-              "title": "Article 5 — Common areas.",
+              "title": "Article 5 - Common areas.",
               "body": "Shared spaces (kitchens, study rooms, laundry rooms, halls) must be left clean after use. Perishable food not stored properly or bulky items are prohibited."
             },
             "6": {
-              "title": "Article 6 — Visitors.",
+              "title": "Article 6 - Visitors.",
               "body": "Visitors are allowed between 8 a.m. and 10 p.m. They may not stay in rooms for more than 72 consecutive hours. The resident is responsible for their guests' behavior."
             }
           }
@@ -47,15 +47,15 @@
           "title": "Safety and maintenance",
           "articles": {
             "7": {
-              "title": "Article 7 — Equipment.",
+              "title": "Article 7 - Equipment.",
               "body": "Residents must use provided equipment carefully and immediately report any breakdown or damage via the maintenance request portal."
             },
             "8": {
-              "title": "Article 8 — Fire safety.",
+              "title": "Article 8 - Fire safety.",
               "body": "It is strictly forbidden to disable or obstruct fire safety devices. Candles, gas burners, or any open-flame devices in rooms are prohibited."
             },
             "9": {
-              "title": "Article 9 — Access.",
+              "title": "Article 9 - Access.",
               "body": "The access card is personal and non-transferable. In case of loss, the resident must immediately inform the administration and pay for a replacement."
             }
           }
@@ -76,8 +76,8 @@
     "privacy": {
       "title": "Privacy policy",
       "subtitle": "Lumièrebourg University City · Last updated: January 2025",
-      "intro": "Lumièrebourg University City is committed to protecting the privacy of its residents and users. This policy describes the personal data collected, the purposes of processing, and your rights under the General Data Protection Regulation (GDPR — EU 2016/679).",
-      "seoTitle": "Privacy policy — Lumièrebourg",
+      "intro": "Lumièrebourg University City is committed to protecting the privacy of its residents and users. This policy describes the personal data collected, the purposes of processing, and your rights under the General Data Protection Regulation (GDPR - EU 2016/679).",
+      "seoTitle": "Privacy policy",
       "seoDescription": "Privacy policy and personal data processing at Lumièrebourg University City.",
       "sections": {
         "controller": {

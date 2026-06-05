@@ -164,8 +164,9 @@
     },
     "allRoles": "All roles",
     "announcements": {
-      "listTitle": "Announcements",
-      "detailTitle": "Announcement"
+      "detailTitle": "Announcement",
+      "listDescription": "Stay up to date with the latest news and events at Lumièrebourg University City.",
+      "listTitle": "Announcements"
     },
     "pagination": {
       "rowsPerPage": "Rows per page",

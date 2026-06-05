@@ -62,7 +62,10 @@ const handleAnnouncementClick = async (
   );
 };
 
-useHead({
+useSeoMeta({
+  description: t('common.announcements.listDescription'),
+  ogDescription: t('common.announcements.listDescription'),
+  ogTitle: t('common.announcements.listTitle'),
   title: t('common.announcements.listTitle'),
 });
 </script>

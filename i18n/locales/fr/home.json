@@ -1,5 +1,9 @@
 {
   "home": {
+    "seo": {
+      "title": "Campus Flow - Résidence Étudiante à Paris",
+      "description": "Une résidence étudiante à Paris. 580 résidents, des espaces partagés, une communauté qui fonctionne vraiment. Candidatez en ligne pour la Cité Universitaire Lumièrebourg."
+    },
     "hero": {
       "badge": "Cité Universitaire · Paris, France",
       "title": {
@@ -78,7 +82,7 @@
             "author": "Ibrahim Koné",
             "avatar": "IK",
             "faculty": "Polytechnique · M1",
-            "quote": "Deux ans à Lumièrebourg et je ne regrette pas une seule journée. Les demandes de maintenance sont traitées en moins de 48h — ça change vraiment la vie au quotidien."
+            "quote": "Deux ans à Lumièrebourg et je ne regrette pas une seule journée. Les demandes de maintenance sont traitées en moins de 48h - ça change vraiment la vie au quotidien."
           }
         ],
         "row2": [
@@ -104,7 +108,7 @@
             "author": "Antoine Lebrun",
             "avatar": "AL",
             "faculty": "Dauphine · L2 Éco",
-            "quote": "Renouveler son bail en ligne est d'une simplicité déconcertante. On reçoit des rappels, on signe électroniquement — jamais eu à me déplacer inutilement."
+            "quote": "Renouveler son bail en ligne est d'une simplicité déconcertante. On reçoit des rappels, on signe électroniquement - jamais eu à me déplacer inutilement."
           },
           {
             "author": "Priya Sharma",

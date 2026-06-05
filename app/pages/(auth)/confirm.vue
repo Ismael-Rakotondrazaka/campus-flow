@@ -5,6 +5,8 @@ import ConfirmPage from '~/features/auth/pages/ConfirmPage.vue';
 
 useSeoMeta({
   ogImage: '/images/og-openmind.png',
+  robots: 'noindex, nofollow',
+  title: 'Confirmation',
   twitterCard: 'summary_large_image',
   twitterImage: '/images/og-openmind.png',
 });

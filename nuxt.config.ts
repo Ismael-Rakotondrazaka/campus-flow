@@ -179,14 +179,22 @@ export default defineNuxtConfig({
   },
 
   site: {
+    defaultLocale: 'fr',
+    description:
+      'Gérez votre logement étudiant à la Cité Universitaire Lumièrebourg' +
+      ' | candidatures, renouvellements et maintenance en ligne.',
     name: 'Campus Flow',
     url: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
   },
+
 
   sitemap: {
     sitemaps: {
       pages: {
         includeAppSources: true,
+      },
+      announcements: {
+        sources: ['/api/__sitemap__/announcements'],
       },
     },
   },

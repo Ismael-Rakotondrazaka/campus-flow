@@ -30,9 +30,25 @@ const formatDate = (iso: string) =>
     year: 'numeric',
   });
 
-useHead(() => ({
-  title: announcement.value?.title ?? t('common.announcements.detailTitle'),
-}));
+const excerpt = computed(() => {
+  const raw =
+    announcement.value?.content
+      ?.replace(/<[^>]*>/g, '')
+      .replace(/\s+/g, ' ')
+      .trim() ?? '';
+  return raw.length > 160 ? `${raw.slice(0, 157)}…` : raw;
+});
+
+useSeoMeta({
+  description: () => excerpt.value || undefined,
+  ogDescription: () => excerpt.value || undefined,
+  ogImage: () =>
+    announcement.value?.illustrationUrl ?? '/images/og-campus-flow.png',
+  ogTitle: () =>
+    announcement.value?.title ?? t('common.announcements.detailTitle'),
+  title: () =>
+    announcement.value?.title ?? t('common.announcements.detailTitle'),
+});
 </script>
 
 <template>

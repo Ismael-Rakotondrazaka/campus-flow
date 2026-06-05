@@ -1,5 +1,9 @@
 {
   "home": {
+    "seo": {
+      "title": "Campus Flow - Student Housing in Paris",
+      "description": "Student housing in Paris. 580 residents, shared spaces, and a community that actually works. Apply online for Lumièrebourg University City."
+    },
     "hero": {
       "badge": "University City · Paris, France",
       "title": {
@@ -78,7 +82,7 @@
             "author": "Ibrahim Koné",
             "avatar": "IK",
             "faculty": "Polytechnique · M1",
-            "quote": "Two years at Lumièrebourg and I don't regret a single day. Maintenance requests are handled in less than 48 hours — it really changes daily life."
+            "quote": "Two years at Lumièrebourg and I don't regret a single day. Maintenance requests are handled in less than 48 hours - it really changes daily life."
           }
         ],
         "row2": [
@@ -104,7 +108,7 @@
             "author": "Antoine Lebrun",
             "avatar": "AL",
             "faculty": "Dauphine · L2 Economics",
-            "quote": "Renewing your lease online is surprisingly simple. You get reminders, sign electronically — never had to make unnecessary trips."
+            "quote": "Renewing your lease online is surprisingly simple. You get reminders, sign electronically - never had to make unnecessary trips."
           },
           {
             "author": "Priya Sharma",

@@ -5,6 +5,8 @@ import LoginPage from '~/features/auth/pages/LoginPage.vue';
 
 useSeoMeta({
   ogImage: '/images/og-openmind.png',
+  robots: 'noindex, nofollow',
+  title: 'Connexion',
   twitterCard: 'summary_large_image',
   twitterImage: '/images/og-openmind.png',
 });

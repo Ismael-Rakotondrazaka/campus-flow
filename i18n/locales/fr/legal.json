@@ -6,22 +6,22 @@
       "title": "Règlement intérieur",
       "subtitle": "Cité Universitaire Lumièrebourg · Dernière mise à jour : janvier 2025",
       "intro": "Le présent règlement intérieur s'applique à l'ensemble des résidents, visiteurs et personnels de la Cité Universitaire Lumièrebourg. Il a pour objet de définir les droits et obligations de chacun afin de garantir un cadre de vie serein, respectueux et propice aux études.",
-      "seoTitle": "Règlement intérieur — Lumièrebourg",
+      "seoTitle": "Règlement intérieur",
       "seoDescription": "Consultez le règlement intérieur de la Cité Universitaire Lumièrebourg.",
       "sections": {
         "housing": {
           "title": "Conditions d'hébergement",
           "articles": {
             "1": {
-              "title": "Article 1 — Attribution du logement.",
+              "title": "Article 1 - Attribution du logement.",
               "body": "L'attribution d'un logement est strictement personnelle. La chambre ne peut être cédée, sous-louée ou occupée par une tierce personne sans autorisation expresse de l'administration."
             },
             "2": {
-              "title": "Article 2 — Durée du séjour.",
+              "title": "Article 2 - Durée du séjour.",
               "body": "Le contrat d'hébergement est conclu pour la durée de l'année universitaire en cours. Tout renouvellement est soumis à l'approbation de l'administration et à la vérification du statut étudiant du résident."
             },
             "3": {
-              "title": "Article 3 — Entrée dans les lieux.",
+              "title": "Article 3 - Entrée dans les lieux.",
               "body": "À son arrivée, le résident procède à un état des lieux contradictoire avec un représentant de la cité. Tout dommage constaté à l'entrée est consigné dans ce document."
             }
           }
@@ -30,15 +30,15 @@
           "title": "Vie en communauté",
           "articles": {
             "4": {
-              "title": "Article 4 — Respect du voisinage.",
+              "title": "Article 4 - Respect du voisinage.",
               "body": "Les résidents sont tenus de respecter la tranquillité de leurs voisins. Le calme est exigé entre 22h et 8h. Tout trouble répété à l'ordre public de la résidence peut entraîner une procédure disciplinaire."
             },
             "5": {
-              "title": "Article 5 — Parties communes.",
+              "title": "Article 5 - Parties communes.",
               "body": "Les espaces partagés (cuisines, salles de travail, buanderies, halls) doivent être laissés propres après usage. Il est interdit d'y introduire des denrées périssables non conditionnées ou du matériel encombrant."
             },
             "6": {
-              "title": "Article 6 — Visiteurs.",
+              "title": "Article 6 - Visiteurs.",
               "body": "Les visiteurs sont autorisés entre 8h et 22h. Ils ne peuvent séjourner dans les chambres au-delà de 72h consécutives. Le résident est responsable du comportement de ses invités pendant toute la durée de leur visite."
             }
           }
@@ -47,15 +47,15 @@
           "title": "Sécurité et entretien",
           "articles": {
             "7": {
-              "title": "Article 7 — Équipements.",
+              "title": "Article 7 - Équipements.",
               "body": "Le résident s'engage à utiliser les équipements mis à sa disposition avec soin et à signaler immédiatement toute panne ou dégradation via le portail de demandes de maintenance."
             },
             "8": {
-              "title": "Article 8 — Sécurité incendie.",
+              "title": "Article 8 - Sécurité incendie.",
               "body": "Il est formellement interdit de neutraliser ou d'obstruer les dispositifs de sécurité incendie. L'utilisation de bougies, de réchauds à gaz ou de tout appareil à flamme nue dans les chambres est prohibée."
             },
             "9": {
-              "title": "Article 9 — Accès.",
+              "title": "Article 9 - Accès.",
               "body": "La carte d'accès est personnelle et intransmissible. En cas de perte, le résident doit en informer immédiatement l'administration et procéder au remplacement à ses frais."
             }
           }
@@ -76,8 +76,8 @@
     "privacy": {
       "title": "Politique de confidentialité",
       "subtitle": "Cité Universitaire Lumièrebourg · Dernière mise à jour : janvier 2025",
-      "intro": "La Cité Universitaire Lumièrebourg s'engage à protéger la vie privée de ses résidents et utilisateurs. La présente politique décrit la nature des données personnelles collectées, les finalités de leur traitement et les droits dont vous disposez conformément au Règlement général sur la protection des données (RGPD — UE 2016/679).",
-      "seoTitle": "Politique de confidentialité — Lumièrebourg",
+      "intro": "La Cité Universitaire Lumièrebourg s'engage à protéger la vie privée de ses résidents et utilisateurs. La présente politique décrit la nature des données personnelles collectées, les finalités de leur traitement et les droits dont vous disposez conformément au Règlement général sur la protection des données (RGPD - UE 2016/679).",
+      "seoTitle": "Politique de confidentialité",
       "seoDescription": "Politique de confidentialité et traitement des données personnelles de la Cité Universitaire Lumièrebourg.",
       "sections": {
         "controller": {
