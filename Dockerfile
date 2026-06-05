@@ -1,5 +1,5 @@
 # ---------- BUILD STAGE ----------
-FROM node:20-alpine AS builder
+FROM node:22-alpine AS builder
 
 ARG NUXT_PUBLIC_APP_URL
 ARG NUXT_PUBLIC_APP_VERSION
@@ -16,11 +16,12 @@ RUN npm ci --ignore-scripts
 
 COPY . .
 
+RUN npx prisma generate
 RUN npm run build
 
 
 # ---------- PRODUCTION STAGE ----------
-FROM node:20-alpine
+FROM node:22-alpine
 
 ENV NODE_ENV=production
 # @link https://nuxt.com/docs/getting-started/deployment#entry-point
