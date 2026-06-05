@@ -3,6 +3,7 @@
     <HomeHero />
     <HomeFeatures />
     <HomeTestimonials />
+    <HomeAnnouncements />
     <HomeMap />
     <HomeCta />
   </div>

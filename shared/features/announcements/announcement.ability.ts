@@ -4,11 +4,13 @@ import { UserTypeGuard } from '../../utils/userTypeGuard';
 import { AdminRole } from '../admins/admin.model';
 
 export const IndexAnnouncementAbility = defineAbility(
-  (user: User) => UserTypeGuard.isAdmin(user) || UserTypeGuard.isResident(user)
+  { allowGuest: true },
+  (_user: null | User) => true
 );
 
 export const ShowAnnouncementAbility = defineAbility(
-  (user: User) => UserTypeGuard.isAdmin(user) || UserTypeGuard.isResident(user)
+  { allowGuest: true },
+  (_user: null | User) => true
 );
 
 export const StoreAnnouncementAbility = defineAbility((user: User) =>
