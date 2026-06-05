@@ -71,7 +71,7 @@ const resolveTestimonialRow = (key: string): TestimonialCard[] => {
     return [];
   }
 
-  return raw.map((item) => ({
+  return raw.map(item => ({
     author: rt(item.author),
     avatar: rt(item.avatar),
     faculty: rt(item.faculty),
