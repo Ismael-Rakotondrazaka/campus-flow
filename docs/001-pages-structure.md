@@ -1,22 +1,21 @@
 # Pages Structure
 
+- /
+- /join-community
+- /politique-de-confidentialite
+- /reglement-interieur
 - /announcements
   - /
   - /[announcementId]
-- /auth
-  - /login
-  - /forgot-password
+- /login
+- /confirm
+- /forgot-password
 - /admin
   - /root
     - /dashboard
     - /admins
       - /
-      - /create
       - /[adminId]
-        - /edit
-    - /users
-      - /
-      - /[userId]
         - /edit
     - /residents
       - /
@@ -73,13 +72,13 @@
 - /resident
   - /dashboard
   - /settings
+  - /announcements
+    - /
+    - /[announcementId]
   - /renewals
     - /
     - /create
     - /[renewalId]
-  - /announcements
-    - /
-    - /[announcementId]
   - /maintenances
     - /
     - /create

@@ -1,4 +1,4 @@
-# 004 — Application Window: Housing & Renewal Periods
+# 003 — Application Window: Housing & Renewal Periods
 
 ## Problem Statement
 
@@ -8,7 +8,7 @@ Students need to know whether applications are open for a given academic session
 
 ## Solution: Application & Renewal Windows
 
-The `academic_sessions` table now includes four columns to control submission periods:
+The `academic_sessions` table includes four columns to control submission periods:
 
 | Column | Type | Purpose |
 |--------|------|---------|
@@ -28,9 +28,7 @@ Additional constraints ensure:
 
 ### Window Timing
 
-For the current implementation:
 - **Application window**: 1 month duration, ending 1 month before the academic session starts
-  - Provides time for admins to process applications before the session begins
 - **Renewal window**: 1 month duration, ending 2 weeks before the application window closes
   - Allows existing residents to renew slightly earlier than new students apply
 
@@ -45,41 +43,22 @@ All three seeded academic sessions (2023-24, 2024-25, 2025-26) follow this patte
 
 ## Implementation Status
 
-### Backend (Supabase RLS Policies) — ✅ COMPLETED
+### Backend — ✅ COMPLETED
 
-Window enforcement policies have been added to `housing_applications` and `renewals` tables:
+Window enforcement is handled in the ability layer:
 
-- ✅ `housing_applications` INSERT policy enforces `application_open_at` / `application_close_at`
-- ✅ `renewals` INSERT policy enforces `renewal_open_at` / `renewal_close_at`
-- ✅ Both policies verify the session is active (`deleted_at IS NULL`)
+- ✅ `StoreHousingApplicationAbility` checks `applicationOpenAt` / `applicationCloseAt` before inserting
+- ✅ `StoreRenewalAbility` checks `renewalOpenAt` / `renewalCloseAt` before inserting
+- ✅ `GET /api/academic-sessions/active-application` returns the session whose application window is currently open (used by the frontend to gate `/join-community`)
 
-### Frontend — TODO
+### Frontend — ⚠️ PARTIAL
 
-Implement window status checking:
-
-```ts
-type WindowStatus = 'upcoming' | 'open' | 'closed' | 'not_scheduled'
-
-function getWindowStatus(openAt: string | null, closeAt: string | null): WindowStatus {
-  if (!openAt || !closeAt) return 'not_scheduled'
-  const now = new Date()
-  const open = new Date(openAt)
-  const close = new Date(closeAt)
-  
-  if (now < open) return 'upcoming'
-  if (now > close) return 'closed'
-  return 'open'
-}
-```
-
-Use this to:
-- Show the application/renewal form only when status is `'open'`
-- Display countdown timers when status is `'upcoming'`
-- Display closure message when status is `'closed'`
+- ✅ `/join-community` fetches the active application session on page load; shows a "closed" message if none is found
+- ❌ `/resident/renewals/create` has no equivalent window guard- ❌ No `GET /api/academic-sessions/active-renewal` endpoint exists yet
 
 ### Admin UI — TODO
 
-The "Create/Edit Academic Session" form should include date-time pickers for:
+The "Create/Edit Academic Session" form should include date-time pickers for all four window fields:
 - `application_open_at`
 - `application_close_at`
 - `renewal_open_at`
