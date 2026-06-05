@@ -1,0 +1,145 @@
+{
+  "home": {
+    "seo": {
+      "title": "Campus Flow - Résidence Étudiante à Paris",
+      "description": "Une résidence étudiante à Paris. 580 résidents, des espaces partagés, une communauté qui fonctionne vraiment. Candidatez en ligne pour la Cité Universitaire Lumièrebourg."
+    },
+    "hero": {
+      "badge": "Cité Universitaire · Paris, France",
+      "title": {
+        "line1": "Où le Savoir",
+        "emphasis": "rencontre",
+        "line2": "la Vie"
+      },
+      "subtitle": "Une résidence étudiante à Paris. 580 résidents, des espaces partagés, une communauté qui fonctionne vraiment.",
+      "cta": {
+        "join": "Rejoindre la communauté",
+        "signIn": "Se connecter"
+      },
+      "stats": {
+        "students": "Étudiants",
+        "rooms": "Chambres",
+        "location": "Paris"
+      },
+      "imageAlt": "Lumièrebourg"
+    },
+    "features": {
+      "eyebrow": "Notre mission",
+      "title": {
+        "line1": "Un cadre de vie",
+        "line2": "pensé pour vous"
+      },
+      "intro": "Tout ce qu'il vous faut pour vivre confortablement, sans avoir à y penser.",
+      "items": {
+        "comfort": {
+          "title": "Logements confortables",
+          "description": "150 chambres aménagées pour offrir un cadre de vie agréable et propice aux études."
+        },
+        "community": {
+          "title": "Vie communautaire",
+          "description": "Une communauté de 580 étudiants, des espaces partagés et des événements réguliers."
+        },
+        "services": {
+          "title": "Services & maintenance",
+          "description": "Des équipes dédiées pour assurer le bon fonctionnement et le confort de votre logement."
+        }
+      }
+    },
+    "testimonials": {
+      "eyebrow": "Ils nous font confiance",
+      "title": {
+        "line1": "La voix de nos",
+        "line2": "résidents"
+      },
+      "intro": "Des étudiants du monde entier partagent leur expérience à la Cité Universitaire Lumièrebourg.",
+      "cards": {
+        "row1": [
+          {
+            "author": "Amara Diallo",
+            "avatar": "AD",
+            "faculty": "Sciences Po · M1",
+            "quote": "J'ai trouvé de vraies amitiés et un réseau que j'utilise encore. L'équipe répond vraiment quand on en a besoin."
+          },
+          {
+            "author": "Théo Marchand",
+            "avatar": "TM",
+            "faculty": "HEC Paris · L3",
+            "quote": "Les espaces communs sont vraiment pensés pour travailler et se détendre. J'ai rencontré mes meilleurs amis ici, lors de soirées culturelles organisées par la cité."
+          },
+          {
+            "author": "Yuki Nakamura",
+            "avatar": "YN",
+            "faculty": "Sorbonne · M2 Physique",
+            "quote": "En tant qu'étudiante internationale, Lumièrebourg a rendu mon intégration à Paris incroyablement facile. L'administration parle plusieurs langues et les démarches sont simples."
+          },
+          {
+            "author": "Léa Fontaine",
+            "avatar": "LF",
+            "faculty": "ENSAD · L2 Design",
+            "quote": "La chambre est mieux que ce que j'espérais pour ce prix. La fibre est solide aussi, ce qui compte vraiment pour le design."
+          },
+          {
+            "author": "Ibrahim Koné",
+            "avatar": "IK",
+            "faculty": "Polytechnique · M1",
+            "quote": "Deux ans à Lumièrebourg et je ne regrette pas une seule journée. Les demandes de maintenance sont traitées en moins de 48h - ça change vraiment la vie au quotidien."
+          }
+        ],
+        "row2": [
+          {
+            "author": "Camille Rousseau",
+            "avatar": "CR",
+            "faculty": "Université Paris-Est · L3",
+            "quote": "Le processus de candidature en ligne est vraiment bien conçu. En quelques clics, j'avais validé ma chambre. Un vrai gain de temps lors d'une période stressante."
+          },
+          {
+            "author": "Omar Benali",
+            "avatar": "OB",
+            "faculty": "ESCP · MBA",
+            "quote": "J'ai rencontré des gens de plus de 30 pays ici. On ne s'y attend pas dans une résidence, et ça change vraiment comment on voit les choses."
+          },
+          {
+            "author": "Sofia Petrov",
+            "avatar": "SP",
+            "faculty": "UPMC · M2 Bio",
+            "quote": "Assez calme pour vraiment travailler, assez proche de Paris pour avoir une vie en dehors. Cette combinaison est rare."
+          },
+          {
+            "author": "Antoine Lebrun",
+            "avatar": "AL",
+            "faculty": "Dauphine · L2 Éco",
+            "quote": "Renouveler son bail en ligne est d'une simplicité déconcertante. On reçoit des rappels, on signe électroniquement - jamais eu à me déplacer inutilement."
+          },
+          {
+            "author": "Priya Sharma",
+            "avatar": "PS",
+            "faculty": "ESSEC · Grande École",
+            "quote": "Ça marche quand ça doit marcher, et c'est sympa le reste du temps. À conseiller sans hésiter."
+          }
+        ]
+      }
+    },
+    "announcements": {
+      "eyebrow": "Actualités",
+      "title": {
+        "line1": "Restez informé",
+        "line2": "de la vie du campus"
+      },
+      "intro": "Tout ce qui se passe à Lumièrebourg, au même endroit.",
+      "cta": "Voir toutes les actualités",
+      "empty": "Aucune annonce pour le moment."
+    },
+    "map": {
+      "eyebrow": "Localisation",
+      "title": "Nous trouver"
+    },
+    "cta": {
+      "title": {
+        "line1": "Prêt à rejoindre",
+        "line2": "la communauté ?"
+      },
+      "subtitle": "Cinq minutes, quelques informations, et votre dossier est envoyé.",
+      "button": "Déposer ma candidature"
+    }
+  }
+}

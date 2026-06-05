@@ -1,0 +1,55 @@
+<script setup lang="ts">
+import { useQuery } from '@pinia/colada';
+
+import { Avatar, AvatarImage } from '~/components/ui/avatar';
+
+import { storageSignedUrlQuery } from '../composables/useStorageSignedUrl';
+import { formatFallbackUrl } from '../composables/useUserImageUrl';
+
+interface Props {
+  bucket?: string;
+  dataSlot?: string;
+  firstName?: null | string;
+  imageUrl?: null | string;
+  lastName?: null | string;
+}
+
+const props = defineProps<Props>();
+
+const isStoragePath = computed(
+  () => !!props.imageUrl && !props.imageUrl.startsWith('http')
+);
+
+const { data: signedUrl } = useQuery(() => ({
+  ...storageSignedUrlQuery({
+    bucket: props.bucket ?? '',
+    path: props.imageUrl ?? '',
+  }),
+  enabled: isStoragePath.value && !!props.bucket,
+}));
+
+const { t } = useI18n();
+
+const fallbackUrl = computed(() =>
+  formatFallbackUrl(props.firstName, props.lastName)
+);
+
+const resolvedUrl = computed(() => {
+  if (!props.imageUrl) return fallbackUrl.value;
+  if (!isStoragePath.value) return props.imageUrl; // full http URL
+  return signedUrl.value ?? fallbackUrl.value;
+});
+
+const fullname = computed(() => {
+  const parts: string[] = [];
+  if (props.firstName?.trim()) parts.push(props.firstName.trim());
+  if (props.lastName?.trim()) parts.push(props.lastName.trim());
+  return parts.join(' ') || t('users.profile.defaultName');
+});
+</script>
+
+<template>
+  <Avatar :data-slot="dataSlot">
+    <AvatarImage :alt="fullname" :src="resolvedUrl" />
+  </Avatar>
+</template>

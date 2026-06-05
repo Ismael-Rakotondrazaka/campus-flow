@@ -1,0 +1,23 @@
+<template>
+  <Badge :class="colorClass">
+    {{ label }}
+  </Badge>
+</template>
+
+<script lang="ts" setup>
+import { type AnnouncementStatus, AnnouncementStatusColor } from '#imports';
+
+import Badge from '~/components/ui/badge/Badge.vue';
+
+interface Props {
+  value: AnnouncementStatus;
+}
+
+const props = defineProps<Props>();
+
+const { t } = useI18n();
+
+const colorClass = computed(() => AnnouncementStatusColor[props.value]);
+
+const label = computed(() => t(`common.statuses.announcement.${props.value}`));
+</script>

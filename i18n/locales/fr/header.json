@@ -1,0 +1,16 @@
+{
+  "header": {
+    "brand": {
+      "name": "Lumièrebourg"
+    },
+    "end": {
+      "signIn": "Se connecter",
+      "joinCommunity": "Rejoindre la communauté",
+      "dashboard": "Tableau de bord"
+    },
+    "logout": {
+      "label": "Se déconnecter",
+      "success": "Vous avez été déconnecté avec succès."
+    }
+  }
+}

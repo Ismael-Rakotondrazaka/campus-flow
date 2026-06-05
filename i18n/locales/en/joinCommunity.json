@@ -1,0 +1,73 @@
+{
+  "joinCommunity": {
+    "page": {
+      "title": "Join the community",
+      "description": "Submit your housing application for the current academic session.",
+      "metaDescription": "Apply online for student housing at Lumièrebourg University City in Paris. Fill in your details and submit your application in minutes.",
+      "metaTitle": "Join the community"
+    },
+    "closed": {
+      "title": "Applications closed",
+      "description": "Housing applications are not open for this session.",
+      "hint": "Check back when a new academic session opens.",
+      "backHome": "Back to home"
+    },
+    "steps": {
+      "general": "General information",
+      "contact": "Contact information",
+      "education": "Education information",
+      "verification": "Verification"
+    },
+    "nav": {
+      "back": "Back",
+      "next": "Next",
+      "submit": "Submit application",
+      "submitting": "Submitting..."
+    },
+    "verification": {
+      "title": "Please verify your information"
+    },
+    "success": {
+      "title": "Application submitted",
+      "description": "Your housing application has been received successfully.",
+      "descriptionLong": "Your application is in. We'll get back to you once we've reviewed it.",
+      "backHome": "Back to home"
+    },
+    "error": {
+      "title": "Submission failed",
+      "retry": "Try again"
+    },
+    "fields": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "gender": "Gender",
+      "origin": "Origin",
+      "nic": "ID number",
+      "nicFull": "National ID card number",
+      "email": "Email",
+      "emailAddress": "Email address",
+      "phone": "Phone",
+      "phoneNumber": "Phone number",
+      "emergency": "Emergency contact",
+      "emergencyNumber": "Emergency contact number",
+      "faculty": "Faculty",
+      "profilePhoto": "Profile photo",
+      "profilePhotoPreview": "Profile photo preview",
+      "nicPhoto": "ID document",
+      "nicPhotoFull": "National ID card photo",
+      "schoolCertificate": "School certificate"
+    },
+    "placeholders": {
+      "nic": "e.g. 1234567890123"
+    },
+    "upload": {
+      "profilePhoto": "Upload profile photo",
+      "nicPhoto": "Upload ID document",
+      "remove": "Remove"
+    },
+    "errors": {
+      "documentsRequired": "All documents are required",
+      "submissionFailed": "Submission failed"
+    }
+  }
+}

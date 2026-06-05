@@ -1,0 +1,85 @@
+# Pages Structure
+
+- /
+- /join-community
+- /politique-de-confidentialite
+- /reglement-interieur
+- /announcements
+  - /
+  - /[announcementId]
+- /login
+- /confirm
+- /forgot-password
+- /admin
+  - /root
+    - /dashboard
+    - /admins
+      - /
+      - /[adminId]
+        - /edit
+    - /residents
+      - /
+      - /[residentId]
+    - /faculties
+      - /
+    - /academic-sessions
+      - /
+      - /create
+      - /[academicSessionId]
+        - /edit
+    - /announcements
+      - /
+      - /create
+      - /[announcementId]
+        - /edit
+    - /buildings
+      - /
+    - /lodgments
+      - /
+    - /housing-applications
+      - /
+      - /[housingApplicationId]
+    - /renewals
+      - /
+      - /[renewalId]
+    - /maintenances
+      - /
+      - /[maintenanceId]
+  - /housing-application
+    - /dashboard
+    - /buildings
+      - /
+    - /lodgments
+      - /
+    - /housing-applications
+      - /
+      - /[housingApplicationId]
+  - /renewal
+    - /dashboard
+    - /renewals
+      - /
+      - /[renewalId]
+  - /maintenance
+    - /dashboard
+    - /maintenances
+      - /
+      - /[maintenanceId]
+    - /maintainers
+      - /
+      - /create
+      - /[maintainerId]
+        - /edit
+- /resident
+  - /dashboard
+  - /settings
+  - /announcements
+    - /
+    - /[announcementId]
+  - /renewals
+    - /
+    - /create
+    - /[renewalId]
+  - /maintenances
+    - /
+    - /create
+    - /[maintenanceId]

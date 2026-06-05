@@ -1,0 +1,45 @@
+{
+  "dates": {
+    "timeAgo": {
+      "just-now": "just now",
+      "ago": "{0} ago",
+      "in": "in {0}",
+      "last-month": "last month",
+      "next-month": "next month",
+      "month": {
+        "future": "month | months",
+        "past": "month | months"
+      },
+      "last-year": "last year",
+      "next-year": "next year",
+      "year": {
+        "future": "year | years",
+        "past": "year | years"
+      },
+      "yesterday": "yesterday",
+      "tomorrow": "tomorrow",
+      "day": {
+        "future": "day | days",
+        "past": "day | days"
+      },
+      "last-week": "last week",
+      "next-week": "next week",
+      "week": {
+        "future": "week | weeks",
+        "past": "week | weeks"
+      },
+      "hour": {
+        "future": "hour | hours",
+        "past": "hour | hours"
+      },
+      "minute": {
+        "future": "minute | minutes",
+        "past": "minute | minutes"
+      },
+      "second": {
+        "future": "second | seconds",
+        "past": "second | seconds"
+      }
+    }
+  }
+}

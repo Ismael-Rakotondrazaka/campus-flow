@@ -1,0 +1,32 @@
+{
+  "posts": {
+    "forms": {
+      "fields": {
+        "content": {
+          "label": "Contenu",
+          "placeholder": "Entrez le contenu"
+        },
+        "image": {
+          "label": "Image",
+          "upload": {
+            "text": "Importer"
+          }
+        }
+      },
+      "ctas": {
+        "publish": "Publier"
+      }
+    },
+    "index": {
+      "title": "Publications",
+      "results": "Résultats : {count} publication",
+      "newPost": "Nouvelle Publication"
+    },
+    "show": {
+      "title": "Publié par {fullName}"
+    },
+    "create": {
+      "title": "Nouvel Article"
+    }
+  }
+}

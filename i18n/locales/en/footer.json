@@ -1,0 +1,20 @@
+{
+  "footer": {
+    "description": "A student residence in Paris for the Lumièrebourg community.",
+    "location": "Paris, France",
+    "sections": {
+      "navigation": "Navigation",
+      "info": "Information"
+    },
+    "nav": {
+      "home": "Home",
+      "announcements": "Announcements",
+      "joinCommunity": "Join the community",
+      "signIn": "Sign in",
+      "rules": "House rules",
+      "privacy": "Privacy policy"
+    },
+    "copyright": "© {year} Lumièrebourg · University City of Paris. All rights reserved.",
+    "tagline": "Built for the student community."
+  }
+}

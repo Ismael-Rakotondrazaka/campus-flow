@@ -1,0 +1,221 @@
+{
+  "common": {
+    "brand": {
+      "name": "Lumièrebourg"
+    },
+    "buttons": {
+      "delete": "Delete",
+      "edit": "Edit",
+      "create": "Create",
+      "confirm": "Confirm",
+      "confirmAccept": "Confirm acceptance",
+      "confirmReject": "Confirm rejection",
+      "confirmValidate": "Confirm validation",
+      "accept": "Accept",
+      "reject": "Reject",
+      "validate": "Validate",
+      "back": "Back",
+      "backToHome": "Back to home",
+      "next": "Next",
+      "retry": "Retry",
+      "close": "Close",
+      "publish": "Publish",
+      "saveDraft": "Save as draft",
+      "viewDetails": "View details",
+      "viewProfile": "View profile",
+      "viewDocument": "View document",
+      "viewPhoto": "View photo",
+      "viewMyRequest": "View my request",
+      "joinCommunity": "Join the community",
+      "dashboard": "Dashboard",
+      "logout": "Log out",
+      "changeEmail": "Change email",
+      "update": "Update"
+    },
+    "loading": {
+      "saving": "Saving...",
+      "submitting": "Submitting...",
+      "signingIn": "Signing in...",
+      "updating": "Updating...",
+      "deleting": "Deleting..."
+    },
+    "search": {
+      "placeholder": "Search...",
+      "placeholderBuilding": "Search for a building...",
+      "placeholderAnnouncement": "Search for an announcement...",
+      "placeholderFaculty": "Search for a faculty...",
+      "placeholderMaintainer": "Search for a maintainer...",
+      "country": "Search country..."
+    },
+    "empty": {
+      "noResults": "No results.",
+      "noBuilding": "No building found.",
+      "noFaculty": "No faculty found.",
+      "noCountry": "No country found.",
+      "noFileSelected": "No file selected",
+      "notAvailable": "Not available"
+    },
+    "results": {
+      "countLabel": "Results:"
+    },
+    "cards": {
+      "personalInfo": "Personal information",
+      "contact": "Contact",
+      "scolarite": "Education",
+      "documents": "Documents",
+      "lodgment": "Lodging",
+      "location": "Location",
+      "information": "Information",
+      "assignedLodgment": "Assigned room",
+      "fullName": "Full name",
+      "gender": "Gender",
+      "origin": "Origin",
+      "nicNumber": "ID number",
+      "email": "Email",
+      "phone": "Phone",
+      "emergencyContact": "Emergency contact",
+      "faculty": "Faculty",
+      "academicSession": "Academic session",
+      "building": "Building",
+      "floor": "Floor",
+      "room": "Room",
+      "capacity": "Capacity",
+      "occupation": "Occupancy",
+      "type": "Type",
+      "status": "Status",
+      "reportedAt": "Reported on",
+      "workStart": "Work start",
+      "workEnd": "Work end",
+      "description": "Description",
+      "actions": "Actions"
+    },
+    "deleteModal": {
+      "title": "Delete {entity}",
+      "description": "This action cannot be undone."
+    },
+    "toasts": {
+      "deleteFailed": "An error occurred while deleting.",
+      "notAssignedToLodgment": "You are not assigned to a room yet.",
+      "documentsRequired": "All documents are required.",
+      "announcement": {
+        "created": "Announcement created successfully",
+        "updated": "Announcement updated",
+        "deleted": "Announcement deleted successfully"
+      },
+      "academicSession": {
+        "created": "Academic session created",
+        "updated": "Academic session updated",
+        "deleted": "Academic session deleted successfully"
+      },
+      "maintainer": {
+        "created": "Maintainer created successfully",
+        "updated": "Maintainer updated successfully",
+        "deleted": "Maintainer deleted successfully"
+      },
+      "admin": {
+        "deleted": "Administrator deleted successfully",
+        "roleUpdated": "Role updated"
+      },
+      "housingApplication": {
+        "updated": "Application updated"
+      },
+      "renewal": {
+        "updated": "Renewal updated",
+        "submitted": "Renewal request submitted"
+      },
+      "maintenance": {
+        "submitted": "Maintenance request submitted",
+        "statusUpdated": "Status updated"
+      }
+    },
+    "workflow": {
+      "acceptDialog": {
+        "title": "Accept request",
+        "hint": "This will move the request to accepted status."
+      },
+      "rejectDialog": {
+        "title": "Reject request",
+        "confirm": "Confirm rejection"
+      },
+      "validateDialog": {
+        "title": "Validate request",
+        "hint": "Assign a room before validating.",
+        "confirm": "Confirm validation"
+      },
+      "chooseReason": "Choose a reason",
+      "chooseLodgment": "Choose a room",
+      "chooseRole": "Choose a role"
+    },
+    "tables": {
+      "photo": "Photo",
+      "fullName": "Full name",
+      "email": "Email",
+      "phone": "Phone",
+      "status": "Status",
+      "submittedAt": "Submitted on",
+      "action": "Action",
+      "actions": "Actions"
+    },
+    "notFound": {
+      "renewal": "Renewal not found or deleted.",
+      "housingApplication": "Application not found or deleted.",
+      "maintenance": "Maintenance not found or deleted.",
+      "announcement": "Announcement not found or deleted."
+    },
+    "allRoles": "All roles",
+    "announcements": {
+      "detailTitle": "Announcement",
+      "listDescription": "Stay up to date with the latest news and events at Lumièrebourg University City.",
+      "listTitle": "Announcements"
+    },
+    "pagination": {
+      "rowsPerPage": "Rows per page",
+      "pageOf": "Page {page} of {total}"
+    },
+    "selects": {
+      "status": "Status",
+      "type": "Type",
+      "allStatuses": "All statuses",
+      "allTypes": "All types",
+      "selectFaculty": "Select a faculty...",
+      "selectBuilding": "Select a building...",
+      "academicSessions": "Academic sessions"
+    },
+    "statuses": {
+      "renewal": {
+        "pending": "Pending",
+        "accepted": "Accepted",
+        "refused": "Refused",
+        "validated": "Validated"
+      },
+      "maintenance": {
+        "pending": "Pending",
+        "accepted": "Accepted",
+        "refused": "Refused",
+        "done": "Done"
+      },
+      "maintenanceType": {
+        "electrical": "Electrical",
+        "equipment": "Equipment",
+        "hvac": "HVAC",
+        "other": "Other",
+        "plumbing": "Plumbing"
+      },
+      "housingApplication": {
+        "pending": "Pending",
+        "accepted": "Accepted",
+        "refused": "Refused",
+        "validated": "Validated"
+      },
+      "announcement": {
+        "draft": "Draft",
+        "published": "Published"
+      },
+      "occupancy": {
+        "available": "Available",
+        "full": "Full",
+        "overbooked": "Overbooked"
+      }
+    }
+  }
+}

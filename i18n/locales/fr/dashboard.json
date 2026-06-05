@@ -1,0 +1,30 @@
+{
+  "dashboard": {
+    "welcome": "Bienvenue {firstName} !",
+    "admin": {
+      "title": "Tableau de bord",
+      "greeting": "Bienvenue, {name}"
+    },
+    "resident": {
+      "greeting": "Bonjour, {firstName}",
+      "subtitle": "Bienvenue sur votre tableau de bord",
+      "maintenances": {
+        "title": "Maintenances",
+        "countSubtitle": "Nombre de demandes de maintenance",
+        "viewMine": "Voir mes demandes"
+      },
+      "renewals": {
+        "title": "Renouvellements",
+        "lastStatus": "Dernier statut",
+        "none": "Aucune demande de renouvellement",
+        "viewMine": "Voir mes renouvellements"
+      },
+      "lodgment": {
+        "title": "Mon logement",
+        "subtitle": "Votre affectation actuelle",
+        "none": "Aucun logement assigné",
+        "floorRoom": "Étage {floor} - Chambre {room}"
+      }
+    }
+  }
+}

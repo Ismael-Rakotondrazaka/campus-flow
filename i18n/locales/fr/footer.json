@@ -1,0 +1,20 @@
+{
+  "footer": {
+    "description": "Une résidence universitaire à Paris, pour les étudiants de Lumièrebourg.",
+    "location": "Paris, France",
+    "sections": {
+      "navigation": "Navigation",
+      "info": "Informations"
+    },
+    "nav": {
+      "home": "Accueil",
+      "announcements": "Annonces",
+      "joinCommunity": "Rejoindre la communauté",
+      "signIn": "Se connecter",
+      "rules": "Règlement intérieur",
+      "privacy": "Politique de confidentialité"
+    },
+    "copyright": "© {year} Lumièrebourg · Cité Universitaire de Paris. Tous droits réservés.",
+    "tagline": "Construit pour la communauté étudiante."
+  }
+}

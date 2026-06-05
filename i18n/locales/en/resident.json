@@ -1,0 +1,83 @@
+{
+  "resident": {
+    "announcements": {
+      "listTitle": "Announcements",
+      "empty": "No announcements available at the moment.",
+      "backToList": "Back to announcements"
+    },
+    "maintenances": {
+      "listTitle": "My maintenance requests",
+      "createTitle": "Report maintenance",
+      "createPageTitle": "New maintenance request",
+      "createCardTitle": "New maintenance request",
+      "reportCta": "Report maintenance",
+      "listEmpty": "You have no maintenance requests yet.",
+      "listEmptyShort": "No maintenance requests.",
+      "backToList": "Back to maintenance",
+      "detailTitle": "Maintenance request",
+      "detailTitleWithLocation": "Maintenance - {building}, room {room}",
+      "locationLine": "Building {building} - {floor} - Room {room}",
+      "door": "Door",
+      "roomNumber": "No. {room}",
+      "form": {
+        "cardDescription": "Describe the issue in your room.",
+        "typeLabel": "Issue type",
+        "typePlaceholder": "Select type",
+        "descriptionPlaceholder": "Describe the issue",
+        "descriptionPlaceholderLong": "Describe the issue in detail...",
+        "notAssignedHint": "You are not assigned to a room yet. Contact administration.",
+        "submitRequest": "Submit request"
+      },
+      "floor": {
+        "ground": "Ground floor",
+        "basement": "Basement",
+        "basementNumber": "Basement {n}",
+        "first": "1st floor",
+        "ordinal": "{n}th floor"
+      }
+    },
+    "renewals": {
+      "listTitle": "My renewals",
+      "createTitle": "Renew my contract",
+      "createPageTitle": "New renewal request",
+      "createCardTitle": "Renewal request",
+      "renewCta": "Renew my contract",
+      "listEmpty": "You have no renewal requests yet.",
+      "listEmptyShort": "No renewals found.",
+      "resultsCount": "1 renewal | {count} renewals",
+      "backToList": "Back to renewals",
+      "backToMine": "Back to my renewals",
+      "detailTitlePrefix": "Renewal of {date}",
+      "refusalReason": "Refusal reason",
+      "table": {
+        "academicSession": "Academic session",
+        "faculty": "Faculty",
+        "submittedAt": "Submitted on"
+      },
+      "form": {
+        "deadlineDescription": "Check your information and provide the required documents. Deadline:",
+        "emergencyNumber": "Emergency number",
+        "photo": "Photo",
+        "nic": "National ID card (NIC)",
+        "submitRequest": "Submit request"
+      },
+      "closed": {
+        "title": "Renewals closed",
+        "description": "Renewals are not open for this session.",
+        "return": "Return to dashboard"
+      },
+      "alreadySubmitted": {
+        "title": "Request already submitted",
+        "description": "You already have a renewal request for this session.",
+        "view": "View my request"
+      }
+    },
+    "settings": {
+      "title": "Settings",
+      "subtitle": "Manage your profile and preferences",
+      "profileSubtitle": "Your resident profile information",
+      "loadError": "Unable to load settings.",
+      "profileLoadError": "Error loading profile."
+    }
+  }
+}

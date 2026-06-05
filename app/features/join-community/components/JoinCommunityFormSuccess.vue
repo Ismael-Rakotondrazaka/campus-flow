@@ -1,0 +1,40 @@
+<script setup lang="ts">
+import { Icon } from '#components';
+
+import { Button } from '~/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '~/components/ui/card';
+
+const localeRoute = useLocaleRoute();
+const { t } = useI18n();
+
+const handleReturnToHome = async () => {
+  await navigateTo(localeRoute({ name: 'index' }));
+};
+</script>
+
+<template>
+  <Card class="border-green-200 bg-green-50">
+    <CardHeader>
+      <div class="flex items-center gap-3">
+        <Icon name="mdi:check-circle" class="size-8 text-green-600" />
+        <div>
+          <CardTitle>{{ t('joinCommunity.success.title') }}</CardTitle>
+          <CardDescription>
+            {{ t('joinCommunity.success.descriptionLong') }}
+          </CardDescription>
+        </div>
+      </div>
+    </CardHeader>
+    <CardContent>
+      <Button @click="handleReturnToHome">
+        {{ t('joinCommunity.success.backHome') }}
+      </Button>
+    </CardContent>
+  </Card>
+</template>

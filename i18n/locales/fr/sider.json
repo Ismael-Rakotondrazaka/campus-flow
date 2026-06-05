@@ -1,0 +1,34 @@
+{
+  "sider": {
+    "shared": {
+      "dashboard": "Tableau de bord",
+      "buildings": "Bâtiments",
+      "lodgments": "Logements",
+      "housingApplications": "Demandes de logement",
+      "renewals": "Renouvellements",
+      "maintenances": "Maintenances"
+    },
+    "root": {
+      "subtitle": "Pour Administrateur",
+      "admins": "Administrateurs",
+      "residents": "Résidents",
+      "faculties": "Facultés",
+      "academicSessions": "Sessions académiques",
+      "announcements": "Annonces"
+    },
+    "resident": {
+      "subtitle": "Espace étudiant",
+      "settings": "Paramètres"
+    },
+    "housingApplication": {
+      "subtitle": "Demandes de Logement"
+    },
+    "maintenance": {
+      "subtitle": "Pour Maintenance",
+      "maintainers": "Maintenanciers"
+    },
+    "renewal": {
+      "subtitle": "Pour Renouvellement"
+    }
+  }
+}

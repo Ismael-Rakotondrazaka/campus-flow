@@ -1,0 +1,23 @@
+{
+  "pinia": {
+    "title": "Pinia (persisted state)",
+    "count": {
+      "statistic": {
+        "count": "Count",
+        "doubledCount": "Doubled Count"
+      },
+      "actions": {
+        "decrement": "Decrement",
+        "increment": "Increment",
+        "random": "Random",
+        "reset": "Reset"
+      }
+    },
+    "name": {
+      "title": "Name",
+      "input": {
+        "placeholder": "Enter a name"
+      }
+    }
+  }
+}

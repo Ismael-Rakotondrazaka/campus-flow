@@ -1,0 +1,37 @@
+{
+  "forms": {
+    "buttons": {
+      "submit": "Envoyer",
+      "cancel": "Annuler",
+      "save": "Enregistrer",
+      "reset": "Réinitialiser",
+      "send": "Envoyer",
+      "signIn": "Se connecter",
+      "facebookLogin": "Se connecter avec Facebook",
+      "register": "Créer un compte"
+    },
+    "fields": {
+      "email": {
+        "label": "Email",
+        "placeholder": "email{'@'}exemple.com"
+      },
+      "password": {
+        "label": "Mot de passe",
+        "placeholder": "********"
+      },
+      "title": {
+        "label": "Titre"
+      },
+      "content": {
+        "label": "Contenu"
+      },
+      "required": "Obligatoire",
+      "selectFaculty": "Veuillez sélectionner une faculté"
+    },
+    "validation": {
+      "photoRequired": "La photo est requise",
+      "nicRequired": "La CIN est requise",
+      "schoolCertRequired": "Le certificat de scolarité est requis"
+    }
+  }
+}

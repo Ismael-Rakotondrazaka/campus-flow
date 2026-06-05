@@ -1,0 +1,113 @@
+{
+  "users": {
+    "profile": {
+      "tabs": {
+        "posts": "Posts",
+        "followers": "Followers",
+        "following": "Following"
+      },
+      "actions": {
+        "newArticle": "New article",
+        "follow": "Follow",
+        "following": "Following",
+        "share": "Share",
+        "copy": "Copy",
+        "editProfile": "Edit profile",
+        "shareCopied": "Share URL copied to clipboard",
+        "shareCopyFailed": "Failed to copy share URL"
+      },
+      "posts": {
+        "searchPlaceholder": "Search posts...",
+        "allStatuses": "All",
+        "tags": "Tags",
+        "searchTagsPlaceholder": "Search tags...",
+        "noTags": "No tags found.",
+        "loading": "Loading...",
+        "empty": "No posts yet."
+      },
+      "followers": {
+        "searchPlaceholder": "Search followers...",
+        "loading": "Loading...",
+        "empty": "No followers yet."
+      },
+      "following": {
+        "searchPlaceholder": "Search following...",
+        "loading": "Loading...",
+        "empty": "No following yet."
+      },
+      "defaultName": "User"
+    },
+    "settings": {
+      "title": "Settings",
+      "profile": {
+        "title": "Profile",
+        "description": "Update your personal information and profile picture.",
+        "pictureLabel": "Profile picture",
+        "usernameLabel": "Username",
+        "usernamePlaceholder": "yourusername",
+        "tagsLabel": "Interests & skills",
+        "tagsPlaceholder": "Add a tag and press Enter",
+        "success": "Profile updated successfully",
+        "usernameValidateFailed": "Unable to validate username uniqueness right now.",
+        "usernameTaken": "Username already taken"
+      },
+      "password": {
+        "title": "Change password",
+        "description": "Update your account password. Use at least 8 characters.",
+        "newPassword": "New password",
+        "confirmPassword": "Confirm password",
+        "success": "Password updated successfully",
+        "failed": "Failed to update password",
+        "confirmMismatch": "Passwords do not match",
+        "minLength": "Password must be at least 8 characters"
+      },
+      "email": {
+        "title": "Change email",
+        "description": "Update your email address.",
+        "modalTitle": "Change your email",
+        "modalDescription": "We've sent a confirmation email to {email}. Please check your inbox and click the link to change your email address.",
+        "success": "Email change requested",
+        "failed": "Failed to update email"
+      },
+      "notifications": {
+        "title": "Notification preferences",
+        "description": "Choose which notifications you want to receive.",
+        "channels": {
+          "email": "Email",
+          "in_app": "In-app",
+          "push": "Push"
+        }
+      }
+    },
+    "forms": {
+      "fields": {
+        "firstName": {
+          "label": "First name",
+          "placeholder": "John"
+        },
+        "lastName": {
+          "label": "Last name",
+          "placeholder": "Doe"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "email{'@'}example.com"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "********"
+        },
+        "username": {
+          "label": "Username",
+          "placeholder": "yourusername"
+        }
+      },
+      "validation": {
+        "firstNameRequired": "First name is required",
+        "lastNameRequired": "Last name is required",
+        "usernameRequired": "Username is required",
+        "notFound": "User not found."
+      }
+    }
+  }
+}

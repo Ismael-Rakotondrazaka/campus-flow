@@ -1,0 +1,34 @@
+{
+  "sider": {
+    "shared": {
+      "dashboard": "Dashboard",
+      "buildings": "Buildings",
+      "lodgments": "Lodgings",
+      "housingApplications": "Housing applications",
+      "renewals": "Renewals",
+      "maintenances": "Maintenance"
+    },
+    "root": {
+      "subtitle": "For administrators",
+      "admins": "Administrators",
+      "residents": "Residents",
+      "faculties": "Faculties",
+      "academicSessions": "Academic sessions",
+      "announcements": "Announcements"
+    },
+    "resident": {
+      "subtitle": "Student space",
+      "settings": "Settings"
+    },
+    "housingApplication": {
+      "subtitle": "Housing applications"
+    },
+    "maintenance": {
+      "subtitle": "Maintenance",
+      "maintainers": "Maintainers"
+    },
+    "renewal": {
+      "subtitle": "Renewals"
+    }
+  }
+}

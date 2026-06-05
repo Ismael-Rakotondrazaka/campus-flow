@@ -1,0 +1,23 @@
+{
+  "pinia": {
+    "title": "Pinia (état persistant)",
+    "count": {
+      "statistic": {
+        "count": "Compte",
+        "doubledCount": "Compte doublé"
+      },
+      "actions": {
+        "decrement": "Décrémenter",
+        "increment": "Incrémenter",
+        "random": "Aléatoire",
+        "reset": "Réinitialiser"
+      }
+    },
+    "name": {
+      "title": "Nom",
+      "input": {
+        "placeholder": "Entrez un nom"
+      }
+    }
+  }
+}

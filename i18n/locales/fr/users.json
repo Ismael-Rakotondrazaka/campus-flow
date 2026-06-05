@@ -1,0 +1,113 @@
+{
+  "users": {
+    "profile": {
+      "tabs": {
+        "posts": "Publications",
+        "followers": "Abonnés",
+        "following": "Abonnements"
+      },
+      "actions": {
+        "newArticle": "Nouvel article",
+        "follow": "Suivre",
+        "following": "Abonné",
+        "share": "Partager",
+        "copy": "Copier",
+        "editProfile": "Modifier le profil",
+        "shareCopied": "Lien de partage copié dans le presse-papiers",
+        "shareCopyFailed": "Impossible de copier le lien de partage"
+      },
+      "posts": {
+        "searchPlaceholder": "Rechercher des publications...",
+        "allStatuses": "Tous",
+        "tags": "Tags",
+        "searchTagsPlaceholder": "Rechercher des tags...",
+        "noTags": "Aucun tag trouvé.",
+        "loading": "Chargement...",
+        "empty": "Aucune publication pour le moment."
+      },
+      "followers": {
+        "searchPlaceholder": "Rechercher des abonnés...",
+        "loading": "Chargement...",
+        "empty": "Aucun abonné pour le moment."
+      },
+      "following": {
+        "searchPlaceholder": "Rechercher des abonnements...",
+        "loading": "Chargement...",
+        "empty": "Aucun abonnement pour le moment."
+      },
+      "defaultName": "Utilisateur"
+    },
+    "settings": {
+      "title": "Paramètres",
+      "profile": {
+        "title": "Profil",
+        "description": "Mettez à jour vos informations personnelles et votre photo de profil.",
+        "pictureLabel": "Photo de profil",
+        "usernameLabel": "Nom d'utilisateur",
+        "usernamePlaceholder": "votrenomutilisateur",
+        "tagsLabel": "Centres d'intérêt et compétences",
+        "tagsPlaceholder": "Ajoutez un tag et appuyez sur Entrée",
+        "success": "Profil mis à jour avec succès",
+        "usernameValidateFailed": "Impossible de vérifier l'unicité du nom d'utilisateur pour le moment.",
+        "usernameTaken": "Ce nom d'utilisateur est déjà pris"
+      },
+      "password": {
+        "title": "Changer le mot de passe",
+        "description": "Mettez à jour le mot de passe de votre compte. Utilisez au moins 8 caractères.",
+        "newPassword": "Nouveau mot de passe",
+        "confirmPassword": "Confirmer le mot de passe",
+        "success": "Mot de passe mis à jour avec succès",
+        "failed": "Échec de la mise à jour du mot de passe",
+        "confirmMismatch": "Les mots de passe ne correspondent pas",
+        "minLength": "Le mot de passe doit contenir au moins 8 caractères"
+      },
+      "email": {
+        "title": "Changer l'email",
+        "description": "Mettez à jour votre adresse e-mail.",
+        "modalTitle": "Changer votre email",
+        "modalDescription": "Nous avons envoyé un e-mail de confirmation à {email}. Veuillez consulter votre boîte de réception et cliquer sur le lien pour changer votre adresse e-mail.",
+        "success": "Demande de changement d'email envoyée",
+        "failed": "Échec de la mise à jour de l'email"
+      },
+      "notifications": {
+        "title": "Préférences de notification",
+        "description": "Choisissez les notifications que vous souhaitez recevoir.",
+        "channels": {
+          "email": "E-mail",
+          "in_app": "Dans l'app",
+          "push": "Push"
+        }
+      }
+    },
+    "forms": {
+      "fields": {
+        "firstName": {
+          "label": "Prénom",
+          "placeholder": "Jean"
+        },
+        "lastName": {
+          "label": "Nom",
+          "placeholder": "Dupont"
+        },
+        "email": {
+          "label": "E-mail",
+          "placeholder": "email{'@'}exemple.com"
+        },
+        "password": {
+          "label": "Mot de passe",
+          "placeholder": "********"
+        },
+        "username": {
+          "label": "Nom d'utilisateur",
+          "placeholder": "votrenomutilisateur"
+        }
+      },
+      "validation": {
+        "firstNameRequired": "Le prénom est requis",
+        "lastNameRequired": "Le nom est requis",
+        "usernameRequired": "Le nom d'utilisateur est requis",
+        "notFound": "Utilisateur non trouvé."
+      }
+    }
+  }
+}
