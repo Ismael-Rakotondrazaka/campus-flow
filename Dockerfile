@@ -31,7 +31,11 @@ ENV NITRO_PORT=3000
 WORKDIR /app
 
 COPY --from=builder /app/.output ./.output
+COPY --from=builder /app/prisma ./prisma
+COPY scripts/docker-entrypoint/cli.sh docker-entrypoint.sh
+
+RUN npm install --no-save prisma && chmod +x docker-entrypoint.sh
 
 EXPOSE 3000
 
-CMD ["node", ".output/server/index.mjs"]
+CMD ["./docker-entrypoint.sh"]
