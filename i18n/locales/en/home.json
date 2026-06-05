@@ -7,7 +7,7 @@
         "emphasis": "meets",
         "line2": "Life"
       },
-      "subtitle": "Discover a dynamic environment where the student community thrives — a place for learning, growth, and connection.",
+      "subtitle": "Student housing in Paris. 580 residents, shared spaces, and a community that actually works.",
       "cta": {
         "join": "Join the community",
         "signIn": "Sign in"
@@ -25,7 +25,7 @@
         "line1": "A living environment",
         "line2": "designed for you"
       },
-      "intro": "Lumièrebourg University City offers a complete environment so you can focus on what matters.",
+      "intro": "Everything you need to live comfortably, without having to think about it.",
       "items": {
         "comfort": {
           "title": "Comfortable housing",
@@ -54,7 +54,7 @@
             "author": "Amara Diallo",
             "avatar": "AD",
             "faculty": "Sciences Po · M1",
-            "quote": "Lumièrebourg gave me much more than housing. I found a family, a network, and memories for life. The management team is always listening."
+            "quote": "Lumièrebourg gave me real friendships and a network I still use. The team actually responds when you need them."
           },
           {
             "author": "Théo Marchand",
@@ -72,7 +72,7 @@
             "author": "Léa Fontaine",
             "avatar": "LF",
             "faculty": "ENSAD · L2 Design",
-            "quote": "The room quality far exceeds my expectations for the price. And the fiber connection is excellent — essential for my creative projects."
+            "quote": "The room is better than I expected for what I pay. The fiber connection is solid too, which matters a lot for design work."
           },
           {
             "author": "Ibrahim Koné",
@@ -92,13 +92,13 @@
             "author": "Omar Benali",
             "avatar": "OB",
             "faculty": "ESCP · MBA",
-            "quote": "The community diversity is incredible. I connected with students from more than 30 nationalities. These encounters transformed my worldview."
+            "quote": "I met students from over 30 countries here. Not something you expect from student housing, and it genuinely changed how I think."
           },
           {
             "author": "Sofia Petrov",
             "avatar": "SP",
             "faculty": "UPMC · M2 Bio",
-            "quote": "The site's calm is perfect for revision while being 20 minutes from major Parisian universities. The ideal balance between study and social life."
+            "quote": "Quiet enough to actually study, close enough to central Paris to have a life outside. That combination is genuinely hard to find."
           },
           {
             "author": "Antoine Lebrun",
@@ -110,10 +110,20 @@
             "author": "Priya Sharma",
             "avatar": "PS",
             "faculty": "ESSEC · Grande École",
-            "quote": "Lumièrebourg perfectly embodies the student city spirit: serious when needed, festive and welcoming the rest of the time. I recommend it to everyone."
+            "quote": "It works when it needs to, and it's actually fun the rest of the time. Tell everyone you know."
           }
         ]
       }
+    },
+    "announcements": {
+      "eyebrow": "Latest news",
+      "title": {
+        "line1": "Stay informed",
+        "line2": "about campus life"
+      },
+      "intro": "Everything happening at Lumièrebourg, in one place.",
+      "cta": "See all announcements",
+      "empty": "No announcements at the moment."
     },
     "map": {
       "eyebrow": "Location",
@@ -124,7 +134,7 @@
         "line1": "Ready to join",
         "line2": "the community?"
       },
-      "subtitle": "Submit your housing application in a few minutes and become part of life at Lumièrebourg.",
+      "subtitle": "It takes about five minutes. Fill in your details and send it in.",
       "button": "Submit my application"
     }
   }

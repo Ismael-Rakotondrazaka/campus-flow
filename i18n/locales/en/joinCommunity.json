@@ -29,7 +29,7 @@
     "success": {
       "title": "Application submitted",
       "description": "Your housing application has been received successfully.",
-      "descriptionLong": "Your housing application has been received. We will review it and contact you soon.",
+      "descriptionLong": "Your application is in. We'll get back to you once we've reviewed it.",
       "backHome": "Back to home"
     },
     "error": {

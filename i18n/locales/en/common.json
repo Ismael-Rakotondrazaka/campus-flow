@@ -131,7 +131,7 @@
     "workflow": {
       "acceptDialog": {
         "title": "Accept request",
-        "hint": "Confirm that you want to accept this request."
+        "hint": "This will move the request to accepted status."
       },
       "rejectDialog": {
         "title": "Reject request",

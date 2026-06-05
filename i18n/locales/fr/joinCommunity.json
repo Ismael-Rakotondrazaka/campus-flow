@@ -29,7 +29,7 @@
     "success": {
       "title": "Demande envoyée",
       "description": "Votre demande de logement a bien été reçue.",
-      "descriptionLong": "Votre demande de logement a été reçue. Nous l'examinerons et vous recontacterons bientôt.",
+      "descriptionLong": "Votre demande est bien enregistrée. Nous vous recontacterons après l'avoir examinée.",
       "backHome": "Retour à l'accueil"
     },
     "error": {

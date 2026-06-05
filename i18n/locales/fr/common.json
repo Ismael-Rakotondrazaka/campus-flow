@@ -131,7 +131,7 @@
     "workflow": {
       "acceptDialog": {
         "title": "Accepter la demande",
-        "hint": "Confirmez que vous souhaitez accepter cette demande."
+        "hint": "La demande passera au statut accepté."
       },
       "rejectDialog": {
         "title": "Refuser la demande",

@@ -7,7 +7,7 @@
         "emphasis": "rencontre",
         "line2": "la Vie"
       },
-      "subtitle": "Découvrez un environnement dynamique où la communauté étudiante prospère - un lieu d'apprentissage, de croissance et de rencontres.",
+      "subtitle": "Une résidence étudiante à Paris. 580 résidents, des espaces partagés, une communauté qui fonctionne vraiment.",
       "cta": {
         "join": "Rejoindre la communauté",
         "signIn": "Se connecter"
@@ -25,7 +25,7 @@
         "line1": "Un cadre de vie",
         "line2": "pensé pour vous"
       },
-      "intro": "La Cité Universitaire Lumièrebourg offre un environnement complet pour que vous puissiez vous concentrer sur l'essentiel.",
+      "intro": "Tout ce qu'il vous faut pour vivre confortablement, sans avoir à y penser.",
       "items": {
         "comfort": {
           "title": "Logements confortables",
@@ -54,7 +54,7 @@
             "author": "Amara Diallo",
             "avatar": "AD",
             "faculty": "Sciences Po · M1",
-            "quote": "Lumièrebourg m'a offert bien plus qu'un logement. J'ai trouvé une famille, un réseau, et des souvenirs pour la vie. L'équipe de direction est toujours à l'écoute."
+            "quote": "J'ai trouvé de vraies amitiés et un réseau que j'utilise encore. L'équipe répond vraiment quand on en a besoin."
           },
           {
             "author": "Théo Marchand",
@@ -72,7 +72,7 @@
             "author": "Léa Fontaine",
             "avatar": "LF",
             "faculty": "ENSAD · L2 Design",
-            "quote": "La qualité des chambres dépasse largement mes attentes pour le prix. Et la connexion fibre est excellente — indispensable pour mes projets créatifs."
+            "quote": "La chambre est mieux que ce que j'espérais pour ce prix. La fibre est solide aussi, ce qui compte vraiment pour le design."
           },
           {
             "author": "Ibrahim Koné",
@@ -92,13 +92,13 @@
             "author": "Omar Benali",
             "avatar": "OB",
             "faculty": "ESCP · MBA",
-            "quote": "La diversité de la communauté est incroyable. J'ai noué des liens avec des étudiants de plus de 30 nationalités. Ces rencontres ont transformé ma vision du monde."
+            "quote": "J'ai rencontré des gens de plus de 30 pays ici. On ne s'y attend pas dans une résidence, et ça change vraiment comment on voit les choses."
           },
           {
             "author": "Sofia Petrov",
             "avatar": "SP",
             "faculty": "UPMC · M2 Bio",
-            "quote": "Le calme du site est parfait pour les révisions tout en étant à 20 minutes des grandes universités parisiennes. L'équilibre idéal entre studieux et vie sociale."
+            "quote": "Assez calme pour vraiment travailler, assez proche de Paris pour avoir une vie en dehors. Cette combinaison est rare."
           },
           {
             "author": "Antoine Lebrun",
@@ -110,10 +110,20 @@
             "author": "Priya Sharma",
             "avatar": "PS",
             "faculty": "ESSEC · Grande École",
-            "quote": "Lumièrebourg incarne parfaitement l'esprit de la cité étudiante : sérieuse quand il le faut, festive et accueillante le reste du temps. Je la recommande à tous."
+            "quote": "Ça marche quand ça doit marcher, et c'est sympa le reste du temps. À conseiller sans hésiter."
           }
         ]
       }
+    },
+    "announcements": {
+      "eyebrow": "Actualités",
+      "title": {
+        "line1": "Restez informé",
+        "line2": "de la vie du campus"
+      },
+      "intro": "Tout ce qui se passe à Lumièrebourg, au même endroit.",
+      "cta": "Voir toutes les actualités",
+      "empty": "Aucune annonce pour le moment."
     },
     "map": {
       "eyebrow": "Localisation",
@@ -124,7 +134,7 @@
         "line1": "Prêt à rejoindre",
         "line2": "la communauté ?"
       },
-      "subtitle": "Faites votre demande de logement en quelques minutes et intégrez la vie à Lumièrebourg.",
+      "subtitle": "Cinq minutes, quelques informations, et votre dossier est envoyé.",
       "button": "Déposer ma candidature"
     }
   }
