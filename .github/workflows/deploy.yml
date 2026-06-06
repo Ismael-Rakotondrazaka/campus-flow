@@ -50,17 +50,11 @@ jobs:
           tags: |
             ghcr.io/ismael-rakotondrazaka/campus-flow:setup
 
-      # 5. Deploy on VPS
-      - name: SSH Deploy
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-
-          script: |
-            cd ~/projects/campus-flow
-
-            docker compose pull
-
-            docker compose up -d --remove-orphans
+      # 5. Trigger boot repo deploy
+      - name: Trigger Boot Deploy
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.BOOT_PAT }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository_owner }}/${{ vars.BOOT_REPO }}/actions/workflows/deploy.yml/dispatches" \
+            -d '{"ref":"main"}'
