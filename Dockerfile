@@ -21,7 +21,7 @@ RUN npm run build
 
 
 # ---------- PRODUCTION STAGE ----------
-FROM node:22-alpine
+FROM node:22-alpine AS production
 
 ENV NODE_ENV=production
 # @link https://nuxt.com/docs/getting-started/deployment#entry-point
@@ -31,11 +31,7 @@ ENV NITRO_PORT=3000
 WORKDIR /app
 
 COPY --from=builder /app/.output ./.output
-COPY --from=builder /app/prisma ./prisma
-COPY scripts/docker-entrypoint/cli.sh docker-entrypoint.sh
-
-RUN npm install --no-save prisma && chmod +x docker-entrypoint.sh
 
 EXPOSE 3000
 
-CMD ["./docker-entrypoint.sh"]
+CMD ["node", ".output/server/index.mjs"]

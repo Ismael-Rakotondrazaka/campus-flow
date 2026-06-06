@@ -26,8 +26,8 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # 3. Build and push image
-      - name: Build and Push
+      # 3. Build and push app image
+      - name: Build and Push App
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -40,7 +40,17 @@ jobs:
             ghcr.io/ismael-rakotondrazaka/campus-flow:latest
             ghcr.io/ismael-rakotondrazaka/campus-flow:${{ github.sha }}
 
-      # 4. Deploy on VPS
+      # 4. Build and push setup image
+      - name: Build and Push Setup
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile.setup
+          push: true
+          tags: |
+            ghcr.io/ismael-rakotondrazaka/campus-flow:setup
+
+      # 5. Deploy on VPS
       - name: SSH Deploy
         uses: appleboy/ssh-action@v1.2.0
         with:
