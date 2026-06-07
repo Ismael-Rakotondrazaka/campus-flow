@@ -2,7 +2,6 @@ import type { SitemapUrl } from '#sitemap/types';
 
 export default defineCachedEventHandler(
   async (): Promise<SitemapUrl[]> => {
-
     const announcements = await prisma.announcement.findMany({
       orderBy: {
         updatedAt: 'desc',
