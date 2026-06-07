@@ -1,21 +1,21 @@
 import type { SitemapUrl } from '#sitemap/types';
 
 export default defineCachedEventHandler(
-  async (event): Promise<SitemapUrl[]> => {
+  async (): Promise<SitemapUrl[]> => {
 
     const announcements = await prisma.announcement.findMany({
-      select: {
-        id: true,
-        title: true,
-        illustrationUrl: true,
-        updatedAt: true,
-      },
       orderBy: {
         updatedAt: 'desc',
       },
+      select: {
+        id: true,
+        illustrationUrl: true,
+        title: true,
+        updatedAt: true,
+      },
       where: {
-        status: 'published',
         deletedAt: null,
+        status: 'published',
       },
     });
 

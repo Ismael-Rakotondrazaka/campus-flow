@@ -187,14 +187,13 @@ export default defineNuxtConfig({
     url: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
   },
 
-
   sitemap: {
     sitemaps: {
-      pages: {
-        includeAppSources: true,
-      },
       announcements: {
         sources: ['/api/__sitemap__/announcements'],
+      },
+      pages: {
+        includeAppSources: true,
       },
     },
   },

@@ -57,10 +57,10 @@ npm run preview
 
 ## Roles
 
-| Role | Access |
-|------|--------|
-| `root` | Full access — admins, residents, all domains |
-| `housing_application` | Buildings, lodgments, housing applications |
-| `renewal` | Renewal requests |
-| `maintenance` | Maintenance requests, maintainers |
-| Resident | Own renewals and maintenance requests |
+| Role                  | Access                                       |
+| --------------------- | -------------------------------------------- |
+| `root`                | Full access — admins, residents, all domains |
+| `housing_application` | Buildings, lodgments, housing applications   |
+| `renewal`             | Renewal requests                             |
+| `maintenance`         | Maintenance requests, maintainers            |
+| Resident              | Own renewals and maintenance requests        |

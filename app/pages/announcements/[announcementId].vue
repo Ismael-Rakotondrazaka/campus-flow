@@ -77,7 +77,9 @@ useSeoMeta({
             <p class="text-muted-foreground text-sm">
               {{ formatDate(announcement.createdAt) }}
             </p>
-            <h1 class="font-display text-foreground text-3xl font-bold lg:text-4xl">
+            <h1
+              class="font-display text-foreground text-3xl font-bold lg:text-4xl"
+            >
               {{ announcement.title }}
             </h1>
           </div>
@@ -93,9 +95,7 @@ useSeoMeta({
             />
           </div>
 
-          <div
-            class="text-foreground text-base leading-8 whitespace-pre-wrap"
-          >
+          <div class="text-foreground text-base leading-8 whitespace-pre-wrap">
             {{ announcement.content }}
           </div>
         </article>

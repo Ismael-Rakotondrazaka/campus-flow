@@ -79,9 +79,7 @@ useSeoMeta({
         >
           {{ $t('home.announcements.eyebrow') }}
         </span>
-        <h1
-          class="font-display text-foreground text-4xl font-bold lg:text-5xl"
-        >
+        <h1 class="font-display text-foreground text-4xl font-bold lg:text-5xl">
           {{ $t('common.announcements.listTitle') }}
         </h1>
       </div>
