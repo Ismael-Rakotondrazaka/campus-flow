@@ -11,6 +11,7 @@
     "functions:serve:local": "supabase functions serve --env-file .env",
     "postinstall": "nuxt prepare",
     "lint": "concurrently \"npx eslint . --cache\" \"npx prettier --check .\"",
+    "lint:ci": "concurrently \"npx eslint . --max-warnings 0\" \"npx prettier --check .\"",
     "lint:fix": "concurrently \"npx eslint . --fix\" \"npx prettier --write . --log-level warn\"",
     "lint:fix:files": "eslint --fix",
     "db:reset:local": "supabase db reset --local",
