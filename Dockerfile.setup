@@ -5,7 +5,7 @@ ENV PRISMA_CLI_QUERY_ENGINE_TYPE=none
 WORKDIR /app
 
 # Install first — this 500MB layer is cached until prisma version changes
-RUN npm install --no-save prisma dotenv tsx @prisma/adapter-pg consola @adonisjs/hash
+RUN npm install --no-save prisma @prisma/client dotenv tsx @prisma/adapter-pg consola @adonisjs/hash
 
 # Copy files after — only this small layer rebuilds on each deploy
 COPY prisma.config.ts .
