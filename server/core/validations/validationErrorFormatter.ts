@@ -3,6 +3,7 @@ import type { ZodIssueOptionalMessage } from 'zod';
 
 import { z } from 'zod';
 
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export abstract class ValidationErrorFormatter {
   public static format<T extends z.ZodTypeAny>(
     error: z.ZodError<T>

@@ -37,10 +37,10 @@ services:
         - action: rebuild
           path: package.json
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.campus-flow.rule=Host(`campus-flow.localhost`)"
-      - "traefik.http.routers.campus-flow.entrypoints=web"
-      - "traefik.http.services.campus-flow.loadbalancer.server.port=3000"
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.campus-flow.rule=Host(`campus-flow.localhost`)'
+      - 'traefik.http.routers.campus-flow.entrypoints=web'
+      - 'traefik.http.services.campus-flow.loadbalancer.server.port=3000'
     networks:
       - web
 

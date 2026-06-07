@@ -18,6 +18,7 @@ const ignores = [
   'shared/types/database.ts',
   'prisma/generated/**',
   'docs/**',
+  '**/*.md',
 ];
 
 export default withNuxt([
