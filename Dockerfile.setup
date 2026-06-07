@@ -10,5 +10,6 @@ RUN npm install --no-save prisma dotenv tsx @prisma/adapter-pg consola @adonisjs
 # Copy files after — only this small layer rebuilds on each deploy
 COPY prisma.config.ts .
 COPY prisma ./prisma
+RUN npx prisma generate
 
 CMD ["npx", "prisma", "migrate", "deploy"]
