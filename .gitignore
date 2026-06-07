@@ -34,3 +34,6 @@ prisma/generated/
 
 # Temporary files
 temp/
+
+# ESLint cache
+.eslintcache

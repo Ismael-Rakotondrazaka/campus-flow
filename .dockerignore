@@ -36,3 +36,6 @@ Thumbs.db
 
 # Local editor metadata
 .fleet
+
+# ESLint cache
+.eslintcache
