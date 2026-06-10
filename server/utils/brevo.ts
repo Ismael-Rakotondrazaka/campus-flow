@@ -15,14 +15,13 @@ export const EmailTemplate = {
 export type EmailTemplate = keyof typeof EmailTemplate;
 
 export const EmailTemplateBrevoId: Record<EmailTemplate, number> = {
-  // TODO: create or update these templates on Brevo and replace the IDs
-  HOUSING_APPLICATION_ACCEPTED: 4,
-  HOUSING_APPLICATION_REFUSED: 5,
-  HOUSING_APPLICATION_VALIDATED: 6,
-  RENEWAL_ACCEPTED: 7,
-  RENEWAL_REFUSED: 8,
-  RENEWAL_VALIDATED: 9,
-  WELCOME: 3,
+  HOUSING_APPLICATION_ACCEPTED: 5,
+  HOUSING_APPLICATION_REFUSED: 6,
+  HOUSING_APPLICATION_VALIDATED: 7,
+  RENEWAL_ACCEPTED: 8,
+  RENEWAL_REFUSED: 9,
+  RENEWAL_VALIDATED: 10,
+  WELCOME: 4,
 };
 
 export interface EmailSendResult {
